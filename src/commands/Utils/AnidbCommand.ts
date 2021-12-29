@@ -4,6 +4,7 @@ import {MessageEmbed} from 'discord.js';
 import {Colors} from '../../static/Colors';
 import moment from 'moment/moment';
 import {upFirstLetter} from '../../utils/strings';
+import {NO_IMAGE_URL} from '../../static/Constants';
 
 export default new Command({
   name: 'anidb',
@@ -82,7 +83,7 @@ export default new Command({
     }
 
     if (animeInfo.ageRestricted) {
-      description += `\n**Для взрослых:** Да`;
+      description += '\n**Для взрослых:** Да';
     }
 
     const nextEpisode = animeInfo.episodes[lastEpisodeId + 1];
@@ -93,9 +94,17 @@ export default new Command({
 
     const embed = new MessageEmbed()
       .setDescription(description)
-      .setImage(`https://cdn-eu.anidb.net/images/main/${animeInfo.picture}`)
-      .setColor(Colors.Green);
 
-    message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      .setColor(Colors.Green);
+    const tagsBlackList = new Set(['Loli']);
+
+    const isTagsContainBlockedTags = tags.some((tag) => tagsBlackList.has(tag));
+    if (!isTagsContainBlockedTags) {
+      embed.setImage(`https://cdn-eu.anidb.net/images/main/${animeInfo.picture}`);
+    } else {
+      embed.setImage(NO_IMAGE_URL);
+    }
+
+    message.reply({embeds: [embed], allowedMentions: {repliedUser: false}});
   },
 });

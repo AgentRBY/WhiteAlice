@@ -106,7 +106,7 @@ export default new Command({
     }
 
     if (animeInfo.isAdult) {
-      description += `\n**Для взрослых:** Да`;
+      description += '\n**Для взрослых:** Да';
     }
 
     if (nextEpisodeTime) {
