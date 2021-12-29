@@ -71,8 +71,8 @@ export default new Command({
     const author = result.authorName
       ? `[${result.authorName}](${result.authorUrl})`
       : Array.isArray(result.raw.data.creator)
-      ? result.raw.data.creator.join(', ')
-      : result.raw.data.creator;
+        ? result.raw.data.creator.join(', ')
+        : result.raw.data.creator;
 
     let description = `**Автор:** ${author || 'Не найдено'}
        **Персонажи:** ${characters ? formatNames(characters) : 'Не найдено'}
@@ -81,6 +81,8 @@ export default new Command({
        **Ссылка:** [клик](${result.url})`;
 
     let showAnimeButton;
+
+    const embed = new MessageEmbed().setDescription(description).setThumbnail(result.thumbnail).setColor(Colors.Green);
 
     if (result.site === 'AniDB' && result.raw.data) {
       const anime = result.raw.data;
@@ -109,10 +111,14 @@ export default new Command({
             .setLabel('Показать информацию об аниме')
             .setStyle('PRIMARY'),
         );
+
+        embed.setFooter(
+          `Что-бы узнать по подробнее об аниме введите команду >anidb ${anime.anidb_aid} или нажмите на кнопку`,
+        );
       }
     }
 
-    const embed = new MessageEmbed().setDescription(description).setThumbnail(result.thumbnail).setColor(Colors.Green);
+    embed.setDescription(description);
 
     const replyMessage = await message.reply({
       embeds: [embed],
@@ -126,9 +132,10 @@ export default new Command({
       max: 1,
     });
 
-    collector.on('collect', () => {
+    collector.on('collect', (interaction: ButtonInteraction) => {
       console.log(String(result.raw.data.anidb_aid));
-      client.commands.get('anidb').run({ client, message, args: [String(result.raw.data.anidb_aid)] });
+      client.commands.get('anidb').run({client, message, args: [String(result.raw.data.anidb_aid)]});
+      interaction.deferUpdate();
     });
   },
 });

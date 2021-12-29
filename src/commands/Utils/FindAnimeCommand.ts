@@ -76,7 +76,7 @@ export default new Command({
       )
       .setThumbnail(anime.image || anime.video)
       .setColor(Colors.Green)
-      .setFooter(`Что-бы узнать по подробнее об аниме введите команду >anilist ${anime.anilist}`);
+      .setFooter(`Что-бы узнать по подробнее об аниме введите команду >anilist ${anime.anilist} или нажмите на кнопку`);
 
     const showAnimeButton = new MessageActionRow().addComponents(
       new MessageButton()
@@ -88,7 +88,7 @@ export default new Command({
     const replyMessage = await message.reply({
       embeds: [embed],
       components: [showAnimeButton],
-      allowedMentions: { repliedUser: false },
+      allowedMentions: {repliedUser: false},
     });
 
     const collector = replyMessage.createMessageComponentCollector({
@@ -97,8 +97,9 @@ export default new Command({
       max: 1,
     });
 
-    collector.on('collect', () => {
-      client.commands.get('anilist').run({ client, message, args: [String(anime.anilist)] });
+    collector.on('collect', (interaction: ButtonInteraction) => {
+      client.commands.get('anilist').run({client, message, args: [String(anime.anilist)]});
+      interaction.deferUpdate();
     });
   },
 });
