@@ -1,15 +1,19 @@
-import {Event} from '../../structures/Event';
-import {Collection, Message} from 'discord.js';
-import {ExtendClient} from '../../structures/Client';
-import {ScamModule} from '../../modules/Scam';
-import {ErrorEmbed} from '../../utils/Embed';
+import { Event } from '../../structures/Event';
+import { Collection, Message } from 'discord.js';
+import { ExtendClient } from '../../structures/Client';
+import { ScamModule } from '../../modules/Scam';
+import { ErrorEmbed } from '../../utils/Embed';
 import Permissions from '../../static/Permissions';
-import {GuildModel} from '../../models/GuildModel';
+import { GuildModel } from '../../models/GuildModel';
 
 export default new Event({
   name: 'messageCreate',
   run: async (client: ExtendClient, message: Message) => {
     if (!message.member || !message.guild || !message.guild.me || message.channel.type === 'DM') {
+      return;
+    }
+
+    if (client.config.mode === 'development' && !client.config.ownersID.split(',').includes(message.author.id)) {
       return;
     }
 

@@ -6,9 +6,10 @@ declare global {
       botToken: string;
       environment: 'dev' | 'prod' | 'debug';
       prefix: string;
-      owners: string;
+      ownersID: string;
       sauceNAOToken: string;
       mongoURI: string;
+      mode: 'production' | 'testing' | 'development';
     }
   }
 }
