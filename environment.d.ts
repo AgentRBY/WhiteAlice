@@ -8,6 +8,7 @@ export interface Environment {
   sauceNAOToken: string;
   mongoURI: string;
   mode: 'production' | 'testing' | 'development';
+  yandexYU: string;
 }
 
 declare global {

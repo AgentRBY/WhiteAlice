@@ -31,6 +31,7 @@
     "moment": "^2.29.1",
     "mongoose": "^6.0.14",
     "node-cmd": "^5.0.0",
+    "node-html-parser": "^5.2.0",
     "request": "^2.88.2",
     "request-promise": "^4.2.6",
     "sagiri": "^3.1.1",

@@ -15,3 +15,7 @@ export function formatNames(text: string, separator = ' '): string {
     .map((character) => upFirstLetter(character))
     .join(separator);
 }
+
+export function encodeURLFull(url: string) {
+  return encodeURI(url).replace(':', '%3A').replace(',', '%2C');
+}
