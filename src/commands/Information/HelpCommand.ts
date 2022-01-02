@@ -1,9 +1,9 @@
-import {EmbedFieldData, MessageEmbed} from 'discord.js';
-import {upFirstLetter} from '../../utils/strings';
-import {Emojis, EmojisLinks} from '../../static/Emojis';
-import {Colors} from '../../static/Colors';
-import {ErrorEmbed} from '../../utils/Embed';
-import {Command} from '../../structures/Command';
+import { EmbedFieldData, MessageEmbed } from 'discord.js';
+import { upAllFirstLatter } from '../../utils/strings';
+import { Emojis, EmojisLinks } from '../../static/Emojis';
+import { Colors } from '../../static/Colors';
+import { ErrorEmbed } from '../../utils/Embed';
+import { Command } from '../../structures/Command';
 
 export default new Command({
   name: 'help',
@@ -26,7 +26,7 @@ export default new Command({
     if (!args.length) {
       const fields: EmbedFieldData[] = [...client.categories.keys()].map((category) => {
         return {
-          name: `${upFirstLetter(category)} [${
+          name: `${upAllFirstLatter(category)} [${
             client.commands.filter((command) => command.category.toLowerCase() === category.toLowerCase()).size
           }]`,
           value: client.commands
