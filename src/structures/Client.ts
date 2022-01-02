@@ -1,9 +1,9 @@
-import {Client, ClientEvents, Collection, Intents} from 'discord.js';
-import {promisify} from 'util';
-import {glob} from 'glob';
-import {CommandType} from '../typings/Command';
-import {EventType} from '../typings/Event';
-import {DisTube, DisTubeEvents} from 'distube';
+import { Client, ClientEvents, Collection, Intents } from 'discord.js';
+import { promisify } from 'util';
+import { glob } from 'glob';
+import { CommandType } from '../typings/Command';
+import { EventType } from '../typings/Event';
+import { DisTube, DisTubeEvents } from 'distube';
 import SoundCloudPlugin from '@distube/soundcloud';
 import SpotifyPlugin from '@distube/spotify';
 import AniDB from 'anidbjs';
@@ -49,6 +49,10 @@ export class ExtendClient extends Client {
     await this.loadEvents();
 
     await this.login(process.env.botToken);
+  }
+
+  public getOwners(): string[] {
+    return this.config.ownersID.split(',');
   }
 
   private static async importFile(filePath: string) {

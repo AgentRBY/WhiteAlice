@@ -13,7 +13,7 @@ export default new Event({
       return;
     }
 
-    if (client.config.mode === 'development' && !client.config.ownersID.split(',').includes(message.author.id)) {
+    if (client.config.mode === 'development' && !client.getOwners().includes(message.author.id)) {
       return;
     }
 
@@ -34,6 +34,12 @@ export default new Event({
       await GuildData.save();
     }
 
+    if (client.config.mode === 'testing' && !GuildData.testersID?.includes(message.author.id)) {
+      const errorEmbed = ErrorEmbed('**Включен режим тестирования. Использование бота доступно только тестерам**');
+      message.reply({ embeds: [errorEmbed], allowedMentions: { repliedUser: false } });
+      return;
+    }
+
     const prefix = GuildData.prefix || client.config.prefix || '>';
 
     if (!message.content.startsWith(prefix)) {
@@ -48,8 +54,17 @@ export default new Event({
       return;
     }
 
-    if (command.ownerOnly && !client.config.ownersID.split(',').includes(message.author.id)) {
+    if (command.ownerOnly && !client.getOwners().includes(message.author.id)) {
       const errorEmbed = ErrorEmbed('**У вас нет прав на эту команду**');
+      message.reply({ embeds: [errorEmbed], allowedMentions: { repliedUser: false } });
+      return;
+    }
+
+    if (
+      command.testersOnly &&
+      (!GuildData.testersID?.includes(message.author.id) || !client.getOwners().includes(message.author.id))
+    ) {
+      const errorEmbed = ErrorEmbed('**Это команда доступна только тестировщикам**');
       message.reply({ embeds: [errorEmbed], allowedMentions: { repliedUser: false } });
       return;
     }

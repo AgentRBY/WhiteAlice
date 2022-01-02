@@ -1,7 +1,7 @@
-import {Collection, Message, PermissionString} from 'discord.js';
-import {ExtendClient} from '../structures/Client';
-import {IGuildModel} from './GuildModel';
-import {Document} from 'mongoose';
+import { Collection, Message, PermissionString } from 'discord.js';
+import { ExtendClient } from '../structures/Client';
+import { IGuildModel } from './GuildModel';
+import { Document } from 'mongoose';
 
 export interface CommandType {
   name: string;
@@ -14,7 +14,8 @@ export interface CommandType {
   aliases?: string[];
   memberPermissions?: PermissionString[];
   botPermissions?: PermissionString[];
-  ownerOnly?: boolean;
+  ownerOnly?: true;
+  testersOnly?: true;
 }
 
 interface CommandExample {
