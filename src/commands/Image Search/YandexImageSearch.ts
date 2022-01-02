@@ -17,7 +17,6 @@ export default new Command({
   description: '',
   examples: [],
   usage: 'yandexImageSearch',
-  testersOnly: true,
   run: async ({ message, args }) => {
     const imageLink = args[0];
 
