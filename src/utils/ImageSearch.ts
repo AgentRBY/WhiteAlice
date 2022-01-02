@@ -24,8 +24,9 @@ export const generateYandexSearchLink = (imageLink: string, yu: string) => {
 };
 
 export const getSitesFromYandexResponse = (response: Response): YandexImagesResponse => {
+  console.log(response);
   const parsedHTML = HTMLParser(JSON.parse(response.body).blocks[0].html);
-  
+
   if (parsedHTML.querySelector('.CbirOtherSizes-EmptyMessage')) {
     return null;
   }
