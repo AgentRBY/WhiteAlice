@@ -41,4 +41,12 @@ export const whitelistSites: WhitelistSite[] = [
     url: 'nhentai.to/g/',
     type: WhitelistedSitesType.MANGA_SITE,
   },
+  {
+    url: 'toonily.com/webtoon',
+    type: WhitelistedSitesType.MANGA_SITE,
+  },
+  {
+    url: 'mangaforfree.net/manga',
+    type: WhitelistedSitesType.MANGA_SITE,
+  },
 ];
