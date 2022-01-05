@@ -6,10 +6,11 @@ import { Command } from '../../structures/Command';
 import { isGifLink, isImageLink, isLink } from '../../utils/Other';
 import { formatNames } from '../../utils/strings';
 import { generateDefaultButtons, pagination } from '../../utils/Pagination';
+import { sauceNEORelevantSites } from '../../static/ImageSearch';
 
 export default new Command({
   name: 'findImage',
-  category: 'Utils',
+  category: 'Image Search',
   aliases: ['find', 'fi', 'image'],
   description: `Поиск изображения в системе SauceNEO. 
   Допустимые форматы: png, jpeg, jpg, webp, bmp, gif.
@@ -62,8 +63,7 @@ export default new Command({
       return message.reply({ embeds: [errorEmbed], allowedMentions: { repliedUser: false } });
     }
 
-    const relevantSites = new Set(['AniDB', 'nHentai', 'Gelbooru', 'Danbooru', 'Yande.re', 'e621']);
-    let filteredSites = results.filter((result) => relevantSites.has(result.site));
+    let filteredSites = results.filter((result) => sauceNEORelevantSites.has(result.site));
 
     if (!filteredSites.length) {
       filteredSites = [results[0]];

@@ -3,7 +3,7 @@ import { ErrorEmbed } from '../../utils/Embed';
 import { client } from '../../app';
 import { generateYandexSearchLink, getSitesFromYandexResponse } from '../../utils/ImageSearch';
 import { promisify } from 'util';
-import { whitelistSites } from '../../static/YandexImageSearch';
+import { yandexWhitelistSites } from '../../static/ImageSearch';
 import { MessageActionRow, MessageEmbed } from 'discord.js';
 import { Colors } from '../../static/Colors';
 import { Site, WhitelistSite } from '../../typings/YandexImagesResponse';
@@ -29,7 +29,7 @@ export default new Command({
   usage: 'yandexImageSearch <картинка>',
   run: async ({ message, args, attributes }) => {
     if (attributes.has('S')) {
-      const sites = whitelistSites.map((site) => site.url);
+      const sites = yandexWhitelistSites.map((site) => site.url);
       const formattedSites = `\n➤ \`${sites.join('`\n ➤ `')}\``;
 
       const embed = new MessageEmbed()
@@ -64,7 +64,7 @@ export default new Command({
       .map((site) => {
         const formattedURL = site.url.replace(/^(?:https?:\/\/)?(?:[^@\/\n]+@)?(?:www\.)?/, '');
 
-        const info = whitelistSites.find((whitelistSite) => formattedURL.startsWith(whitelistSite.url));
+        const info = yandexWhitelistSites.find((whitelistSite) => formattedURL.startsWith(whitelistSite.url));
 
         if (!info) {
           return;

@@ -1,14 +1,14 @@
-import {Command} from '../../structures/Command';
-import {ErrorEmbed} from '../../utils/Embed';
-import {TraceMoe} from 'trace.moe.ts';
-import {Colors} from '../../static/Colors';
+import { Command } from '../../structures/Command';
+import { ErrorEmbed } from '../../utils/Embed';
+import { TraceMoe } from 'trace.moe.ts';
+import { Colors } from '../../static/Colors';
 import anilist from 'anilist-node';
-import {ButtonInteraction, MessageActionRow, MessageButton, MessageEmbed} from 'discord.js';
-import {isLink, isMediaLink} from '../../utils/Other';
+import { ButtonInteraction, MessageActionRow, MessageButton, MessageEmbed } from 'discord.js';
+import { isLink, isMediaLink } from '../../utils/Other';
 
 export default new Command({
   name: 'findanime',
-  category: 'Utils',
+  category: 'Image Search',
   aliases: ['найтианиме', 'fa'],
   description: `Ищет аниме по ссылке картинку через trace.moe
   Допустимые форматы: png, jpeg, jpg, webp, bmp, gif, mp4
@@ -88,7 +88,7 @@ export default new Command({
     const replyMessage = await message.reply({
       embeds: [embed],
       components: [showAnimeButton],
-      allowedMentions: {repliedUser: false},
+      allowedMentions: { repliedUser: false },
     });
 
     const collector = replyMessage.createMessageComponentCollector({
@@ -98,7 +98,7 @@ export default new Command({
     });
 
     collector.on('collect', (interaction: ButtonInteraction) => {
-      client.commands.get('anilist').run({client, message, args: [String(anime.anilist)]});
+      client.commands.get('anilist').run({ client, message, args: [String(anime.anilist)] });
       interaction.deferUpdate();
     });
   },

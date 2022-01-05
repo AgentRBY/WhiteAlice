@@ -1,6 +1,6 @@
 import { WhitelistedSitesType, WhitelistSite } from '../typings/YandexImagesResponse';
 
-export const whitelistSites: WhitelistSite[] = [
+export const yandexWhitelistSites: WhitelistSite[] = [
   {
     url: 'konachan.net',
     type: WhitelistedSitesType.BOORU_SITE,
@@ -58,3 +58,5 @@ export const whitelistSites: WhitelistSite[] = [
     type: WhitelistedSitesType.MANGA_SITE,
   },
 ];
+
+export const sauceNEORelevantSites = new Set(['AniDB', 'nHentai', 'Gelbooru', 'Danbooru', 'Yande.re', 'e621']);
