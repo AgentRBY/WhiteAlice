@@ -30,6 +30,10 @@ export const whitelistSites: WhitelistSite[] = [
     type: WhitelistedSitesType.BOORU_SITE,
   },
   {
+    url: 'xbooru.com',
+    type: WhitelistedSitesType.BOORU_SITE,
+  },
+  {
     url: 'reddit.com/r/HentaiSource',
     type: WhitelistedSitesType.REDDIT_SOURCE,
   },
