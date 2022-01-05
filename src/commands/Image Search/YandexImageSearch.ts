@@ -26,7 +26,19 @@ export default new Command({
     },
   ],
   usage: 'yandexImageSearch <картинка>',
-  run: async ({ message, args }) => {
+  run: async ({ message, args, attributes }) => {
+    if (attributes.has('S')) {
+      const sites = whitelistSites.map((site) => site.url);
+      const formattedSites = `\n➤ \`${sites.join('`\n ➤ `')}\``;
+
+      const embed = new MessageEmbed()
+        .setDescription(`**Список сайтов, по которым фильтруются результаты:** ${formattedSites}`)
+        .setColor(Colors.Green);
+
+      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      return;
+    }
+
     const imageLink = args[0];
 
     if (!imageLink) {
