@@ -40,7 +40,16 @@ export default new Command({
       return;
     }
 
-    const imageLink = args[0];
+    let imageLink;
+
+    if (message.attachments.size) {
+      const attachment = message.attachments.first();
+      imageLink = attachment.url || attachment.proxyURL;
+    }
+
+    if (args.length) {
+      imageLink = args[0];
+    }
 
     if (!imageLink) {
       const embed = ErrorEmbed('Введите ссылку на изображение');
