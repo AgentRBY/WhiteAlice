@@ -40,5 +40,6 @@ export interface WhitelistSite {
 export enum WhitelistedSitesType {
   BOORU_SITE = 'Сайт, содержащий набор картинок и тегов к ним (aka Имиджборд aka Booru-site) ',
   REDDIT_SOURCE = 'Саб-реддит Hentai_Source, где, возможно, нашли ответ откуда фулл вашей картинки',
+  REDDIT_IWANTTOBEHERHENTAI = 'Саб-реддит IWantToBeHerHentai, где, возможно, есть фулл вашей картинки',
   MANGA_SITE = 'Сайт, на котором можно прочитать мангу',
 }

@@ -34,6 +34,10 @@ export const whitelistSites: WhitelistSite[] = [
     type: WhitelistedSitesType.REDDIT_SOURCE,
   },
   {
+    url: 'reddit.com/r/IWantToBeHerHentai',
+    type: WhitelistedSitesType.REDDIT_IWANTTOBEHERHENTAI,
+  },
+  {
     url: 'nhentai.net/g/',
     type: WhitelistedSitesType.MANGA_SITE,
   },
