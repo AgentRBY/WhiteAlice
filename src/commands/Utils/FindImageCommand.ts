@@ -1,10 +1,11 @@
 import sagiri from 'sagiri';
-import {ButtonInteraction, MessageActionRow, MessageButton, MessageEmbed} from 'discord.js';
-import {Colors} from '../../static/Colors';
-import {ErrorEmbed} from '../../utils/Embed';
-import {Command} from '../../structures/Command';
-import {isGifLink, isImageLink, isLink} from '../../utils/Other';
-import {formatNames} from '../../utils/strings';
+import { MessageActionRow, MessageEmbed } from 'discord.js';
+import { Colors } from '../../static/Colors';
+import { ErrorEmbed } from '../../utils/Embed';
+import { Command } from '../../structures/Command';
+import { isGifLink, isImageLink, isLink } from '../../utils/Other';
+import { formatNames } from '../../utils/strings';
+import { generateDefaultButtons, pagination } from '../../utils/Pagination';
 
 export default new Command({
   name: 'findImage',
@@ -62,80 +63,65 @@ export default new Command({
     }
 
     const relevantSites = new Set(['AniDB', 'nHentai', 'Gelbooru', 'Danbooru', 'Yande.re', 'e621']);
-    const relevantSite = results.find((result) => relevantSites.has(result.site));
-    const result = relevantSite || results[0];
+    let filteredSites = results.filter((result) => relevantSites.has(result.site));
 
-    const characters =
-      result.raw.data.characters || results.find((result) => Boolean(result.raw.data.characters))?.characters;
-
-    const author = result.authorName
-      ? `[${result.authorName}](${result.authorUrl})`
-      : Array.isArray(result.raw.data.creator)
-        ? result.raw.data.creator.join(', ')
-        : result.raw.data.creator;
-
-    let description = `**Автор:** ${author || 'Не найдено'}
-       **Персонажи:** ${characters ? formatNames(characters) : 'Не найдено'}
-       **Точность совпадения:** ${result.similarity}
-       **Найдено на:** ${result.site}
-       **Ссылка:** [клик](${result.url})`;
-
-    let showAnimeButton;
-
-    const embed = new MessageEmbed().setDescription(description).setThumbnail(result.thumbnail).setColor(Colors.Green);
-
-    if (result.site === 'AniDB' && result.raw.data) {
-      const anime = result.raw.data;
-
-      description = '';
-      if (anime.source) {
-        description += `\n**Аниме**: ${anime.source}`;
-      }
-
-      if (anime.part) {
-        description += `\n**Эпизод**: ${anime.part}`;
-      }
-
-      if (anime.est_time) {
-        description += `\n**Из момента:** ${anime.est_time}`;
-      }
-
-      description += `\n**Точность совпадения:** ${result.similarity}
-       **Найдено на:** ${result.site}
-       **Ссылка:** [клик](${result.url})`;
-
-      if (anime.anidb_aid) {
-        showAnimeButton = new MessageActionRow().addComponents(
-          new MessageButton()
-            .setCustomId('findImage_showAnime')
-            .setLabel('Показать информацию об аниме')
-            .setStyle('PRIMARY'),
-        );
-
-        embed.setFooter(
-          `Что-бы узнать по подробнее об аниме введите команду >anidb ${anime.anidb_aid} или нажмите на кнопку`,
-        );
-      }
+    if (!filteredSites.length) {
+      filteredSites = [results[0]];
     }
 
-    embed.setDescription(description);
+    const generateEmbed = (site: any, sites: any[], page: number, pages: number) => {
+      const characters =
+        site.raw.data.characters || sites.find((site) => Boolean(site.raw.data.characters))?.characters;
+
+      const author = site.authorName
+        ? `[${site.authorName}](${site.authorUrl})`
+        : Array.isArray(site.raw.data.creator)
+        ? site.raw.data.creator.join(', ')
+        : site.raw.data.creator;
+
+      let description = `**Автор:** ${author || 'Не найдено'}
+       **Персонажи:** ${characters ? formatNames(characters) : 'Не найдено'}
+       **Точность совпадения:** ${site.similarity}
+       **Найдено на:** ${site.site}
+       **Ссылка:** [клик](${site.url})`;
+
+      const embed = new MessageEmbed().setDescription(description).setThumbnail(site.thumbnail).setColor(Colors.Green);
+
+      if (site.site === 'AniDB' && site.raw.data) {
+        const anime = site.raw.data;
+
+        description = `**Аниме**: ${anime.source}
+           **Эпизод**: ${anime.part}
+           **Из момента:** ${anime.est_time}
+           **Точность совпадения:** ${site.similarity}
+           **Найдено на:** ${site.site}
+           **Ссылка:** [клик](${site.url})`;
+
+        if (anime.anidb_aid) {
+          embed.setFooter(
+            `Что-бы узнать по подробнее об аниме введите команду >anidb ${anime.anidb_aid} или нажмите на кнопку`,
+          );
+        }
+      }
+
+      embed.setDescription(description);
+      embed.setFooter(`${embed.footer?.text || ''}\nСтраница ${page}/${pages}`);
+
+      return embed;
+    };
+
+    const pages = filteredSites.map((site, index) =>
+      generateEmbed(site, filteredSites, index + 1, filteredSites.length),
+    );
+
+    const paginationButtons = new MessageActionRow().addComponents(generateDefaultButtons(pages.length));
 
     const replyMessage = await message.reply({
-      embeds: [embed],
-      components: showAnimeButton ? [showAnimeButton] : [],
+      embeds: [generateEmbed(filteredSites[0], filteredSites, 1, filteredSites.length)],
+      components: [paginationButtons],
       allowedMentions: { repliedUser: false },
     });
 
-    const collector = replyMessage.createMessageComponentCollector({
-      filter: (interaction: ButtonInteraction) => interaction.customId === 'findImage_showAnime',
-      idle: 60_000,
-      max: 1,
-    });
-
-    collector.on('collect', (interaction: ButtonInteraction) => {
-      console.log(String(result.raw.data.anidb_aid));
-      client.commands.get('anidb').run({client, message, args: [String(result.raw.data.anidb_aid)]});
-      interaction.deferUpdate();
-    });
+    pagination(replyMessage, pages);
   },
 });
