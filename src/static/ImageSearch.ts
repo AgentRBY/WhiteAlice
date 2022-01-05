@@ -50,11 +50,51 @@ export const yandexWhitelistSites: WhitelistSite[] = [
     type: WhitelistedSitesType.MANGA_SITE,
   },
   {
+    url: 'simply-hentai.com',
+    type: WhitelistedSitesType.MANGA_SITE,
+  },
+  {
     url: 'toonily.com/webtoon',
     type: WhitelistedSitesType.MANGA_SITE,
   },
   {
     url: 'mangaforfree.net/manga',
+    type: WhitelistedSitesType.MANGA_SITE,
+  },
+  {
+    url: 'hentaihbo.com',
+    type: WhitelistedSitesType.MANGA_SITE,
+  },
+  {
+    url: 'hentaiput',
+    type: WhitelistedSitesType.MANGA_SITE,
+  },
+  {
+    url: 'hentaiol.com',
+    type: WhitelistedSitesType.MANGA_SITE,
+  },
+  {
+    url: 'hentaiwoo.com',
+    type: WhitelistedSitesType.MANGA_SITE,
+  },
+  {
+    url: 'hentaidock.net',
+    type: WhitelistedSitesType.MANGA_SITE,
+  },
+  {
+    url: 'simply-hentai.info',
+    type: WhitelistedSitesType.MANGA_SITE,
+  },
+  {
+    url: 'hentaihub.info',
+    type: WhitelistedSitesType.MANGA_SITE,
+  },
+  {
+    url: 'hentai102.com',
+    type: WhitelistedSitesType.MANGA_SITE,
+  },
+  {
+    url: 'akuma.moe/g/',
     type: WhitelistedSitesType.MANGA_SITE,
   },
 ];
