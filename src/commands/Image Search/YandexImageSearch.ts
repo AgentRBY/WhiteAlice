@@ -81,7 +81,8 @@ export default new Command({
 
         return { ...site, info };
       })
-      .filter((site) => site);
+      .filter((site) => site)
+      .sort((firstSite, secondarySite) => secondarySite.info.priority - firstSite.info.priority);
 
     if (!filteredSites.length) {
       const embed = ErrorEmbed('Изображение не найдено');

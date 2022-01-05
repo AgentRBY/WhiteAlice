@@ -35,6 +35,7 @@ export interface OriginalImage {
 export interface WhitelistSite {
   url: string;
   type: WhitelistedSitesType;
+  priority: number;
 }
 
 export enum WhitelistedSitesType {
