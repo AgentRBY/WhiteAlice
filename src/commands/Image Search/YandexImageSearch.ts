@@ -60,7 +60,7 @@ export default new Command({
 
     const firstPageEmbed = new MessageEmbed(basicEmbed)
       .setDescription(
-        `Найдено на: [${filteredSites[0].domain}](${filteredSites[0].url})
+        `Найдено на: [${filteredSites[0].info.url}](${filteredSites[0].url})
       Описание сайта: ${filteredSites[0].info.type}
       `,
       )
