@@ -14,9 +14,18 @@ export default new Command({
   name: 'yandex-image-search',
   category: 'Image Search',
   aliases: ['yis'],
-  description: '',
-  examples: [],
-  usage: 'yandexImageSearch',
+  description: `Поиск изображений через Яндекс. Бот ищет картинку через Яндекс и фильтрует результаты по URL`,
+  examples: [
+    {
+      command: 'findImage https://i.imgur.com/KlQUCJG.png',
+      description: 'Найти изображение по ссылке',
+    },
+    {
+      command: 'findImage -S',
+      description: 'Получить список сайтов, по которым фильтруются результаты',
+    },
+  ],
+  usage: 'yandexImageSearch <картинка>',
   run: async ({ message, args }) => {
     const imageLink = args[0];
 
