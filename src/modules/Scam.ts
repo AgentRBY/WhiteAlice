@@ -1,5 +1,5 @@
-import {Message} from 'discord.js';
-import {ExtendClient} from '../structures/Client';
+import { Message } from 'discord.js';
+import { ExtendClient } from '../structures/Client';
 
 export function ScamModule(client: ExtendClient, message: Message): void {
   if (client.config.ownersID.includes(message.author.id)) {
@@ -23,8 +23,13 @@ export function ScamModule(client: ExtendClient, message: Message): void {
     messageContent.includes('@everyone')
   ) {
     try {
-      message.delete();
-      message.member.kick('HL_BOT | Nitro Scam');
+      if (message.deletable) {
+        message.delete();
+      }
+
+      if (message.guild.me.permissions.has('KICK_MEMBERS')) {
+        message.member.kick(`HL_BOT | Nitro Scam`);
+      }
     } catch {}
     return;
   }
@@ -33,8 +38,13 @@ export function ScamModule(client: ExtendClient, message: Message): void {
 
   if (scamLink?.length) {
     try {
-      message.delete();
-      message.member.kick(`HL_BOT | Scam link: ${scamLink[0]}`);
+      if (message.deletable) {
+        message.delete();
+      }
+
+      if (message.guild.me.permissions.has('KICK_MEMBERS')) {
+        message.member.kick(`HL_BOT | Scam link: ${scamLink[0]}`);
+      }
     } catch {}
     return;
   }
