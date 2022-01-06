@@ -123,4 +123,4 @@ export const yandexWhitelistSites: WhitelistSite[] = [
   },
 ];
 
-export const sauceNEORelevantSites = new Set(['AniDB', 'nHentai', 'Gelbooru', 'Danbooru', 'Yande.re', 'e621']);
+export const sauceNAORelevantSites = new Set(['AniDB', 'nHentai', 'Gelbooru', 'Danbooru', 'Yande.re', 'e621']);

@@ -6,13 +6,13 @@ import { Command } from '../../structures/Command';
 import { isGifLink, isImageLink, isLink } from '../../utils/Other';
 import { formatNames } from '../../utils/strings';
 import { generateDefaultButtons, pagination } from '../../utils/Pagination';
-import { sauceNEORelevantSites } from '../../static/ImageSearch';
+import { sauceNAORelevantSites } from '../../static/ImageSearch';
 
 export default new Command({
   name: 'findImage',
   category: 'Image Search',
   aliases: ['find', 'fi', 'image'],
-  description: `Поиск изображения в системе SauceNEO. 
+  description: `Поиск изображения в системе SauceNAO. 
   Допустимые форматы: png, jpeg, jpg, webp, bmp, gif.
   Для gif-анимаций в поиске будет использоваться первый кадр`,
   usage: 'findImage [ссылка на картинку]',
@@ -46,11 +46,11 @@ export default new Command({
       return message.reply({ embeds: [errorEmbed], allowedMentions: { repliedUser: false } });
     }
 
-    const SauceNEOApi = sagiri(client.config.sauceNAOToken);
+    const SauceNAOApi = sagiri(client.config.sauceNAOToken);
     let results = [];
 
     try {
-      results = await SauceNEOApi(link, { db: 999 });
+      results = await SauceNAOApi(link, { db: 999 });
     } catch {
       const errorEmbed = ErrorEmbed('**Произошла ошибка, попробуйте позже**');
       return message.reply({ embeds: [errorEmbed], allowedMentions: { repliedUser: false } });
@@ -63,7 +63,7 @@ export default new Command({
       return message.reply({ embeds: [errorEmbed], allowedMentions: { repliedUser: false } });
     }
 
-    let filteredSites = results.filter((result) => sauceNEORelevantSites.has(result.site));
+    let filteredSites = results.filter((result) => sauceNAORelevantSites.has(result.site));
 
     if (!filteredSites.length) {
       filteredSites = [results[0]];
