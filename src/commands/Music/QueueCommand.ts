@@ -1,8 +1,8 @@
-import {ErrorEmbed} from '../../utils/Embed';
-import {MessageEmbed} from 'discord.js';
-import {Colors} from '../../static/Colors';
-import {EmojisLinks} from '../../static/Emojis';
-import {Command} from '../../structures/Command';
+import { ErrorEmbed } from '../../utils/Embed';
+import { MessageEmbed } from 'discord.js';
+import { Colors } from '../../static/Colors';
+import { EmojisLinks } from '../../static/Emojis';
+import { Command } from '../../structures/Command';
 
 export default new Command({
   name: 'queue',
@@ -27,12 +27,12 @@ export default new Command({
     const playlist = queue.songs
       .map((song, index) => {
         if (index === 0) {
-          return `Сейчас играет: **${song.name}** - \`${song.formattedDuration}\` ${
+          return `Сейчас играет: **${song.name}** - ${song.uploader.name} (\`${song.formattedDuration}\`) ${
             queue.songs.length > 1 ? '\n\n`Плейлист`' : ''
           }`;
         }
 
-        return `➤ **${index}.** **${song.name}** - \`${song.formattedDuration}\``;
+        return `➤ **${index}.** **${song.name}** - ${song.uploader.name} (\`${song.formattedDuration}\`)`;
       })
       .join('\n');
 

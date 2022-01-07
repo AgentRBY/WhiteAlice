@@ -23,7 +23,7 @@ export default new Command({
     const song = queue.songs[0];
 
     const embed = new MessageEmbed()
-      .setDescription(`${Emojis.Headphone} **Сейчас играет: \`${song.name}\`**`)
+      .setDescription(`${Emojis.Headphone} **Сейчас играет: \`${song.name}\` - ${song.uploader.name}**`)
       .setColor(Colors.Green)
       .setImage(song.thumbnail);
 
