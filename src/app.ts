@@ -1,7 +1,10 @@
-import {ExtendClient} from './structures/Client';
+import { ExtendClient } from './structures/Client';
 
 require('dotenv').config();
 
 export const client = new ExtendClient();
-
-client.start();
+try {
+  client.start();
+} catch (e) {
+  console.log(e);
+}
