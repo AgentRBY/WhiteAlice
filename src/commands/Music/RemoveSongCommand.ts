@@ -5,10 +5,10 @@ import { ErrorEmbed, SuccessEmbed } from '../../utils/Embed';
 export default new Command({
   name: 'removeSong',
   category: 'Music',
-  aliases: ['rs'],
+  aliases: ['rs', 'deleteSong'],
   description: '',
   examples: [],
-  usage: 'deleteSong',
+  usage: 'removeSong',
   run: async ({ message, args }) => {
     const queue = client.disTube.getQueue(message);
 
