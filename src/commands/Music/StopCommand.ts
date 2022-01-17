@@ -1,10 +1,10 @@
-import {ErrorEmbed, SuccessEmbed} from '../../utils/Embed';
-import {Command} from '../../structures/Command';
+import { ErrorEmbed, SuccessEmbed } from '../../utils/Embed';
+import { Command } from '../../structures/Command';
 
 export default new Command({
   name: 'stop',
   category: 'Music',
-  aliases: ['s', 'leave', 'disconnect', 'стоп', 'остановить', 'выйти'],
+  aliases: ['leave', 'disconnect', 'стоп', 'остановить', 'выйти'],
   description: 'Завершает работу бота и выходит из канала',
   usage: 'stop',
   examples: [

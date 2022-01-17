@@ -1,10 +1,10 @@
-import {ErrorEmbed, SuccessEmbed} from '../../utils/Embed';
-import {Command} from '../../structures/Command';
+import { ErrorEmbed, SuccessEmbed } from '../../utils/Embed';
+import { Command } from '../../structures/Command';
 
 export default new Command({
   name: 'skip',
   category: 'Music',
-  aliases: [],
+  aliases: ['s'],
   description: 'Пропускает текущий трек. Если трек последний, завершает работу боту',
   usage: 'skip',
   examples: [
