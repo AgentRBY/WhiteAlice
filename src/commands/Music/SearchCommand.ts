@@ -87,7 +87,7 @@ export default new Command({
     const description = `**\`Введите номер одной из песен:\`** \n${formattedSearchResults}`;
 
     const embed = new MessageEmbed()
-      .setAuthor({ name: 'Поиск', iconURL: EmojisLinks.Headphone })
+      .setAuthor('Поиск', EmojisLinks.Headphone)
       .setDescription(description)
       .setColor(Colors.Green);
 
