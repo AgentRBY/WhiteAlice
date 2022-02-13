@@ -39,7 +39,7 @@ export default new Command({
       return;
     }
 
-    const deletedSong = queue.songs.splice(songId, 1)[0];
+    const deletedSong = queue.songs.splice(songId - 1, 1)[0];
 
     const embed = SuccessEmbed(`**Песня \`${deletedSong.name}\` - \`${deletedSong.uploader.name}\` удалена**`);
     message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
