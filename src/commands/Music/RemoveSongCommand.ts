@@ -6,8 +6,13 @@ export default new Command({
   name: 'removeSong',
   category: 'Music',
   aliases: ['rs', 'deleteSong'],
-  description: '',
-  examples: [],
+  description: 'Позволяет убрать песню по номеру. Номер песни можно узнать в команде >queue',
+  examples: [
+    {
+      command: '>removeSong 3',
+      description: 'Удаляет 3ю песню из плейлиста',
+    },
+  ],
   usage: 'removeSong',
   run: async ({ message, args }) => {
     const queue = client.disTube.getQueue(message);

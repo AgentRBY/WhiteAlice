@@ -8,8 +8,8 @@ import { Colors } from '../../static/Colors';
 export default new Command({
   name: 'queueInfo',
   category: 'Music',
-  aliases: [],
-  description: '',
+  aliases: ['qi'],
+  description: 'Показывает информацию о текущем плейлисте',
   examples: [],
   usage: 'queueInfo',
   run: async ({ message }) => {

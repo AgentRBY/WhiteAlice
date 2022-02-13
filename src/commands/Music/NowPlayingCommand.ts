@@ -9,8 +9,13 @@ export default new Command({
   name: 'nowPlaying',
   category: 'Music',
   aliases: ['np'],
-  description: '',
-  examples: [],
+  description: 'Показывает песню, которая сейчас играет',
+  examples: [
+    {
+      command: 'nowPlaying',
+      description: 'Покажет текущую песню',
+    },
+  ],
   usage: 'nowPlaying',
   run: async ({ message }) => {
     const queue = client.disTube.getQueue(message);
