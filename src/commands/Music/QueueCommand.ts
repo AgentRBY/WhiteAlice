@@ -1,8 +1,10 @@
 import { ErrorEmbed } from '../../utils/Embed';
-import { MessageEmbed } from 'discord.js';
+import { MessageActionRow, MessageEmbed } from 'discord.js';
 import { Colors } from '../../static/Colors';
 import { EmojisLinks } from '../../static/Emojis';
 import { Command } from '../../structures/Command';
+import { Song } from 'distube';
+import { generateDefaultButtons, pagination } from '../../utils/Pagination';
 
 export default new Command({
   name: 'queue',
@@ -24,23 +26,49 @@ export default new Command({
       return message.reply({ embeds: [errorEmbed], allowedMentions: { repliedUser: false } });
     }
 
-    const playlist = queue.songs
-      .map((song, index) => {
-        if (index === 0) {
-          return `Сейчас играет: **${song.name}** - ${song.uploader.name} (\`${song.formattedDuration}\`) ${
-            queue.songs.length > 1 ? '\n\n`Плейлист`' : ''
-          }`;
-        }
+    const songsPerPage = 20;
 
-        return `➤ **${index}.** **${song.name}** - ${song.uploader.name} (\`${song.formattedDuration}\`)`;
-      })
-      .join('\n');
+    const generateEmbed = (songs: Song[], page: number, pages: number) => {
+      const embed = new MessageEmbed()
+        .setAuthor({ name: 'Плейлист', iconURL: EmojisLinks.Headphone })
+        .setColor(Colors.Green)
+        .setFooter(`Страница ${page}/${pages}`);
 
-    const embed = new MessageEmbed()
-      .setAuthor('Плейлист', EmojisLinks.Headphone)
-      .setDescription(playlist)
-      .setColor(Colors.Green);
+      const description = songs
+        .map((song, index) => {
+          return `➤ **${songsPerPage * (page - 1) + (index + 1)}.** **${song.name}** - ${song.uploader.name} (\`${
+            song.formattedDuration
+          }\`)`;
+        })
+        .join('\n');
 
-    message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      embed.setDescription(description);
+
+      return embed;
+    };
+
+    const pagesCount = Math.ceil(queue.songs.length / songsPerPage);
+
+    const pages = [...new Array(pagesCount)].map((_, index) => {
+      const page = index + 1;
+
+      const songsStartCount = songsPerPage * (page - 1);
+      const songsEndCount = page === pagesCount ? queue.songs.length : songsStartCount + songsPerPage;
+
+      const songs = queue.songs.slice(songsStartCount, songsEndCount);
+
+      return generateEmbed(songs, page, pagesCount);
+    });
+
+    const paginationButtons = new MessageActionRow().addComponents(generateDefaultButtons(pages.length));
+    const firstPageEmbed = generateEmbed(queue.songs.slice(0, 20), 1, pagesCount);
+
+    const replyMessage = await message.reply({
+      embeds: [firstPageEmbed],
+      components: [paginationButtons],
+      allowedMentions: { repliedUser: false },
+    });
+
+    pagination(replyMessage, pages);
   },
 });
