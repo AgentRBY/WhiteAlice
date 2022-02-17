@@ -35,6 +35,13 @@ export default new Command({
       return;
     }
 
+    if (filter === 'false' || filter === 'disable' || filter === 'clear') {
+      queue.setFilter(false);
+      const embed = SuccessEmbed('Фильтры убраны');
+      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      return;
+    }
+
     if (!AvailableFilters.has(filter)) {
       const embed = ErrorEmbed('Фильтр не найден');
       embed.setFooter('Что-бы узнать доступные фильтры пропишите >filters list');
