@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export const LINK_REGEX = /https?:\/\/(www\.)?[\w#%+.:=@~-]{1,256}\.[\d()A-Za-z]{1,6}\b([\w#%&()+./:=?@~-]*)/;
 export const IMAGE_LINK_REGEX = /\.(?:png|jpeg|jpg|webp|bmp)$/;
 export const VIDEO_LINK_REGEX = /\.mp4$/;
@@ -27,4 +29,8 @@ export async function sleep(ms: number): Promise<unknown> {
   return new Promise((resolve) => {
     setTimeout(resolve, ms);
   });
+}
+
+export function isDuration(duration: moment.Duration): boolean {
+  return duration.locale('en').humanize() !== moment.duration(0).humanize();
 }

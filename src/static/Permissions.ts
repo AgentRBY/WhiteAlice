@@ -1,4 +1,6 @@
-const Permissions: Record<string, string> = {
+import { PermissionString } from 'discord.js';
+
+const Permissions: Record<PermissionString, string> = {
   ADMINISTRATOR: 'Администратор',
   CREATE_INSTANT_INVITE: 'Создавать приглашения',
   KICK_MEMBERS: 'Выгонять участников',
@@ -29,7 +31,19 @@ const Permissions: Record<string, string> = {
   MANAGE_NICKNAMES: 'Управлять никнеймами',
   MANAGE_ROLES: 'Управлять ролями',
   MANAGE_WEBHOOKS: 'Управлять вебхуками',
-  MANAGE_EMOJIS: 'Управлять эмодзи',
+  MANAGE_EMOJIS_AND_STICKERS: 'Управлять эмодзи',
+  CREATE_PRIVATE_THREADS: 'Создавать приватные ветки',
+  CREATE_PUBLIC_THREADS: 'Создавать публичные ветки',
+  MANAGE_EVENTS: 'Управлять событиями',
+  MANAGE_THREADS: 'Управлять ветками',
+  MODERATE_MEMBERS: 'Выдавать пользователям тайм-аут',
+  REQUEST_TO_SPEAK: 'Запрос на разговор',
+  SEND_MESSAGES_IN_THREADS: 'Отправлять сообщения в ветки',
+  START_EMBEDDED_ACTIVITIES: 'Возможность запускать встроенные приложения в голосовом канале',
+  USE_APPLICATION_COMMANDS: 'Использовать команды приложения',
+  USE_EXTERNAL_STICKERS: 'Использовать внешние стикеры',
+  USE_PRIVATE_THREADS: 'Использовать приватные ветки',
+  USE_PUBLIC_THREADS: 'Использовать публичные ветки',
 };
 
 export default Permissions;
