@@ -1,6 +1,9 @@
 import { Command } from '../../structures/Command';
 import { ErrorEmbed, SuccessEmbed } from '../../utils/Embed';
 import moment from 'moment';
+import { MessageEmbed } from 'discord.js';
+import { Emojis } from '../../static/Emojis';
+import { Colors } from '../../static/Colors';
 
 export default new Command({
   name: 'unmute',
@@ -38,6 +41,13 @@ export default new Command({
 
     const embed = SuccessEmbed('Пользователь был размучен');
     embed.setFooter({ text: `Если бы не вы, ему осталось бы сидеть в муте ${remainingMuteTimeHumanize}` });
+    const directEmbed = new MessageEmbed()
+      .setDescription(
+        `${Emojis.Info} На сервере \`${message.guild}\` Вы были размучены пользователем ${message.author}`,
+      )
+      .setColor(Colors.Green);
+
     message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+    member.send({ embeds: [directEmbed] });
   },
 });

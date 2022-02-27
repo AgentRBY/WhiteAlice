@@ -2,6 +2,9 @@ import { Command } from '../../structures/Command';
 import { ErrorEmbed, SuccessEmbed } from '../../utils/Embed';
 import { formatDuration, getDurationFromString } from '../../utils/Date';
 import moment from 'moment';
+import { MessageEmbed } from 'discord.js';
+import { Emojis } from '../../static/Emojis';
+import { Colors } from '../../static/Colors';
 
 export default new Command({
   name: 'mute',
@@ -25,7 +28,7 @@ export default new Command({
     },
     {
       command: 'mute @TestUSer 7d1мин -F',
-      description: 'Выдаёт мут пользователю @TestUser на 7 дней и 1 минуту даже если он уже был замьючен раньше',
+      description: 'Выдаёт мут пользователю @TestUser на 7 дней и 1 минуту даже если он уже был замучен раньше',
     },
   ],
   usage: 'mute <пользователь> <время> [причина]',
@@ -47,7 +50,7 @@ export default new Command({
 
       const embed = ErrorEmbed('Пользователь уже в муте');
       embed.setFooter({
-        text: `Осталось до размьюта: ${moment.duration(duration).locale('ru').humanize()}`,
+        text: `Осталось до размута: ${moment.duration(duration).locale('ru').humanize()}`,
       });
 
       message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
@@ -67,13 +70,21 @@ export default new Command({
 
     await member.timeout(time.asMilliseconds(), reason);
 
-    const embed = SuccessEmbed(`Пользователь ${member} был замучен на ${formatDuration(time)}`);
+    const formattedTime = formatDuration(time);
+
+    const embed = SuccessEmbed(`Пользователь ${member} был замучен на ${formattedTime}`);
+    const directEmbed = new MessageEmbed()
+      .setDescription(
+        `${Emojis.Info} На сервере \`${message.guild}\` Вы были замучены пользователем ${message.author} на ${formattedTime}`,
+      )
+      .setColor(Colors.Red);
 
     if (reason) {
       embed.setFooter({ text: `По причине: ${reason}` });
+      directEmbed.setFooter({ text: `По причине: ${reason}` });
     }
 
     message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
-    return;
+    member.send({ embeds: [directEmbed] });
   },
 });
