@@ -43,6 +43,16 @@ export default new Command({
       return;
     }
 
+    if (
+      member.permissions.has('BAN_MEMBERS') ||
+      member.permissions.has('MODERATE_MEMBERS') ||
+      member.roles.highest.comparePositionTo(message.guild.me.roles.highest) >= 0
+    ) {
+      const embed = ErrorEmbed('У вас нет прав, что бы замутить этого пользователя');
+      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      return;
+    }
+
     const forceMute = attributes.has('F') || attributes.has('-F');
 
     if (member.communicationDisabledUntilTimestamp > Date.now() && !forceMute) {
