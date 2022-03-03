@@ -5,6 +5,7 @@ import { AntiScamModule } from '../../modules/AntiScam';
 import { ErrorEmbed } from '../../utils/Embed';
 import Permissions from '../../static/Permissions';
 import { GuildModel } from '../../models/GuildModel';
+import { AntiPingModule } from '../../modules/AntiPing';
 
 export default new Event({
   name: 'messageCreate',
@@ -23,6 +24,7 @@ export default new Event({
     }
 
     AntiScamModule(client, message);
+    AntiPingModule(client, message);
 
     let GuildData = await GuildModel.findById(message.guildId);
 
