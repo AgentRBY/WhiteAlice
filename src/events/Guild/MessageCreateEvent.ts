@@ -1,7 +1,7 @@
 import { Event } from '../../structures/Event';
 import { Collection, Message } from 'discord.js';
 import { ExtendClient } from '../../structures/Client';
-import { ScamModule } from '../../modules/Scam';
+import { AntiScamModule } from '../../modules/AntiScam';
 import { ErrorEmbed } from '../../utils/Embed';
 import Permissions from '../../static/Permissions';
 import { GuildModel } from '../../models/GuildModel';
@@ -22,7 +22,8 @@ export default new Event({
       return;
     }
 
-    ScamModule(client, message);
+    AntiScamModule(client, message);
+
     let GuildData = await GuildModel.findById(message.guildId);
 
     if (!GuildData) {

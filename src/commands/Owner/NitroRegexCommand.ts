@@ -1,7 +1,7 @@
-import {MessageEmbed} from 'discord.js';
-import {Command} from '../../structures/Command';
-import {DISCORD_NITRO_SCAM_REGEX} from '../../modules/Scam';
-import {Colors} from '../../static/Colors';
+import { MessageEmbed } from 'discord.js';
+import { Command } from '../../structures/Command';
+import { DISCORD_NITRO_SCAM_REGEX } from '../../modules/AntiScam';
+import { Colors } from '../../static/Colors';
 
 export default new Command({
   name: 'nitro-regex',
