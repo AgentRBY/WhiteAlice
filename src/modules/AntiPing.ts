@@ -5,7 +5,7 @@ import moment from 'moment';
 export function AntiPingModule(client: ExtendClient, message: Message) {
   const mentions = message.mentions.members;
 
-  if (mentions.size < 2) {
+  if (mentions.size < 10) {
     return;
   }
 
