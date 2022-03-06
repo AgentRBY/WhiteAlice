@@ -13,6 +13,8 @@ export default new Command({
     },
   ],
   usage: 'deleteMessage <айди>',
+  botPermissions: ['MANAGE_MESSAGES'],
+  memberPermissions: ['BAN_MEMBERS'],
   run: async ({ message, args }) => {
     const messageId = args[0];
 
