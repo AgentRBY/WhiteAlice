@@ -39,7 +39,7 @@ export default new Command({
       return message.reply({ embeds: [errorEmbed], allowedMentions: { repliedUser: false } });
     }
 
-    if (!isImageLink(link) && !isGifLink(link)) {
+    if (!isImageLink(link.toLowerCase()) && !isGifLink(link.toLowerCase())) {
       const errorEmbed = ErrorEmbed(
         '**Ссылка не ведёт на изображение. Допустимые форматы: `png, jpeg, jpg, webp, bmp, gif`**',
       ).setFooter('Для gif-анимаций в поиске будет использоваться первый кадр');

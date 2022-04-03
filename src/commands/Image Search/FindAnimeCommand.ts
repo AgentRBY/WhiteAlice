@@ -37,7 +37,7 @@ export default new Command({
       return message.reply({ embeds: [errorEmbed], allowedMentions: { repliedUser: false } });
     }
 
-    if (!isMediaLink(link)) {
+    if (!isMediaLink(link.toLowerCase())) {
       const errorEmbed = ErrorEmbed(
         '**Ссылка не ведёт на изображение или видео. Допустимые форматы: `png, jpeg, jpg, webp, bmp, gif, mp4`**',
       ).setFooter('Для gif-анимаций и видео в поиске будет использоваться первый кадр');
