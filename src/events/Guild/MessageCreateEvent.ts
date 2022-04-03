@@ -6,6 +6,9 @@ import { ErrorEmbed } from '../../utils/Embed';
 import Permissions from '../../static/Permissions';
 import { GuildModel } from '../../models/GuildModel';
 import { AntiPingModule } from '../../modules/AntiPing';
+import { NHentaiLink } from '../../modules/NHentaiLink';
+import { AniDBLink } from '../../modules/AniDBLink';
+import { AnilistLink } from '../../modules/AnilistLink';
 
 export default new Event({
   name: 'messageCreate',
@@ -25,6 +28,10 @@ export default new Event({
 
     AntiScamModule(client, message);
     AntiPingModule(client, message);
+
+    NHentaiLink(client, message);
+    AniDBLink(client, message);
+    AnilistLink(client, message);
 
     let GuildData = await GuildModel.findById(message.guildId);
 
