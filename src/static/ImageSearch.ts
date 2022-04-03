@@ -7,6 +7,11 @@ export const yandexWhitelistSites: WhitelistSite[] = [
     priority: 0,
   },
   {
+    url: 'yande.re',
+    type: WhitelistedSitesType.BOORU_SITE,
+    priority: 1,
+  },
+  {
     url: 'safebooru.org',
     type: WhitelistedSitesType.BOORU_SITE,
     priority: 1,
@@ -38,6 +43,21 @@ export const yandexWhitelistSites: WhitelistSite[] = [
   },
   {
     url: 'xbooru.com',
+    type: WhitelistedSitesType.BOORU_SITE,
+    priority: 0,
+  },
+  {
+    url: 'tbib.org',
+    type: WhitelistedSitesType.BOORU_SITE,
+    priority: 0,
+  },
+  {
+    url: 'furry.booru.org',
+    type: WhitelistedSitesType.BOORU_SITE,
+    priority: 0,
+  },
+  {
+    url: 'furry34.com',
     type: WhitelistedSitesType.BOORU_SITE,
     priority: 0,
   },
@@ -119,6 +139,11 @@ export const yandexWhitelistSites: WhitelistSite[] = [
   {
     url: 'akuma.moe/g/',
     type: WhitelistedSitesType.MANGA_SITE,
+    priority: 1,
+  },
+  {
+    url: 'animevost.org',
+    type: WhitelistedSitesType.ANIME_SITE,
     priority: 1,
   },
 ];

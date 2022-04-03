@@ -43,4 +43,5 @@ export enum WhitelistedSitesType {
   REDDIT_SOURCE = 'Саб-реддит Hentai_Source, где, возможно, нашли ответ откуда фулл вашей картинки',
   REDDIT_IWANTTOBEHERHENTAI = 'Саб-реддит IWantToBeHerHentai, где, возможно, есть фулл вашей картинки',
   MANGA_SITE = 'Сайт, на котором можно прочитать мангу',
+  ANIME_SITE = 'Сайт, на котором можно посмотреть аниме',
 }
