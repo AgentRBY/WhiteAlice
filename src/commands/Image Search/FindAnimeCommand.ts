@@ -33,7 +33,7 @@ export default new Command({
     }
 
     if (!link || !isLink(link)) {
-      const errorEmbed = ErrorEmbed('**Укажите ссылку**');
+      const errorEmbed = ErrorEmbed('**Введите ссылку на изображение**');
       return message.reply({ embeds: [errorEmbed], allowedMentions: { repliedUser: false } });
     }
 
@@ -51,13 +51,13 @@ export default new Command({
     });
 
     if (response.error) {
-      const errorEmbed = ErrorEmbed(`**Произошла ошибка ${response.error}**`);
+      const errorEmbed = ErrorEmbed(`**Произошла ошибка ${response.error}**`).setFooter({ text: 'Попробуйте позже' });
       return message.reply({ embeds: [errorEmbed], allowedMentions: { repliedUser: false } });
     }
     const anime = response.result.find((anime) => anime.similarity > 0.86);
 
     if (!anime) {
-      const errorEmbed = ErrorEmbed('**Аниме не найдено**');
+      const errorEmbed = ErrorEmbed('**Результаты не найдены**');
       return message.reply({ embeds: [errorEmbed], allowedMentions: { repliedUser: false } });
     }
 

@@ -52,7 +52,7 @@ export default new Command({
     }
 
     if (!imageLink) {
-      const embed = ErrorEmbed('Введите ссылку на изображение');
+      const embed = ErrorEmbed('**Введите ссылку на изображение**');
       message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
       return;
     }
@@ -62,7 +62,7 @@ export default new Command({
     const result = await request(yandexImageLink).then((response) => getSitesFromYandexResponse(response));
 
     if (!result) {
-      const embed = ErrorEmbed('Изображение не найдено');
+      const embed = ErrorEmbed('**Результаты не найдены**');
       message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
       return;
     }
@@ -85,7 +85,7 @@ export default new Command({
       .sort((firstSite, secondarySite) => secondarySite.info.priority - firstSite.info.priority);
 
     if (!filteredSites.length) {
-      const embed = ErrorEmbed('Изображение не найдено');
+      const embed = ErrorEmbed('**Результаты не найдены**');
       message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
       return;
     }

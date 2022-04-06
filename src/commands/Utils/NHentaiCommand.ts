@@ -25,7 +25,7 @@ export default new Command({
     const id = args[0];
 
     if (!id || !isNumber(id)) {
-      const embed = ErrorEmbed('Укажите айди');
+      const embed = ErrorEmbed('**Укажите айди манги**');
       message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
       return;
     }
@@ -35,7 +35,7 @@ export default new Command({
     const manga = await hHentaiApi.fetchDoujin(id);
 
     if (!manga) {
-      const embed = ErrorEmbed('Манга не найдена');
+      const embed = ErrorEmbed('**Манга не найдена**');
       message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
       return;
     }

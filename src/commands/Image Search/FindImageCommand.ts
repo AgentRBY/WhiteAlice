@@ -35,7 +35,7 @@ export default new Command({
     }
 
     if (!link || !isLink(link)) {
-      const errorEmbed = ErrorEmbed('**Введите ссылку**');
+      const errorEmbed = ErrorEmbed('**Введите ссылку на изображение**');
       return message.reply({ embeds: [errorEmbed], allowedMentions: { repliedUser: false } });
     }
 
@@ -59,7 +59,7 @@ export default new Command({
     results = results.filter((result) => result.similarity > 50);
 
     if (!results.length) {
-      const errorEmbed = ErrorEmbed('**Изображение не найдено**');
+      const errorEmbed = ErrorEmbed('**Результаты не найдены**');
       return message.reply({ embeds: [errorEmbed], allowedMentions: { repliedUser: false } });
     }
 

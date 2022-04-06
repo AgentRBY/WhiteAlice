@@ -1,11 +1,11 @@
-import {ErrorEmbed} from '../../utils/Embed';
-import {Command} from '../../structures/Command';
+import { ErrorEmbed } from '../../utils/Embed';
+import { Command } from '../../structures/Command';
 import anilist from 'anilist-node';
-import {MessageEmbed} from 'discord.js';
-import {Colors} from '../../static/Colors';
-import {Format, Source, Status} from '../../static/Anilist';
-import {unix} from 'moment';
-import {promisify} from 'util';
+import { MessageEmbed } from 'discord.js';
+import { Colors } from '../../static/Colors';
+import { Format, Source, Status } from '../../static/Anilist';
+import { unix } from 'moment';
+import { promisify } from 'util';
 
 const requset = promisify(require('request'));
 
@@ -74,7 +74,7 @@ export default new Command({
     const animeID = args.length ? Number(args[0]) : null;
 
     if (!animeID || Number.isNaN(animeID)) {
-      const errorEmbed = ErrorEmbed('**Укажите айди**');
+      const errorEmbed = ErrorEmbed('**Укажите айди аниме**');
       return message.reply({ embeds: [errorEmbed], allowedMentions: { repliedUser: false } });
     }
 

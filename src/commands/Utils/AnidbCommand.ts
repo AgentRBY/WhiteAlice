@@ -1,10 +1,10 @@
-import {Command} from '../../structures/Command';
-import {ErrorEmbed} from '../../utils/Embed';
-import {MessageEmbed} from 'discord.js';
-import {Colors} from '../../static/Colors';
+import { Command } from '../../structures/Command';
+import { ErrorEmbed } from '../../utils/Embed';
+import { MessageEmbed } from 'discord.js';
+import { Colors } from '../../static/Colors';
 import moment from 'moment/moment';
-import {upFirstLetter} from '../../utils/strings';
-import {NO_IMAGE_URL} from '../../static/Constants';
+import { upFirstLetter } from '../../utils/strings';
+import { NO_IMAGE_URL } from '../../static/Constants';
 
 export default new Command({
   name: 'anidb',
@@ -22,7 +22,7 @@ export default new Command({
     const animeID = args.length ? Number(args[0]) : null;
 
     if (!animeID || Number.isNaN(animeID)) {
-      const errorEmbed = ErrorEmbed('**Укажите айди**');
+      const errorEmbed = ErrorEmbed('**Укажите айди аниме**');
       return message.reply({ embeds: [errorEmbed], allowedMentions: { repliedUser: false } });
     }
 
@@ -105,6 +105,6 @@ export default new Command({
       embed.setImage(NO_IMAGE_URL);
     }
 
-    message.reply({embeds: [embed], allowedMentions: {repliedUser: false}});
+    message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
   },
 });
