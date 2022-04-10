@@ -3,12 +3,12 @@ import { MessageEmbed } from 'discord.js';
 import moment from 'moment';
 import { upFirstLetter } from './strings';
 import { Colors } from '../static/Colors';
-import { NO_IMAGE_URL } from '../static/Constants';
 
 export function formatNHentaiManga(manga: Doujin): MessageEmbed {
   const authors = manga.tags.artists.length ? manga.tags.artists : manga.tags.groups;
+  const excludedTags = new Set(['lolicon', 'shotacon', 'guro', 'coprophagia', 'scat']);
 
-  const embed = new MessageEmbed()
+  return new MessageEmbed()
     .setAuthor({
       name: `nHentai | ${manga.id}`,
       url: 'https://nhentai.net/',
@@ -21,18 +21,12 @@ export function formatNHentaiManga(manga: Doujin): MessageEmbed {
         **Количество страниц:** ${manga.length}
         **Добавили в любимое:** ${manga.favorites}
         **Автор(ы):** ${authors.map((artist) => `[${upFirstLetter(artist.name)}](${artist.url})`).join(', ')}
-        **Теги:** \`${[...manga.tags.parodies, ...manga.tags.tags].map((tag) => upFirstLetter(tag.name)).join('`, `')}\`
+        **Теги:** ${[...manga.tags.parodies, ...manga.tags.tags]
+          .map((tag) => upFirstLetter(tag.name))
+          .map((tag) => (excludedTags.has(tag.toLowerCase()) ? `__\`${tag}\`__` : `\`${tag}\``))
+          .join(', ')}
       `,
     )
-    .setColor(Colors.Green);
-
-  const excludedTags = new Set(['lolicon', 'shotacon', 'guro', 'coprophagia', 'scat']);
-
-  if (!manga.tags.tags.some((tag) => excludedTags.has(tag.name))) {
-    embed.setImage(manga.cover.url);
-  } else {
-    embed.setImage(NO_IMAGE_URL);
-  }
-
-  return embed;
+    .setColor(Colors.Green)
+    .setImage(manga.cover.url);
 }

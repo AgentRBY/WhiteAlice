@@ -32,6 +32,12 @@ export default new Command({
 
     const embed = formatNHentaiManga(manga);
 
-    message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+    message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } }).then((msg) => {
+      const excludedTags = new Set(['lolicon', 'shotacon', 'guro', 'coprophagia', 'scat']);
+
+      if (manga.tags.tags.some((tag) => excludedTags.has(tag.name))) {
+        setTimeout(() => msg.delete(), 30_000);
+      }
+    });
   },
 });

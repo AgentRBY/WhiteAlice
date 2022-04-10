@@ -6,7 +6,6 @@ import { Colors } from '../static/Colors';
 import { promisify } from 'util';
 import moment from 'moment/moment';
 import { upFirstLetter } from './strings';
-import { NO_IMAGE_URL } from '../static/Constants';
 
 const requset = promisify(require('request'));
 
@@ -135,11 +134,12 @@ export function formatAniDBAnime(anime: any): MessageEmbed {
 
     return [...accumulator, upFirstLetter(current.name)];
   }, '');
+  const tagsBlackList = new Set(['Loli']);
 
   let description = `**Название:** ${title}
          **Количество эпизодов:** ${episodes || 'Неизвестно'}
          **Тип:** ${anime.type || 'Неизвестно'}
-         **Теги:** ${tags.join(', ')}`;
+         **Теги:** ${tags.map((tag) => (tagsBlackList.has(tag) ? `__\`${tag}\`__` : `\`${tag}\``)).join(', ')}`;
 
   if (anime.ratings?.temporary) {
     description += `\n**Средняя оценка:** ${anime.ratings.temporary.score}/10`;
@@ -155,18 +155,8 @@ export function formatAniDBAnime(anime: any): MessageEmbed {
     description += `\n**Следующий эпизод:** ${moment(nextEpisode.airDate).locale('ru').calendar()}`;
   }
 
-  const embed = new MessageEmbed()
+  return new MessageEmbed()
     .setDescription(description)
-
-    .setColor(Colors.Green);
-  const tagsBlackList = new Set(['Loli']);
-
-  const isTagsContainBlockedTags = tags.some((tag) => tagsBlackList.has(tag));
-  if (!isTagsContainBlockedTags) {
-    embed.setImage(`https://cdn-eu.anidb.net/images/main/${anime.picture}`);
-  } else {
-    embed.setImage(NO_IMAGE_URL);
-  }
-
-  return embed;
+    .setColor(Colors.Green)
+    .setImage(`https://cdn-eu.anidb.net/images/main/${anime.picture}`);
 }
