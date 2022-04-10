@@ -1,10 +1,6 @@
 import { Command } from '../../structures/Command';
 import { ErrorEmbed } from '../../utils/Embed';
-import { MessageEmbed } from 'discord.js';
-import { Colors } from '../../static/Colors';
-import moment from 'moment/moment';
-import { upFirstLetter } from '../../utils/strings';
-import { NO_IMAGE_URL } from '../../static/Constants';
+import { formatAniDBAnime } from '../../utils/Anime';
 
 export default new Command({
   name: 'anidb',
@@ -26,9 +22,9 @@ export default new Command({
       return message.reply({ embeds: [errorEmbed], allowedMentions: { repliedUser: false } });
     }
 
-    let animeInfo;
+    let anime;
     try {
-      animeInfo = await client.aniDB.anime(animeID);
+      anime = await client.aniDB.anime(animeID);
     } catch (error) {
       if (error.status === 'Banned') {
         const errorEmbed = ErrorEmbed('**Превышено ограничение на использования API сервиса. Попробуйте позже**');
@@ -39,71 +35,7 @@ export default new Command({
       }
     }
 
-    const lastEpisodeId = animeInfo.episodes.reduce(
-      (accumulator, current, index) => (moment(current.airDate).isAfter() ? accumulator : index),
-      0,
-    );
-
-    const lastEpisode = animeInfo.episodes[lastEpisodeId];
-    const episodes = animeInfo.endDate
-      ? animeInfo.episodeCount
-      : `${Number(lastEpisode.episodeNumber) < animeInfo.episodeCount ? lastEpisode.episodeNumber : '?'}/${
-          animeInfo.episodeCount || '?'
-        }`;
-
-    const title =
-      animeInfo.titles.find((title) => title.language === 'ru')?.title ||
-      animeInfo.titles.find((title) => title.language === 'x-jat')?.title;
-
-    const excludedTags = new Set(['angst', 'Japan', 'Earth', 'Asia']);
-
-    const tags = animeInfo.tags.reduce((accumulator, current) => {
-      if (current.localSpoiler) {
-        return accumulator;
-      }
-
-      if (current.weight === 0) {
-        return accumulator;
-      }
-
-      if (excludedTags.has(current.name)) {
-        return accumulator;
-      }
-
-      return [...accumulator, upFirstLetter(current.name)];
-    }, '');
-
-    let description = `**Название:** ${title}
-         **Количество эпизодов:** ${episodes || 'Неизвестно'}
-         **Тип:** ${animeInfo.type || 'Неизвестно'}
-         **Теги:** ${tags.join(', ')}`;
-
-    if (animeInfo.ratings?.temporary) {
-      description += `\n**Средняя оценка:** ${animeInfo.ratings.temporary.score}/10`;
-    }
-
-    if (animeInfo.ageRestricted) {
-      description += '\n**Для взрослых:** Да';
-    }
-
-    const nextEpisode = animeInfo.episodes[lastEpisodeId + 1];
-
-    if (nextEpisode) {
-      description += `\n**Следующий эпизод:** ${moment(nextEpisode.airDate).locale('ru').calendar()}`;
-    }
-
-    const embed = new MessageEmbed()
-      .setDescription(description)
-
-      .setColor(Colors.Green);
-    const tagsBlackList = new Set(['Loli']);
-
-    const isTagsContainBlockedTags = tags.some((tag) => tagsBlackList.has(tag));
-    if (!isTagsContainBlockedTags) {
-      embed.setImage(`https://cdn-eu.anidb.net/images/main/${animeInfo.picture}`);
-    } else {
-      embed.setImage(NO_IMAGE_URL);
-    }
+    const embed = formatAniDBAnime(anime);
 
     message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
   },
