@@ -7,9 +7,24 @@ export default new Command({
   name: 'filter',
   category: 'Music',
   aliases: [],
-  description: '',
-  examples: [],
-  usage: 'filter',
+  description: `Накладывает фильтр на песню. 
+  Список доступных фильтров можно просмотреть по команде >filter list. 
+  Что бы отключить фильтры пропишите >filter clear`,
+  examples: [
+    {
+      command: 'filter bassboost',
+      description: 'Включает фильтр bassboost к песне',
+    },
+    {
+      command: 'filter clear',
+      description: 'Очищает фильтры',
+    },
+    {
+      command: 'filter list',
+      description: 'Показывает все доступные фильтры',
+    },
+  ],
+  usage: 'filter <имя фильтра | list | clear>',
   run: async ({ message, args }) => {
     const queue = client.disTube.getQueue(message);
 
@@ -35,7 +50,9 @@ export default new Command({
       return;
     }
 
-    if (filter === 'false' || filter === 'disable' || filter === 'clear') {
+    const disableAliases = new Set(['false', 'disable', 'clear', 'remove', 'off', 'clean']);
+
+    if (disableAliases.has(filter)) {
       queue.setFilter(false);
       const embed = SuccessEmbed('Фильтры убраны');
       message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
