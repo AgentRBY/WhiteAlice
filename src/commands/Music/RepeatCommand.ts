@@ -1,5 +1,5 @@
-import {ErrorEmbed, SuccessEmbed} from '../../utils/Embed';
-import {Command} from '../../structures/Command';
+import { ErrorEmbed, SuccessEmbed } from '../../utils/Embed';
+import { Command } from '../../structures/Command';
 
 export default new Command({
   name: 'repeat',
@@ -30,7 +30,7 @@ export default new Command({
     }
 
     if (queue.repeatMode) {
-      const errorEmbed = ErrorEmbed('**Повторение выключено**');
+      const errorEmbed = SuccessEmbed('**Повторение выключено**');
       client.disTube.setRepeatMode(message, 0);
       return message.reply({ embeds: [errorEmbed], allowedMentions: { repliedUser: false } });
     }
