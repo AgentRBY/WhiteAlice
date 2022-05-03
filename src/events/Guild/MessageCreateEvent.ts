@@ -9,6 +9,7 @@ import { AntiPingModule } from '../../modules/AntiPing';
 import { NHentaiLink } from '../../modules/NHentaiLink';
 import { AniDBLink } from '../../modules/AniDBLink';
 import { AnilistLink } from '../../modules/AnilistLink';
+import { MemberModel } from '../../models/MemberModel';
 
 export default new Event({
   name: 'messageCreate',
@@ -43,6 +44,19 @@ export default new Event({
 
       await GuildData.save();
     }
+
+    let MemberData = await MemberModel.findById(`${message.author.id}-${message.guildId}`);
+
+    if (!MemberData) {
+      MemberData = await MemberModel.create({
+        _id: `${message.author.id}-${message.guildId}`,
+      });
+
+      await MemberData.save();
+    }
+
+    MemberData.messageCount++;
+    await MemberData.save();
 
     if (client.config.mode === 'testing' && !GuildData.testersID?.includes(message.author.id)) {
       const errorEmbed = ErrorEmbed('**Включен режим тестирования. Использование бота доступно только тестерам**');
@@ -117,6 +131,6 @@ export default new Event({
       return;
     }
 
-    command.run({ client, message, args: cleanArgs, keys, attributes, GuildData });
+    command.run({ client, message, args: cleanArgs, keys, attributes, GuildData, MemberData });
   },
 });

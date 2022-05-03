@@ -2,6 +2,7 @@ import { Collection, Message, PermissionString } from 'discord.js';
 import { ExtendClient } from '../structures/Client';
 import { IGuildModel } from './GuildModel';
 import { Document } from 'mongoose';
+import { IMemberModel } from './MemberModel';
 
 export interface CommandType {
   name: string;
@@ -30,6 +31,7 @@ interface CommandRunOptions {
   message: Message;
   args: string[];
   GuildData?: Document<unknown, unknown, IGuildModel> & IGuildModel;
+  MemberData?: Document<unknown, unknown, IMemberModel> & IMemberModel;
   keys?: Collection<string, string>;
   attributes?: Set<string>;
 }
