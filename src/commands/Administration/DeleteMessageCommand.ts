@@ -20,7 +20,11 @@ export default new Command({
 
     if (!messageId) {
       const embed = ErrorEmbed('Сообщение не найдено');
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } }).then(() => {
+        setTimeout(() => {
+          message.delete();
+        }, 5000);
+      });
       return;
     }
 
@@ -29,7 +33,11 @@ export default new Command({
       .then((m) => m)
       .catch(() => {
         const embed = ErrorEmbed('Сообщение не найдено');
-        message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+        message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } }).then(() => {
+          setTimeout(() => {
+            message.delete();
+          }, 5000);
+        });
         return;
       });
 
@@ -40,7 +48,11 @@ export default new Command({
 
     if (!fetchedMessage.deletable) {
       const embed = ErrorEmbed('Нет прав на удаление сообщения');
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } }).then(() => {
+        setTimeout(() => {
+          message.delete();
+        }, 5000);
+      });
       return;
     }
 
