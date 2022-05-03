@@ -47,7 +47,11 @@ export default new Command({
     fetchedMessage.delete();
 
     const embed = SuccessEmbed(`Сообщение от пользователя ${fetchedMessage.member} было удалено`);
-    message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+    message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } }).then(() => {
+      setTimeout(() => {
+        message.delete();
+      }, 5000);
+    });
     return;
   },
 });
