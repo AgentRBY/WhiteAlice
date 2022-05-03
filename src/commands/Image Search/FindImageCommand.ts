@@ -3,7 +3,7 @@ import { MessageActionRow, MessageEmbed } from 'discord.js';
 import { Colors } from '../../static/Colors';
 import { ErrorEmbed } from '../../utils/Embed';
 import { Command } from '../../structures/Command';
-import { isGifLink, isImageLink, isLink } from '../../utils/Other';
+import { isGifLink, isImageLink, isLink, removeQueryParams } from '../../utils/Other';
 import { formatNames } from '../../utils/strings';
 import { generateDefaultButtons, pagination } from '../../utils/Pagination';
 import { sauceNAORelevantSites } from '../../static/ImageSearch';
@@ -27,11 +27,11 @@ export default new Command({
 
     if (message.attachments.size) {
       const attachment = message.attachments.first();
-      link = attachment.url || attachment.proxyURL;
+      link = removeQueryParams(attachment.url || attachment.proxyURL);
     }
 
     if (args.length) {
-      link = args[0];
+      link = removeQueryParams(args[0]);
     }
 
     if (!link || !isLink(link)) {

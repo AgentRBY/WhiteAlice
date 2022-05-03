@@ -25,6 +25,10 @@ export function isMediaLink(text: string): boolean {
   return isImageLink(text) || isVideoLink(text) || isGifLink(text);
 }
 
+export function removeQueryParams(text: string): string {
+  return text.split('?')[0];
+}
+
 export async function sleep(ms: number): Promise<unknown> {
   return new Promise((resolve) => {
     setTimeout(resolve, ms);

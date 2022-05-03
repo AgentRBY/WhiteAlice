@@ -8,6 +8,7 @@ import { MessageActionRow, MessageEmbed } from 'discord.js';
 import { Colors } from '../../static/Colors';
 import { Site, WhitelistSite } from '../../typings/YandexImagesResponse';
 import { generateDefaultButtons, pagination } from '../../utils/Pagination';
+import { removeQueryParams } from '../../utils/Other';
 
 const request = promisify(require('request'));
 
@@ -44,11 +45,11 @@ export default new Command({
 
     if (message.attachments.size) {
       const attachment = message.attachments.first();
-      imageLink = attachment.url || attachment.proxyURL;
+      imageLink = removeQueryParams(attachment.url || attachment.proxyURL);
     }
 
     if (args.length) {
-      imageLink = args[0];
+      imageLink = removeQueryParams(args[0]);
     }
 
     if (!imageLink) {

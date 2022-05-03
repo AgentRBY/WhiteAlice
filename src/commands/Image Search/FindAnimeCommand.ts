@@ -4,7 +4,7 @@ import { TraceMoe } from 'trace.moe.ts';
 import { Colors } from '../../static/Colors';
 import anilist from 'anilist-node';
 import { ButtonInteraction, MessageActionRow, MessageButton, MessageEmbed } from 'discord.js';
-import { isLink, isMediaLink } from '../../utils/Other';
+import { isLink, isMediaLink, removeQueryParams } from '../../utils/Other';
 
 export default new Command({
   name: 'findanime',
@@ -21,15 +21,15 @@ export default new Command({
     },
   ],
   run: async ({ client, message, args }) => {
-    let link;
+    let link: string;
 
     if (message.attachments.size) {
       const attachment = message.attachments.first();
-      link = attachment.url || attachment.proxyURL;
+      link = removeQueryParams(attachment.url || attachment.proxyURL);
     }
 
     if (args.length) {
-      link = args[0];
+      link = removeQueryParams(args[0]);
     }
 
     if (!link || !isLink(link)) {
