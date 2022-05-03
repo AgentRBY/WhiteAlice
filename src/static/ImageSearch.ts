@@ -146,6 +146,11 @@ export const yandexWhitelistSites: WhitelistSite[] = [
     type: WhitelistedSitesType.ANIME_SITE,
     priority: 1,
   },
+  {
+    url: 'daemon-hentai.com',
+    type: WhitelistedSitesType.HENTAI_SITE,
+    priority: 0,
+  },
 ];
 
 export const sauceNAORelevantSites = new Set(['AniDB', 'nHentai', 'Gelbooru', 'Danbooru', 'Yande.re', 'e621']);
