@@ -31,7 +31,7 @@ export const getSitesFromYandexResponse = (response: Response): YandexImagesResp
   }
 
   const elementWithSites = parsedHTML
-    .querySelectorAll('div.Root.Theme.Theme_color_yandex-default.Theme_root_default')
+    .querySelectorAll('div.Root')
     .find((element) => element.id.startsWith('CbirSites'));
 
   return JSON.parse(elementWithSites.attributes['data-state']);
