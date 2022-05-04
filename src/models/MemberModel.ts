@@ -17,6 +17,22 @@ const MemberSchema = new Schema<IMemberModel>({
     type: Number,
     default: 0,
   },
+  mutes: [
+    {
+      date: Number,
+      givenBy: String,
+      reason: {
+        type: String,
+        required: false,
+      },
+      time: Number,
+      unmuted: {
+        type: Boolean,
+        default: false,
+        required: false,
+      },
+    },
+  ],
 });
 
 export const MemberModel = model<IMemberModel>('MemberData', MemberSchema);

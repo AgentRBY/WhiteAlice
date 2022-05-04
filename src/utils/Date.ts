@@ -1,4 +1,5 @@
 import moment, { Duration } from 'moment';
+import { Moment } from 'moment/moment';
 
 export function getDurationFromString(text: string): Duration | undefined {
   const days = getDaysFromString(text) * 86_400_000;
@@ -6,10 +7,6 @@ export function getDurationFromString(text: string): Duration | undefined {
   const minutes = getMinutesFromString(text) * 60_000;
 
   const durationInMilliseconds = days + hours + minutes;
-
-  console.log(days);
-  console.log(minutes);
-  console.log(durationInMilliseconds);
 
   if (!durationInMilliseconds) {
     return;
@@ -29,7 +26,87 @@ export function formatDuration(duration: Duration): string {
 
   const formatterArray = [formattedDays, formattedHours, formattedMinutes].filter((item) => item);
 
-  return formatterArray.join(", ")
+  return formatterArray.join(', ');
+}
+
+export function formatDurationInPast(duration: Duration): string {
+  const days = duration.days();
+  const hours = duration.hours();
+  const minutes = duration.minutes();
+
+  const formattedDays = days ? formatDays(days) : '';
+  const formattedHours = hours ? formatHours(hours) : '';
+  const formattedMinutes = minutes ? formatMinutes(minutes) : '';
+
+  const formatterArray = [formattedDays, formattedHours, formattedMinutes].filter((item) => item);
+
+  return formatterArray.join(', ');
+}
+
+export function formatDays(days: number): string {
+  if (days === 1 || days === 21) {
+    return `${days} день`;
+  }
+
+  if ((days > 1 && days < 5) || (days > 21 && days < 25)) {
+    return `${days} дня`;
+  }
+
+  if (days > 4 && days < 21) {
+    return `${days} дней`;
+  }
+}
+
+export function formatHours(hours: number): string {
+  if (hours === 1 || hours === 21 || hours === 31 || hours === 41 || hours === 51) {
+    return `${hours} час`;
+  }
+
+  if (
+    (hours > 1 && hours < 5) ||
+    (hours > 21 && hours < 25) ||
+    (hours > 31 && hours < 35) ||
+    (hours > 41 && hours < 45) ||
+    (hours > 51 && hours < 55)
+  ) {
+    return `${hours} часа`;
+  }
+
+  if (
+    (hours > 4 && hours < 21) ||
+    (hours > 24 && hours < 31) ||
+    (hours > 34 && hours < 41) ||
+    (hours > 44 && hours < 51) ||
+    (hours > 54 && hours < 61)
+  ) {
+    return `${hours} часов`;
+  }
+}
+
+export function formatMinutes(minutes: number): string {
+  if (minutes === 1 || minutes === 21 || minutes === 31 || minutes === 41 || minutes === 51) {
+    return `${minutes} минута`;
+  }
+
+  if (
+    (minutes > 1 && minutes < 5) ||
+    (minutes > 21 && minutes < 25) ||
+    (minutes > 31 && minutes < 35) ||
+    (minutes > 41 && minutes < 45) ||
+    (minutes > 51 && minutes < 55)
+  ) {
+    return `${minutes} минуты`;
+  }
+
+  if (
+    (minutes > 4 && minutes < 21) ||
+    (minutes > 24 && minutes < 31) ||
+    (minutes > 34 && minutes < 41) ||
+    (minutes > 44 && minutes < 51) ||
+    (minutes > 54 && minutes < 61)
+  ) {
+    return `${minutes} минут`;
+  }
 }
 
 export function getDaysFromString(text: string): number {
@@ -63,4 +140,8 @@ export function getMinutesFromString(text: string): number {
   }
 
   return Number(result[1] || 0);
+}
+
+export function momentToDiscordDate(moment: Moment, timeFormat: string = 'f') {
+  return `<t:${moment.unix()}:${timeFormat}>`;
 }

@@ -4,6 +4,7 @@ import moment from 'moment';
 import { MessageEmbed } from 'discord.js';
 import { Emojis } from '../../static/Emojis';
 import { Colors } from '../../static/Colors';
+import { MemberModel } from '../../models/MemberModel';
 
 export default new Command({
   name: 'unmute',
@@ -46,6 +47,10 @@ export default new Command({
         `${Emojis.Info} На сервере \`${message.guild}\` Вы были размучены пользователем ${message.author}`,
       )
       .setColor(Colors.Green);
+
+    const MemberData = await MemberModel.findById(`${member.id}-${message.guildId}`);
+    MemberData.mutes[MemberData.mutes.length - 1].unmuted = true;
+    MemberData.save();
 
     message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
     member.send({ embeds: [directEmbed] });
