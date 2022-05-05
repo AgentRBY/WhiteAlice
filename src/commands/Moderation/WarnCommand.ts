@@ -8,7 +8,7 @@ import { MemberModel } from '../../models/MemberModel';
 
 export default new Command({
   name: 'warn',
-  category: 'Administration',
+  category: 'Moderation',
   aliases: [],
   description: `Выдаёт предупреждение пользователю. 
   Каждое предупреждение даёт +5% к времени мута.

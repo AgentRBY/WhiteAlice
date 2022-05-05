@@ -3,7 +3,7 @@ import { ErrorEmbed, SuccessEmbed } from '../../utils/Embed';
 
 export default new Command({
   name: 'deleteMessage',
-  category: 'Administration',
+  category: 'Moderation',
   aliases: ['dmsg', 'delete'],
   description: 'Удаляет сообщение по айди',
   examples: [

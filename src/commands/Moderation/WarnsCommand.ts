@@ -8,7 +8,7 @@ import { momentToDiscordDate } from '../../utils/Date';
 
 export default new Command({
   name: 'warns',
-  category: 'Administration',
+  category: 'Moderation',
   aliases: [],
   description: 'Выводит список всех предупреждений пользователя.',
   examples: [

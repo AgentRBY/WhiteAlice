@@ -10,7 +10,7 @@ import { Mute } from '../../typings/MemberModel';
 
 export default new Command({
   name: 'mute',
-  category: 'Administration',
+  category: 'Moderation',
   aliases: [],
   description: `Выдаёт мут пользователю.
   Время должно быть записано без пробелов. Поддерживаются дни, часы и минуты.
@@ -108,7 +108,8 @@ export default new Command({
             } на ${formattedTime}
             Из них ${formattedTimeWhichWarns} (+${MemberData.warns.length * 5}%) вы получили из-за предупреждений`,
       )
-      .setColor(Colors.Red);
+      .setColor(Colors.Red)
+      .setTimestamp();
 
     if (reason) {
       embed.setFooter({ text: `По причине: ${reason}` });

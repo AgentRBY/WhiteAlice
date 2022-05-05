@@ -8,7 +8,7 @@ import { MemberModel } from '../../models/MemberModel';
 
 export default new Command({
   name: 'unmute',
-  category: 'Administration',
+  category: 'Moderation',
   aliases: [],
   description: 'Размучивает человека, если он был замучен',
   examples: [
