@@ -41,6 +41,7 @@ export class ExtendClient extends Client {
       leaveOnFinish: true,
       leaveOnStop: true,
       plugins: [new SoundCloudPlugin(), new SpotifyPlugin()],
+      youtubeCookie: this.config.distubeCookie,
     });
 
     await mongoose.connect(process.env.mongoURI).catch((error) => console.log(error));
