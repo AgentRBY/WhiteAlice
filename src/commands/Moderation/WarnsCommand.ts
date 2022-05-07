@@ -42,11 +42,22 @@ export default new Command({
           name: `Предупреждение №${index + 1}`,
           value: `**Выдан:** ${message.guild.members.cache.get(warn.givenBy) || 'Неизвестно'}
                 **Причина:** ${warn.reason || 'Отсутствует'}
-                **Время:** ${momentToDiscordDate(moment(warn.date))}`,
+                **Время:** ${momentToDiscordDate(moment(warn.date))}
+                ${
+                  warn.removed
+                    ? `
+                **Был снят:** Да
+                **Снят пользователем:** ${message.guild.members.cache.get(warn.removedBy) || 'Неизвестно'}
+                **Время снятия:** ${momentToDiscordDate(moment(warn.removedDate))}
+                ${warn.removedReason ? `**Причина снятия:** ${warn.removedReason}` : ''}`
+                    : ''
+                }`,
           inline: true,
         })),
       )
-      .setFooter({ text: `Процент увеличения времени мута: +${MemberBase.warns.length * 5}%` });
+      .setFooter({
+        text: `Процент увеличения времени мута: +${MemberBase.warns.filter((warn) => !warn.removed).length * 5}%`,
+      });
 
     message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
   },

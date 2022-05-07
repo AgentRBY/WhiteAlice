@@ -7,6 +7,8 @@ import { Emojis } from '../../static/Emojis';
 import { Colors } from '../../static/Colors';
 import { MemberModel } from '../../models/MemberModel';
 import { Mute } from '../../typings/MemberModel';
+import { percentToFraction } from '../../utils/Number';
+import { MuteType } from '../../static/Mute';
 
 export default new Command({
   name: 'mute',
@@ -84,43 +86,90 @@ export default new Command({
 
     const reason = args.slice(2).join(' ');
 
-    const warnsInPercent = (MemberData.warns.length * 5) / 100 + 1;
-    const timeWitchWarns = time.asMilliseconds() * warnsInPercent;
+    let text: string;
+    let directText: string;
+    let totalTime: number = time.asMilliseconds();
+    let formattedTime = formatDuration(time);
+    let muteType = MuteType.CLASSIC;
 
-    await member.timeout(timeWitchWarns, reason);
+    if (MemberData.warns.filter((warn) => !warn.removed).length) {
+      muteType = MuteType.WITH_WARNS;
+    }
 
-    const formattedTime = formatDuration(moment.duration(timeWitchWarns));
-    const formattedTimeWhichWarns = formatDurationInPast(moment.duration(timeWitchWarns - time.asMilliseconds()));
+    if (MemberData.bans.length) {
+      muteType = muteType === MuteType.WITH_WARNS ? MuteType.WITH_WARNS_AND_BANS : MuteType.WITH_BANS;
+    }
 
-    const embed = SuccessEmbed(
-      !MemberData.warns.length
-        ? `Пользователь ${member} был замучен на ${formattedTime}`
-        : `Пользователь ${member} был замучен на ${formattedTime}, из которых ${formattedTimeWhichWarns} (+${
-            MemberData.warns.length * 5
-          }%) он получил из-за предупреждений`,
-    );
-    const directEmbed = new MessageEmbed()
-      .setDescription(
-        !MemberData.warns.length
-          ? `${Emojis.Info} На сервере \`${message.guild}\` Вы были замучены пользователем ${message.author} на ${formattedTime}`
-          : `${Emojis.Info} На сервере \`${message.guild}\` Вы были замучены пользователем ${
-              message.author
-            } на ${formattedTime}
-            Из них ${formattedTimeWhichWarns} (+${MemberData.warns.length * 5}%) вы получили из-за предупреждений`,
-      )
-      .setColor(Colors.Red)
-      .setTimestamp();
+    switch (muteType) {
+      case MuteType.CLASSIC:
+        text = `Пользователь ${member} был замучен на ${formattedTime}`;
+        directText = `${Emojis.Info} На сервере \`${message.guild}\` Вы были замучены пользователем ${message.author} на ${formattedTime}`;
+        break;
+      case MuteType.WITH_WARNS:
+        const warnsInPercent = MemberData.warns.filter((warn) => !warn.removed).length * 5;
+        const warnsInFraction = percentToFraction(warnsInPercent);
+
+        totalTime = time.asMilliseconds() * warnsInFraction;
+        formattedTime = formatDuration(moment.duration(totalTime));
+        const formattedTimeWithWarns = formatDurationInPast(moment.duration(totalTime - time.asMilliseconds()));
+
+        text = `Пользователь ${member} был замучен на ${formattedTime}, из которых ${formattedTimeWithWarns} (+${warnsInPercent}%) он получил из-за предупреждений`;
+        directText = `${Emojis.Info} На сервере \`${message.guild}\` Вы были замучены пользователем ${message.author} на ${formattedTime}
+         Из них ${formattedTimeWithWarns} (+${warnsInPercent}%) Вы получили из-за предупреждений`;
+        break;
+      case MuteType.WITH_BANS:
+        const bansInPercent = MemberData.bans.length * 100;
+        const bansInFraction = percentToFraction(bansInPercent);
+
+        totalTime = time.asMilliseconds() * bansInFraction;
+        formattedTime = formatDuration(moment.duration(totalTime));
+        const formattedTimeWithBans = formatDurationInPast(moment.duration(totalTime - time.asMilliseconds()));
+
+        text = `Пользователь ${member} был замучен на ${formattedTime}, из которых ${formattedTimeWithBans} (+${bansInPercent}%) он получил из-за банов`;
+        directText = `${Emojis.Info} На сервере \`${message.guild}\` Вы были замучены пользователем ${message.author} на ${formattedTime}
+         Из них ${formattedTimeWithBans} (+${bansInPercent}%) Вы получили из-за банов`;
+        break;
+      case MuteType.WITH_WARNS_AND_BANS:
+        const onlyWarnsInPercent = MemberData.warns.filter((warn) => !warn.removed).length * 5;
+        const onlyWarnsInFraction = percentToFraction(onlyWarnsInPercent);
+
+        const onlyBansInPercent = MemberData.bans.length * 100;
+        const onlyBansInFraction = percentToFraction(onlyBansInPercent);
+
+        const bansAndWarnsInFraction = percentToFraction(onlyBansInPercent + onlyWarnsInPercent);
+
+        totalTime = time.asMilliseconds() * bansAndWarnsInFraction;
+        formattedTime = formatDuration(moment.duration(totalTime));
+
+        const formattedTimeWithOnlyWarns = formatDurationInPast(
+          moment.duration(totalTime - time.asMilliseconds() * onlyBansInFraction),
+        );
+        const formattedTimeWithOnlyBans = formatDurationInPast(
+          moment.duration(totalTime - time.asMilliseconds() * onlyWarnsInFraction),
+        );
+
+        text = `Пользователь ${member} был замучен на ${formattedTime}, из которых ${formattedTimeWithOnlyWarns} (+${onlyWarnsInPercent}%) он получил из-за предупреждений, а ${formattedTimeWithOnlyBans} (+${onlyBansInPercent}%) он получил из-за банов`;
+        directText = `${Emojis.Info} На сервере \`${message.guild}\` Вы были замучены пользователем ${message.author} на ${formattedTime}
+         Из них ${formattedTimeWithOnlyWarns} (+${onlyWarnsInPercent}%) Вы получили из-за предупреждений
+         И ${formattedTimeWithOnlyBans} (+${onlyBansInPercent}%) из-за банов`;
+        break;
+    }
+
+    const embed = SuccessEmbed(text);
+    const directEmbed = new MessageEmbed().setDescription(directText).setColor(Colors.Red).setTimestamp();
 
     if (reason) {
       embed.setFooter({ text: `По причине: ${reason}` });
       directEmbed.setFooter({ text: `По причине: ${reason}` });
     }
 
+    await member.timeout(totalTime, reason);
+
     const mute: Mute = {
       date: Date.now(),
       reason: reason,
       givenBy: message.author.id,
-      time: Math.floor(timeWitchWarns),
+      time: totalTime,
     };
 
     MemberData.mutes.push(mute);

@@ -1,15 +1,32 @@
 export interface IMemberModel {
   _id: string;
-  warns: Warn[];
   messageCount: number;
+  warns: Warn[];
   mutes: Mute[];
+  bans: Ban[];
 }
 
-export type Warn = Punishment;
+export interface Warn extends Punishment {
+  removed?: boolean;
+  removedBy?: string;
+  removedDate?: number;
+  removedReason?: string;
+}
 
 export interface Mute extends Punishment {
   time: number;
   unmuted?: boolean;
+  unmutedBy?: string;
+  unmutedDate?: number;
+  unmutedReason?: string;
+}
+
+export interface Ban extends Punishment {
+  unbanned?: boolean;
+  unbannedBy?: string;
+  unbannedDate?: number;
+  unbannedReason?: string;
+  messageDeleteCountInDays?: number;
 }
 
 export interface Punishment {

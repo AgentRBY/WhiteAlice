@@ -9,18 +9,22 @@ import { MemberModel } from '../../models/MemberModel';
 export default new Command({
   name: 'unmute',
   category: 'Moderation',
-  aliases: [],
+  aliases: ['removeMute'],
   description: 'Размучивает человека, если он был замучен',
   examples: [
     {
       command: 'unmute @TestUser',
       description: 'Убирает мут у пользователя @TestUser',
     },
+    {
+      command: 'unmute @TestUser Ошибочный мут',
+      description: 'Убирает мут у пользователя @TestUser по причине `Ошибочный мут`',
+    },
   ],
-  usage: 'unmute <пользователь>',
+  usage: 'unmute <пользователь> [причина]',
   botPermissions: ['MODERATE_MEMBERS'],
   memberPermissions: ['BAN_MEMBERS'],
-  run: async ({ message }) => {
+  run: async ({ message, args }) => {
     const member = message.mentions.members.first();
 
     if (!member) {
@@ -35,13 +39,15 @@ export default new Command({
       return;
     }
 
+    const reason = args.slice(1).join(' ');
+
     const remainingMuteTime = Date.now() - member.communicationDisabledUntilTimestamp;
     const remainingMuteTimeHumanize = moment.duration(remainingMuteTime).locale('ru').humanize();
 
     await member.timeout(null);
 
-    const embed = SuccessEmbed('Пользователь был размучен');
-    embed.setFooter({ text: `Если бы не вы, ему осталось бы сидеть в муте ${remainingMuteTimeHumanize}` });
+    const embed = SuccessEmbed(`Пользователь был размучен
+        Если бы не вы, ему осталось бы сидеть в муте ${remainingMuteTimeHumanize}`);
     const directEmbed = new MessageEmbed()
       .setDescription(
         `${Emojis.Info} На сервере \`${message.guild}\` Вы были размучены пользователем ${message.author}`,
@@ -50,6 +56,15 @@ export default new Command({
 
     const MemberData = await MemberModel.findById(`${member.id}-${message.guildId}`);
     MemberData.mutes[MemberData.mutes.length - 1].unmuted = true;
+    MemberData.mutes[MemberData.mutes.length - 1].unmutedDate = Date.now();
+    MemberData.mutes[MemberData.mutes.length - 1].unmutedBy = message.author.id;
+
+    if (reason) {
+      MemberData.mutes[MemberData.mutes.length - 1].unmutedReason = reason;
+      embed.setFooter({ text: `Причина размута: ${reason}` });
+      directEmbed.setFooter({ text: `Причина размута: ${reason}` });
+    }
+
     MemberData.save();
 
     message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });

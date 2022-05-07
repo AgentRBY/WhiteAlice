@@ -42,7 +42,15 @@ export default new Command({
                 **Причина:** ${mute.reason || 'Отсутствует'}
                 **Выдан:** ${momentToDiscordDate(moment(mute.date))}
                 **Истекает:** ${momentToDiscordDate(moment(mute.time + mute.date))}
-                ${mute.unmuted ? '**Был размучен:** Да' : ''}`,
+                ${
+                  mute.unmuted
+                    ? `
+                **Был размучен:** Да
+                **Размучен пользователем:** ${message.guild.members.cache.get(mute.unmutedBy) || 'Неизвестно'}
+                **Время размута:** ${momentToDiscordDate(moment(mute.unmutedDate))}
+                ${mute.unmutedReason ? `**Причина размута:** ${mute.unmutedReason}` : ''}`
+                    : ''
+                }`,
         inline: true,
       })),
     );
