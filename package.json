@@ -28,7 +28,7 @@
     "ffmpeg-static": "^5.0.0",
     "glob": "^7.2.0",
     "libsodium-wrappers": "^0.7.9",
-    "moment": "^2.29.1",
+    "moment": "^2.29.2",
     "mongoose": "^6.0.14",
     "nhentai": "^3.0.0",
     "node-cmd": "^5.0.0",
