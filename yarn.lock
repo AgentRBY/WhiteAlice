@@ -466,14 +466,14 @@ __metadata:
   linkType: hard
 
 "@derhuerst/http-basic@npm:^8.2.0":
-  version: 8.2.1
-  resolution: "@derhuerst/http-basic@npm:8.2.1"
+  version: 8.2.2
+  resolution: "@derhuerst/http-basic@npm:8.2.2"
   dependencies:
     caseless: ^0.12.0
     concat-stream: ^1.6.2
     http-response-object: ^3.0.1
     parse-cache-control: ^1.0.1
-  checksum: 35add0f13f0a549682b170139ab44648d39133f21c532305010836403fe3958e7c6138b524de158f0625b742334b7d17d52f8e4e3b7ae63626d0dc017e806e57
+  checksum: 4192d20cf0b412430729a86598891068dd5f2a935e2e0cc8540fb38857007a06a31baa4322e2bd7cf13327275a4e3dbd8ba84eaa3e737d83102fd820dceffc17
   languageName: node
   linkType: hard
 
@@ -2890,15 +2890,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ffmpeg-static@npm:^4.4.0":
-  version: 4.4.0
-  resolution: "ffmpeg-static@npm:4.4.0"
+"ffmpeg-static@npm:^5.0.0":
+  version: 5.0.0
+  resolution: "ffmpeg-static@npm:5.0.0"
   dependencies:
     "@derhuerst/http-basic": ^8.2.0
     env-paths: ^2.2.0
     https-proxy-agent: ^5.0.0
     progress: ^2.0.3
-  checksum: 1c7106d386ddc3b364991f76046418f4bde44f5fcef27d4d5651bfebd766c848e7773c3924476eeacbb27fa7980635226cf8983867897551aed619e3e26a8350
+  checksum: 80b69aa20afd0574fe3dc5f74464eb0f23b25a69e35f7f87a67f2d7044863e6e16f93333b0712ad8748de4d14425c56a58dd0d16618de28dfc39a163fa706a9e
   languageName: node
   linkType: hard
 
@@ -3452,7 +3452,7 @@ __metadata:
     eslint-plugin-prettier: ^4.0.0
     eslint-plugin-sonarjs: ^0.11.0
     eslint-plugin-unicorn: ^39.0.0
-    ffmpeg-static: ^4.4.0
+    ffmpeg-static: ^5.0.0
     glob: ^7.2.0
     husky: ^7.0.4
     libsodium-wrappers: ^0.7.9
