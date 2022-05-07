@@ -95,7 +95,8 @@ export default new Event({
 
     if (
       command.memberPermissions?.length &&
-      !message.channel.permissionsFor(message.member).has(command.memberPermissions)
+      !message.channel.permissionsFor(message.member).has(command.memberPermissions) &&
+      !client.getOwners().includes(message.author.id)
     ) {
       message.channel.send(
         `У вас нет нужных прав для этого, вам нужно: ${command.memberPermissions
