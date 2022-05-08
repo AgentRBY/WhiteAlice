@@ -28,7 +28,7 @@ I am using `yarn 3` in a project but you can use any other package manager
 
 
 ## Modules
-- `Image Search` - Search anime, manga and other images
+- `Image Search` - Search anime, manga and other by images
 - `Moderation` - Logging of all actions, the impact of the number of warnings / bans on the duration of the mute and more
 - `Music` - Play music in voice channel. Support YouTube, Spotify and SoundCloud
 - `Utils` - Various commands, like as search for random anime or hentai, anime information and more
