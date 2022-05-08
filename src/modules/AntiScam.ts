@@ -2,7 +2,7 @@ import { Message } from 'discord.js';
 import { ExtendClient } from '../structures/Client';
 
 export function AntiScamModule(client: ExtendClient, message: Message): void {
-  if (client.config.ownersID.includes(message.author.id)) {
+  if (client.getOwners().includes(message.author.id)) {
     return;
   }
 

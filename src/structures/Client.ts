@@ -53,7 +53,7 @@ export class ExtendClient extends Client {
   }
 
   public getOwners(): string[] {
-    return this.config.ownersID.split(',');
+    return this.config.ownersID.split(',') || [];
   }
 
   private static async importFile(filePath: string) {
