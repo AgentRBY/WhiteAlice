@@ -21,8 +21,8 @@ export default new Command({
       description: 'Показывает информацию о команде `ping`',
     },
   ],
-  run: async ({ client, message, args }) => {
-    const { prefix } = client.config;
+  run: async ({ client, message, args, GuildData }) => {
+    const prefix = GuildData.prefix || client.config.prefix || '>';
     if (!args.length) {
       const fields: EmbedFieldData[] = [...client.categories.keys()].map((category) => {
         return {
