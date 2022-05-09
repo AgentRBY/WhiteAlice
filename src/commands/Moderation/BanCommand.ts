@@ -6,6 +6,7 @@ import { Emojis } from '../../static/Emojis';
 import { MemberModel } from '../../models/MemberModel';
 import { Ban } from '../../typings/MemberModel';
 import { isNumber } from '../../utils/Number';
+import { client } from '../../app';
 
 export default new Command({
   name: 'ban',
@@ -35,28 +36,29 @@ export default new Command({
   memberPermissions: ['BAN_MEMBERS'],
   botPermissions: ['BAN_MEMBERS'],
   run: async ({ message, args, keys }) => {
-    const member = message.mentions.members.first();
+    const member = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
+    const userId = args[0] || member?.id;
 
-    if (!member) {
+    if (!userId) {
       const embed = ErrorEmbed('Введите пользователя');
       message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
       return;
     }
 
     await message.guild.bans.fetch();
-    if (message.guild.bans.cache.get(member.id)) {
+    if (message.guild.bans.cache.get(userId)) {
       const embed = ErrorEmbed('Пользователь уже в бане');
       message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
       return;
     }
 
-    if (!member.bannable) {
+    if (member && !member.bannable) {
       const embed = ErrorEmbed('У меня нет прав, что бы забанить этого пользователя');
       message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
       return;
     }
 
-    if (member.roles.highest.comparePositionTo(message.guild.me.roles.highest) >= 0) {
+    if (member?.roles.highest.comparePositionTo(message.guild.me.roles.highest) >= 0) {
       const embed = ErrorEmbed('У вас нет прав, что бы замутить этого пользователя');
       message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
       return;
@@ -76,11 +78,20 @@ export default new Command({
       }
     }
 
-    const MemberData = await MemberModel.findById(`${member.id}-${message.guildId}`);
+    let MemberData = await MemberModel.findById(`${userId}-${message.guildId}`);
+
+    if (!MemberData) {
+      MemberData = await MemberModel.create({
+        _id: `${userId}-${message.guildId}`,
+      });
+      await MemberData.save();
+    }
 
     const reason = args.slice(1).join(' ');
 
-    const embed = SuccessEmbed(`Пользователь ${member} был забанен`);
+    const user = await client.users.fetch(userId);
+
+    const embed = SuccessEmbed(`Пользователь ${member || user} был забанен`);
     const directEmbed = new MessageEmbed()
       .setColor(Colors.Red)
       .setDescription(
@@ -103,10 +114,10 @@ export default new Command({
     MemberData.bans.push(ban);
     MemberData.save();
 
-    await member.send({ embeds: [directEmbed] });
+    await (member || user).send({ embeds: [directEmbed] }).catch(() => {});
     message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
 
-    member.ban({
+    message.guild.bans.create(userId, {
       reason,
       days: messageDeleteCountInDays,
     });
