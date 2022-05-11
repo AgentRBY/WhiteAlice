@@ -57,30 +57,30 @@ export default new Command({
       return message.reply({ embeds: [errorEmbed], allowedMentions: { repliedUser: false } });
     }
 
-    let description = `**Команда**: \`${prefix}${command.name}\`
-    **Категория**: ${command.category}`;
+    let description = `**➤ Команда**: \`${prefix}${command.name}\`
+    \n**➤ Категория**: \`${command.category}\``;
     if (command.description) {
       description += `
-    **Описание**: ${command.description}`;
+    \n**➤ Описание**: ${command.description}`;
     }
     if (command.ownerOnly) {
       description += `
-    __**Только для создателей**__: Эта команда доступна только для создателей бота`;
+    \n__**➤ Только для создателей**__: Эта команда доступна только для создателей бота`;
     }
     if (command.aliases?.length) {
       description += `
-    **Алиасы**: \n┗ ${command.aliases.map((alias) => `\`${prefix}${alias}\``).join(', ')}`;
+    \n**➤ Алиасы**: \n┗ ${command.aliases.map((alias) => `\`${prefix}${alias}\``).join(', ')}`;
     }
     if (command.usage) {
       description += `\n
-    **Использование**: \n┗ \`${prefix}${command.usage}\``;
+    **➤ Использование**: \n┗ \`${prefix}${command.usage}\``;
     }
     if (command.examples.length) {
       description += '\n';
       command.examples.forEach((example, index) => {
         if (example.command !== '' && example.description !== '') {
           description += `
-          **Пример ${++index}:**
+          **➤ Пример ${++index}:**
           \`${prefix}${example.command}\`
           ┗ ${example.description}
         `;
