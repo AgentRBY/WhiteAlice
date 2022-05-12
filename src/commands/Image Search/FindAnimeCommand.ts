@@ -40,7 +40,7 @@ export default new Command({
     if (!isMediaLink(link.toLowerCase())) {
       const errorEmbed = ErrorEmbed(
         '**Ссылка не ведёт на изображение или видео. Допустимые форматы: `png, jpeg, jpg, webp, bmp, gif, mp4`**',
-      ).setFooter('Для gif-анимаций и видео в поиске будет использоваться первый кадр');
+      ).setFooter({ text: 'Для gif-анимаций и видео в поиске будет использоваться первый кадр' });
       return message.reply({ embeds: [errorEmbed], allowedMentions: { repliedUser: false } });
     }
 
@@ -76,7 +76,9 @@ export default new Command({
       )
       .setThumbnail(anime.image || anime.video)
       .setColor(Colors.Green)
-      .setFooter(`Что-бы узнать по подробнее об аниме введите команду >anilist ${anime.anilist} или нажмите на кнопку`);
+      .setFooter({
+        text: `Что-бы узнать по подробнее об аниме введите команду >anilist ${anime.anilist} или нажмите на кнопку`,
+      });
 
     const showAnimeButton = new MessageActionRow().addComponents(
       new MessageButton()

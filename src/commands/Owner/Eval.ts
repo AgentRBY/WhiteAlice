@@ -38,7 +38,7 @@ export default new Command({
       }
       if (response.length > 5950) {
         response = response.slice(0, 5950) + '...';
-        embed.setFooter(`Обрезано ${response.length - 5950} символов`);
+        embed.setFooter({ text: `Обрезано ${response.length - 5950} символов` });
       }
 
       embed.setDescription(response);
@@ -49,7 +49,7 @@ export default new Command({
 
       if (formattedError.length > 1950) {
         formattedError = formattedError.slice(0, 1950) + '...';
-        embed.setFooter(`Обрезано ${formattedError.length - 5950} символов`);
+        embed.setFooter({ text: `Обрезано ${formattedError.length - 5950} символов` });
       }
 
       embed.setDescription(formattedError);

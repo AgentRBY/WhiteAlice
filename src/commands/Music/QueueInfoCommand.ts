@@ -20,7 +20,12 @@ export default new Command({
       return message.reply({ embeds: [errorEmbed], allowedMentions: { repliedUser: false } });
     }
 
-    const embed = new MessageEmbed().setAuthor('Плейлист', EmojisLinks.Headphone).setColor(Colors.Green);
+    const embed = new MessageEmbed()
+      .setAuthor({
+        name: 'Плейлист',
+        iconURL: EmojisLinks.Headphone,
+      })
+      .setColor(Colors.Green);
 
     const repeatModes = ['Выключен', 'Повторение песни', 'Повторение плейлиста'];
 

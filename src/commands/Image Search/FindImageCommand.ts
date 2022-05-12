@@ -42,7 +42,7 @@ export default new Command({
     if (!isImageLink(link.toLowerCase()) && !isGifLink(link.toLowerCase())) {
       const errorEmbed = ErrorEmbed(
         '**Ссылка не ведёт на изображение. Допустимые форматы: `png, jpeg, jpg, webp, bmp, gif`**',
-      ).setFooter('Для gif-анимаций в поиске будет использоваться первый кадр');
+      ).setFooter({ text: 'Для gif-анимаций в поиске будет использоваться первый кадр' });
       return message.reply({ embeds: [errorEmbed], allowedMentions: { repliedUser: false } });
     }
 
@@ -98,14 +98,14 @@ export default new Command({
            **Ссылка:** [клик](${site.url})`;
 
         if (anime.anidb_aid) {
-          embed.setFooter(
-            `Что-бы узнать по подробнее об аниме введите команду >anidb ${anime.anidb_aid} или нажмите на кнопку`,
-          );
+          embed.setFooter({
+            text: `Что-бы узнать по подробнее об аниме введите команду >anidb ${anime.anidb_aid} или нажмите на кнопку`,
+          });
         }
       }
 
       embed.setDescription(description);
-      embed.setFooter(`${embed.footer?.text || ''}\nСтраница ${page}/${pages}`);
+      embed.setFooter({ text: `${embed.footer?.text || ''}\nСтраница ${page}/${pages}` });
 
       return embed;
     };

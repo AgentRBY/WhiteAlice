@@ -94,13 +94,13 @@ export default new Command({
     const generateEmbed = (site: MappedSite, page: number, pages: number) => {
       return new MessageEmbed()
         .setColor(Colors.Green)
-        .setAuthor('Найден результат')
+        .setAuthor({ name: 'Найден результат' })
         .setDescription(
           `Найдено на: [${site.info.url}](${site.url})
            Описание сайта: ${site.info.type}`,
         )
         .setThumbnail(site.originalImage.url)
-        .setFooter(`Страница ${page}/${pages}`);
+        .setFooter({ text: `Страница ${page}/${pages}` });
     };
 
     const pages = filteredSites.map((site, index) => generateEmbed(site, index + 1, filteredSites.length));

@@ -32,14 +32,18 @@ export default new Command({
 
     if (!songId || Number.isNaN(songId)) {
       const embed = ErrorEmbed('**Введите айди трека**');
-      embed.setFooter('Примечание: айди трека это - номер трека в плейлисте, его можно узнать прописав команду >queue');
+      embed.setFooter({
+        text: 'Примечание: айди трека это - номер трека в плейлисте, его можно узнать прописав команду >queue',
+      });
       message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
       return;
     }
 
     if (songId <= 0 || songId > queue.songs.length) {
       const embed = ErrorEmbed('**Песни под данным айди не найдено**');
-      embed.setFooter('Примечание: айди трека это - номер трека в плейлисте, его можно узнать прописав команду >queue');
+      embed.setFooter({
+        text: 'Примечание: айди трека это - номер трека в плейлисте, его можно узнать прописав команду >queue',
+      });
       message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
       return;
     }

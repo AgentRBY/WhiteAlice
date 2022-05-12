@@ -61,7 +61,7 @@ export default new Command({
 
     if (!AvailableFilters.has(filter)) {
       const embed = ErrorEmbed('Фильтр не найден');
-      embed.setFooter('Что-бы узнать доступные фильтры пропишите >filters list');
+      embed.setFooter({ text: 'Что-бы узнать доступные фильтры пропишите >filters list' });
       message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
       return;
     }

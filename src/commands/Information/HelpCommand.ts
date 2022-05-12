@@ -42,7 +42,7 @@ export default new Command({
         .setDescription(
           `${Emojis.Info} **Всего \`${client.commands.size}\` команд в \`${client.categories.size}\` категориях **`,
         )
-        .setFooter(`Что бы увидеть подробно про каждую команду, используйте: ${prefix}help [имя команды]`)
+        .setFooter({ text: `Что бы увидеть подробно про каждую команду, используйте: ${prefix}help [имя команды]` })
         .setColor(Colors.Blue);
 
       return message.reply({ embeds: [commandsEmbed], allowedMentions: { repliedUser: false } });

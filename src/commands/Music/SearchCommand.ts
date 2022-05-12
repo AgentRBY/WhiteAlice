@@ -87,12 +87,12 @@ export default new Command({
     const description = `**\`Введите номер одной из песен:\`** \n${formattedSearchResults}`;
 
     const embed = new MessageEmbed()
-      .setAuthor('Поиск', EmojisLinks.Headphone)
+      .setAuthor({ name: 'Поиск', iconURL: EmojisLinks.Headphone })
       .setDescription(description)
       .setColor(Colors.Green);
 
     if (searchType === 'playlist') {
-      embed.setFooter('Поиск по плейлистам');
+      embed.setFooter({ text: 'Поиск по плейлистам' });
     }
 
     message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });

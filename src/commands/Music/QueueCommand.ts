@@ -30,9 +30,9 @@ export default new Command({
 
     const generateEmbed = (songs: Song[], page: number, pages: number) => {
       const embed = new MessageEmbed()
-        .setAuthor('Плейлист', EmojisLinks.Headphone)
+        .setAuthor({ name: 'Плейлист', iconURL: EmojisLinks.Headphone })
         .setColor(Colors.Green)
-        .setFooter(`Страница ${page}/${pages}`);
+        .setFooter({ text: `Страница ${page}/${pages}` });
 
       const description = songs
         .map((song, index) => {

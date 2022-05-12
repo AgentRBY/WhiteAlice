@@ -44,9 +44,9 @@ export default new Command({
       const addedSong = queue.songs[1];
 
       const embed = new MessageEmbed()
-        .setAuthor('Музыка', EmojisLinks.Music)
+        .setAuthor({ name: 'Музыка', iconURL: EmojisLinks.Music })
         .setDescription(`Трек **${addedSong.name}** был добавлен в плейлист и текущая песня **пропущена**`)
-        .setFooter(`Длительность: ${addedSong.formattedDuration}`)
+        .setFooter({ text: `Длительность: ${addedSong.formattedDuration}` })
         .setColor(Colors.Green);
       return message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
     }
