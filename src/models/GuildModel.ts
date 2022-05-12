@@ -13,6 +13,7 @@ const GuildSchema = new Schema<IGuildModel>({
       createdBy: String,
     },
   ],
+  mediaChannels: [String],
 });
 
 export const GuildModel = model<IGuildModel>('GuildData', GuildSchema);

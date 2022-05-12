@@ -10,6 +10,7 @@ import { NHentaiLink } from '../../modules/NHentaiLink';
 import { AniDBLink } from '../../modules/AniDBLink';
 import { AnilistLink } from '../../modules/AnilistLink';
 import { MemberModel } from '../../models/MemberModel';
+import { MediaChannel } from '../../modules/MediaChannel';
 
 export default new Event({
   name: 'messageCreate',
@@ -27,13 +28,6 @@ export default new Event({
       return;
     }
 
-    AntiScamModule(client, message);
-    AntiPingModule(client, message);
-
-    NHentaiLink(client, message);
-    AniDBLink(client, message);
-    AnilistLink(client, message);
-
     let GuildData = await GuildModel.findById(message.guildId);
 
     if (!GuildData) {
@@ -44,6 +38,15 @@ export default new Event({
 
       await GuildData.save();
     }
+
+    AntiScamModule(client, message);
+    AntiPingModule(client, message);
+
+    NHentaiLink(client, message);
+    AniDBLink(client, message);
+    AnilistLink(client, message);
+
+    MediaChannel(client, message, GuildData);
 
     let MemberData = await MemberModel.findById(`${message.author.id}-${message.guildId}`);
 

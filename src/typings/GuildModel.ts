@@ -3,6 +3,7 @@ export interface IGuildModel {
   prefix: string;
   testersID: string[];
   notes: Note[];
+  mediaChannels: string[];
 }
 
 export interface Note {
