@@ -52,7 +52,8 @@ export default new Command({
     if (
       member.permissions.has('BAN_MEMBERS') ||
       member.permissions.has('MODERATE_MEMBERS') ||
-      member.roles.highest.comparePositionTo(message.guild.me.roles.highest) >= 0
+      member.roles.highest.comparePositionTo(message.guild.me.roles.highest) >= 0 ||
+      member.permissions.has('ADMINISTRATOR')
     ) {
       const embed = ErrorEmbed('У вас нет прав, что бы замутить этого пользователя');
       message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
