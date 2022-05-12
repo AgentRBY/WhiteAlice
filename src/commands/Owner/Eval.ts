@@ -1,8 +1,8 @@
-import {MessageEmbed} from 'discord.js';
-import {inspect} from 'util';
-import {Command} from '../../structures/Command';
-import {ErrorEmbed} from '../../utils/Embed';
-import {Colors} from '../../static/Colors';
+import { MessageEmbed } from 'discord.js';
+import { inspect } from 'util';
+import { Command } from '../../structures/Command';
+import { ErrorEmbed } from '../../utils/Embed';
+import { Colors } from '../../static/Colors';
 
 export default new Command({
   name: 'eval',
@@ -12,12 +12,12 @@ export default new Command({
   usage: 'eval <code>',
   examples: [
     {
-      command: 'eval console.log(\'\')',
+      command: "eval console.log('')",
       description: 'Выводит в консоль пустую строку',
     },
   ],
   ownerOnly: true,
-  run: async ({ client, message, args }) => {
+  run: async ({ client, message, args, GuildData, MemberData }) => {
     if (!args.length) {
       const errorEmbed = ErrorEmbed('**Введите любой код.**');
       return message.reply({ embeds: [errorEmbed], allowedMentions: { repliedUser: false } });
