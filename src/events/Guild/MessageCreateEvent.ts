@@ -11,7 +11,6 @@ import { AniDBLink } from '../../modules/AniDBLink';
 import { AnilistLink } from '../../modules/AnilistLink';
 import { MemberModel } from '../../models/MemberModel';
 import { MediaChannel } from '../../modules/MediaChannel';
-import { performance } from 'perf_hooks';
 
 export default new Event({
   name: 'messageCreate',
@@ -35,7 +34,6 @@ export default new Event({
       await GuildData.save();
     }
 
-    const p1 = performance.now();
     AntiScamModule(client, message);
     AntiPingModule(client, message);
 
@@ -44,7 +42,6 @@ export default new Event({
     AnilistLink(client, message);
 
     MediaChannel(client, message, GuildData);
-    const p2 = performance.now();
 
     let MemberData = await MemberModel.findById(`${message.author.id}-${message.guildId}`);
 
@@ -139,9 +136,5 @@ export default new Event({
     }
 
     command.run({ client, message, args: cleanArgs, keys, attributes, GuildData, MemberData });
-    const p3 = performance.now();
-
-    console.log('Call to exec command took ' + (p2 - p1) + ' milliseconds.');
-    console.log('Call to exec command took2 ' + (p3 - p2) + ' milliseconds.');
   },
 });
