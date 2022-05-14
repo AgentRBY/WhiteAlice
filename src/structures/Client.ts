@@ -8,6 +8,12 @@ import SoundCloudPlugin from '@distube/soundcloud';
 import SpotifyPlugin from '@distube/spotify';
 import AniDB from 'anidbjs';
 import mongoose from 'mongoose';
+import { MongoData } from '../typings/Database';
+import { IMemberModel } from '../typings/MemberModel';
+import { CacheManager } from './CacheManager';
+import { IGuildModel } from '../typings/GuildModel';
+import { MemberModel } from '../models/MemberModel';
+import { GuildModel } from '../models/GuildModel';
 
 const globPromise = promisify(glob);
 
@@ -19,6 +25,8 @@ export class ExtendClient extends Client {
   aniDB = new AniDB({ client: 'hltesttwo', version: 9 });
   config = process.env;
   invites: Collection<string, Collection<string, number>> = new Collection();
+  memberBase: CacheManager<MongoData<IMemberModel>>;
+  guildBase: CacheManager<MongoData<IGuildModel>>;
 
   constructor() {
     super({
@@ -48,6 +56,15 @@ export class ExtendClient extends Client {
 
     await this.loadCommands();
     await this.loadEvents();
+
+    this.memberBase = new CacheManager({
+      maxCacheSize: 100,
+      getCallback: ExtendClient.getMemberBase,
+    });
+    this.guildBase = new CacheManager({
+      maxCacheSize: 100,
+      getCallback: ExtendClient.getGuildBase,
+    });
 
     await this.login(process.env.botToken);
   }
@@ -93,5 +110,13 @@ export class ExtendClient extends Client {
         this.on(event.name as keyof ClientEvents, event.run.bind(null, this));
       }
     }
+  }
+
+  private static async getMemberBase(id: string): Promise<MongoData<IMemberModel>> {
+    return MemberModel.findById(id);
+  }
+
+  private static async getGuildBase(id: string): Promise<MongoData<IGuildModel>> {
+    return GuildModel.findById(id);
   }
 }

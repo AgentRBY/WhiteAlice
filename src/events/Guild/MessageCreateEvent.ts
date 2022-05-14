@@ -23,7 +23,7 @@ export default new Event({
       return;
     }
 
-    let GuildData = await GuildModel.findById(message.guildId);
+    let GuildData = await client.guildBase.get(message.guildId);
 
     if (!GuildData) {
       GuildData = await GuildModel.create({
@@ -43,7 +43,7 @@ export default new Event({
 
     MediaChannel(client, message, GuildData);
 
-    let MemberData = await MemberModel.findById(`${message.author.id}-${message.guildId}`);
+    let MemberData = await client.memberBase.get(`${message.author.id}-${message.guildId}`);
 
     if (!MemberData) {
       MemberData = await MemberModel.create({

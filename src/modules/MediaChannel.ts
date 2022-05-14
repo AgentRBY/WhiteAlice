@@ -2,14 +2,10 @@ import { ExtendClient } from '../structures/Client';
 import { Message, MessageEmbed } from 'discord.js';
 import { Colors } from '../static/Colors';
 import { Emojis } from '../static/Emojis';
-import { Document } from 'mongoose';
 import { IGuildModel } from '../typings/GuildModel';
+import { MongoData } from '../typings/Database';
 
-export function MediaChannel(
-  client: ExtendClient,
-  message: Message,
-  GuildData: Document<unknown, unknown, IGuildModel> & IGuildModel,
-): void {
+export function MediaChannel(client: ExtendClient, message: Message, GuildData: MongoData<IGuildModel>): void {
   const mediaChannels = GuildData.mediaChannels;
 
   if (!mediaChannels.includes(message.channelId)) {
