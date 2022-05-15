@@ -1,7 +1,7 @@
 import { Command } from '../../structures/Command';
 import { ErrorEmbed } from '../../utils/Embed';
 import { client } from '../../app';
-import { Message, MessageEmbed } from 'discord.js';
+import { Message, MessageEmbed, TextChannel } from 'discord.js';
 import { EmojisLinks } from '../../static/Emojis';
 import { Colors } from '../../static/Colors';
 
@@ -109,7 +109,11 @@ export default new Command({
         const songIndex = Number(collected.first().content) - 1;
         const song = searchResults[songIndex];
 
-        client.disTube.play(message, song);
+        client.disTube.play(message.member.voice.channel, song, {
+          message,
+          member: message.member,
+          textChannel: message.channel as TextChannel,
+        });
       })
       .catch(() => {
         const embed = ErrorEmbed('Вы не выбрали никакую песню');

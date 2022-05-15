@@ -34,8 +34,8 @@ export default new Command({
     }
 
     const skipSong = attributes.has('S') || attributes.has('s');
-    await client.disTube.play(message, args.join(' '), {
-      unshift: true,
+    await client.disTube.play(message.member.voice.channel, args.join(' '), {
+      position: 1,
       skip: skipSong,
     });
 
