@@ -10,7 +10,8 @@ export default new Command({
   name: 'randomAnime',
   category: 'Utils',
   aliases: [],
-  description: `Ищет случайное аниме по тегам. Теги перечисляются через пробел, если в теге два слова, то писать через нижнее подчёркивание (_)`,
+  description:
+    'Ищет случайное аниме по тегам. Теги перечисляются через пробел, если в теге два слова, то писать через нижнее подчёркивание (_)',
   examples: [
     {
       command: 'randomAnime Food',
@@ -23,7 +24,7 @@ export default new Command({
   ],
   usage: 'randomAnime',
   run: async ({ message, args }) => {
-    const tags = args.map((arg) => `"${upAllFirstLatter(arg.replace('_', ' '))}"`);
+    const tags = args.map((argument) => `"${upAllFirstLatter(argument.replace('_', ' '))}"`);
 
     if (!tags.length) {
       const embed = ErrorEmbed('**Введите один или несколько тегов**');

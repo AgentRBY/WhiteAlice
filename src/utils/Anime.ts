@@ -100,6 +100,7 @@ export async function formatAnilistAnime(anime: AnimeEntry): Promise<MessageEmbe
   return new MessageEmbed().setDescription(description).setImage(anime.coverImage.large).setColor(Colors.Green);
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function formatAniDBAnime(anime: any): MessageEmbed {
   const lastEpisodeId = anime.episodes.reduce(
     (accumulator, current, index) => (moment(current.airDate).isAfter() ? accumulator : index),

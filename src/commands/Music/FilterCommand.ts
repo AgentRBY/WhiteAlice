@@ -44,7 +44,7 @@ export default new Command({
     }
 
     if (filter === 'list') {
-      const availableFilters = Array.from(AvailableFilters).join('`, `');
+      const availableFilters = [...AvailableFilters].join('`, `');
       const embed = SuccessEmbed(`Доступные фильтры: \`${availableFilters}\``);
       message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
       return;

@@ -1,5 +1,5 @@
-import {ErrorEmbed, SuccessEmbed} from '../../utils/Embed';
-import {Command} from '../../structures/Command';
+import { ErrorEmbed, SuccessEmbed } from '../../utils/Embed';
+import { Command } from '../../structures/Command';
 
 export default new Command({
   name: 'pause',

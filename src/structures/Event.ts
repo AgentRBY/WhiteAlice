@@ -1,4 +1,4 @@
-import {EventType} from '../typings/Event';
+import { EventType } from '../typings/Event';
 
 export class Event {
   constructor(eventOptions: EventType) {

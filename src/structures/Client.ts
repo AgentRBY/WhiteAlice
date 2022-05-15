@@ -44,12 +44,15 @@ export class ExtendClient extends Client {
     this.disTube = new DisTube(this, {
       searchSongs: 1,
       searchCooldown: 30,
-      emptyCooldown: 0,
-      leaveOnEmpty: true,
+      emptyCooldown: 20,
       leaveOnFinish: true,
-      leaveOnStop: true,
       plugins: [new SoundCloudPlugin(), new SpotifyPlugin()],
       youtubeCookie: this.config.distubeCookie,
+      youtubeDL: false,
+      nsfw: true,
+      ytdlOptions: {
+        quality: 'highestvideo',
+      },
     });
 
     await mongoose.connect(process.env.mongoURI).catch((error) => console.log(error));
@@ -79,7 +82,7 @@ export class ExtendClient extends Client {
   }
 
   private async loadCommands() {
-    const commandFiles = await globPromise(`${__dirname}/../commands/**/*.{js,ts}`);
+    const commandFiles = await globPromise('./src/commands/**/*.{ts,js}', { realpath: true });
 
     commandFiles.map(async (commandFile: string) => {
       const file: CommandType = await ExtendClient.importFile(commandFile);
@@ -96,7 +99,7 @@ export class ExtendClient extends Client {
   }
 
   private async loadEvents() {
-    const eventFiles = await globPromise(`${__dirname}/../events/**/*.{js,ts}`);
+    const eventFiles = await globPromise('./src/events/**/*.{ts,js}', { realpath: true });
 
     for (const eventFile of eventFiles) {
       const event: EventType = await ExtendClient.importFile(eventFile);

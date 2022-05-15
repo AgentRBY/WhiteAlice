@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { MessageEmbed } from 'discord.js';
 import { inspect } from 'util';
 import { Command } from '../../structures/Command';

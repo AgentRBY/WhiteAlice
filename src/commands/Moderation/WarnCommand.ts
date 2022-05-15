@@ -27,7 +27,7 @@ export default new Command({
   usage: 'warn <пользователь> [причина]',
   memberPermissions: ['BAN_MEMBERS'],
   run: async ({ message, args }) => {
-    let member = message.mentions.members.first();
+    const member = message.mentions.members.first();
 
     if (!member) {
       const embed = ErrorEmbed('**Введите пользователя**');

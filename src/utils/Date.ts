@@ -24,7 +24,7 @@ export function formatDuration(duration: Duration): string {
   const formattedHours = hours ? moment.duration(hours).locale('ru').humanize() : '';
   const formattedMinutes = minutes ? moment.duration(minutes).locale('ru').humanize() : '';
 
-  const formatterArray = [formattedDays, formattedHours, formattedMinutes].filter((item) => item);
+  const formatterArray = [formattedDays, formattedHours, formattedMinutes].filter(Boolean);
 
   return formatterArray.join(', ');
 }
@@ -38,7 +38,7 @@ export function formatDurationInPast(duration: Duration): string {
   const formattedHours = hours ? formatHours(hours) : '';
   const formattedMinutes = minutes ? formatMinutes(minutes) : '';
 
-  const formatterArray = [formattedDays, formattedHours, formattedMinutes].filter((item) => item);
+  const formatterArray = [formattedDays, formattedHours, formattedMinutes].filter(Boolean);
 
   return formatterArray.join(', ');
 }
@@ -142,6 +142,6 @@ export function getMinutesFromString(text: string): number {
   return Number(result[1] || 0);
 }
 
-export function momentToDiscordDate(moment: Moment, timeFormat: string = 'f') {
+export function momentToDiscordDate(moment: Moment, timeFormat = 'f') {
   return `<t:${moment.unix()}:${timeFormat}>`;
 }

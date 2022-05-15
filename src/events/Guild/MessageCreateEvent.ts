@@ -131,7 +131,7 @@ export default new Event({
     });
 
     if (attributes.has('help') || attributes.has('h')) {
-      client.commands.get('help').run({ client, message, args: [command.name] });
+      client.commands.get('help').run({ client, message, args: [command.name], GuildData });
       return;
     }
 

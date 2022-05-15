@@ -1,5 +1,6 @@
-import {ErrorEmbed} from '../../utils/Embed';
-import {Command} from '../../structures/Command';
+import { ErrorEmbed } from '../../utils/Embed';
+import { Command } from '../../structures/Command';
+import { TextChannel } from 'discord.js';
 
 export default new Command({
   name: 'play',
@@ -30,7 +31,11 @@ export default new Command({
     }
 
     try {
-      await client.disTube.play(message, args.join(' '));
+      await client.disTube.play(message.member.voice.channel, args.join(' '), {
+        message,
+        member: message.member,
+        textChannel: message.channel as TextChannel,
+      });
     } catch (error) {
       const embed = ErrorEmbed(`**Произошла ошибка ${error}**`);
       return message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });

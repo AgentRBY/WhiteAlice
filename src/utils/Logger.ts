@@ -1,18 +1,18 @@
-import colors from 'colors';
-import {sep} from 'path';
-import {upFirstLetter} from './strings';
+import picocolors from 'picocolors';
+import { sep } from 'path';
+import { upFirstLetter } from './strings';
 
 class Logger {
   public static error(error: Error): void {
-    console.log(`${colors.red('➤')}  ${colors.bgRed(' Error ')} ${this.formatError(error)}`);
+    console.log(`${picocolors.red('➤')}  ${picocolors.bgRed(' Error ')} ${this.formatError(error)}`);
   }
 
   public static info(text: string): void {
-    console.log(`${colors.blue('➤')}  ${colors.bgBlue(' Info ')} ${text}`);
+    console.log(`${picocolors.blue('➤')}  ${picocolors.bgBlue(' Info ')} ${text}`);
   }
 
   public static success(text: string): void {
-    console.log(`${colors.green('➤')}  ${colors.bgGreen.black(' Success ')} ${text}`);
+    console.log(`${picocolors.green('➤')}  ${picocolors.bgGreen(picocolors.black(' Success '))} ${text}`);
   }
 
   static formatError(error: Error): string {
@@ -20,9 +20,9 @@ class Logger {
     return `${upFirstLetter(errorMessage)} \n${this.parseStack(error.stack ?? '')
       .map((line) =>
         line
-          .replace(/^at +/, (m) => colors.gray(`➤  ${m}`))
-          .replace(/\((.+)\)/, (_, m) => `(${colors.cyan(m)})`)
-          .replace(/:(\d+):\d+/, (_, m) => colors.bold(` on line ${m}`)),
+          .replace(/^at +/, (m) => picocolors.gray(`➤  ${m}`))
+          .replace(/\((.+)\)/, (_, m) => `(${picocolors.cyan(m)})`)
+          .replace(/:(\d+):\d+/, (_, m) => picocolors.bold(` on line ${m}`)),
       )
       .join('\n')}`;
   }

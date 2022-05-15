@@ -27,7 +27,8 @@ export default new Command({
     },
     {
       command: 'search convolk - I fucked up -S',
-      description: `Выдаст ошибку, так как при безопасном поиске любые 16+ видео не попадают в результаты (в том числе и содержащие маты)`,
+      description:
+        'Выдаст ошибку, так как при безопасном поиске любые 16+ видео не попадают в результаты (в том числе и содержащие маты)',
     },
   ],
   usage: 'search <запрос>',
@@ -103,7 +104,7 @@ export default new Command({
       );
     };
     message.channel
-      .awaitMessages({ filter: collectorFilter, max: 1, time: 30000 })
+      .awaitMessages({ filter: collectorFilter, max: 1, time: 30_000 })
       .then((collected) => {
         const songIndex = Number(collected.first().content) - 1;
         const song = searchResults[songIndex];

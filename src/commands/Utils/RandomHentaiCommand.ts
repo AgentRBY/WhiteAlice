@@ -10,7 +10,8 @@ export default new Command({
   name: 'randomHentai',
   category: 'Utils',
   aliases: [],
-  description: `Выводит случайный хентай. Можно искать по тегам, если у тега два слова, то нужно писать его через нижние подчёркивание (_)`,
+  description:
+    'Выводит случайный хентай. Можно искать по тегам, если у тега два слова, то нужно писать его через нижние подчёркивание (_)',
   examples: [
     {
       command: 'randomHentai',
@@ -46,11 +47,11 @@ export default new Command({
 
     const embed = formatNHentaiManga(manga);
 
-    message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } }).then((msg) => {
+    message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } }).then((message_) => {
       const excludedTags = new Set(['lolicon', 'shotacon', 'guro', 'coprophagia', 'scat']);
 
       if (manga.tags.tags.some((tag) => excludedTags.has(tag.name))) {
-        setTimeout(() => msg.delete(), 30_000);
+        setTimeout(() => message_.delete(), 30_000);
       }
     });
   },

@@ -1,4 +1,4 @@
-# Packages #
+# Package manages
 # npm
 node_modules/
 
@@ -11,6 +11,8 @@ node_modules/
 !.yarn/versions
 .pnp.*
 
-/config.json
-
+# Enviroment
 .env
+
+# ESLint
+.eslintcache

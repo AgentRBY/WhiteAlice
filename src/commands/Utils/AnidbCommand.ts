@@ -37,11 +37,11 @@ export default new Command({
 
     const embed = formatAniDBAnime(anime);
 
-    message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } }).then((msg) => {
+    message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } }).then((message_) => {
       const tagsBlackList = new Set(['Loli']);
 
       if (anime.tags.some((tag) => tagsBlackList.has(tag))) {
-        setTimeout(() => msg.delete(), 30_000);
+        setTimeout(() => message_.delete(), 30_000);
       }
     });
   },

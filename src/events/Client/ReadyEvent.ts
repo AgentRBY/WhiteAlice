@@ -1,7 +1,7 @@
-import {Event} from '../../structures/Event';
-import {ExtendClient} from '../../structures/Client';
-import {sleep} from '../../utils/Other';
-import {Collection} from 'discord.js';
+import { Event } from '../../structures/Event';
+import { ExtendClient } from '../../structures/Client';
+import { sleep } from '../../utils/Other';
+import { Collection } from 'discord.js';
 
 export default new Event({
   name: 'ready',

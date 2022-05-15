@@ -1,6 +1,6 @@
-import {Event} from '../../structures/Event';
-import {ExtendClient} from '../../structures/Client';
-import {Invite} from 'discord.js';
+import { Event } from '../../structures/Event';
+import { ExtendClient } from '../../structures/Client';
+import { Invite } from 'discord.js';
 
 export default new Event({
   name: 'inviteCreate',

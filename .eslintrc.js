@@ -13,16 +13,7 @@ module.exports = {
     'prettier',
   ],
   rules: {
-    'unicorn/filename-case': [
-      'error',
-      {
-        cases: {
-          camelCase: true,
-          pascalCase: true,
-          kebabCase: true,
-        },
-      },
-    ],
+    'unicorn/filename-case': 'off',
     'unicorn/prevent-abbreviations': [
       'error',
       {
@@ -44,9 +35,12 @@ module.exports = {
     'unicorn/prefer-node-protocol': 'off',
     'unicorn/import-style': 'off',
     'unicorn/no-array-reduce': 'off',
+    'unicorn/consistent-function-scoping': 'off',
+    'unicorn/no-new-array': 'off',
     'import/no-unresolved': 'off',
     '@typescript-eslint/no-var-requires': 'off',
     '@typescript-eslint/ban-ts-comment': 'off',
+    '@typescript-eslint/no-empty-function': 'off',
     quotes: ['error', 'single'],
   },
 };

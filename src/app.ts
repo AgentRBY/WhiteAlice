@@ -5,6 +5,6 @@ require('dotenv').config();
 export const client = new ExtendClient();
 try {
   client.start();
-} catch (e) {
-  console.log(e);
+} catch (error) {
+  console.log(error);
 }

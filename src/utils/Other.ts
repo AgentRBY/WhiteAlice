@@ -25,7 +25,7 @@ export function isMediaLink(text: string): boolean {
   return isImageLink(text) || isVideoLink(text) || isGifLink(text);
 }
 
-export function removeQueryParams(text: string): string {
+export function removeQueryParameters(text: string): string {
   return text.split('?')[0];
 }
 

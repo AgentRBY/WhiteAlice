@@ -1,6 +1,6 @@
-import {Event} from '../../structures/Event';
-import {ExtendClient} from '../../structures/Client';
-import {Guild} from 'discord.js';
+import { Event } from '../../structures/Event';
+import { ExtendClient } from '../../structures/Client';
+import { Guild } from 'discord.js';
 
 export default new Event({
   name: 'guildDelete',

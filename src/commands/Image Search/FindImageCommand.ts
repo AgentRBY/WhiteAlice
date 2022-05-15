@@ -3,7 +3,7 @@ import { MessageActionRow, MessageEmbed } from 'discord.js';
 import { Colors } from '../../static/Colors';
 import { ErrorEmbed } from '../../utils/Embed';
 import { Command } from '../../structures/Command';
-import { isGifLink, isImageLink, isLink, removeQueryParams } from '../../utils/Other';
+import { isGifLink, isImageLink, isLink, removeQueryParameters as removeQueryParameters } from '../../utils/Other';
 import { formatNames } from '../../utils/strings';
 import { generateDefaultButtons, pagination } from '../../utils/Pagination';
 import { sauceNAORelevantSites } from '../../static/ImageSearch';
@@ -27,11 +27,11 @@ export default new Command({
 
     if (message.attachments.size) {
       const attachment = message.attachments.first();
-      link = removeQueryParams(attachment.url || attachment.proxyURL);
+      link = removeQueryParameters(attachment.url || attachment.proxyURL);
     }
 
     if (args.length) {
-      link = removeQueryParams(args[0]);
+      link = removeQueryParameters(args[0]);
     }
 
     if (!link || !isLink(link)) {
@@ -69,6 +69,7 @@ export default new Command({
       filteredSites = [results[0]];
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const generateEmbed = (site: any, sites: any[], page: number, pages: number) => {
       const characters =
         site.raw.data.characters || sites.find((site) => Boolean(site.raw.data.characters))?.characters;

@@ -1,7 +1,7 @@
-import {Command} from '../../structures/Command';
-import {Message, MessageEmbed} from 'discord.js';
-import {Emojis} from '../../static/Emojis';
-import {Colors} from '../../static/Colors';
+import { Command } from '../../structures/Command';
+import { Message, MessageEmbed } from 'discord.js';
+import { Emojis } from '../../static/Emojis';
+import { Colors } from '../../static/Colors';
 
 export default new Command({
   name: 'ping',

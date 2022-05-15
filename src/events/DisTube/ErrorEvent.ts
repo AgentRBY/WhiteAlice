@@ -16,7 +16,7 @@ export default new Event({
         channel.send({ embeds: [embed] });
         return;
       default:
-        console.log(error);
+        channel.send({ embeds: [ErrorEmbed(`Произошла ошибка: ${error}`)] });
         break;
     }
   },

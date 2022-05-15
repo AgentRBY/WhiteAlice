@@ -8,7 +8,7 @@ import { MessageActionRow, MessageEmbed } from 'discord.js';
 import { Colors } from '../../static/Colors';
 import { Site, WhitelistSite } from '../../typings/YandexImagesResponse';
 import { generateDefaultButtons, pagination } from '../../utils/Pagination';
-import { removeQueryParams } from '../../utils/Other';
+import { removeQueryParameters as removeQueryParameters } from '../../utils/Other';
 
 const request = promisify(require('request'));
 
@@ -16,7 +16,7 @@ export default new Command({
   name: 'yandex-image-search',
   category: 'Image Search',
   aliases: ['yis'],
-  description: `Поиск изображений через Яндекс. Бот ищет картинку через Яндекс и фильтрует результаты по URL`,
+  description: 'Поиск изображений через Яндекс. Бот ищет картинку через Яндекс и фильтрует результаты по URL',
   examples: [
     {
       command: 'findImage https://i.imgur.com/KlQUCJG.png',
@@ -45,11 +45,11 @@ export default new Command({
 
     if (message.attachments.size) {
       const attachment = message.attachments.first();
-      imageLink = removeQueryParams(attachment.url || attachment.proxyURL);
+      imageLink = removeQueryParameters(attachment.url || attachment.proxyURL);
     }
 
     if (args.length) {
-      imageLink = removeQueryParams(args[0]);
+      imageLink = removeQueryParameters(args[0]);
     }
 
     if (!imageLink) {
@@ -72,7 +72,7 @@ export default new Command({
 
     const filteredSites: MappedSite[] = result.sites
       .map((site) => {
-        const formattedURL = site.url.replace(/^(?:https?:\/\/)?(?:[^@\/\n]+@)?(?:www\.)?/, '');
+        const formattedURL = site.url.replace(/^(?:https?:\/\/)?(?:[^\n/@]+@)?(?:www\.)?/, '');
 
         const info = yandexWhitelistSites.find((whitelistSite) => formattedURL.startsWith(whitelistSite.url));
 
@@ -82,7 +82,7 @@ export default new Command({
 
         return { ...site, info };
       })
-      .filter((site) => site)
+      .filter(Boolean)
       .sort((firstSite, secondarySite) => secondarySite.info.priority - firstSite.info.priority);
 
     if (!filteredSites.length) {

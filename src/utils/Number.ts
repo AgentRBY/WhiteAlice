@@ -1,5 +1,5 @@
 export function isNumber(text: string | number): boolean {
-  return !isNaN(Number(text));
+  return !Number.isNaN(Number(text));
 }
 
 export function getRandomInt(min: number, max: number): number {

@@ -5,7 +5,7 @@ export const pagination = (
   pages: MessageEmbed[],
   buttons: [MessageButton, MessageButton] = generateDefaultButtons(pages.length),
 ) => {
-  const [prevButton, nextButton] = buttons;
+  const [previousButton, nextButton] = buttons;
   const pagesCount = pages.length;
   let currentPage = 1;
 
@@ -13,12 +13,12 @@ export const pagination = (
 
   const collector = message.createMessageComponentCollector({
     filter: (interaction: ButtonInteraction) =>
-      interaction.customId === prevButton.customId || interaction.customId === nextButton.customId,
+      interaction.customId === previousButton.customId || interaction.customId === nextButton.customId,
     idle: 120_000,
   });
 
   collector.on('collect', (interaction: ButtonInteraction) => {
-    currentPage += interaction.customId === prevButton.customId ? -1 : 1;
+    currentPage += interaction.customId === previousButton.customId ? -1 : 1;
 
     buttonsRow.components[0].setDisabled(currentPage === 1);
     buttonsRow.components[1].setDisabled(currentPage === pagesCount);
@@ -35,10 +35,6 @@ export const pagination = (
       return;
     }
 
-    if (message.deleted) {
-      return;
-    }
-
     buttonsRow.components[0].setDisabled(true);
     buttonsRow.components[1].setDisabled(true);
 
@@ -51,13 +47,13 @@ export const pagination = (
 
 export const generateDefaultButtons = (
   pages: number,
-  prevButtonName: string = 'Предыдущая страница',
-  nextButtonName: string = 'Следующая страница',
+  previousButtonName = 'Предыдущая страница',
+  nextButtonName = 'Следующая страница',
 ): [MessageButton, MessageButton] => {
   return [
     new MessageButton()
       .setCustomId('yandexImageSearch_Prev')
-      .setLabel(prevButtonName)
+      .setLabel(previousButtonName)
       .setStyle('PRIMARY')
       .setDisabled(true),
     new MessageButton()
