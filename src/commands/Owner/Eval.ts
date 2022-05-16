@@ -13,7 +13,7 @@ export default new Command({
   usage: 'eval <code>',
   examples: [
     {
-      command: "eval console.log('')",
+      command: 'eval console.log("")',
       description: 'Выводит в консоль пустую строку',
     },
   ],
