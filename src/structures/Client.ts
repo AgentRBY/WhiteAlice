@@ -82,7 +82,7 @@ export class ExtendClient extends Client {
   }
 
   private async loadCommands() {
-    const commandFiles = await globPromise('./src/commands/**/*.{ts,js}', { realpath: true });
+    const commandFiles = await globPromise(`${__dirname}/../commands/**/*.{js,ts}`);
 
     commandFiles.map(async (commandFile: string) => {
       const file: CommandType = await ExtendClient.importFile(commandFile);
@@ -99,7 +99,7 @@ export class ExtendClient extends Client {
   }
 
   private async loadEvents() {
-    const eventFiles = await globPromise('./src/events/**/*.{ts,js}', { realpath: true });
+    const eventFiles = await globPromise(`${__dirname}/../events/**/*.{js,ts}`);
 
     for (const eventFile of eventFiles) {
       const event: EventType = await ExtendClient.importFile(eventFile);
