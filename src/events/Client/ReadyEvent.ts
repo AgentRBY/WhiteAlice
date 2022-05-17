@@ -2,6 +2,8 @@ import { Event } from '../../structures/Event';
 import { ExtendClient } from '../../structures/Client';
 import { sleep } from '../../utils/Other';
 import { Collection } from 'discord.js';
+import { Activities } from '../../static/Activities';
+import { getRandomInt } from '../../utils/Number';
 
 export default new Event({
   name: 'ready',
@@ -15,6 +17,10 @@ export default new Event({
         client.invites.set(guild.id, new Collection(firstInvites.map((invite) => [invite.code, invite.uses])));
       }
     });
+
+    setInterval(() => {
+      client.user.setActivity(Activities[getRandomInt(0, Activities.length - 1)]);
+    }, 120_000);
 
     console.log(`${client.user.username} ready`);
   },
