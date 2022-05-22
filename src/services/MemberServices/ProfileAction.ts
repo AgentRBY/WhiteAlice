@@ -7,5 +7,8 @@ export class ProfileAction {
     const MemberData = await this.getMemberData(id);
 
     MemberData.messageCount++;
+    if (MemberData.messageCount % 10 === 0) {
+      this.setMemberData(id, MemberData);
+    }
   }
 }
