@@ -24,7 +24,7 @@ export default new Command({
     },
   ],
   run: async ({ client, message, args }) => {
-    const prefix = client.service.getPrefix(message.guildId);
+    const prefix = await client.service.getPrefix(message.guildId);
 
     if (!args.length) {
       const fields: EmbedFieldData[] = [...client.categories.keys()].map((category) => {
