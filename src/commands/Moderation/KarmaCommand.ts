@@ -1,6 +1,6 @@
 import { Command } from '../../structures/Command';
 import { getMemberBaseId } from '../../utils/Other';
-import { ErrorEmbed, SuccessEmbed } from '../../utils/Embed';
+import { SuccessEmbed } from '../../utils/Embed';
 import { KARMA_FOR_BAN, KARMA_FOR_MUTE, KARMA_FOR_WARN } from '../../static/Punishment';
 
 export default new Command({
@@ -24,7 +24,7 @@ export default new Command({
     const karma = await client.service.getKarma(getMemberBaseId(member));
 
     if (!karma) {
-      const embed = ErrorEmbed('У вас нет кармы');
+      const embed = SuccessEmbed('У вас нет кармы');
       message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
       return;
     }
