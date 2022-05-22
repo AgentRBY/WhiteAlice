@@ -24,7 +24,7 @@ export default new Command({
       return;
     }
 
-    if (!client.service.isMediaChannel(message.guildId, channelId)) {
+    if (!(await client.service.isMediaChannel(message.guildId, channelId))) {
       const embed = ErrorEmbed('Канал не найдено в списке Каналов только для медиа контента');
       message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
       return;

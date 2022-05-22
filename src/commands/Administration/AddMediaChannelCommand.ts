@@ -36,7 +36,8 @@ export default new Command({
       return;
     }
 
-    if (client.service.isMediaChannel(message.guildId, channelId)) {
+    console.log('test');
+    if (await client.service.isMediaChannel(message.guildId, channelId)) {
       const embed = ErrorEmbed('Канал уже добавлен');
       message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
       return;

@@ -33,7 +33,7 @@ export default new Event({
 
     client.service.incrementMessageCount(getMemberBaseId(message.member));
 
-    if (client.service.getKarma(getMemberBaseId(message.member)) === undefined) {
+    if ((await client.service.getKarma(getMemberBaseId(message.member))) === undefined) {
       client.service.recalculateKarma(getMemberBaseId(message.member));
     }
 
@@ -70,7 +70,8 @@ export default new Event({
 
     if (
       command.testersOnly &&
-      (client.service.isTester(message.guildId, message.author.id) || !client.getOwners().includes(message.author.id))
+      ((await client.service.isTester(message.guildId, message.author.id)) ||
+        !client.getOwners().includes(message.author.id))
     ) {
       const errorEmbed = ErrorEmbed('**Это команда доступна только тестировщикам**');
       message.reply({ embeds: [errorEmbed], allowedMentions: { repliedUser: false } });

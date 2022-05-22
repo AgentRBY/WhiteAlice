@@ -55,7 +55,7 @@ export default new Command({
 
       const content = args.slice(2).join(' ');
 
-      if (client.service.isNoteExist(message.guildId, name)) {
+      if (await client.service.isNoteExist(message.guildId, name)) {
         const embed = ErrorEmbed('Заметка с таким именем уже существует');
         message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
         return;
@@ -96,7 +96,7 @@ export default new Command({
         return;
       }
 
-      if (!client.service.isNoteExist(message.guildId, name)) {
+      if (!(await client.service.isNoteExist(message.guildId, name))) {
         const embed = ErrorEmbed('Заметка с таким именем не найдена');
         message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
         return;
