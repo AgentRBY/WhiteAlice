@@ -1,10 +1,11 @@
 import { Command } from '../../structures/Command';
 import { ErrorEmbed, SuccessEmbed } from '../../utils/Embed';
 import { isNumber } from '../../utils/Number';
-import { MemberModel } from '../../models/MemberModel';
 import { MessageEmbed } from 'discord.js';
 import { Colors } from '../../static/Colors';
 import { Emojis } from '../../static/Emojis';
+import { client } from '../../app';
+import { getMemberBaseId } from '../../utils/Other';
 
 export default new Command({
   name: 'removeWarn',
@@ -24,9 +25,9 @@ export default new Command({
   usage: 'removeWarn <пользователь> <номер предупреждения> [причина]',
   memberPermissions: ['BAN_MEMBERS'],
   run: async ({ message, args }) => {
-    const member = message.mentions.members.first();
+    const targetMember = message.mentions.members.first();
 
-    if (!member) {
+    if (!targetMember) {
       const embed = ErrorEmbed('Введите пользователя');
       message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
       return;
@@ -35,25 +36,25 @@ export default new Command({
 
     if (!isNumber(warningNumber)) {
       const embed = ErrorEmbed('Введите номер предупреждения').setFooter({
-        text: `Что бы узнать номер предупреждения пользователя введите >warns ${member.user.tag}`,
+        text: `Что бы узнать номер предупреждения пользователя введите >warns ${targetMember.user.tag}`,
       });
       message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
       return;
     }
 
-    const MemberData = await MemberModel.findById(`${member.id}-${message.guildId}`);
+    const warns = await client.service.getWarns(getMemberBaseId(targetMember));
 
-    if (MemberData.warns.length < warningNumber) {
+    if (warns.length < warningNumber) {
       const embed = ErrorEmbed('У пользователя нет предупреждения под этим номером').setFooter({
-        text: `Что бы узнать номер предупреждения пользователя введите >warns ${member.user.tag}`,
+        text: `Что бы узнать номер предупреждения пользователя введите >warns ${targetMember.user.tag}`,
       });
       message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
       return;
     }
 
-    const warningIndex = warningNumber - 1;
+    const warnId = warningNumber - 1;
 
-    if (MemberData.warns[warningIndex].removed) {
+    if (warns[warnId].removed) {
       const embed = ErrorEmbed('Предупреждение уже удалено');
       message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
       return;
@@ -61,17 +62,9 @@ export default new Command({
 
     const reason = args.slice(2).join(' ');
 
-    MemberData.warns[warningIndex].removed = true;
-    MemberData.warns[warningIndex].removedBy = message.author.id;
-    MemberData.warns[warningIndex].removedDate = Date.now();
+    client.service.removeWarn(getMemberBaseId(targetMember), warnId, message.author.id, reason);
 
-    if (reason) {
-      MemberData.warns[warningIndex].removedReason = reason;
-    }
-
-    MemberData.save();
-
-    const embed = SuccessEmbed(`У пользователя ${member} было снято предупреждение №${warningNumber}`);
+    const embed = SuccessEmbed(`У пользователя ${targetMember} было снято предупреждение №${warningNumber}`);
     const directEmbed = new MessageEmbed()
       .setColor(Colors.Blue)
       .setDescription(
@@ -85,6 +78,6 @@ export default new Command({
     }
 
     message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
-    member.send({ embeds: [directEmbed] });
+    targetMember.send({ embeds: [directEmbed] });
   },
 });

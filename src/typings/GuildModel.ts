@@ -1,5 +1,7 @@
+import { Snowflake } from 'discord.js';
+
 export interface IGuildModel {
-  _id: string;
+  _id: Snowflake;
   prefix: string;
   testersID: string[];
   notes: Note[];

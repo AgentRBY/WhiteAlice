@@ -14,6 +14,7 @@ import { CacheManager } from './CacheManager';
 import { IGuildModel } from '../typings/GuildModel';
 import { MemberModel } from '../models/MemberModel';
 import { GuildModel } from '../models/GuildModel';
+import { Service } from './Service';
 
 const globPromise = promisify(glob);
 
@@ -27,6 +28,7 @@ export class ExtendClient extends Client {
   invites: Collection<string, Collection<string, number>> = new Collection();
   memberBase: CacheManager<MongoData<IMemberModel>>;
   guildBase: CacheManager<MongoData<IGuildModel>>;
+  service: Service;
 
   constructor() {
     super({
@@ -57,16 +59,18 @@ export class ExtendClient extends Client {
 
     await mongoose.connect(process.env.mongoURI).catch((error) => console.log(error));
 
+    this.service = new Service(this);
+
     await this.loadCommands();
     await this.loadEvents();
 
     this.memberBase = new CacheManager({
       maxCacheSize: 100,
-      getCallback: ExtendClient.getMemberBase,
+      getCallback: this.getMemberBase,
     });
     this.guildBase = new CacheManager({
       maxCacheSize: 100,
-      getCallback: ExtendClient.getGuildBase,
+      getCallback: this.getGuildBase,
     });
 
     await this.login(process.env.botToken);
@@ -115,11 +119,32 @@ export class ExtendClient extends Client {
     }
   }
 
-  private static async getMemberBase(id: string): Promise<MongoData<IMemberModel>> {
-    return MemberModel.findById(id);
+  protected async getMemberBase(id: string): Promise<MongoData<IMemberModel>> {
+    let MemberData = await MemberModel.findById(id);
+
+    if (!MemberData) {
+      MemberData = await MemberModel.create({
+        _id: id,
+      });
+
+      await MemberData.save();
+    }
+
+    return MemberData;
   }
 
-  private static async getGuildBase(id: string): Promise<MongoData<IGuildModel>> {
-    return GuildModel.findById(id);
+  protected async getGuildBase(id: string): Promise<MongoData<IGuildModel>> {
+    let GuildData = await GuildModel.findById(id);
+
+    if (!GuildData) {
+      GuildData = await GuildModel.create({
+        _id: id,
+        prefix: this.config.prefix || '>',
+      });
+
+      await GuildData.save();
+    }
+
+    return GuildData;
   }
 }

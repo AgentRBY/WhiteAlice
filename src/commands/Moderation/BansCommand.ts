@@ -1,10 +1,11 @@
 import { Command } from '../../structures/Command';
-import { MemberModel } from '../../models/MemberModel';
-import { ErrorEmbed, SuccessEmbed } from '../../utils/Embed';
+import { SuccessEmbed } from '../../utils/Embed';
 import { MessageEmbed } from 'discord.js';
 import { Colors } from '../../static/Colors';
 import { formatDays, momentToDiscordDate } from '../../utils/Date';
 import moment from 'moment';
+import { client } from '../../app';
+import { getMemberBaseId } from '../../utils/Other';
 
 export default new Command({
   name: 'bans',
@@ -21,15 +22,9 @@ export default new Command({
   run: async ({ message }) => {
     const member = message.mentions.members.first() || message.member;
 
-    const MemberBase = await MemberModel.findById(`${member.id}-${message.guild.id}`);
+    const bans = await client.service.getBans(getMemberBaseId(member));
 
-    if (!MemberBase) {
-      const embed = ErrorEmbed('Пользователь не найден в базе');
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
-      return;
-    }
-
-    if (!MemberBase.bans.length) {
+    if (!bans.length) {
       const embed = SuccessEmbed('Баны отсутствуют');
       message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
       return;
@@ -38,7 +33,7 @@ export default new Command({
     const embed = new MessageEmbed()
       .setColor(Colors.Blue)
       .addFields(
-        MemberBase.bans.map((ban, index) => ({
+        bans.map((ban, index) => ({
           name: `Бан №${index + 1}`,
           value: `**Выдан:** ${message.guild.members.cache.get(ban.givenBy) || 'Неизвестно'}
                 **Причина:** ${ban.reason || 'Отсутствует'}
@@ -48,8 +43,7 @@ export default new Command({
                   ban.messageDeleteCountInDays === 1 ? 'й' : 'е'
                 } ${formatDays(ban.messageDeleteCountInDays)}`
               : ''
-          }${!ban.unbanned && index !== MemberBase.bans.length ? '\n**Был разбанен:** Да' : ''}
-          ${
+          }${
             ban.unbanned
               ? `
                 **Был разбанен:** Да
@@ -61,7 +55,7 @@ export default new Command({
           inline: true,
         })),
       )
-      .setFooter({ text: `Процент увеличения времени мута: +${MemberBase.bans.length * 100}%` });
+      .setFooter({ text: `Карма за баны: ${await client.service.calculateBansKarma(getMemberBaseId(member))}` });
 
     message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
   },

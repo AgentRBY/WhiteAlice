@@ -16,18 +16,20 @@ export default new Command({
     },
   ],
   usage: 'notes',
-  run: async ({ message, GuildData }) => {
-    if (!GuildData.notes) {
+  run: async ({ message, client }) => {
+    const notes = await client.service.getNotes(message.guildId);
+
+    if (!notes) {
       const embed = ErrorEmbed('На данном сервере отсутствуют заметки');
       message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
       return;
     }
 
-    const notes = GuildData.notes.map((note) => note.name).join('`, `');
+    const formattedNotes = notes.map((note) => note.name).join('`, `');
 
     const embed = new MessageEmbed()
       .setColor(Colors.Blue)
-      .setDescription(`${Emojis.Info} Список всех заметок: \`${notes}\``);
+      .setDescription(`${Emojis.Info} Список всех заметок: \`${formattedNotes}\``);
     message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
   },
 });

@@ -1,8 +1,5 @@
 import { Collection, Message, PermissionString } from 'discord.js';
 import { ExtendClient } from '../structures/Client';
-import { IGuildModel } from './GuildModel';
-import { IMemberModel } from './MemberModel';
-import { MongoData } from './Database';
 
 export interface CommandType {
   name: string;
@@ -30,8 +27,6 @@ interface CommandRunOptions {
   client: ExtendClient;
   message: Message;
   args: string[];
-  GuildData?: MongoData<IGuildModel>;
-  MemberData?: MongoData<IMemberModel>;
   keys?: Collection<string, string>;
   attributes?: Set<string>;
 }

@@ -1,5 +1,6 @@
 import { Command } from '../../structures/Command';
 import { ErrorEmbed, SuccessEmbed } from '../../utils/Embed';
+import { client } from '../../app';
 
 export default new Command({
   name: 'removeMediaChannel',
@@ -14,7 +15,7 @@ export default new Command({
   ],
   usage: 'removeMediaChannel <айди>',
   memberPermissions: ['BAN_MEMBERS'],
-  run: async ({ message, args, GuildData }) => {
+  run: async ({ message, args }) => {
     const channelId = args[0];
 
     if (!channelId) {
@@ -23,14 +24,13 @@ export default new Command({
       return;
     }
 
-    if (!GuildData.mediaChannels.includes(channelId)) {
+    if (!client.service.isMediaChannel(message.guildId, channelId)) {
       const embed = ErrorEmbed('Канал не найдено в списке Каналов только для медиа контента');
       message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
       return;
     }
 
-    GuildData.mediaChannels = GuildData.mediaChannels.filter((id) => id !== channelId);
-    GuildData.save();
+    client.service.removeMediaChannel(message.guildId, channelId);
 
     const embed = SuccessEmbed('Канал удален из списка Каналов только для медиа контента');
     message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });

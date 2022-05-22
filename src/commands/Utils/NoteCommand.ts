@@ -4,6 +4,7 @@ import { ErrorEmbed, SuccessEmbed } from '../../utils/Embed';
 import { MessageEmbed } from 'discord.js';
 import { Colors } from '../../static/Colors';
 import { EmojisLinks } from '../../static/Emojis';
+import { client } from '../../app';
 
 export default new Command({
   name: 'note',
@@ -34,7 +35,7 @@ export default new Command({
     },
   ],
   usage: 'note <имя заметки|create|remove> [имя новой/удаляемой заметки] [контент новой заметки]',
-  run: async ({ message, args, GuildData }) => {
+  run: async ({ message, args }) => {
     const commandType = args[0];
 
     if (commandType === 'create') {
@@ -54,7 +55,7 @@ export default new Command({
 
       const content = args.slice(2).join(' ');
 
-      if (GuildData.notes.some((note) => note.name === name)) {
+      if (client.service.isNoteExist(message.guildId, name)) {
         const embed = ErrorEmbed('Заметка с таким именем уже существует');
         message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
         return;
@@ -73,8 +74,7 @@ export default new Command({
         createdBy: message.author.id,
       };
 
-      GuildData.notes.push(note);
-      GuildData.save();
+      client.service.addNote(message.guildId, note);
 
       const embed = SuccessEmbed(`Заметка \`${note.name}\` была создана`);
       message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
@@ -96,14 +96,13 @@ export default new Command({
         return;
       }
 
-      if (!GuildData.notes.some((note) => note.name === name)) {
+      if (!client.service.isNoteExist(message.guildId, name)) {
         const embed = ErrorEmbed('Заметка с таким именем не найдена');
         message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
         return;
       }
 
-      GuildData.notes = GuildData.notes.filter((note) => note.name !== name);
-      GuildData.save();
+      client.service.removeNote(message.guildId, name);
 
       const embed = SuccessEmbed(`Заметка ${name} была удалена`);
       message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
@@ -118,7 +117,7 @@ export default new Command({
       return;
     }
 
-    const note = GuildData.notes.find((note) => note.name === noteName);
+    const note = await client.service.getNote(message.guildId, noteName);
 
     if (!note) {
       const embed = ErrorEmbed('Заметка с таким именем не найдена');

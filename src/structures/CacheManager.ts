@@ -16,8 +16,9 @@ export class CacheManager<T> {
     this.getCallback = options.getCallback;
   }
 
-  public update(id: string, data: T): void {
+  public update(id: string, data: T): T {
     this.cache.set(id, data);
+    return data;
   }
 
   public async get(id: string): Promise<T> {

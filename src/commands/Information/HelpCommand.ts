@@ -23,8 +23,9 @@ export default new Command({
       description: 'Показывает информацию о команде `ping`',
     },
   ],
-  run: async ({ client, message, args, GuildData }) => {
-    const prefix = GuildData.prefix || client.config.prefix || '>';
+  run: async ({ client, message, args }) => {
+    const prefix = client.service.getPrefix(message.guildId);
+
     if (!args.length) {
       const fields: EmbedFieldData[] = [...client.categories.keys()].map((category) => {
         return {
@@ -61,22 +62,27 @@ export default new Command({
 
     let description = `**➤ Команда**: \`${prefix}${command.name}\`
     \n**➤ Категория**: \`${command.category}\``;
+
     if (command.description) {
       description += `
     \n**➤ Описание**: ${command.description}`;
     }
+
     if (command.ownerOnly) {
       description += `
     \n__**➤ Только для создателей**__: Эта команда доступна только для создателей бота`;
     }
+
     if (command.aliases?.length) {
       description += `
     \n**➤ Алиасы**: \n┗ ${command.aliases.map((alias) => `\`${prefix}${alias}\``).join(', ')}`;
     }
+
     if (command.usage) {
       description += `\n
     **➤ Использование**: \n┗ \`${prefix}${command.usage}\``;
     }
+
     if (command.examples.length) {
       description += '\n';
       command.examples.forEach((example, index) => {
@@ -99,6 +105,7 @@ export default new Command({
       footer: { text: 'Синтаксис: <> = обязательно, [] = опционально, | - или' },
       color: Colors.Blue,
     });
-    return await message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+
+    message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
   },
 });

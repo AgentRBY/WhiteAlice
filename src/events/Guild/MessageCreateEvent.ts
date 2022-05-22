@@ -4,13 +4,12 @@ import { ExtendClient } from '../../structures/Client';
 import { AntiScamModule } from '../../modules/AntiScam';
 import { ErrorEmbed } from '../../utils/Embed';
 import Permissions from '../../static/Permissions';
-import { GuildModel } from '../../models/GuildModel';
 import { AntiPingModule } from '../../modules/AntiPing';
 import { NHentaiLink } from '../../modules/NHentaiLink';
 import { AniDBLink } from '../../modules/AniDBLink';
 import { AnilistLink } from '../../modules/AnilistLink';
-import { MemberModel } from '../../models/MemberModel';
 import { MediaChannel } from '../../modules/MediaChannel';
+import { getMemberBaseId } from '../../utils/Other';
 
 export default new Event({
   name: 'messageCreate',
@@ -23,17 +22,6 @@ export default new Event({
       return;
     }
 
-    let GuildData = await client.guildBase.get(message.guildId);
-
-    if (!GuildData) {
-      GuildData = await GuildModel.create({
-        _id: message.guildId,
-        prefix: client.config.prefix || '>',
-      });
-
-      await GuildData.save();
-    }
-
     AntiScamModule(client, message);
     AntiPingModule(client, message);
 
@@ -41,33 +29,26 @@ export default new Event({
     AniDBLink(client, message);
     AnilistLink(client, message);
 
-    MediaChannel(client, message, GuildData);
+    MediaChannel(client, message);
 
-    let MemberData = await client.memberBase.get(`${message.author.id}-${message.guildId}`);
+    client.service.incrementMessageCount(getMemberBaseId(message.member));
 
-    if (!MemberData) {
-      MemberData = await MemberModel.create({
-        _id: `${message.author.id}-${message.guildId}`,
-      });
-
-      await MemberData.save();
+    if (client.service.getKarma(getMemberBaseId(message.member)) === undefined) {
+      client.service.recalculateKarma(getMemberBaseId(message.member));
     }
-
-    MemberData.messageCount++;
-    MemberData.save();
 
     if (message.content === `<@${client.user.id}>` || message.content === `<@!${client.user.id}>`) {
       client.commands.get('ping').run({ client, message, args: [] });
       return;
     }
 
-    if (client.config.mode === 'testing' && !GuildData.testersID?.includes(message.author.id)) {
+    if (client.config.mode === 'testing' && client.service.isTester(message.guildId, message.author.id)) {
       const errorEmbed = ErrorEmbed('**Включен режим тестирования. Использование бота доступно только тестерам**');
       message.reply({ embeds: [errorEmbed], allowedMentions: { repliedUser: false } });
       return;
     }
 
-    const prefix = GuildData.prefix || client.config.prefix || '>';
+    const prefix = await client.service.getPrefix(message.guildId);
 
     if (!message.content.startsWith(prefix)) {
       return;
@@ -89,7 +70,7 @@ export default new Event({
 
     if (
       command.testersOnly &&
-      (!GuildData.testersID?.includes(message.author.id) || !client.getOwners().includes(message.author.id))
+      (client.service.isTester(message.guildId, message.author.id) || !client.getOwners().includes(message.author.id))
     ) {
       const errorEmbed = ErrorEmbed('**Это команда доступна только тестировщикам**');
       message.reply({ embeds: [errorEmbed], allowedMentions: { repliedUser: false } });
@@ -131,10 +112,10 @@ export default new Event({
     });
 
     if (attributes.has('help') || attributes.has('h')) {
-      client.commands.get('help').run({ client, message, args: [command.name], GuildData });
+      client.commands.get('help').run({ client, message, args: [command.name] });
       return;
     }
 
-    command.run({ client, message, args: cleanArgs, keys, attributes, GuildData, MemberData });
+    command.run({ client, message, args: cleanArgs, keys, attributes });
   },
 });

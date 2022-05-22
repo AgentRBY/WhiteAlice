@@ -41,7 +41,6 @@ export default new Command({
         return;
       });
 
-    console.log(fetchedMessage);
     if (!fetchedMessage) {
       return;
     }

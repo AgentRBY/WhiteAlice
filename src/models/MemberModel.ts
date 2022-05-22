@@ -11,87 +11,41 @@ const MemberSchema = new Schema<IMemberModel>({
     {
       date: Number,
       givenBy: String,
-      reason: {
-        type: String,
-        required: false,
-      },
-      removed: {
-        type: Boolean,
-        required: false,
-      },
-      removedBy: {
-        type: String,
-        required: false,
-      },
-      removedReason: {
-        type: String,
-        required: false,
-      },
-      removedDate: {
-        type: Number,
-        required: false,
-      },
+      reason: String,
+      removed: Boolean,
+      removedBy: String,
+      removedReason: String,
+      removedDate: Number,
     },
   ],
   mutes: [
     {
       date: Number,
       givenBy: String,
-      reason: {
-        type: String,
-        required: false,
-      },
+      reason: String,
       time: Number,
-      unmuted: {
-        type: Boolean,
-        required: false,
-      },
-      unmutedBy: {
-        type: String,
-        required: false,
-      },
-      unmutedReason: {
-        type: String,
-        required: false,
-      },
-      unmutedDate: {
-        type: Number,
-        required: false,
-      },
+      unmuted: Boolean,
+      unmutedBy: String,
+      unmutedReason: String,
+      unmutedDate: Number,
     },
   ],
   bans: [
     {
       date: Number,
       givenBy: String,
-      reason: {
-        type: String,
-        required: false,
-      },
-      unbanned: {
-        type: Boolean,
-        default: false,
-        required: false,
-      },
-      unbannedBy: {
-        type: String,
-        required: false,
-      },
-      unbannedReason: {
-        type: String,
-        required: false,
-      },
-      unbannedDate: {
-        type: Number,
-        required: false,
-      },
+      reason: String,
+      unbanned: Boolean,
+      unbannedBy: String,
+      unbannedReason: String,
+      unbannedDate: Number,
       messageDeleteCountInDays: {
         type: Number,
         default: 0,
-        required: false,
       },
     },
   ],
+  karma: Number,
 });
 
 export const MemberModel = model<IMemberModel>('MemberData', MemberSchema);

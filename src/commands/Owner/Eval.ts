@@ -18,7 +18,7 @@ export default new Command({
     },
   ],
   ownerOnly: true,
-  run: async ({ client, message, args, GuildData, MemberData }) => {
+  run: async ({ client, message, args }) => {
     if (!args.length) {
       const errorEmbed = ErrorEmbed('**Введите любой код.**');
       return message.reply({ embeds: [errorEmbed], allowedMentions: { repliedUser: false } });

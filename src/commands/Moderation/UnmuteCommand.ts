@@ -4,7 +4,8 @@ import moment from 'moment';
 import { MessageEmbed } from 'discord.js';
 import { Emojis } from '../../static/Emojis';
 import { Colors } from '../../static/Colors';
-import { MemberModel } from '../../models/MemberModel';
+import { client } from '../../app';
+import { getMemberBaseId } from '../../utils/Other';
 
 export default new Command({
   name: 'unmute',
@@ -25,15 +26,15 @@ export default new Command({
   botPermissions: ['MODERATE_MEMBERS'],
   memberPermissions: ['BAN_MEMBERS'],
   run: async ({ message, args }) => {
-    const member = message.mentions.members.first();
+    const targetMember = message.mentions.members.first();
 
-    if (!member) {
+    if (!targetMember) {
       const embed = ErrorEmbed('Пользователь не найден');
       message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
       return;
     }
 
-    if (!member.isCommunicationDisabled()) {
+    if (!targetMember.isCommunicationDisabled()) {
       const embed = ErrorEmbed('Пользователь не в муте');
       message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
       return;
@@ -41,12 +42,12 @@ export default new Command({
 
     const reason = args.slice(1).join(' ');
 
-    const remainingMuteTime = Date.now() - member.communicationDisabledUntilTimestamp;
+    const remainingMuteTime = Date.now() - targetMember.communicationDisabledUntilTimestamp;
     const remainingMuteTimeHumanize = moment.duration(remainingMuteTime).locale('ru').humanize();
 
-    await member.timeout(null);
+    await targetMember.timeout(null);
 
-    const embed = SuccessEmbed(`Пользователь был размучен
+    const embed = SuccessEmbed(`Пользователь ${targetMember} был размучен
         Если бы не вы, ему осталось бы сидеть в муте ${remainingMuteTimeHumanize}`);
     const directEmbed = new MessageEmbed()
       .setDescription(
@@ -54,20 +55,14 @@ export default new Command({
       )
       .setColor(Colors.Green);
 
-    const MemberData = await MemberModel.findById(`${member.id}-${message.guildId}`);
-    MemberData.mutes[MemberData.mutes.length - 1].unmuted = true;
-    MemberData.mutes[MemberData.mutes.length - 1].unmutedDate = Date.now();
-    MemberData.mutes[MemberData.mutes.length - 1].unmutedBy = message.author.id;
+    client.service.removeMute(getMemberBaseId(targetMember), message.author.id, reason);
 
     if (reason) {
-      MemberData.mutes[MemberData.mutes.length - 1].unmutedReason = reason;
       embed.setFooter({ text: `Причина размута: ${reason}` });
       directEmbed.setFooter({ text: `Причина размута: ${reason}` });
     }
 
-    MemberData.save();
-
     message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
-    member.send({ embeds: [directEmbed] });
+    targetMember.send({ embeds: [directEmbed] });
   },
 });

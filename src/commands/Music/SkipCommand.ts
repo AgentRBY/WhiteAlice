@@ -29,7 +29,7 @@ export default new Command({
 
     try {
       const skipCount = Number.isNaN(Number(args[0])) ? 1 : Number(args[0]);
-      console.log(skipCount);
+
       if (skipCount > queue.songs.length) {
         const errorEmbed = ErrorEmbed('**В плейлисте нет столько песен**');
         return message.reply({ embeds: [errorEmbed], allowedMentions: { repliedUser: false } });

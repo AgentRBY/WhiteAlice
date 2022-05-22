@@ -5,7 +5,6 @@ import { MessageEmbed } from 'discord.js';
 import { Colors } from '../../static/Colors';
 import { Emojis } from '../../static/Emojis';
 import { client } from '../../app';
-import { MemberModel } from '../../models/MemberModel';
 
 export default new Command({
   name: 'unban',
@@ -48,8 +47,6 @@ export default new Command({
       return;
     }
 
-    const MemberData = await MemberModel.findById(`${user.id}-${message.guildId}`);
-
     await message.guild.bans.fetch();
     if (!message.guild.bans.cache.get(user.id)) {
       const embed = ErrorEmbed('Пользователь не забанен');
@@ -67,16 +64,12 @@ export default new Command({
       .setDescription(`${Emojis.Info} На сервере \`${message.guild}\` Вас разбанил пользователь ${message.author}`)
       .setTimestamp();
 
-    MemberData.bans[MemberData.bans.length - 1].unbanned = true;
-    MemberData.bans[MemberData.bans.length - 1].unbannedBy = message.author.id;
-    MemberData.bans[MemberData.bans.length - 1].unbannedDate = Date.now();
+    client.service.removeBan(`${userId}-${message.guild.id}`, message.author.id, reason);
 
     if (reason) {
-      MemberData.bans[MemberData.bans.length - 1].unbannedReason = reason;
       embed.setFooter({ text: `Причина разбана: ${reason}` });
       directEmbed.setFooter({ text: `Причина разбана: ${reason}` });
     }
-    MemberData.save();
 
     user.send({ embeds: [directEmbed] }).catch(() => {});
     message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });

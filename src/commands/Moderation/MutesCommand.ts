@@ -1,10 +1,11 @@
 import { Command } from '../../structures/Command';
-import { ErrorEmbed, SuccessEmbed } from '../../utils/Embed';
-import { MemberModel } from '../../models/MemberModel';
+import { SuccessEmbed } from '../../utils/Embed';
 import { MessageEmbed } from 'discord.js';
 import moment from 'moment';
 import { Colors } from '../../static/Colors';
 import { momentToDiscordDate } from '../../utils/Date';
+import { client } from '../../app';
+import { getMemberBaseId } from '../../utils/Other';
 
 export default new Command({
   name: 'mutes',
@@ -19,24 +20,18 @@ export default new Command({
   ],
   usage: 'mutes [пользователь]',
   run: async ({ message }) => {
-    const member = message.mentions.members.first() || message.member;
+    const targetMember = message.mentions.members.first() || message.member;
 
-    const MemberBase = await MemberModel.findById(`${member.id}-${message.guild.id}`);
+    const mutes = await client.service.getMutes(getMemberBaseId(targetMember));
 
-    if (!MemberBase) {
-      const embed = ErrorEmbed('Пользователь не найден в базе');
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
-      return;
-    }
-
-    if (!MemberBase.mutes.length) {
+    if (!mutes.length) {
       const embed = SuccessEmbed('Муты отсутствуют');
       message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
       return;
     }
 
     const embed = new MessageEmbed().setColor(Colors.Blue).addFields(
-      MemberBase.mutes.map((mute, index) => ({
+      mutes.map((mute, index) => ({
         name: `Мут №${index + 1}`,
         value: `**Выдан:** ${message.guild.members.cache.get(mute.givenBy) || 'Неизвестно'}
                 **Причина:** ${mute.reason || 'Отсутствует'}

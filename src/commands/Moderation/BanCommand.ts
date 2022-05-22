@@ -3,10 +3,10 @@ import { ErrorEmbed, SuccessEmbed } from '../../utils/Embed';
 import { MessageEmbed } from 'discord.js';
 import { Colors } from '../../static/Colors';
 import { Emojis } from '../../static/Emojis';
-import { MemberModel } from '../../models/MemberModel';
 import { Ban } from '../../typings/MemberModel';
 import { isNumber } from '../../utils/Number';
 import { client } from '../../app';
+import { KARMA_FOR_BAN } from '../../static/Punishment';
 
 export default new Command({
   name: 'ban',
@@ -17,7 +17,9 @@ export default new Command({
   
   Можно очистить сообщения пользователя за последние пару дней (от 1 до 7) добавив ключ hl:D
   
-  Список всех банов у пользователя можно просмотреть командой >bans`,
+  Список всех банов у пользователя можно просмотреть командой >bans
+  
+  Каждый бан даёт +${KARMA_FOR_BAN} кармы`,
   examples: [
     {
       command: 'ban @TestUser',
@@ -78,15 +80,6 @@ export default new Command({
       }
     }
 
-    let MemberData = await MemberModel.findById(`${userId}-${message.guildId}`);
-
-    if (!MemberData) {
-      MemberData = await MemberModel.create({
-        _id: `${userId}-${message.guildId}`,
-      });
-      await MemberData.save();
-    }
-
     const reason = args.slice(1).join(' ');
 
     const user = await client.users.fetch(userId);
@@ -111,8 +104,7 @@ export default new Command({
       messageDeleteCountInDays,
     };
 
-    MemberData.bans.push(ban);
-    MemberData.save();
+    client.service.addBan(`${userId}-${message.guild.id}`, ban);
 
     await (member || user).send({ embeds: [directEmbed] }).catch(() => {});
     message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });

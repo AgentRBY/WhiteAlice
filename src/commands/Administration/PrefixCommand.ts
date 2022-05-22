@@ -8,13 +8,8 @@ export default new Command({
   description: '',
   examples: [],
   usage: 'update',
-  run: async ({ message, args, GuildData }) => {
-    if (!message.member.permissions.has('MANAGE_GUILD')) {
-      const embed = ErrorEmbed('У вас недостаточно прав, что бы изменить префикс сервера');
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
-      return;
-    }
-
+  memberPermissions: ['MANAGE_GUILD'],
+  run: async ({ client, message, args }) => {
     const prefix = args[0];
 
     if (!prefix) {
@@ -29,7 +24,7 @@ export default new Command({
       return;
     }
 
-    await GuildData.updateOne({ prefix });
+    client.service.setPrefix(message.guildId, prefix);
 
     const embed = SuccessEmbed(`Префикс успешно изменён на \`${prefix}\``);
     message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });

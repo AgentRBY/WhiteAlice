@@ -1,10 +1,15 @@
+import { Snowflake } from 'discord.js';
+
 export interface IMemberModel {
-  _id: string;
+  _id: MemberBaseId;
   messageCount: number;
   warns: Warn[];
   mutes: Mute[];
   bans: Ban[];
+  karma: number;
 }
+
+export type MemberBaseId = `${Snowflake}-${Snowflake}`;
 
 export interface Warn extends Punishment {
   removed?: boolean;
