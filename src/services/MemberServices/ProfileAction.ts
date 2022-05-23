@@ -5,9 +5,6 @@ export class ProfileAction {
   async incrementMessageCount(this: Service, id: MemberBaseId) {
     const MemberData = await this.getMemberData(id);
 
-    MemberData.messageCount++;
-    if (MemberData.messageCount % 10 === 0) {
-      this.setMemberData(id, MemberData);
-    }
+    await MemberData.updateOne({ messageCount: MemberData.messageCount + 1 });
   }
 }
