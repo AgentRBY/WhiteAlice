@@ -1,6 +1,6 @@
 import { Event } from '../../structures/Event';
 import { ExtendClient } from '../../structures/Client';
-import { GuildMember, TextChannel } from 'discord.js';
+import { Collection, GuildMember, TextChannel } from 'discord.js';
 import { InfoEmbed } from '../../utils/Embed';
 
 export default new Event({
@@ -33,5 +33,9 @@ export default new Event({
     const embed = InfoEmbed(`${member.user} присоединился по коду \`${usedInvite.code}\` созданным ${inviter}`);
     embed.setFooter({ text: `Это ${usedInvite.uses} использование этого кода` });
     logChannel.send({ embeds: [embed] });
+
+    const codeUses = new Collection<string, number>();
+    newInvites.each((inv) => codeUses.set(inv.code, inv.uses));
+    client.invites.set(member.guild.id, codeUses);
   },
 });
