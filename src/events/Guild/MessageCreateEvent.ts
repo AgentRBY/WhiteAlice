@@ -14,13 +14,15 @@ import { getMemberBaseId } from '../../utils/Other';
 export default new Event({
   name: 'messageCreate',
   run: async (client: ExtendClient, message: Message) => {
-    if (!message.member || !message.guild || !message.guild.me || message.channel.type === 'DM') {
+    if (!message.member || !message.guild || !message.guild.me || message.channel.type === 'DM' || message.system) {
       return;
     }
 
     if (client.config.mode === 'development' && !client.getOwners().includes(message.author.id)) {
       return;
     }
+
+    console.log(message);
 
     AntiScamModule(client, message);
     AntiPingModule(client, message);
