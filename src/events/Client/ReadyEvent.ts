@@ -13,8 +13,12 @@ export default new Event({
 
     client.guilds.cache.forEach(async (guild) => {
       if (guild.me.permissions.has('MANAGE_GUILD')) {
-        const firstInvites = await guild.invites.fetch();
-        client.invites.set(guild.id, new Collection(firstInvites.map((invite) => [invite.code, invite.uses])));
+        const fetchedInvites = await guild.invites.fetch();
+        // client.invites.set(guild.id, new Collection(firstInvites.map((invite) => [invite.code, invite.uses])));
+        const codeUses = new Collection<string, number>();
+        fetchedInvites.each((invite) => codeUses.set(invite.code, invite.uses));
+
+        client.invites.set(guild.id, codeUses);
       }
     });
 
