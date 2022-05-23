@@ -22,8 +22,6 @@ export default new Event({
       return;
     }
 
-    console.log(message);
-
     AntiScamModule(client, message);
     AntiPingModule(client, message);
 
