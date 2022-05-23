@@ -10,7 +10,7 @@ export default new Event({
       return;
     }
 
-    const logChannel = member.guild.channels.cache.get('910989430557392947') as TextChannel;
+    const logChannel = member.guild.channels.cache.get('917831415826104381') as TextChannel;
 
     if (!logChannel) {
       return;
