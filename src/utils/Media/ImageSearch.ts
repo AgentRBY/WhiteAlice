@@ -1,6 +1,6 @@
 import { Response } from 'request';
 import HTMLParser from 'node-html-parser';
-import { YandexImagesResponse } from '../typings/YandexImagesResponse';
+import { YandexImagesResponse } from '../../typings/YandexImagesResponse';
 
 export const generateYandexSearchLink = (imageLink: string, yu: string) => {
   const requestBody = {

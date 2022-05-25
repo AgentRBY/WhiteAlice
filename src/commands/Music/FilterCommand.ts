@@ -1,6 +1,6 @@
 import { Command } from '../../structures/Command';
 import { client } from '../../app';
-import { ErrorEmbed, SuccessEmbed } from '../../utils/Embed';
+import { ErrorEmbed, SuccessEmbed } from '../../utils/Discord/Embed';
 import { AvailableFilters } from '../../static/Music';
 
 export default new Command({

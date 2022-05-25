@@ -1,9 +1,9 @@
 import { Command } from '../../structures/Command';
-import { SuccessEmbed } from '../../utils/Embed';
+import { SuccessEmbed } from '../../utils/Discord/Embed';
 import { MessageEmbed } from 'discord.js';
 import moment from 'moment';
 import { Colors } from '../../static/Colors';
-import { momentToDiscordDate } from '../../utils/Date';
+import { momentToDiscordDate } from '../../utils/Common/Date';
 import { client } from '../../app';
 import { getMemberBaseId } from '../../utils/Other';
 

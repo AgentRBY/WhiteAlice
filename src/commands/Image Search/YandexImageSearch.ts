@@ -1,14 +1,14 @@
 import { Command } from '../../structures/Command';
-import { ErrorEmbed } from '../../utils/Embed';
+import { ErrorEmbed } from '../../utils/Discord/Embed';
 import { client } from '../../app';
-import { generateYandexSearchLink, getSitesFromYandexResponse } from '../../utils/ImageSearch';
+import { generateYandexSearchLink, getSitesFromYandexResponse } from '../../utils/Media/ImageSearch';
 import { promisify } from 'util';
 import { yandexWhitelistSites } from '../../static/ImageSearch';
 import { MessageActionRow, MessageEmbed } from 'discord.js';
 import { Colors } from '../../static/Colors';
 import { Site, WhitelistSite } from '../../typings/YandexImagesResponse';
-import { generateDefaultButtons, pagination } from '../../utils/Pagination';
-import { removeQueryParameters as removeQueryParameters } from '../../utils/Other';
+import { generateDefaultButtons, pagination } from '../../utils/Discord/Pagination';
+import { removeQueryParameters } from '../../utils/Common/Strings';
 
 const request = promisify(require('request'));
 

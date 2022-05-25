@@ -1,6 +1,6 @@
 import { Command } from '../../structures/Command';
-import { ErrorEmbed } from '../../utils/Embed';
-import { formatAniDBAnime } from '../../utils/Anime';
+import { ErrorEmbed } from '../../utils/Discord/Embed';
+import { formatAniDBAnime } from '../../utils/Media/Anime';
 
 export default new Command({
   name: 'anidb',

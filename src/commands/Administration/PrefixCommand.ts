@@ -1,5 +1,5 @@
 import { Command } from '../../structures/Command';
-import { ErrorEmbed, SuccessEmbed } from '../../utils/Embed';
+import { ErrorEmbed, SuccessEmbed } from '../../utils/Discord/Embed';
 
 export default new Command({
   name: 'prefix',

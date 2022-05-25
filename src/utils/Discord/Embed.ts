@@ -1,6 +1,6 @@
 import { MessageEmbed } from 'discord.js';
-import { Colors } from '../static/Colors';
-import { Emojis } from '../static/Emojis';
+import { Colors } from '../../static/Colors';
+import { Emojis } from '../../static/Emojis';
 
 export const ErrorEmbed = (description: string): MessageEmbed =>
   new MessageEmbed().setDescription(`${Emojis.No} ${description}`).setColor(Colors.Red);

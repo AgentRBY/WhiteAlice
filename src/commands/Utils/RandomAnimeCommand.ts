@@ -1,9 +1,9 @@
 import { Command } from '../../structures/Command';
 import anilist from 'anilist-node';
-import { formatAnilistAnime } from '../../utils/Anime';
-import { upAllFirstLatter } from '../../utils/strings';
-import { ErrorEmbed } from '../../utils/Embed';
-import { getRandomInt } from '../../utils/Number';
+import { formatAnilistAnime } from '../../utils/Media/Anime';
+import { upAllFirstLatter } from '../../utils/Common/Strings';
+import { ErrorEmbed } from '../../utils/Discord/Embed';
+import { getRandomInt } from '../../utils/Common/Number';
 import { SortList } from '../../static/Anilist';
 
 export default new Command({

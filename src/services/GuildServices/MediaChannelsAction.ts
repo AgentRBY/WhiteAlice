@@ -11,7 +11,6 @@ export class MediaChannelsAction {
   async isMediaChannel(this: Service, id: Snowflake, channelID: string): Promise<boolean> {
     const GuildData = await this.getGuildData(id);
 
-    console.log(channelID);
     return GuildData.mediaChannels.includes(channelID);
   }
 

@@ -1,5 +1,5 @@
 import { Command } from '../../structures/Command';
-import { ErrorEmbed, SuccessEmbed } from '../../utils/Embed';
+import { ErrorEmbed, SuccessEmbed } from '../../utils/Discord/Embed';
 import moment from 'moment';
 import { MessageEmbed } from 'discord.js';
 import { Emojis } from '../../static/Emojis';

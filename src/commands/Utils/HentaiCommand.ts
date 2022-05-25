@@ -1,6 +1,6 @@
 import { Command } from '../../structures/Command';
-import { ErrorEmbed } from '../../utils/Embed';
-import { formatNHentaiManga } from '../../utils/Manga';
+import { ErrorEmbed } from '../../utils/Discord/Embed';
+import { formatNHentaiManga } from '../../utils/Media/Manga';
 
 const nHentai = require('nhentai');
 

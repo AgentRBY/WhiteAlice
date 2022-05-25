@@ -1,6 +1,6 @@
 import { TextChannel } from 'discord.js';
 import { Event } from '../../structures/Event';
-import { ErrorEmbed } from '../../utils/Embed';
+import { ErrorEmbed } from '../../utils/Discord/Embed';
 
 export default new Event({
   name: 'error',

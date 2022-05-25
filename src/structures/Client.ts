@@ -15,6 +15,7 @@ import { IGuildModel } from '../typings/GuildModel';
 import { MemberModel } from '../models/MemberModel';
 import { GuildModel } from '../models/GuildModel';
 import { Service } from './Service';
+import Logger from '../utils/Logger';
 
 const globPromise = promisify(glob);
 
@@ -57,7 +58,7 @@ export class ExtendClient extends Client {
       },
     });
 
-    await mongoose.connect(process.env.mongoURI).catch((error) => console.log(error));
+    await mongoose.connect(process.env.mongoURI).catch((error) => Logger.error(error));
 
     this.service = new Service(this);
 

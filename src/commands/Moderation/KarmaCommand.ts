@@ -1,7 +1,7 @@
 import { Command } from '../../structures/Command';
-import { getMemberBaseId } from '../../utils/Other';
-import { SuccessEmbed } from '../../utils/Embed';
+import { SuccessEmbed } from '../../utils/Discord/Embed';
 import { KARMA_FOR_BAN, KARMA_FOR_MUTE, KARMA_FOR_WARN } from '../../static/Punishment';
+import { getMemberBaseId } from '../../utils/Other';
 
 export default new Command({
   name: 'karma',

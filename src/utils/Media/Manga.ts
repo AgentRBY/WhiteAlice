@@ -1,8 +1,8 @@
 import { Doujin } from 'nhentai';
 import { MessageEmbed } from 'discord.js';
 import moment from 'moment';
-import { upFirstLetter } from './strings';
-import { Colors } from '../static/Colors';
+import { upFirstLetter } from '../Common/Strings';
+import { Colors } from '../../static/Colors';
 
 export function formatNHentaiManga(manga: Doujin): MessageEmbed {
   const authors = manga.tags.artists.length ? manga.tags.artists : manga.tags.groups;

@@ -1,12 +1,12 @@
 import { Command } from '../../structures/Command';
-import { ErrorEmbed, SuccessEmbed } from '../../utils/Embed';
+import { ErrorEmbed, SuccessEmbed } from '../../utils/Discord/Embed';
 import { MessageEmbed } from 'discord.js';
 import { Colors } from '../../static/Colors';
 import { Warn } from '../../typings/MemberModel';
 import { Emojis } from '../../static/Emojis';
 import { client } from '../../app';
-import { getMemberBaseId } from '../../utils/Other';
 import { KARMA_FOR_WARN } from '../../static/Punishment';
+import { getMemberBaseId } from '../../utils/Other';
 
 export default new Command({
   name: 'warn',

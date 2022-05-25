@@ -1,14 +1,14 @@
 import { Command } from '../../structures/Command';
-import { ErrorEmbed, SuccessEmbed } from '../../utils/Embed';
-import { formatDuration, formatDurationInPast, getDurationFromString } from '../../utils/Date';
+import { ErrorEmbed, SuccessEmbed } from '../../utils/Discord/Embed';
+import { formatDuration, formatDurationInPast, getDurationFromString } from '../../utils/Common/Date';
 import moment from 'moment';
 import { MessageEmbed } from 'discord.js';
 import { Colors } from '../../static/Colors';
 import { Mute } from '../../typings/MemberModel';
 import { client } from '../../app';
 import { Emojis } from '../../static/Emojis';
-import { getMemberBaseId } from '../../utils/Other';
 import { KARMA_FOR_MUTE } from '../../static/Punishment';
+import { getMemberBaseId } from '../../utils/Other';
 
 export default new Command({
   name: 'mute',

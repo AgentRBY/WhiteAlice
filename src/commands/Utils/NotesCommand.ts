@@ -2,7 +2,7 @@ import { Command } from '../../structures/Command';
 import { MessageEmbed } from 'discord.js';
 import { Colors } from '../../static/Colors';
 import { Emojis } from '../../static/Emojis';
-import { ErrorEmbed } from '../../utils/Embed';
+import { ErrorEmbed } from '../../utils/Discord/Embed';
 
 export default new Command({
   name: 'notes',

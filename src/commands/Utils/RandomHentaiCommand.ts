@@ -1,8 +1,8 @@
 import { Command } from '../../structures/Command';
-import { formatNHentaiManga } from '../../utils/Manga';
+import { formatNHentaiManga } from '../../utils/Media/Manga';
 import { Doujin, SearchResult, SortMethods } from 'nhentai';
-import { getRandomInt } from '../../utils/Number';
-import { ErrorEmbed } from '../../utils/Embed';
+import { getRandomInt } from '../../utils/Common/Number';
+import { ErrorEmbed } from '../../utils/Discord/Embed';
 
 const nHentai = require('nhentai');
 

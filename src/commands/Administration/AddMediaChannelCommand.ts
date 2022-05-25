@@ -1,5 +1,5 @@
 import { Command } from '../../structures/Command';
-import { ErrorEmbed, SuccessEmbed } from '../../utils/Embed';
+import { ErrorEmbed, SuccessEmbed } from '../../utils/Discord/Embed';
 import { client } from '../../app';
 
 export default new Command({
@@ -36,7 +36,6 @@ export default new Command({
       return;
     }
 
-    console.log('test');
     if (await client.service.isMediaChannel(message.guildId, channelId)) {
       const embed = ErrorEmbed('Канал уже добавлен');
       message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });

@@ -1,10 +1,10 @@
 import { Command } from '../../structures/Command';
-import { ErrorEmbed } from '../../utils/Embed';
+import { ErrorEmbed } from '../../utils/Discord/Embed';
 import { TraceMoe } from 'trace.moe.ts';
 import { Colors } from '../../static/Colors';
 import anilist from 'anilist-node';
 import { ButtonInteraction, MessageActionRow, MessageButton, MessageEmbed } from 'discord.js';
-import { isLink, isMediaLink, removeQueryParameters as removeQueryParameters } from '../../utils/Other';
+import { isLink, isMediaLink, removeQueryParameters } from '../../utils/Common/Strings';
 
 export default new Command({
   name: 'findanime',

@@ -1,8 +1,8 @@
 import { EmbedFieldData, MessageEmbed } from 'discord.js';
-import { upAllFirstLatter } from '../../utils/strings';
+import { upAllFirstLatter } from '../../utils/Common/Strings';
 import { Emojis, EmojisLinks } from '../../static/Emojis';
 import { Colors } from '../../static/Colors';
-import { ErrorEmbed } from '../../utils/Embed';
+import { ErrorEmbed } from '../../utils/Discord/Embed';
 import { Command } from '../../structures/Command';
 
 export default new Command({

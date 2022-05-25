@@ -1,4 +1,4 @@
-import { ErrorEmbed, SuccessEmbed } from '../../utils/Embed';
+import { ErrorEmbed, SuccessEmbed } from '../../utils/Discord/Embed';
 import { Command } from '../../structures/Command';
 
 export default new Command({

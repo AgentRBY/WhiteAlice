@@ -13,7 +13,6 @@ export interface CommandType {
   memberPermissions?: PermissionString[];
   botPermissions?: PermissionString[];
   ownerOnly?: true;
-  testersOnly?: true;
 }
 
 interface CommandExample {

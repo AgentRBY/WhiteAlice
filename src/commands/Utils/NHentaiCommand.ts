@@ -1,7 +1,7 @@
 import { Command } from '../../structures/Command';
-import { ErrorEmbed } from '../../utils/Embed';
-import { isNumber } from '../../utils/Number';
-import { formatNHentaiManga } from '../../utils/Manga';
+import { ErrorEmbed } from '../../utils/Discord/Embed';
+import { isNumber } from '../../utils/Common/Number';
+import { formatNHentaiManga } from '../../utils/Media/Manga';
 
 const nHentai = require('nhentai');
 

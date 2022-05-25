@@ -1,5 +1,5 @@
 import { Command } from '../../structures/Command';
-import { ErrorEmbed } from '../../utils/Embed';
+import { ErrorEmbed } from '../../utils/Discord/Embed';
 import { client } from '../../app';
 import { Message, MessageEmbed, TextChannel } from 'discord.js';
 import { EmojisLinks } from '../../static/Emojis';

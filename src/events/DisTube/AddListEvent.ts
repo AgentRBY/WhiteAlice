@@ -3,7 +3,7 @@ import { Colors } from '../../static/Colors';
 import { EmojisLinks } from '../../static/Emojis';
 import { Event } from '../../structures/Event';
 import { Playlist, Queue } from 'distube';
-import { upFirstLetter } from '../../utils/strings';
+import { upFirstLetter } from '../../utils/Common/Strings';
 
 export default new Event({
   name: 'addList',

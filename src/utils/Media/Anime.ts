@@ -1,11 +1,11 @@
 import { AnimeEntry } from 'anilist-node';
-import { Format, Source, Status } from '../static/Anilist';
+import { Format, Source, Status } from '../../static/Anilist';
 import { unix } from 'moment';
 import { MessageEmbed } from 'discord.js';
-import { Colors } from '../static/Colors';
+import { Colors } from '../../static/Colors';
 import { promisify } from 'util';
 import moment from 'moment/moment';
-import { upFirstLetter } from './strings';
+import { upFirstLetter } from '../Common/Strings';
 
 const requset = promisify(require('request'));
 

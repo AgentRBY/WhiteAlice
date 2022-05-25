@@ -1,4 +1,4 @@
-import { ErrorEmbed } from '../../utils/Embed';
+import { ErrorEmbed } from '../../utils/Discord/Embed';
 import { Command } from '../../structures/Command';
 import { TextChannel } from 'discord.js';
 

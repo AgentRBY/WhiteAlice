@@ -1,6 +1,6 @@
 import { Command } from '../../structures/Command';
-import { ErrorEmbed, SuccessEmbed } from '../../utils/Embed';
-import { isNumber } from '../../utils/Number';
+import { ErrorEmbed, SuccessEmbed } from '../../utils/Discord/Embed';
+import { isNumber } from '../../utils/Common/Number';
 import { MessageEmbed } from 'discord.js';
 import { Colors } from '../../static/Colors';
 import { Emojis } from '../../static/Emojis';

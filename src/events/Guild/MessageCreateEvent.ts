@@ -2,7 +2,7 @@ import { Event } from '../../structures/Event';
 import { Collection, Message } from 'discord.js';
 import { ExtendClient } from '../../structures/Client';
 import { AntiScamModule } from '../../modules/AntiScam';
-import { ErrorEmbed } from '../../utils/Embed';
+import { ErrorEmbed } from '../../utils/Discord/Embed';
 import Permissions from '../../static/Permissions';
 import { AntiPingModule } from '../../modules/AntiPing';
 import { NHentaiLink } from '../../modules/NHentaiLink';
@@ -42,12 +42,6 @@ export default new Event({
       return;
     }
 
-    if (client.config.mode === 'testing' && client.service.isTester(message.guildId, message.author.id)) {
-      const errorEmbed = ErrorEmbed('**Включен режим тестирования. Использование бота доступно только тестерам**');
-      message.reply({ embeds: [errorEmbed], allowedMentions: { repliedUser: false } });
-      return;
-    }
-
     const prefix = await client.service.getPrefix(message.guildId);
 
     if (!message.content.startsWith(prefix)) {
@@ -64,16 +58,6 @@ export default new Event({
 
     if (command.ownerOnly && !client.getOwners().includes(message.author.id)) {
       const errorEmbed = ErrorEmbed('**У вас нет прав на эту команду**');
-      message.reply({ embeds: [errorEmbed], allowedMentions: { repliedUser: false } });
-      return;
-    }
-
-    if (
-      command.testersOnly &&
-      ((await client.service.isTester(message.guildId, message.author.id)) ||
-        !client.getOwners().includes(message.author.id))
-    ) {
-      const errorEmbed = ErrorEmbed('**Это команда доступна только тестировщикам**');
       message.reply({ embeds: [errorEmbed], allowedMentions: { repliedUser: false } });
       return;
     }

@@ -1,10 +1,10 @@
-import { ErrorEmbed } from '../../utils/Embed';
+import { ErrorEmbed } from '../../utils/Discord/Embed';
 import { MessageActionRow, MessageEmbed } from 'discord.js';
 import { Colors } from '../../static/Colors';
 import { EmojisLinks } from '../../static/Emojis';
 import { Command } from '../../structures/Command';
 import { Song } from 'distube';
-import { generateDefaultButtons, pagination } from '../../utils/Pagination';
+import { generateDefaultButtons, pagination } from '../../utils/Discord/Pagination';
 
 export default new Command({
   name: 'queue',

@@ -2,7 +2,7 @@
 import { MessageEmbed } from 'discord.js';
 import { inspect } from 'util';
 import { Command } from '../../structures/Command';
-import { ErrorEmbed } from '../../utils/Embed';
+import { ErrorEmbed } from '../../utils/Discord/Embed';
 import { Colors } from '../../static/Colors';
 
 export default new Command({

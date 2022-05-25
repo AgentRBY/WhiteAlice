@@ -1,7 +1,6 @@
 import { ExtendClient } from './Client';
 import { PrefixAction } from '../services/GuildServices/PrefixAction';
 import { TestersAction } from '../services/GuildServices/TestersAction';
-import { serviceMixin } from '../utils/Other';
 import { IGuildModel } from '../typings/GuildModel';
 import { MongoData } from '../typings/Database';
 import { IMemberModel, MemberBaseId } from '../typings/MemberModel';
@@ -12,6 +11,7 @@ import { NotesAction } from '../services/GuildServices/NotesAction';
 import { WarnsAction } from '../services/MemberServices/WarnsAction';
 import { MutesAction } from '../services/MemberServices/MutesAction';
 import { BansAction } from '../services/MemberServices/BansAction';
+import { serviceMixin } from '../utils/Other';
 
 export interface Service
   extends PrefixAction,

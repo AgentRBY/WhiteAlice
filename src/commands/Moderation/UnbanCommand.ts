@@ -1,5 +1,5 @@
 import { Command } from '../../structures/Command';
-import { ErrorEmbed, SuccessEmbed } from '../../utils/Embed';
+import { ErrorEmbed, SuccessEmbed } from '../../utils/Discord/Embed';
 import { isSnowflake } from 'distube';
 import { MessageEmbed } from 'discord.js';
 import { Colors } from '../../static/Colors';

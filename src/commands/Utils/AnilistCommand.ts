@@ -1,7 +1,7 @@
-import { ErrorEmbed } from '../../utils/Embed';
+import { ErrorEmbed } from '../../utils/Discord/Embed';
 import { Command } from '../../structures/Command';
 import anilist from 'anilist-node';
-import { formatAnilistAnime } from '../../utils/Anime';
+import { formatAnilistAnime } from '../../utils/Media/Anime';
 
 export default new Command({
   name: 'anilist',

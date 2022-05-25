@@ -1,11 +1,10 @@
 import sagiri from 'sagiri';
 import { MessageActionRow, MessageEmbed } from 'discord.js';
 import { Colors } from '../../static/Colors';
-import { ErrorEmbed } from '../../utils/Embed';
+import { ErrorEmbed } from '../../utils/Discord/Embed';
 import { Command } from '../../structures/Command';
-import { isGifLink, isImageLink, isLink, removeQueryParameters as removeQueryParameters } from '../../utils/Other';
-import { formatNames } from '../../utils/strings';
-import { generateDefaultButtons, pagination } from '../../utils/Pagination';
+import { formatNames, isGifLink, isImageLink, isLink, removeQueryParameters } from '../../utils/Common/Strings';
+import { generateDefaultButtons, pagination } from '../../utils/Discord/Pagination';
 import { sauceNAORelevantSites } from '../../static/ImageSearch';
 
 export default new Command({
