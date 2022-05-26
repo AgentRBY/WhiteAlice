@@ -1,25 +1,25 @@
-import { Command } from '../../structures/Command';
 import { SuccessEmbed } from '../../utils/Discord/Embed';
 import { MessageEmbed } from 'discord.js';
 import { Colors } from '../../static/Colors';
 import { formatDays, momentToDiscordDate } from '../../utils/Common/Date';
 import moment from 'moment';
-import { client } from '../../app';
 import { getMemberBaseId } from '../../utils/Other';
+import { Command, CommandRunOptions } from '../../structures/Command';
 
-export default new Command({
-  name: 'bans',
-  category: 'Moderation',
-  aliases: [],
-  description: 'Выводит список всех банов у пользователя',
-  examples: [
+class BansCommand extends Command {
+  name = 'bans';
+  category = 'Moderation';
+  aliases = [];
+  description = 'Выводит список всех банов у пользователя';
+  examples = [
     {
       command: '>bans @TestUser',
       description: 'Выводит список всех банов у пользователя TestUser',
     },
-  ],
-  usage: 'bans [пользователь]',
-  run: async ({ message }) => {
+  ];
+  usage = 'bans [пользователь]';
+
+  async run({ client, message }: CommandRunOptions) {
     const member = message.mentions.members.first() || message.member;
 
     const bans = await client.service.getBans(getMemberBaseId(member));
@@ -58,5 +58,7 @@ export default new Command({
       .setFooter({ text: `Карма за баны: ${await client.service.calculateBansKarma(getMemberBaseId(member))}` });
 
     message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
-  },
-});
+  }
+}
+
+export default new BansCommand();

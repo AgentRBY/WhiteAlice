@@ -3,17 +3,18 @@ import { upAllFirstLatter } from '../../utils/Common/Strings';
 import { Emojis, EmojisLinks } from '../../static/Emojis';
 import { Colors } from '../../static/Colors';
 import { ErrorEmbed } from '../../utils/Discord/Embed';
-import { Command } from '../../structures/Command';
 
-export default new Command({
-  name: 'help',
-  category: 'Information',
-  aliases: ['commands', 'хелп', 'команды', 'h'],
-  description: `Показывает список всех команд или информацию по конкретной команде
+import { Command, CommandRunOptions } from '../../structures/Command';
+
+class HelpCommand extends Command {
+  name = 'help';
+  category = 'Information';
+  aliases = ['commands', 'хелп', 'команды', 'h'];
+  description = `Показывает список всех команд или информацию по конкретной команде
     
-    Можно так же вызвать добавив к любой команде в конце ключ \`-h\`, например \`>ping -h\``,
-  usage: 'help [команда]',
-  examples: [
+    Можно так же вызвать добавив к любой команде в конце ключ \`-h\`; например \`>ping -h\``;
+  usage = 'help [команда]';
+  examples = [
     {
       command: 'help',
       description: 'Показывает список всех команд',
@@ -22,8 +23,9 @@ export default new Command({
       command: 'help ping',
       description: 'Показывает информацию о команде `ping`',
     },
-  ],
-  run: async ({ client, message, args }) => {
+  ];
+
+  async run({ client, message, args }: CommandRunOptions) {
     const prefix = await client.service.getPrefix(message.guildId);
 
     if (!args.length) {
@@ -107,5 +109,7 @@ export default new Command({
     });
 
     message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
-  },
-});
+  }
+}
+
+export default new HelpCommand();

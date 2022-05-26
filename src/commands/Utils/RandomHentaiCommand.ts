@@ -1,18 +1,18 @@
-import { Command } from '../../structures/Command';
 import { formatNHentaiManga } from '../../utils/Media/Manga';
 import { Doujin, SearchResult, SortMethods } from 'nhentai';
 import { getRandomInt } from '../../utils/Common/Number';
 import { ErrorEmbed } from '../../utils/Discord/Embed';
+import { Command, CommandRunOptions } from '../../structures/Command';
 
 const nHentai = require('nhentai');
 
-export default new Command({
-  name: 'randomHentai',
-  category: 'Utils',
-  aliases: [],
-  description:
-    'Выводит случайный хентай. Можно искать по тегам, если у тега два слова, то нужно писать его через нижние подчёркивание (_)',
-  examples: [
+class RandomHentaiCommand extends Command {
+  name = 'randomHentai';
+  category = 'Utils';
+  aliases = [];
+  description =
+    'Выводит случайный хентай. Можно искать по тегам, если у тега два слова, то нужно писать его через нижние подчёркивание (_)';
+  examples = [
     {
       command: 'randomHentai',
       description: 'Выводит случайный хентай',
@@ -21,9 +21,10 @@ export default new Command({
       command: 'randomHentai uncensored solo_male',
       description: 'Выводит хентай по тегам Uncensored и Solo Male',
     },
-  ],
-  usage: 'randomHentai',
-  run: async ({ message, args }) => {
+  ];
+  usage = 'randomHentai';
+
+  async run({ message, args }: CommandRunOptions) {
     const tags = args.map((tag) => `tag:"${tag.replace('_', '-')}"`);
 
     const nHentaiApi = new nHentai.API();
@@ -54,5 +55,7 @@ export default new Command({
         setTimeout(() => message_.delete(), 30_000);
       }
     });
-  },
-});
+  }
+}
+
+export default new RandomHentaiCommand();

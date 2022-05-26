@@ -1,18 +1,18 @@
-import { Command } from '../../structures/Command';
 import anilist from 'anilist-node';
 import { formatAnilistAnime } from '../../utils/Media/Anime';
 import { upAllFirstLatter } from '../../utils/Common/Strings';
 import { ErrorEmbed } from '../../utils/Discord/Embed';
 import { getRandomInt } from '../../utils/Common/Number';
 import { SortList } from '../../static/Anilist';
+import { Command, CommandRunOptions } from '../../structures/Command';
 
-export default new Command({
-  name: 'randomAnime',
-  category: 'Utils',
-  aliases: [],
-  description:
-    'Ищет случайное аниме по тегам. Теги перечисляются через пробел, если в теге два слова, то писать через нижнее подчёркивание (_)',
-  examples: [
+class RandomAnimeCommand extends Command {
+  name = 'randomAnime';
+  category = 'Utils';
+  aliases = [];
+  description =
+    'Ищет случайное аниме по тегам. Теги перечисляются через пробел, если в теге два слова, то писать через нижнее подчёркивание (_)';
+  examples = [
     {
       command: 'randomAnime Food',
       description: 'Выводит случайное аниме с тегом Food',
@@ -21,9 +21,10 @@ export default new Command({
       command: 'randomAnime Food Love_Triangle',
       description: 'Выводит случайное аниме с тегами Food и Love Triangle',
     },
-  ],
-  usage: 'randomAnime',
-  run: async ({ message, args }) => {
+  ];
+  usage = 'randomAnime';
+
+  async run({ message, args }: CommandRunOptions) {
     const tags = args.map((argument) => `"${upAllFirstLatter(argument.replace('_', ' '))}"`);
 
     if (!tags.length) {
@@ -63,5 +64,7 @@ export default new Command({
     const embed = await formatAnilistAnime(anime);
 
     message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
-  },
-});
+  }
+}
+
+export default new RandomAnimeCommand();

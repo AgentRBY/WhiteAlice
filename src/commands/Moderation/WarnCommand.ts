@@ -1,22 +1,21 @@
-import { Command } from '../../structures/Command';
 import { ErrorEmbed, SuccessEmbed } from '../../utils/Discord/Embed';
-import { MessageEmbed } from 'discord.js';
+import { MessageEmbed, PermissionString } from 'discord.js';
 import { Colors } from '../../static/Colors';
-import { Warn } from '../../typings/MemberModel';
 import { Emojis } from '../../static/Emojis';
-import { client } from '../../app';
 import { KARMA_FOR_WARN } from '../../static/Punishment';
 import { getMemberBaseId } from '../../utils/Other';
+import { Warn } from '../../typings/MemberModel';
+import { Command, CommandRunOptions } from '../../structures/Command';
 
-export default new Command({
-  name: 'warn',
-  category: 'Moderation',
-  aliases: [],
-  description: `Выдаёт предупреждение пользователю. 
+class WarnCommand extends Command {
+  name = 'warn';
+  category = 'Moderation';
+  aliases = [];
+  description = `Выдаёт предупреждение пользователю. 
   Каждое предупреждение даёт +${KARMA_FOR_WARN} кармы.
   
-  Список всех предупреждений у пользователя можно посмотреть командой >warns`,
-  examples: [
+  Список всех предупреждений у пользователя можно посмотреть командой >warns`;
+  examples = [
     {
       command: 'warn @TestUser',
       description: 'Выдаёт предупреждение пользователю TestUser',
@@ -25,10 +24,11 @@ export default new Command({
       command: 'warn @TestUser Плохое поведение',
       description: 'Выдаёт предупреждение пользователю TestUser с причиной "Плохое поведение"',
     },
-  ],
-  usage: 'warn <пользователь> [причина]',
-  memberPermissions: ['BAN_MEMBERS'],
-  run: async ({ message, args }) => {
+  ];
+  usage = 'warn <пользователь> [причина]';
+  memberPermissions: PermissionString[] = ['BAN_MEMBERS'];
+
+  async run({ client, message, args }: CommandRunOptions) {
     const targetMember = message.mentions.members.first();
 
     if (!targetMember) {
@@ -66,5 +66,7 @@ export default new Command({
 
     message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
     targetMember.send({ embeds: [directEmbed] });
-  },
-});
+  }
+}
+
+export default new WarnCommand();

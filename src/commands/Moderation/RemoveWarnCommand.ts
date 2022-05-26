@@ -1,18 +1,17 @@
-import { Command } from '../../structures/Command';
 import { ErrorEmbed, SuccessEmbed } from '../../utils/Discord/Embed';
 import { isNumber } from '../../utils/Common/Number';
-import { MessageEmbed } from 'discord.js';
+import { MessageEmbed, PermissionString } from 'discord.js';
 import { Colors } from '../../static/Colors';
 import { Emojis } from '../../static/Emojis';
-import { client } from '../../app';
 import { getMemberBaseId } from '../../utils/Other';
+import { Command, CommandRunOptions } from '../../structures/Command';
 
-export default new Command({
-  name: 'removeWarn',
-  category: 'Moderation',
-  aliases: ['deleteWarn', 'delWarn', 'unWarn'],
-  description: 'Позволяет удалить предупреждение у пользователя.',
-  examples: [
+class RemoveWarnCommand extends Command {
+  name = 'removeWarn';
+  category = 'Moderation';
+  aliases = ['deleteWarn', 'delWarn', 'unWarn'];
+  description = 'Позволяет удалить предупреждение у пользователя.';
+  examples = [
     {
       command: 'removeWarn @TestUser 2',
       description: 'Удалить предупреждение №2 у пользователя TestUser',
@@ -21,10 +20,11 @@ export default new Command({
       command: 'removeWarn @TestUser 3 Ошибочное предупреждение',
       description: 'Удалить предупреждение №3 у пользователя TestUser с причиной `Ошибочное предупреждение`',
     },
-  ],
-  usage: 'removeWarn <пользователь> <номер предупреждения> [причина]',
-  memberPermissions: ['BAN_MEMBERS'],
-  run: async ({ message, args }) => {
+  ];
+  usage = 'removeWarn <пользователь> <номер предупреждения> [причина]';
+  memberPermissions: PermissionString[] = ['BAN_MEMBERS'];
+
+  async run({ client, message, args }: CommandRunOptions) {
     const targetMember = message.mentions.members.first();
 
     if (!targetMember) {
@@ -79,5 +79,7 @@ export default new Command({
 
     message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
     targetMember.send({ embeds: [directEmbed] });
-  },
-});
+  }
+}
+
+export default new RemoveWarnCommand();

@@ -1,20 +1,19 @@
-import { Command } from '../../structures/Command';
 import { ErrorEmbed, SuccessEmbed } from '../../utils/Discord/Embed';
 import { formatDuration, formatDurationInPast, getDurationFromString } from '../../utils/Common/Date';
 import moment from 'moment';
-import { MessageEmbed } from 'discord.js';
+import { MessageEmbed, PermissionString } from 'discord.js';
 import { Colors } from '../../static/Colors';
-import { Mute } from '../../typings/MemberModel';
-import { client } from '../../app';
 import { Emojis } from '../../static/Emojis';
 import { KARMA_FOR_MUTE } from '../../static/Punishment';
 import { getMemberBaseId } from '../../utils/Other';
+import { Mute } from '../../typings/MemberModel';
+import { Command, CommandRunOptions } from '../../structures/Command';
 
-export default new Command({
-  name: 'mute',
-  category: 'Moderation',
-  aliases: [],
-  description: `Выдаёт мут пользователю.
+class MuteCommand extends Command {
+  name = 'mute';
+  category = 'Moderation';
+  aliases = [];
+  description = `Выдаёт мут пользователю.
   Время должно быть записано без пробелов. Поддерживаются дни, часы и минуты.
   
   Поддерживается русский(день, час, минута) и английский(day, hour, minute), а так же укороченные варианты записи времени(д, ч, м или d, h, m).
@@ -24,8 +23,8 @@ export default new Command({
   
   Список всех мутов у пользователя можно посмотреть командой >mutes
   
-  Каждый мут даёт +${KARMA_FOR_MUTE} кармы.`,
-  examples: [
+  Каждый мут даёт +${KARMA_FOR_MUTE} кармы.`;
+  examples = [
     {
       command: 'mute @TestUser 1d',
       description: 'Выдаёт мут пользователю @TestUser на 1 день',
@@ -38,11 +37,12 @@ export default new Command({
       command: 'mute @TestUSer 7d1мин -F',
       description: 'Выдаёт мут пользователю @TestUser на 7 дней и 1 минуту, даже если он уже был замучен раньше',
     },
-  ],
-  usage: 'mute <пользователь> <время> [причина]',
-  botPermissions: ['MODERATE_MEMBERS'],
-  memberPermissions: ['BAN_MEMBERS'],
-  run: async ({ message, args, attributes }) => {
+  ];
+  usage = 'mute <пользователь> <время> [причина]';
+  botPermissions: PermissionString[] = ['MODERATE_MEMBERS'];
+  memberPermissions: PermissionString[] = ['BAN_MEMBERS'];
+
+  async run({ client, message, args, attributes }: CommandRunOptions) {
     const targetMember = message.mentions.members.first();
 
     if (!targetMember) {
@@ -122,5 +122,7 @@ export default new Command({
 
     message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
     targetMember.send({ embeds: [directEmbed] });
-  },
-});
+  }
+}
+
+export default new MuteCommand();

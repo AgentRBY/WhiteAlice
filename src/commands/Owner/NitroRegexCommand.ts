@@ -1,15 +1,16 @@
 import { MessageEmbed } from 'discord.js';
-import { Command } from '../../structures/Command';
+
 import { DISCORD_NITRO_SCAM_REGEX } from '../../modules/AntiScam';
 import { Colors } from '../../static/Colors';
+import { Command, CommandRunOptions } from '../../structures/Command';
 
-export default new Command({
-  name: 'nitro-regex',
-  category: 'Owner',
-  aliases: ['нитро-скам'],
-  description:
-    'Показывает REGEX по которому определяется являться ли ссылка скамом или, если есть первый аргумент, показывает является ли ссылка скамом.',
-  examples: [
+class NitroRegexCommand extends Command {
+  name = 'nitro-regex';
+  category = 'Owner';
+  aliases = ['нитро-скам'];
+  description =
+    'Показывает REGEX по которому определяется являться ли ссылка скамом или, если есть первый аргумент, показывает является ли ссылка скамом.';
+  examples = [
     {
       command: 'nitro-regex',
       description: 'Выводит REGEX по которому определяет скам-ссылка',
@@ -18,9 +19,10 @@ export default new Command({
       command: 'nitro-regex https://discord.com',
       description: 'Проверяет ссылку https://discord.com на нитро-скам',
     },
-  ],
-  usage: 'nitro-regex [link]',
-  run: async ({ message, args }) => {
+  ];
+  usage = 'nitro-regex [link]';
+
+  async run({ message, args }: CommandRunOptions) {
     const embed = new MessageEmbed().setColor(Colors.Green);
     if (args.length) {
       embed.setDescription(`${DISCORD_NITRO_SCAM_REGEX.test(args.join('')) ? 'Это скам' : 'Это не скам'}`);
@@ -30,5 +32,7 @@ export default new Command({
     }
 
     message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
-  },
-});
+  }
+}
+
+export default new NitroRegexCommand();

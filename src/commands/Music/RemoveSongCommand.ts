@@ -1,20 +1,20 @@
-import { Command } from '../../structures/Command';
-import { client } from '../../app';
 import { ErrorEmbed, SuccessEmbed } from '../../utils/Discord/Embed';
+import { Command, CommandRunOptions } from '../../structures/Command';
 
-export default new Command({
-  name: 'removeSong',
-  category: 'Music',
-  aliases: ['rs', 'deleteSong'],
-  description: 'Позволяет убрать песню по номеру. Номер песни можно узнать в команде >queue',
-  examples: [
+class RemoveSongCommand extends Command {
+  name = 'removeSong';
+  category = 'Music';
+  aliases = ['rs', 'deleteSong'];
+  description = 'Позволяет убрать песню по номеру. Номер песни можно узнать в команде >queue';
+  examples = [
     {
       command: '>removeSong 3',
       description: 'Удаляет 3ю песню из плейлиста',
     },
-  ],
-  usage: 'removeSong',
-  run: async ({ message, args }) => {
+  ];
+  usage = 'removeSong';
+
+  async run({ client, message, args }: CommandRunOptions) {
     const queue = client.disTube.getQueue(message);
 
     if (!queue) {
@@ -53,5 +53,7 @@ export default new Command({
     const embed = SuccessEmbed(`**Песня \`${deletedSong.name}\` - \`${deletedSong.uploader.name}\` удалена**`);
     message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
     return;
-  },
-});
+  }
+}
+
+export default new RemoveSongCommand();

@@ -1,17 +1,16 @@
-import { Command } from '../../structures/Command';
 import { ErrorEmbed, SuccessEmbed } from '../../utils/Discord/Embed';
 import { isSnowflake } from 'distube';
-import { MessageEmbed } from 'discord.js';
+import { MessageEmbed, PermissionString } from 'discord.js';
 import { Colors } from '../../static/Colors';
 import { Emojis } from '../../static/Emojis';
-import { client } from '../../app';
+import { Command, CommandRunOptions } from '../../structures/Command';
 
-export default new Command({
-  name: 'unban',
-  category: 'Moderation',
-  aliases: ['removeBan'],
-  description: 'Разбанивает пользователя, если он был забанен',
-  examples: [
+class UnbanCommand extends Command {
+  name = 'unban';
+  category = 'Moderation';
+  aliases = ['removeBan'];
+  description = 'Разбанивает пользователя, если он был забанен';
+  examples = [
     {
       command: 'unban 908629905539997726',
       description: 'Разбанивает пользователя с айди 908629905539997726',
@@ -20,11 +19,12 @@ export default new Command({
       command: 'unban 908629905539997726 Хороший человек',
       description: 'Разбанивает пользователя с айди 908629905539997726 по причине `Хороший человек`',
     },
-  ],
-  usage: 'unban <айди пользователя> [причина]',
-  memberPermissions: ['BAN_MEMBERS'],
-  botPermissions: ['BAN_MEMBERS'],
-  run: async ({ message, args }) => {
+  ];
+  usage = 'unban <айди пользователя> [причина]';
+  memberPermissions: PermissionString[] = ['BAN_MEMBERS'];
+  botPermissions: PermissionString[] = ['BAN_MEMBERS'];
+
+  async run({ client, message, args }: CommandRunOptions) {
     const userId = args[0];
 
     if (!userId) {
@@ -73,5 +73,7 @@ export default new Command({
 
     user.send({ embeds: [directEmbed] }).catch(() => {});
     message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
-  },
-});
+  }
+}
+
+export default new UnbanCommand();

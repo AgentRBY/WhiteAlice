@@ -1,13 +1,16 @@
-import { Command } from '../../structures/Command';
+import { Command, CommandRunOptions } from '../../structures/Command';
 
-export default new Command({
-  name: 'rickRoll',
-  category: 'Music',
-  aliases: [],
-  description: 'Never Gonna Give You Up',
-  examples: [],
-  usage: 'rickRoll',
-  run: async ({ client, message }) => {
+class RickRollCommand extends Command {
+  name = 'rickRoll';
+  category = 'Music';
+  aliases = [];
+  description = 'Never Gonna Give You Up';
+  examples = [];
+  usage = 'rickRoll';
+
+  async run({ client, message }: CommandRunOptions) {
     client.commands.get('play').run({ client, message, args: ['https://www.youtube.com/watch?v=dQw4w9WgXcQ'] });
-  },
-});
+  }
+}
+
+export default new RickRollCommand();

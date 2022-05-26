@@ -1,16 +1,15 @@
-import { Command } from '../../structures/Command';
-import { client } from '../../app';
 import { ErrorEmbed, SuccessEmbed } from '../../utils/Discord/Embed';
 import { AvailableFilters } from '../../static/Music';
+import { Command, CommandRunOptions } from '../../structures/Command';
 
-export default new Command({
-  name: 'filter',
-  category: 'Music',
-  aliases: [],
-  description: `Накладывает фильтр на песню. 
+class FilterCommand extends Command {
+  name = 'filter';
+  category = 'Music';
+  aliases = [];
+  description = `Накладывает фильтр на песню. 
   Список доступных фильтров можно просмотреть по команде >filter list. 
-  Что бы отключить фильтры пропишите >filter clear`,
-  examples: [
+  Что бы отключить фильтры пропишите >filter clear`;
+  examples = [
     {
       command: 'filter bassboost',
       description: 'Включает фильтр bassboost к песне',
@@ -23,9 +22,10 @@ export default new Command({
       command: 'filter list',
       description: 'Показывает все доступные фильтры',
     },
-  ],
-  usage: 'filter <имя фильтра | list | clear>',
-  run: async ({ message, args }) => {
+  ];
+  usage = 'filter <имя фильтра | list | clear>';
+
+  async run({ client, message, args }: CommandRunOptions) {
     const queue = client.disTube.getQueue(message);
 
     if (!queue) {
@@ -71,5 +71,7 @@ export default new Command({
     const embed = SuccessEmbed(`Фильтр \`${filter}\` успешно применён`);
     message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
     return;
-  },
-});
+  }
+}
+
+export default new FilterCommand();

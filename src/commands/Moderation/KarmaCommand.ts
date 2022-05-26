@@ -1,24 +1,25 @@
-import { Command } from '../../structures/Command';
 import { SuccessEmbed } from '../../utils/Discord/Embed';
 import { KARMA_FOR_BAN, KARMA_FOR_MUTE, KARMA_FOR_WARN } from '../../static/Punishment';
 import { getMemberBaseId } from '../../utils/Other';
+import { Command, CommandRunOptions } from '../../structures/Command';
 
-export default new Command({
-  name: 'karma',
-  category: 'Moderation',
-  aliases: [],
-  description: `Показывает карму пользователя
+class KarmaCommand extends Command {
+  name = 'karma';
+  category = 'Moderation';
+  aliases = [];
+  description = `Показывает карму пользователя
   
   Одна карма = +1% к времени мута.
-  За один варн даётся ${KARMA_FOR_WARN} кармы. За один мут - ${KARMA_FOR_MUTE} кармы. За один бан - ${KARMA_FOR_BAN} кармы.`,
-  examples: [
+  За один варн даётся ${KARMA_FOR_WARN} кармы. За один мут - ${KARMA_FOR_MUTE} кармы. За один бан - ${KARMA_FOR_BAN} кармы.`;
+  examples = [
     {
       description: 'karma @TestUser',
       command: 'Показать карму участника @TestUser',
     },
-  ],
-  usage: 'karma [пользователь]',
-  run: async ({ client, message }) => {
+  ];
+  usage = 'karma [пользователь]';
+
+  async run({ client, message }: CommandRunOptions) {
     const member = message.mentions.members.first() || message.member;
 
     const karma = await client.service.getKarma(getMemberBaseId(member));
@@ -33,5 +34,7 @@ export default new Command({
 
     message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
     return;
-  },
-});
+  }
+}
+
+export default new KarmaCommand();

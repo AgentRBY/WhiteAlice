@@ -1,20 +1,20 @@
-import { Command } from '../../structures/Command';
-import { client } from '../../app';
 import { ErrorEmbed, SuccessEmbed } from '../../utils/Discord/Embed';
+import { Command, CommandRunOptions } from '../../structures/Command';
 
-export default new Command({
-  name: 'shuffle',
-  category: 'Music',
-  aliases: ['random'],
-  description: 'Перемешивает песни в плейлисте',
-  examples: [
+class ShuffleCommand extends Command {
+  name = 'shuffle';
+  category = 'Music';
+  aliases = ['random'];
+  description = 'Перемешивает песни в плейлисте';
+  examples = [
     {
       command: 'shuffle',
       description: 'Перемешивает песни в плейлисте',
     },
-  ],
-  usage: 'shuffle',
-  run: async ({ message }) => {
+  ];
+  usage = 'shuffle';
+
+  async run({ client, message }: CommandRunOptions) {
     const queue = client.disTube.getQueue(message);
 
     if (!queue) {
@@ -27,5 +27,7 @@ export default new Command({
     const embed = SuccessEmbed('**Плейлист перемешан**');
     message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
     return;
-  },
-});
+  }
+}
+
+export default new ShuffleCommand();

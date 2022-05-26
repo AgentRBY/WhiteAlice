@@ -1,21 +1,23 @@
-import { Command } from '../../structures/Command';
 import { ErrorEmbed, SuccessEmbed } from '../../utils/Discord/Embed';
+import { PermissionString } from 'discord.js';
+import { Command, CommandRunOptions } from '../../structures/Command';
 
-export default new Command({
-  name: 'deleteMessage',
-  category: 'Moderation',
-  aliases: ['dmsg', 'delete'],
-  description: 'Удаляет сообщение по айди',
-  examples: [
+class DeleteMessageCommand extends Command {
+  name = 'deleteMessage';
+  category = 'Moderation';
+  aliases = ['dmsg', 'delete'];
+  description = 'Удаляет сообщение по айди';
+  examples = [
     {
       command: 'deleteMessage 948518420524187648',
       description: 'Удаляет сообщение с айди 948518420524187648',
     },
-  ],
-  usage: 'deleteMessage <айди>',
-  botPermissions: ['MANAGE_MESSAGES'],
-  memberPermissions: ['BAN_MEMBERS'],
-  run: async ({ message, args }) => {
+  ];
+  usage = 'deleteMessage <айди>';
+  botPermissions: PermissionString[] = ['MANAGE_MESSAGES'];
+  memberPermissions: PermissionString[] = ['BAN_MEMBERS'];
+
+  async run({ message, args }: CommandRunOptions) {
     const messageId = args[0];
 
     if (!messageId) {
@@ -64,5 +66,7 @@ export default new Command({
       }, 5000);
     });
     return;
-  },
-});
+  }
+}
+
+export default new DeleteMessageCommand();

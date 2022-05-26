@@ -1,15 +1,17 @@
-import { Command } from '../../structures/Command';
 import { ErrorEmbed, SuccessEmbed } from '../../utils/Discord/Embed';
+import { PermissionString } from 'discord.js';
+import { Command, CommandRunOptions } from '../../structures/Command';
 
-export default new Command({
-  name: 'prefix',
-  category: 'Administration',
-  aliases: [],
-  description: '',
-  examples: [],
-  usage: 'update',
-  memberPermissions: ['MANAGE_GUILD'],
-  run: async ({ client, message, args }) => {
+class PrefixCommand extends Command {
+  name = 'prefix';
+  category = 'Administration';
+  aliases = [];
+  description = '';
+  examples = [];
+  usage = 'update';
+  memberPermissions: PermissionString[] = ['MANAGE_GUILD'];
+
+  async run({ client, message, args }: CommandRunOptions) {
     const prefix = args[0];
 
     if (!prefix) {
@@ -28,5 +30,7 @@ export default new Command({
 
     const embed = SuccessEmbed(`Префикс успешно изменён на \`${prefix}\``);
     message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
-  },
-});
+  }
+}
+
+export default new PrefixCommand();

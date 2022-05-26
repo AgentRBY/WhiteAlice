@@ -1,25 +1,25 @@
-import { Command } from '../../structures/Command';
 import { SuccessEmbed } from '../../utils/Discord/Embed';
 import { MessageEmbed } from 'discord.js';
 import moment from 'moment';
 import { Colors } from '../../static/Colors';
 import { momentToDiscordDate } from '../../utils/Common/Date';
-import { client } from '../../app';
 import { getMemberBaseId } from '../../utils/Other';
+import { Command, CommandRunOptions } from '../../structures/Command';
 
-export default new Command({
-  name: 'warns',
-  category: 'Moderation',
-  aliases: [],
-  description: 'Выводит список всех предупреждений пользователя.',
-  examples: [
+class WarnsCommand extends Command {
+  name = 'warns';
+  category = 'Moderation';
+  aliases = [];
+  description = 'Выводит список всех предупреждений пользователя.';
+  examples = [
     {
       command: 'warns @TestUser',
       description: 'Выводит список всех предупреждений пользователя TestUser.',
     },
-  ],
-  usage: 'warn [пользователь]',
-  run: async ({ message }) => {
+  ];
+  usage = 'warn [пользователь]';
+
+  async run({ client, message }: CommandRunOptions) {
     const targetMember = message.mentions.members.first() || message.member;
 
     const warns = await client.service.getWarns(getMemberBaseId(targetMember));
@@ -55,5 +55,7 @@ export default new Command({
       });
 
     message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
-  },
-});
+  }
+}
+
+export default new WarnsCommand();

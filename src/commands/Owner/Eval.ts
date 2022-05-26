@@ -1,24 +1,26 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { MessageEmbed } from 'discord.js';
 import { inspect } from 'util';
-import { Command } from '../../structures/Command';
+
 import { ErrorEmbed } from '../../utils/Discord/Embed';
 import { Colors } from '../../static/Colors';
+import { Command, CommandRunOptions } from '../../structures/Command';
 
-export default new Command({
-  name: 'eval',
-  category: 'Owner',
-  aliases: [],
-  description: 'Выполняет JS код',
-  usage: 'eval <code>',
-  examples: [
+class EvalCommand extends Command {
+  name = 'eval';
+  category = 'Owner';
+  aliases = [];
+  description = 'Выполняет JS код';
+  usage = 'eval <code>';
+  examples = [
     {
       command: 'eval console.log("")',
       description: 'Выводит в консоль пустую строку',
     },
-  ],
-  ownerOnly: true,
-  run: async ({ client, message, args }) => {
+  ];
+  ownerOnly = true;
+
+  async run({ client, message, args }: CommandRunOptions) {
     if (!args.length) {
       const errorEmbed = ErrorEmbed('**Введите любой код.**');
       return message.reply({ embeds: [errorEmbed], allowedMentions: { repliedUser: false } });
@@ -56,5 +58,7 @@ export default new Command({
       embed.setDescription(formattedError);
       message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
     }
-  },
-});
+  }
+}
+
+export default new EvalCommand();

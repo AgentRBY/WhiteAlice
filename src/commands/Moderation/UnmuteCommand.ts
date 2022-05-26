@@ -1,18 +1,17 @@
-import { Command } from '../../structures/Command';
 import { ErrorEmbed, SuccessEmbed } from '../../utils/Discord/Embed';
 import moment from 'moment';
-import { MessageEmbed } from 'discord.js';
+import { MessageEmbed, PermissionString } from 'discord.js';
 import { Emojis } from '../../static/Emojis';
 import { Colors } from '../../static/Colors';
-import { client } from '../../app';
 import { getMemberBaseId } from '../../utils/Other';
+import { Command, CommandRunOptions } from '../../structures/Command';
 
-export default new Command({
-  name: 'unmute',
-  category: 'Moderation',
-  aliases: ['removeMute'],
-  description: 'Размучивает человека, если он был замучен',
-  examples: [
+class UnmuteCommand extends Command {
+  name = 'unmute';
+  category = 'Moderation';
+  aliases = ['removeMute'];
+  description = 'Размучивает человека, если он был замучен';
+  examples = [
     {
       command: 'unmute @TestUser',
       description: 'Убирает мут у пользователя @TestUser',
@@ -21,11 +20,12 @@ export default new Command({
       command: 'unmute @TestUser Ошибочный мут',
       description: 'Убирает мут у пользователя @TestUser по причине `Ошибочный мут`',
     },
-  ],
-  usage: 'unmute <пользователь> [причина]',
-  botPermissions: ['MODERATE_MEMBERS'],
-  memberPermissions: ['BAN_MEMBERS'],
-  run: async ({ message, args }) => {
+  ];
+  usage = 'unmute <пользователь> [причина]';
+  botPermissions: PermissionString[] = ['MODERATE_MEMBERS'];
+  memberPermissions: PermissionString[] = ['BAN_MEMBERS'];
+
+  async run({ client, message, args }: CommandRunOptions) {
     const targetMember = message.mentions.members.first();
 
     if (!targetMember) {
@@ -64,5 +64,7 @@ export default new Command({
 
     message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
     targetMember.send({ embeds: [directEmbed] });
-  },
-});
+  }
+}
+
+export default new UnmuteCommand();

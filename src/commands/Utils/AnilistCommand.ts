@@ -1,21 +1,23 @@
 import { ErrorEmbed } from '../../utils/Discord/Embed';
-import { Command } from '../../structures/Command';
+
 import anilist from 'anilist-node';
 import { formatAnilistAnime } from '../../utils/Media/Anime';
+import { Command, CommandRunOptions } from '../../structures/Command';
 
-export default new Command({
-  name: 'anilist',
-  category: 'Utils',
-  aliases: ['al', 'анилист'],
-  description: 'Ищет информацию об аниме в AniList по id',
-  examples: [
+class AnilistCommand extends Command {
+  name = 'anilist';
+  category = 'Utils';
+  aliases = ['al', 'анилист'];
+  description = 'Ищет информацию об аниме в AniList по id';
+  examples = [
     {
       command: 'anilist 1234',
       description: 'Ищет информацию об аниме с айди 1234',
     },
-  ],
-  usage: 'anilist <id>',
-  run: async ({ message, args }) => {
+  ];
+  usage = 'anilist <id>';
+
+  async run({ message, args }: CommandRunOptions) {
     const animeID = args.length ? Number(args[0]) : null;
 
     if (!animeID || Number.isNaN(animeID)) {
@@ -33,5 +35,7 @@ export default new Command({
     const embed = await formatAnilistAnime(animeInfo);
 
     message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
-  },
-});
+  }
+}
+
+export default new AnilistCommand();

@@ -1,19 +1,21 @@
 import { ErrorEmbed, SuccessEmbed } from '../../utils/Discord/Embed';
-import { Command } from '../../structures/Command';
 
-export default new Command({
-  name: 'skip',
-  category: 'Music',
-  aliases: ['s'],
-  description: 'Пропускает текущий трек. Если трек последний, завершает работу боту',
-  usage: 'skip',
-  examples: [
+import { Command, CommandRunOptions } from '../../structures/Command';
+
+class SkipCommand extends Command {
+  name = 'skip';
+  category = 'Music';
+  aliases = ['s'];
+  description = 'Пропускает текущий трек. Если трек последний, завершает работу боту';
+  usage = 'skip';
+  examples = [
     {
       command: 'skip',
       description: 'Пропустить текущий трек',
     },
-  ],
-  run: async ({ client, message, args }) => {
+  ];
+
+  async run({ client, message, args }: CommandRunOptions) {
     const queue = client.disTube.getQueue(message);
 
     if (!queue) {
@@ -59,5 +61,7 @@ export default new Command({
       const errorEmbed = ErrorEmbed(`**Произошла ошибка ${error}**`);
       return message.reply({ embeds: [errorEmbed], allowedMentions: { repliedUser: false } });
     }
-  },
-});
+  }
+}
+
+export default new SkipCommand();

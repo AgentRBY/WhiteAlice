@@ -1,7 +1,6 @@
 import { Client, ClientEvents, Collection, Intents } from 'discord.js';
 import { promisify } from 'util';
 import { glob } from 'glob';
-import { CommandType } from '../typings/Command';
 import { EventType } from '../typings/Event';
 import { DisTube, DisTubeEvents } from 'distube';
 import SoundCloudPlugin from '@distube/soundcloud';
@@ -16,11 +15,12 @@ import { MemberModel } from '../models/MemberModel';
 import { GuildModel } from '../models/GuildModel';
 import { Service } from './Service';
 import Logger from '../utils/Logger';
+import { Command } from './Command';
 
 const globPromise = promisify(glob);
 
 export class ExtendClient extends Client {
-  commands: Collection<string, CommandType> = new Collection();
+  commands: Collection<string, Command> = new Collection();
   categories: Set<string> = new Set();
   aliases: Collection<string, string> = new Collection();
   disTube: DisTube;
@@ -90,7 +90,7 @@ export class ExtendClient extends Client {
     const commandFiles = await globPromise(`${__dirname}/../commands/**/*.{js,ts}`);
 
     commandFiles.map(async (commandFile: string) => {
-      const file: CommandType = await ExtendClient.importFile(commandFile);
+      const file: Command = await ExtendClient.importFile(commandFile);
 
       if (file.name) {
         this.commands.set(file.name.toLowerCase(), file);

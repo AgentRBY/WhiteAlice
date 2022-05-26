@@ -1,17 +1,16 @@
-import { Command } from '../../structures/Command';
-import { client } from '../../app';
 import { ErrorEmbed } from '../../utils/Discord/Embed';
 import { MessageEmbed } from 'discord.js';
 import { EmojisLinks } from '../../static/Emojis';
 import { Colors } from '../../static/Colors';
+import { Command, CommandRunOptions } from '../../structures/Command';
 
-export default new Command({
-  name: 'playNext',
-  category: 'Music',
-  aliases: ['pn'],
-  description: `Проиграть трек следующим в очереди. Во всем остальном аналогичен команде >play. 
-     Имеет ключ -S, который позволяет сразу пропускать текущую песню при добавлении`,
-  examples: [
+class PlayNextCommand extends Command {
+  name = 'playNext';
+  category = 'Music';
+  aliases = ['pn'];
+  description = `Проиграть трек следующим в очереди. Во всем остальном аналогичен команде >play. 
+     Имеет ключ -S, который позволяет сразу пропускать текущую песню при добавлении`;
+  examples = [
     {
       command: 'playNext Never Gonna Give You Up',
       description: 'Добавляет `Never Gonna Give You Up` от `Rick Astley` следующим в очередь',
@@ -20,9 +19,10 @@ export default new Command({
       command: 'playNext Never Gonna Give You Up -S',
       description: 'Добавляет `Never Gonna Give You Up` от `Rick Astley` следующим в очередь и пропускает текущий трек',
     },
-  ],
-  usage: 'playNext <запрос>',
-  run: async ({ message, args, attributes }) => {
+  ];
+  usage = 'playNext <запрос>';
+
+  async run({ client, message, args, attributes }: CommandRunOptions) {
     if (!message.member?.voice.channel) {
       const embed = ErrorEmbed('**Вы не находитесь в голосовом канале**');
       return message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
@@ -50,5 +50,7 @@ export default new Command({
         .setColor(Colors.Green);
       return message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
     }
-  },
-});
+  }
+}
+
+export default new PlayNextCommand();

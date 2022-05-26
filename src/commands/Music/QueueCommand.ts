@@ -2,23 +2,25 @@ import { ErrorEmbed } from '../../utils/Discord/Embed';
 import { MessageActionRow, MessageEmbed } from 'discord.js';
 import { Colors } from '../../static/Colors';
 import { EmojisLinks } from '../../static/Emojis';
-import { Command } from '../../structures/Command';
+
 import { Song } from 'distube';
 import { generateDefaultButtons, pagination } from '../../utils/Discord/Pagination';
+import { Command, CommandRunOptions } from '../../structures/Command';
 
-export default new Command({
-  name: 'queue',
-  category: 'Music',
-  aliases: ['q', 'playlist', 'плейлист', 'очередь'],
-  description: 'Показывает плейлист со всеми треками добавленными в очередь',
-  usage: 'queue',
-  examples: [
+class QueueCommand extends Command {
+  name = 'queue';
+  category = 'Music';
+  aliases = ['q', 'playlist', 'плейлист', 'очередь'];
+  description = 'Показывает плейлист со всеми треками добавленными в очередь';
+  usage = 'queue';
+  examples = [
     {
       command: 'queue',
       description: 'Показывает список треков',
     },
-  ],
-  run: async ({ client, message }) => {
+  ];
+
+  async run({ client, message }: CommandRunOptions) {
     const queue = client.disTube.getQueue(message);
 
     if (!queue) {
@@ -70,5 +72,7 @@ export default new Command({
     });
 
     pagination(replyMessage, pages);
-  },
-});
+  }
+}
+
+export default new QueueCommand();

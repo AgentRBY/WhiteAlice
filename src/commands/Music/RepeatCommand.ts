@@ -1,17 +1,18 @@
 import { ErrorEmbed, SuccessEmbed } from '../../utils/Discord/Embed';
-import { Command } from '../../structures/Command';
 
-export default new Command({
-  name: 'repeat',
-  category: 'Music',
-  aliases: ['loop', 'rp', 'повторить'],
-  description: `Позволяет повторить трек или плейлист. 
+import { Command, CommandRunOptions } from '../../structures/Command';
+
+class RepeatCommand extends Command {
+  name = 'repeat';
+  category = 'Music';
+  aliases = ['loop', 'rp', 'повторить'];
+  description = `Позволяет повторить трек или плейлист. 
      Возможны три значения: 
      \`song\` - повторять только песню 
      \`queue\` - повторять весь плейлист (по умолчанию) 
-     \`off\` - выключить повторение`,
-  usage: 'repeat [значение]',
-  examples: [
+     \`off\` - выключить повторение`;
+  usage = 'repeat [значение]';
+  examples = [
     {
       command: 'repeat',
       description: 'Включает/выключает повторение плейлиста',
@@ -20,8 +21,9 @@ export default new Command({
       command: 'repeat song',
       description: 'Включает/выключает повторение песни',
     },
-  ],
-  run: async ({ client, message, args }) => {
+  ];
+
+  async run({ client, message, args }: CommandRunOptions) {
     const queue = client.disTube.getQueue(message);
 
     if (!queue) {
@@ -66,5 +68,7 @@ export default new Command({
     const embed = SuccessEmbed(modeMessage);
 
     return message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
-  },
-});
+  }
+}
+
+export default new RepeatCommand();

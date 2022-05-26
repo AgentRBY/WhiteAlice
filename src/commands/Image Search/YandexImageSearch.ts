@@ -1,6 +1,4 @@
-import { Command } from '../../structures/Command';
 import { ErrorEmbed } from '../../utils/Discord/Embed';
-import { client } from '../../app';
 import { generateYandexSearchLink, getSitesFromYandexResponse } from '../../utils/Media/ImageSearch';
 import { promisify } from 'util';
 import { yandexWhitelistSites } from '../../static/ImageSearch';
@@ -9,15 +7,16 @@ import { Colors } from '../../static/Colors';
 import { Site, WhitelistSite } from '../../typings/YandexImagesResponse';
 import { generateDefaultButtons, pagination } from '../../utils/Discord/Pagination';
 import { removeQueryParameters } from '../../utils/Common/Strings';
+import { Command, CommandRunOptions } from '../../structures/Command';
 
 const request = promisify(require('request'));
 
-export default new Command({
-  name: 'yandex-image-search',
-  category: 'Image Search',
-  aliases: ['yis'],
-  description: 'Поиск изображений через Яндекс. Бот ищет картинку через Яндекс и фильтрует результаты по URL',
-  examples: [
+class YandexImageSearchCommand extends Command {
+  name = 'yandex-image-search';
+  category = 'Image Search';
+  aliases = ['yis'];
+  description = 'Поиск изображений через Яндекс. Бот ищет картинку через Яндекс и фильтрует результаты по URL';
+  examples = [
     {
       command: 'findImage https://i.imgur.com/KlQUCJG.png',
       description: 'Найти изображение по ссылке',
@@ -26,9 +25,10 @@ export default new Command({
       command: 'findImage -S',
       description: 'Получить список сайтов, по которым фильтруются результаты',
     },
-  ],
-  usage: 'yandexImageSearch <картинка>',
-  run: async ({ message, args, attributes }) => {
+  ];
+  usage = 'yandexImageSearch <картинка>';
+
+  async run({ client, message, args, attributes }: CommandRunOptions) {
     if (attributes.has('S')) {
       const sites = yandexWhitelistSites.map((site) => site.url);
       const formattedSites = `\n➤ \`${sites.join('`\n ➤ `')}\``;
@@ -114,5 +114,7 @@ export default new Command({
     });
 
     pagination(replyMessage, pages);
-  },
-});
+  }
+}
+
+export default new YandexImageSearchCommand();

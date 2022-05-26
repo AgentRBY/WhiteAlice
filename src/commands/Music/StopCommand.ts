@@ -1,19 +1,21 @@
 import { ErrorEmbed, SuccessEmbed } from '../../utils/Discord/Embed';
-import { Command } from '../../structures/Command';
 
-export default new Command({
-  name: 'stop',
-  category: 'Music',
-  aliases: ['leave', 'disconnect', 'стоп', 'остановить', 'выйти'],
-  description: 'Завершает работу бота и выходит из канала',
-  usage: 'stop',
-  examples: [
+import { Command, CommandRunOptions } from '../../structures/Command';
+
+class StopCommand extends Command {
+  name = 'stop';
+  category = 'Music';
+  aliases = ['leave', 'disconnect', 'стоп', 'остановить', 'выйти'];
+  description = 'Завершает работу бота и выходит из канала';
+  usage = 'stop';
+  examples = [
     {
       command: 'stop',
       description: 'Завершает работу бота',
     },
-  ],
-  run: async ({ client, message }) => {
+  ];
+
+  async run({ client, message }: CommandRunOptions) {
     const queue = client.disTube.getQueue(message);
 
     if (!queue && !message.guild?.me?.voice.channel) {
@@ -29,5 +31,7 @@ export default new Command({
 
     const embed = SuccessEmbed('**Выхожу...**');
     return message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
-  },
-});
+  }
+}
+
+export default new StopCommand();

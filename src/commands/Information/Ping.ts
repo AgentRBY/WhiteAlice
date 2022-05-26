@@ -1,22 +1,23 @@
-import { Command } from '../../structures/Command';
 import { Message, MessageEmbed } from 'discord.js';
 import { Emojis } from '../../static/Emojis';
 import { Colors } from '../../static/Colors';
+import { Command, CommandRunOptions } from '../../structures/Command';
 
-export default new Command({
-  name: 'ping',
-  category: 'Information',
-  description: `Показывает пинг:
+class PingCommand extends Command {
+  name = 'ping';
+  category = 'Information';
+  description = `Показывает пинг:
    До сервера (высчитывается скорость выполнения запроса)
-   До Discord (отправляется сообщение и высчитывается время между сообщением и текущим временем)`,
-  usage: 'ping',
-  examples: [
+   До Discord (отправляется сообщение и высчитывается время между сообщением и текущим временем)`;
+  usage = 'ping';
+  examples = [
     {
       command: 'ping',
       description: 'Показывает пинг',
     },
-  ],
-  run: async ({ client, message }) => {
+  ];
+
+  async run({ client, message }: CommandRunOptions) {
     const pingMessage: Message = await message.channel.send('Pinging...');
     pingMessage.delete();
 
@@ -26,5 +27,7 @@ export default new Command({
       .setColor(Colors.Green);
 
     await message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
-  },
-});
+  }
+}
+
+export default new PingCommand();

@@ -1,21 +1,22 @@
-import { Command } from '../../structures/Command';
 import { ErrorEmbed } from '../../utils/Discord/Embed';
 import anilist from 'anilist-node';
 import { formatAnilistAnime } from '../../utils/Media/Anime';
+import { Command, CommandRunOptions } from '../../structures/Command';
 
-export default new Command({
-  name: 'anime',
-  category: 'Utils',
-  aliases: [],
-  description: 'Поиск аниме по названию',
-  examples: [
+class AnimeCommand extends Command {
+  name = 'anime';
+  category = 'Utils';
+  aliases = [];
+  description = 'Поиск аниме по названию';
+  examples = [
     {
       command: 'anime Naruto',
       description: 'Ищет аниме с названием Naruto',
     },
-  ],
-  usage: 'anime <имя>',
-  run: async ({ message, args }) => {
+  ];
+  usage = 'anime <имя>';
+
+  async run({ message, args }: CommandRunOptions) {
     const name = args.join(' ');
 
     if (!name) {
@@ -31,5 +32,7 @@ export default new Command({
     const embed = await formatAnilistAnime(anime);
 
     message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
-  },
-});
+  }
+}
+
+export default new AnimeCommand();

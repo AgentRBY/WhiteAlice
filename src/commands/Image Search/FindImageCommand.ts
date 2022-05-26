@@ -2,26 +2,28 @@ import sagiri from 'sagiri';
 import { MessageActionRow, MessageEmbed } from 'discord.js';
 import { Colors } from '../../static/Colors';
 import { ErrorEmbed } from '../../utils/Discord/Embed';
-import { Command } from '../../structures/Command';
+
 import { formatNames, isGifLink, isImageLink, isLink, removeQueryParameters } from '../../utils/Common/Strings';
 import { generateDefaultButtons, pagination } from '../../utils/Discord/Pagination';
 import { sauceNAORelevantSites } from '../../static/ImageSearch';
+import { Command, CommandRunOptions } from '../../structures/Command';
 
-export default new Command({
-  name: 'findImage',
-  category: 'Image Search',
-  aliases: ['find', 'fi', 'image'],
-  description: `Поиск изображения в системе SauceNAO. 
+class FindImageCommand extends Command {
+  name = 'findImage';
+  category = 'Image Search';
+  aliases = ['find', 'fi', 'image'];
+  description = `Поиск изображения в системе SauceNAO. 
   Допустимые форматы: png, jpeg, jpg, webp, bmp, gif.
-  Для gif-анимаций в поиске будет использоваться первый кадр`,
-  usage: 'findImage [ссылка на картинку]',
-  examples: [
+  Для gif-анимаций в поиске будет использоваться первый кадр`;
+  usage = 'findImage [ссылка на картинку]';
+  examples = [
     {
       command: 'findImage https://i.imgur.com/KlQUCJG.png',
       description: 'Найти изображение по ссылке',
     },
-  ],
-  run: async ({ client, message, args }) => {
+  ];
+
+  async run({ client, message, args }: CommandRunOptions) {
     let link;
 
     if (message.attachments.size) {
@@ -123,5 +125,7 @@ export default new Command({
     });
 
     pagination(replyMessage, pages);
-  },
-});
+  }
+}
+
+export default new FindImageCommand();

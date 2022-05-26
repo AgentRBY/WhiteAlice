@@ -1,23 +1,23 @@
-import { Command } from '../../structures/Command';
-import { client } from '../../app';
 import { ErrorEmbed } from '../../utils/Discord/Embed';
 import { MessageEmbed } from 'discord.js';
 import { Colors } from '../../static/Colors';
 import { Emojis } from '../../static/Emojis';
+import { Command, CommandRunOptions } from '../../structures/Command';
 
-export default new Command({
-  name: 'nowPlaying',
-  category: 'Music',
-  aliases: ['np'],
-  description: 'Показывает песню, которая сейчас играет',
-  examples: [
+class NowPlayingCommand extends Command {
+  name = 'nowPlaying';
+  category = 'Music';
+  aliases = ['np'];
+  description = 'Показывает песню, которая сейчас играет';
+  examples = [
     {
       command: 'nowPlaying',
       description: 'Покажет текущую песню',
     },
-  ],
-  usage: 'nowPlaying',
-  run: async ({ message }) => {
+  ];
+  usage = 'nowPlaying';
+
+  async run({ client, message }: CommandRunOptions) {
     const queue = client.disTube.getQueue(message);
 
     if (!queue) {
@@ -34,5 +34,7 @@ export default new Command({
 
     message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
     return;
-  },
-});
+  }
+}
+
+export default new NowPlayingCommand();

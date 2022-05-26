@@ -1,26 +1,25 @@
-import { Command } from '../../structures/Command';
 import { ErrorEmbed, SuccessEmbed } from '../../utils/Discord/Embed';
-import { MessageEmbed } from 'discord.js';
+import { MessageEmbed, PermissionString } from 'discord.js';
 import { Colors } from '../../static/Colors';
 import { Emojis } from '../../static/Emojis';
-import { Ban } from '../../typings/MemberModel';
 import { isNumber } from '../../utils/Common/Number';
-import { client } from '../../app';
 import { KARMA_FOR_BAN } from '../../static/Punishment';
+import { Ban } from '../../typings/MemberModel';
+import { Command, CommandRunOptions } from '../../structures/Command';
 
-export default new Command({
-  name: 'ban',
-  category: 'Moderation',
-  aliases: [],
-  description: `Выдаёт бан пользователю
+class BanCommand extends Command {
+  name = 'ban';
+  category = 'Moderation';
+  aliases = [];
+  description = `Выдаёт бан пользователю
   Каждый бан добавляет +100% к времени мута
   
   Можно очистить сообщения пользователя за последние пару дней (от 1 до 7) добавив ключ hl:D
   
   Список всех банов у пользователя можно просмотреть командой >bans
   
-  Каждый бан даёт +${KARMA_FOR_BAN} кармы`,
-  examples: [
+  Каждый бан даёт +${KARMA_FOR_BAN} кармы`;
+  examples = [
     {
       command: 'ban @TestUser',
       description: 'Забанить пользователя @TestUser',
@@ -33,11 +32,12 @@ export default new Command({
       command: 'ban 908629905539997726 hl:D 6',
       description: 'Забанить пользователя с айди `908629905539997726` и удалить его сообщения за последние 5 дней',
     },
-  ],
-  usage: 'ban <пользователь> [причина]',
-  memberPermissions: ['BAN_MEMBERS'],
-  botPermissions: ['BAN_MEMBERS'],
-  run: async ({ message, args, keys }) => {
+  ];
+  usage = 'ban <пользователь> [причина]';
+  memberPermissions: PermissionString[] = ['BAN_MEMBERS'];
+  botPermissions: PermissionString[] = ['BAN_MEMBERS'];
+
+  async run({ client, message, args, keys }: CommandRunOptions) {
     const member = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
     const userId = args[0] || member?.id;
 
@@ -113,5 +113,7 @@ export default new Command({
       reason,
       days: messageDeleteCountInDays,
     });
-  },
-});
+  }
+}
+
+export default new BanCommand();

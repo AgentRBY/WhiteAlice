@@ -1,26 +1,25 @@
-import { Command } from '../../structures/Command';
-import { Note } from '../../typings/GuildModel';
 import { ErrorEmbed, SuccessEmbed } from '../../utils/Discord/Embed';
 import { MessageEmbed } from 'discord.js';
 import { Colors } from '../../static/Colors';
 import { EmojisLinks } from '../../static/Emojis';
-import { client } from '../../app';
+import { Note } from '../../typings/GuildModel';
+import { Command, CommandRunOptions } from '../../structures/Command';
 
-export default new Command({
-  name: 'note',
-  category: 'Utils',
-  aliases: ['n'],
-  description: `Позволяет вывести заметку. 
+class NoteCommand extends Command {
+  name = 'note';
+  category = 'Utils';
+  aliases = ['n'];
+  description = `Позволяет вывести заметку. 
   Если первым аргументом будет имя заметки, то заметка выведется в чат.
   
-  Если первым аргументом передан \`create\`, то будет создана новая заметка.
+  Если первым аргументом передан \`create\`; то будет создана новая заметка.
   Вторым аргументом должно быть имя, а остальные - контент.
   
   Если первым аргументом передан \`remove\` или \`delete\`, то заметка будет удалена.
   Вторым аргументом должно быть имя заметки.
   
-  Для создания и удаления заметок нужно право \`Управлять сообщениями\``,
-  examples: [
+  Для создания и удаления заметок нужно право \`Управлять сообщениями\``;
+  examples = [
     {
       command: 'note example',
       description: 'Выводит заметку `example`',
@@ -33,9 +32,10 @@ export default new Command({
       command: 'note remove example',
       description: 'Удаляет заметку `example`',
     },
-  ],
-  usage: 'note <имя заметки|create|remove> [имя новой/удаляемой заметки] [контент новой заметки]',
-  run: async ({ message, args }) => {
+  ];
+  usage = 'note <имя заметки|create|remove> [имя новой/удаляемой заметки] [контент новой заметки]';
+
+  async run({ client, message, args }: CommandRunOptions) {
     const commandType = args[0];
 
     if (commandType === 'create') {
@@ -134,5 +134,7 @@ export default new Command({
       .setDescription(note.content);
 
     message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
-  },
-});
+  }
+}
+
+export default new NoteCommand();

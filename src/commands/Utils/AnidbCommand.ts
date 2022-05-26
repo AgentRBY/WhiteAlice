@@ -1,20 +1,21 @@
-import { Command } from '../../structures/Command';
 import { ErrorEmbed } from '../../utils/Discord/Embed';
 import { formatAniDBAnime } from '../../utils/Media/Anime';
+import { Command, CommandRunOptions } from '../../structures/Command';
 
-export default new Command({
-  name: 'anidb',
-  category: 'Utils',
-  aliases: ['adb', 'анидб'],
-  description: 'Ищет информацию об аниме в AniDB по id',
-  examples: [
+class AnidbCommand extends Command {
+  name = 'anidb';
+  category = 'Utils';
+  aliases = ['adb', 'анидб'];
+  description = 'Ищет информацию об аниме в AniDB по id';
+  examples = [
     {
       command: 'anidb 1234',
       description: 'Ищет информацию об аниме с айди 1234',
     },
-  ],
-  usage: 'anidb <id>',
-  run: async ({ client, message, args }) => {
+  ];
+  usage = 'anidb <id>';
+
+  async run({ client, message, args }: CommandRunOptions) {
     const animeID = args.length ? Number(args[0]) : null;
 
     if (!animeID || Number.isNaN(animeID)) {
@@ -44,5 +45,7 @@ export default new Command({
         setTimeout(() => message_.delete(), 30_000);
       }
     });
-  },
-});
+  }
+}
+
+export default new AnidbCommand();

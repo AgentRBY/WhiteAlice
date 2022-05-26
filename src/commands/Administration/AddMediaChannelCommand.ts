@@ -1,21 +1,22 @@
-import { Command } from '../../structures/Command';
 import { ErrorEmbed, SuccessEmbed } from '../../utils/Discord/Embed';
-import { client } from '../../app';
+import { PermissionString } from 'discord.js';
+import { Command, CommandRunOptions } from '../../structures/Command';
 
-export default new Command({
-  name: 'addMediaChannel',
-  category: 'Administration',
-  aliases: ['addToMediaChannels'],
-  description: 'Добавляет канал в список Каналов только для медиа контента',
-  examples: [
+class AddMediaChannelCommand extends Command {
+  name = 'addMediaChannel';
+  category = 'Administration';
+  aliases = ['addToMediaChannels'];
+  description = 'Добавляет канал в список Каналов только для медиа контента';
+  examples = [
     {
       command: 'addMediaChannel 910989430557392947',
       description: 'Добавить канал с айди 910989430557392947 в список Каналов только для медиа контента',
     },
-  ],
-  usage: 'addMediaChannel <айди>',
-  memberPermissions: ['BAN_MEMBERS'],
-  run: async ({ message, args }) => {
+  ];
+  usage = 'addMediaChannel <айди>';
+  memberPermissions: PermissionString[] = ['BAN_MEMBERS'];
+
+  async run({ client, message, args }: CommandRunOptions) {
     const channelId = args[0];
 
     if (!channelId) {
@@ -47,5 +48,7 @@ export default new Command({
     const embed = SuccessEmbed(`Канал <#${channelId}> добавлен как Канал только для медиа контента`);
     message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
     return;
-  },
-});
+  }
+}
+
+export default new AddMediaChannelCommand();

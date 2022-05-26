@@ -1,26 +1,27 @@
-import { Command } from '../../structures/Command';
 import { ErrorEmbed } from '../../utils/Discord/Embed';
 import { TraceMoe } from 'trace.moe.ts';
 import { Colors } from '../../static/Colors';
 import anilist from 'anilist-node';
 import { ButtonInteraction, MessageActionRow, MessageButton, MessageEmbed } from 'discord.js';
 import { isLink, isMediaLink, removeQueryParameters } from '../../utils/Common/Strings';
+import { Command, CommandRunOptions } from '../../structures/Command';
 
-export default new Command({
-  name: 'findanime',
-  category: 'Image Search',
-  aliases: ['найтианиме', 'fa'],
-  description: `Ищет аниме по ссылке картинку через trace.moe
+class FindanimeCommand extends Command {
+  name = 'findanime';
+  category = 'Image Search';
+  aliases = ['найтианиме', 'fa'];
+  description = `Ищет аниме по ссылке картинку через trace.moe
   Допустимые форматы: png, jpeg, jpg, webp, bmp, gif, mp4
-  Для gif-анимаций и видео в поиске будет использоваться первый кадр`,
-  usage: 'findanime <ссылка на изображение>',
-  examples: [
+  Для gif-анимаций и видео в поиске будет использоваться первый кадр`;
+  usage = 'findanime <ссылка на изображение>';
+  examples = [
     {
       command: 'findanime https://i.imgur.com/WHc96tx.jpg',
       description: 'Найти аниме по картинке из ссылки',
     },
-  ],
-  run: async ({ client, message, args }) => {
+  ];
+
+  async run({ client, message, args }: CommandRunOptions) {
     let link: string;
 
     if (message.attachments.size) {
@@ -103,5 +104,7 @@ export default new Command({
       client.commands.get('anilist').run({ client, message, args: [String(anime.anilist)] });
       interaction.deferUpdate();
     });
-  },
-});
+  }
+}
+
+export default new FindanimeCommand();

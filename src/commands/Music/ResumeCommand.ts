@@ -1,19 +1,21 @@
 import { ErrorEmbed, SuccessEmbed } from '../../utils/Discord/Embed';
-import { Command } from '../../structures/Command';
 
-export default new Command({
-  name: 'resume',
-  category: 'Music',
-  aliases: [],
-  description: 'Возобновляет трек, если он остановлен',
-  usage: 'resume',
-  examples: [
+import { Command, CommandRunOptions } from '../../structures/Command';
+
+class ResumeCommand extends Command {
+  name = 'resume';
+  category = 'Music';
+  aliases = [];
+  description = 'Возобновляет трек, если он остановлен';
+  usage = 'resume';
+  examples = [
     {
       command: 'resume',
       description: 'Возобновляет трек',
     },
-  ],
-  run: async ({ client, message }) => {
+  ];
+
+  async run({ client, message }: CommandRunOptions) {
     const queue = client.disTube.getQueue(message);
 
     if (!queue) {
@@ -29,5 +31,7 @@ export default new Command({
     const embed = SuccessEmbed('**Трек был возобновлён.**');
     await client.disTube.resume(message);
     return message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
-  },
-});
+  }
+}
+
+export default new ResumeCommand();

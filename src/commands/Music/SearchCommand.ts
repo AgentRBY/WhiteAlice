@@ -1,22 +1,21 @@
-import { Command } from '../../structures/Command';
 import { ErrorEmbed } from '../../utils/Discord/Embed';
-import { client } from '../../app';
 import { Message, MessageEmbed, TextChannel } from 'discord.js';
 import { EmojisLinks } from '../../static/Emojis';
 import { Colors } from '../../static/Colors';
+import { Command, CommandRunOptions } from '../../structures/Command';
 
-export default new Command({
-  name: 'search',
-  category: 'Music',
-  aliases: ['sc'],
-  description: `Поиск песни через YouTube. По умолчанию выдаёт 10 результатов.
+class SearchCommand extends Command {
+  name = 'search';
+  category = 'Music';
+  aliases = ['sc'];
+  description = `Поиск песни через YouTube. По умолчанию выдаёт 10 результатов.
   Доступные атрибуты:
   -P - поиск по плейлистам
   -S - безопасный поиск
   
   Доступные ключи:
-  hl:L или hl:Limit - устанавливает количество ответов при поиске, максимальное значение - 30`,
-  examples: [
+  hl:L или hl:Limit - устанавливает количество ответов при поиске, максимальное значение - 30`;
+  examples = [
     {
       command: 'search Never Gonna Give You Up',
       description: 'Выдаёт 10 результатов по запросу `Never Gonna Give You Up`',
@@ -30,9 +29,10 @@ export default new Command({
       description:
         'Выдаст ошибку, так как при безопасном поиске любые 16+ видео не попадают в результаты (в том числе и содержащие маты)',
     },
-  ],
-  usage: 'search <запрос>',
-  run: async ({ message, args, keys, attributes }) => {
+  ];
+  usage = 'search <запрос>';
+
+  async run({ client, message, args, attributes, keys }: CommandRunOptions) {
     if (!message.member?.voice.channel) {
       const embed = ErrorEmbed('**Вы не находитесь в голосовом канале**');
       return message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
@@ -120,5 +120,7 @@ export default new Command({
         message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
         return;
       });
-  },
-});
+  }
+}
+
+export default new SearchCommand();

@@ -1,22 +1,23 @@
-import { Command } from '../../structures/Command';
 import { MessageEmbed } from 'discord.js';
 import { Colors } from '../../static/Colors';
 import { Emojis } from '../../static/Emojis';
 import { ErrorEmbed } from '../../utils/Discord/Embed';
+import { Command, CommandRunOptions } from '../../structures/Command';
 
-export default new Command({
-  name: 'notes',
-  category: 'Utils',
-  aliases: [],
-  description: 'Выводит список всех заметок',
-  examples: [
+class NotesCommand extends Command {
+  name = 'notes';
+  category = 'Utils';
+  aliases = [];
+  description = 'Выводит список всех заметок';
+  examples = [
     {
       command: 'notes',
       description: 'Выводит список всех заметок',
     },
-  ],
-  usage: 'notes',
-  run: async ({ message, client }) => {
+  ];
+  usage = 'notes';
+
+  async run({ client, message }: CommandRunOptions) {
     const notes = await client.service.getNotes(message.guildId);
 
     if (!notes) {
@@ -31,5 +32,7 @@ export default new Command({
       .setColor(Colors.Blue)
       .setDescription(`${Emojis.Info} Список всех заметок: \`${formattedNotes}\``);
     message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
-  },
-});
+  }
+}
+
+export default new NotesCommand();

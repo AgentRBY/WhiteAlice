@@ -1,15 +1,15 @@
 import { ErrorEmbed } from '../../utils/Discord/Embed';
-import { Command } from '../../structures/Command';
-import { TextChannel } from 'discord.js';
 
-export default new Command({
-  name: 'play',
-  category: 'Music',
-  aliases: ['p', 'плэй', 'музыка', 'запустить'],
-  description:
-    'Проиграть трек. Поддерживает запросы и ссылки на YouTube, ссылки на плейлисты в Spotify' + ' и SoundCloud',
-  usage: 'play <запрос>',
-  examples: [
+import { TextChannel } from 'discord.js';
+import { Command, CommandRunOptions } from '../../structures/Command';
+
+class PlayCommand extends Command {
+  name = 'play';
+  category = 'Music';
+  aliases = ['p', 'плэй', 'музыка', 'запустить'];
+  description = 'Проиграть трек. Поддерживает запросы и ссылки на YouTube, ссылки на плейлисты в Spotify и SoundCloud';
+  usage = 'play <запрос>';
+  examples = [
     {
       command: 'play Never Gonna Give You Up',
       description: 'Воспроизводит `Never Gonna Give You Up` от `Rick Astley`',
@@ -18,8 +18,9 @@ export default new Command({
       command: 'play https://open.spotify.com/playlist/69l7D0fGepx502NI7YfVdz',
       description: 'Воспроизводит `Lo-fi gaming beats` плейлист из Spotify',
     },
-  ],
-  run: async ({ client, message, args }) => {
+  ];
+
+  async run({ client, message, args }: CommandRunOptions) {
     if (!message.member?.voice.channel) {
       const embed = ErrorEmbed('**Вы не находитесь в голосовом канале**');
       return message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
@@ -40,5 +41,7 @@ export default new Command({
       const embed = ErrorEmbed(`**Произошла ошибка ${error}**`);
       return message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
     }
-  },
-});
+  }
+}
+
+export default new PlayCommand();

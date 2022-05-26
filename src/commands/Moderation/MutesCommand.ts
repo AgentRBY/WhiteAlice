@@ -1,25 +1,25 @@
-import { Command } from '../../structures/Command';
 import { SuccessEmbed } from '../../utils/Discord/Embed';
 import { MessageEmbed } from 'discord.js';
 import moment from 'moment';
 import { Colors } from '../../static/Colors';
 import { momentToDiscordDate } from '../../utils/Common/Date';
-import { client } from '../../app';
 import { getMemberBaseId } from '../../utils/Other';
+import { Command, CommandRunOptions } from '../../structures/Command';
 
-export default new Command({
-  name: 'mutes',
-  category: 'Moderation',
-  aliases: [],
-  description: 'Выводит список всех мутов пользователя',
-  examples: [
+class MutesCommand extends Command {
+  name = 'mutes';
+  category = 'Moderation';
+  aliases = [];
+  description = 'Выводит список всех мутов пользователя';
+  examples = [
     {
       command: 'mutes @TestUser',
       description: 'Выводит список всех мутов пользователя TestUser.',
     },
-  ],
-  usage: 'mutes [пользователь]',
-  run: async ({ message }) => {
+  ];
+  usage = 'mutes [пользователь]';
+
+  async run({ client, message }: CommandRunOptions) {
     const targetMember = message.mentions.members.first() || message.member;
 
     const mutes = await client.service.getMutes(getMemberBaseId(targetMember));
@@ -51,5 +51,7 @@ export default new Command({
     );
 
     message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
-  },
-});
+  }
+}
+
+export default new MutesCommand();

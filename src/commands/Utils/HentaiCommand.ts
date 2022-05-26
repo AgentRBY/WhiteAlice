@@ -1,22 +1,23 @@
-import { Command } from '../../structures/Command';
 import { ErrorEmbed } from '../../utils/Discord/Embed';
 import { formatNHentaiManga } from '../../utils/Media/Manga';
+import { Command, CommandRunOptions } from '../../structures/Command';
 
 const nHentai = require('nhentai');
 
-export default new Command({
-  name: 'hentai',
-  category: 'Utils',
-  aliases: [],
-  description: 'Поиск хентая на nHentai по запросу',
-  examples: [
+class HentaiCommand extends Command {
+  name = 'hentai';
+  category = 'Utils';
+  aliases = [];
+  description = 'Поиск хентая на nHentai по запросу';
+  examples = [
     {
       command: 'hentai Sword Art Online',
       description: 'Выдаст хентай по тематике Sword Art Online',
     },
-  ],
-  usage: 'hentai <запрос>',
-  run: async ({ message, args }) => {
+  ];
+  usage = 'hentai <запрос>';
+
+  async run({ message, args }: CommandRunOptions) {
     const name = args.join(' ');
 
     if (!name) {
@@ -39,5 +40,7 @@ export default new Command({
         setTimeout(() => message_.delete(), 30_000);
       }
     });
-  },
-});
+  }
+}
+
+export default new HentaiCommand();
