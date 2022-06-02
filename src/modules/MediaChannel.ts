@@ -10,7 +10,7 @@ export async function MediaChannel(client: ExtendClient, message: Message): Prom
     return;
   }
 
-  if (!message.content || message.attachments.size) {
+  if (!message.content || message.attachments.size || message.embeds.length) {
     return;
   }
 
