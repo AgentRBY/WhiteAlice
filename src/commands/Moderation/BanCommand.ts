@@ -39,7 +39,7 @@ class BanCommand extends Command {
 
   async run({ client, message, args, keys }: CommandRunOptions) {
     const member = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
-    const userId = args[0] || member?.id;
+    const userId = member?.id || args[0];
 
     if (!userId) {
       const embed = ErrorEmbed('Введите пользователя');
