@@ -10,7 +10,7 @@
     "lint:fix": "eslint ./src --fix --cache",
     "prettier": "prettier ./src --write",
     "build": "tsc",
-    "check-type": "tsc --noEmit"
+    "check-types": "tsc --noEmit"
   },
   "author": "",
   "license": "ISC",
