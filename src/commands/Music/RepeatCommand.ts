@@ -1,6 +1,6 @@
 import { ErrorEmbed, SuccessEmbed } from '../../utils/Discord/Embed';
 
-import { Command, CommandRunOptions } from '../../structures/Command';
+import { Command, CommandExample, CommandRunOptions } from '../../structures/Command';
 
 class RepeatCommand extends Command {
   name = 'repeat';
@@ -12,7 +12,7 @@ class RepeatCommand extends Command {
      \`queue\` - повторять весь плейлист (по умолчанию) 
      \`off\` - выключить повторение`;
   usage = 'repeat [значение]';
-  examples = [
+  examples: CommandExample[] = [
     {
       command: 'repeat',
       description: 'Включает/выключает повторение плейлиста',

@@ -4,7 +4,7 @@ import { Colors } from '../../static/Colors';
 import anilist from 'anilist-node';
 import { ButtonInteraction, MessageActionRow, MessageButton, MessageEmbed } from 'discord.js';
 import { isLink, isMediaLink, removeQueryParameters } from '../../utils/Common/Strings';
-import { Command, CommandRunOptions } from '../../structures/Command';
+import { Command, CommandExample, CommandRunOptions } from '../../structures/Command';
 
 class FindanimeCommand extends Command {
   name = 'findanime';
@@ -14,7 +14,7 @@ class FindanimeCommand extends Command {
   Допустимые форматы: png, jpeg, jpg, webp, bmp, gif, mp4
   Для gif-анимаций и видео в поиске будет использоваться первый кадр`;
   usage = 'findanime <ссылка на изображение>';
-  examples = [
+  examples: CommandExample[] = [
     {
       command: 'findanime https://i.imgur.com/WHc96tx.jpg',
       description: 'Найти аниме по картинке из ссылки',

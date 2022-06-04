@@ -3,7 +3,7 @@ import { MessageEmbed } from 'discord.js';
 import { Colors } from '../../static/Colors';
 import { Emojis } from '../../static/Emojis';
 
-import { Command, CommandRunOptions } from '../../structures/Command';
+import { Command, CommandExample, CommandRunOptions } from '../../structures/Command';
 
 class VolumeCommand extends Command {
   name = 'volume';
@@ -11,7 +11,7 @@ class VolumeCommand extends Command {
   aliases = ['v', 'set-volume', 'громкость', 'установить-громкость'];
   description = 'Устанавливает громкость бота в процентах. По умолчанию значение громкости 50%';
   usage = 'volume <значение>';
-  examples = [
+  examples: CommandExample[] = [
     {
       command: 'volume 42',
       description: 'Устанавливает значения громкости на `42%`',

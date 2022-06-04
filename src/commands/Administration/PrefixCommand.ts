@@ -1,13 +1,13 @@
 import { ErrorEmbed, SuccessEmbed } from '../../utils/Discord/Embed';
 import { PermissionString } from 'discord.js';
-import { Command, CommandRunOptions } from '../../structures/Command';
+import { Command, CommandExample, CommandRunOptions } from '../../structures/Command';
 
 class PrefixCommand extends Command {
   name = 'prefix';
   category = 'Administration';
   aliases = [];
   description = '';
-  examples = [];
+  examples: CommandExample[] = [];
   usage = 'update';
   memberPermissions: PermissionString[] = ['MANAGE_GUILD'];
 

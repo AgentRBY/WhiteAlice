@@ -2,7 +2,7 @@ import { ErrorEmbed } from '../../utils/Discord/Embed';
 import { MessageEmbed } from 'discord.js';
 import { EmojisLinks } from '../../static/Emojis';
 import { Colors } from '../../static/Colors';
-import { Command, CommandRunOptions } from '../../structures/Command';
+import { Command, CommandExample, CommandRunOptions } from '../../structures/Command';
 
 class PlayNextCommand extends Command {
   name = 'playNext';
@@ -10,7 +10,7 @@ class PlayNextCommand extends Command {
   aliases = ['pn'];
   description = `Проиграть трек следующим в очереди. Во всем остальном аналогичен команде >play. 
      Имеет ключ -S, который позволяет сразу пропускать текущую песню при добавлении`;
-  examples = [
+  examples: CommandExample[] = [
     {
       command: 'playNext Never Gonna Give You Up',
       description: 'Добавляет `Never Gonna Give You Up` от `Rick Astley` следующим в очередь',

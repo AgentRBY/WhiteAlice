@@ -1,13 +1,13 @@
 import { ErrorEmbed, SuccessEmbed } from '../../utils/Discord/Embed';
 import { PermissionString } from 'discord.js';
-import { Command, CommandRunOptions } from '../../structures/Command';
+import { Command, CommandExample, CommandRunOptions } from '../../structures/Command';
 
 class DeleteMessageCommand extends Command {
   name = 'deleteMessage';
   category = 'Moderation';
   aliases = ['dmsg', 'delete'];
   description = 'Удаляет сообщение по айди';
-  examples = [
+  examples: CommandExample[] = [
     {
       command: 'deleteMessage 948518420524187648',
       description: 'Удаляет сообщение с айди 948518420524187648',

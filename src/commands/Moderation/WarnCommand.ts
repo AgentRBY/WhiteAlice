@@ -5,7 +5,7 @@ import { Emojis } from '../../static/Emojis';
 import { KARMA_FOR_WARN } from '../../static/Punishment';
 import { getMemberBaseId } from '../../utils/Other';
 import { Warn } from '../../typings/MemberModel';
-import { Command, CommandRunOptions } from '../../structures/Command';
+import { Command, CommandExample, CommandRunOptions } from '../../structures/Command';
 
 class WarnCommand extends Command {
   name = 'warn';
@@ -15,7 +15,7 @@ class WarnCommand extends Command {
   Каждое предупреждение даёт +${KARMA_FOR_WARN} кармы.
   
   Список всех предупреждений у пользователя можно посмотреть командой >warns`;
-  examples = [
+  examples: CommandExample[] = [
     {
       command: 'warn @TestUser',
       description: 'Выдаёт предупреждение пользователю TestUser',

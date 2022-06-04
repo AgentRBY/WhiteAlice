@@ -2,14 +2,14 @@ import { MessageEmbed } from 'discord.js';
 import { Colors } from '../../static/Colors';
 import { Emojis } from '../../static/Emojis';
 import { ErrorEmbed } from '../../utils/Discord/Embed';
-import { Command, CommandRunOptions } from '../../structures/Command';
+import { Command, CommandExample, CommandRunOptions } from '../../structures/Command';
 
 class NotesCommand extends Command {
   name = 'notes';
   category = 'Utils';
   aliases = [];
   description = 'Выводит список всех заметок';
-  examples = [
+  examples: CommandExample[] = [
     {
       command: 'notes',
       description: 'Выводит список всех заметок',

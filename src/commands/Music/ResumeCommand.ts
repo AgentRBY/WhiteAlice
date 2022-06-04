@@ -1,6 +1,6 @@
 import { ErrorEmbed, SuccessEmbed } from '../../utils/Discord/Embed';
 
-import { Command, CommandRunOptions } from '../../structures/Command';
+import { Command, CommandExample, CommandRunOptions } from '../../structures/Command';
 
 class ResumeCommand extends Command {
   name = 'resume';
@@ -8,7 +8,7 @@ class ResumeCommand extends Command {
   aliases = [];
   description = 'Возобновляет трек, если он остановлен';
   usage = 'resume';
-  examples = [
+  examples: CommandExample[] = [
     {
       command: 'resume',
       description: 'Возобновляет трек',

@@ -1,7 +1,7 @@
 import { SuccessEmbed } from '../../utils/Discord/Embed';
 import { KARMA_FOR_BAN, KARMA_FOR_MUTE, KARMA_FOR_WARN } from '../../static/Punishment';
 import { getMemberBaseId } from '../../utils/Other';
-import { Command, CommandRunOptions } from '../../structures/Command';
+import { Command, CommandExample, CommandRunOptions } from '../../structures/Command';
 
 class KarmaCommand extends Command {
   name = 'karma';
@@ -11,7 +11,7 @@ class KarmaCommand extends Command {
   
   Одна карма = +1% к времени мута.
   За один варн даётся ${KARMA_FOR_WARN} кармы. За один мут - ${KARMA_FOR_MUTE} кармы. За один бан - ${KARMA_FOR_BAN} кармы.`;
-  examples = [
+  examples: CommandExample[] = [
     {
       description: 'karma @TestUser',
       command: 'Показать карму участника @TestUser',

@@ -2,7 +2,7 @@ import { formatNHentaiManga } from '../../utils/Media/Manga';
 import { Doujin, SearchResult, SortMethods } from 'nhentai';
 import { getRandomInt } from '../../utils/Common/Number';
 import { ErrorEmbed } from '../../utils/Discord/Embed';
-import { Command, CommandRunOptions } from '../../structures/Command';
+import { Command, CommandExample, CommandRunOptions } from '../../structures/Command';
 
 const nHentai = require('nhentai');
 
@@ -12,7 +12,7 @@ class RandomHentaiCommand extends Command {
   aliases = [];
   description =
     'Выводит случайный хентай. Можно искать по тегам, если у тега два слова, то нужно писать его через нижние подчёркивание (_)';
-  examples = [
+  examples: CommandExample[] = [
     {
       command: 'randomHentai',
       description: 'Выводит случайный хентай',

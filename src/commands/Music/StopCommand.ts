@@ -1,6 +1,6 @@
 import { ErrorEmbed, SuccessEmbed } from '../../utils/Discord/Embed';
 
-import { Command, CommandRunOptions } from '../../structures/Command';
+import { Command, CommandExample, CommandRunOptions } from '../../structures/Command';
 
 class StopCommand extends Command {
   name = 'stop';
@@ -8,7 +8,7 @@ class StopCommand extends Command {
   aliases = ['leave', 'disconnect', 'стоп', 'остановить', 'выйти'];
   description = 'Завершает работу бота и выходит из канала';
   usage = 'stop';
-  examples = [
+  examples: CommandExample[] = [
     {
       command: 'stop',
       description: 'Завершает работу бота',

@@ -2,7 +2,7 @@ import { MessageEmbed } from 'discord.js';
 
 import { DISCORD_NITRO_SCAM_REGEX } from '../../modules/AntiScam';
 import { Colors } from '../../static/Colors';
-import { Command, CommandRunOptions } from '../../structures/Command';
+import { Command, CommandExample, CommandRunOptions } from '../../structures/Command';
 
 class NitroRegexCommand extends Command {
   name = 'nitro-regex';
@@ -10,7 +10,7 @@ class NitroRegexCommand extends Command {
   aliases = ['нитро-скам'];
   description =
     'Показывает REGEX по которому определяется являться ли ссылка скамом или, если есть первый аргумент, показывает является ли ссылка скамом.';
-  examples = [
+  examples: CommandExample[] = [
     {
       command: 'nitro-regex',
       description: 'Выводит REGEX по которому определяет скам-ссылка',

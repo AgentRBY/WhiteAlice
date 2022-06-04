@@ -1,7 +1,7 @@
 import { Message, MessageEmbed } from 'discord.js';
 import { Emojis } from '../../static/Emojis';
 import { Colors } from '../../static/Colors';
-import { Command, CommandRunOptions } from '../../structures/Command';
+import { Command, CommandExample, CommandRunOptions } from '../../structures/Command';
 
 class PingCommand extends Command {
   name = 'ping';
@@ -10,7 +10,7 @@ class PingCommand extends Command {
    До сервера (высчитывается скорость выполнения запроса)
    До Discord (отправляется сообщение и высчитывается время между сообщением и текущим временем)`;
   usage = 'ping';
-  examples = [
+  examples: CommandExample[] = [
     {
       command: 'ping',
       description: 'Показывает пинг',

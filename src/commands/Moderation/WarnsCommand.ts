@@ -4,14 +4,14 @@ import moment from 'moment';
 import { Colors } from '../../static/Colors';
 import { momentToDiscordDate } from '../../utils/Common/Date';
 import { getMemberBaseId } from '../../utils/Other';
-import { Command, CommandRunOptions } from '../../structures/Command';
+import { Command, CommandExample, CommandRunOptions } from '../../structures/Command';
 
 class WarnsCommand extends Command {
   name = 'warns';
   category = 'Moderation';
   aliases = [];
   description = 'Выводит список всех предупреждений пользователя.';
-  examples = [
+  examples: CommandExample[] = [
     {
       command: 'warns @TestUser',
       description: 'Выводит список всех предупреждений пользователя TestUser.',

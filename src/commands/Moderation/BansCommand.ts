@@ -4,14 +4,14 @@ import { Colors } from '../../static/Colors';
 import { formatDays, momentToDiscordDate } from '../../utils/Common/Date';
 import moment from 'moment';
 import { getMemberBaseId } from '../../utils/Other';
-import { Command, CommandRunOptions } from '../../structures/Command';
+import { Command, CommandExample, CommandRunOptions } from '../../structures/Command';
 
 class BansCommand extends Command {
   name = 'bans';
   category = 'Moderation';
   aliases = [];
   description = 'Выводит список всех банов у пользователя';
-  examples = [
+  examples: CommandExample[] = [
     {
       command: '>bans @TestUser',
       description: 'Выводит список всех банов у пользователя TestUser',

@@ -1,13 +1,13 @@
 import { ErrorEmbed, SuccessEmbed } from '../../utils/Discord/Embed';
 import { PermissionString } from 'discord.js';
-import { Command, CommandRunOptions } from '../../structures/Command';
+import { Command, CommandExample, CommandRunOptions } from '../../structures/Command';
 
 class AddMediaChannelCommand extends Command {
   name = 'addMediaChannel';
   category = 'Administration';
   aliases = ['addToMediaChannels'];
   description = 'Добавляет канал в список Каналов только для медиа контента';
-  examples = [
+  examples: CommandExample[] = [
     {
       command: 'addMediaChannel 910989430557392947',
       description: 'Добавить канал с айди 910989430557392947 в список Каналов только для медиа контента',

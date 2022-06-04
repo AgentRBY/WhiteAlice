@@ -4,14 +4,14 @@ import { MessageEmbed, PermissionString } from 'discord.js';
 import { Emojis } from '../../static/Emojis';
 import { Colors } from '../../static/Colors';
 import { getMemberBaseId } from '../../utils/Other';
-import { Command, CommandRunOptions } from '../../structures/Command';
+import { Command, CommandExample, CommandRunOptions } from '../../structures/Command';
 
 class UnmuteCommand extends Command {
   name = 'unmute';
   category = 'Moderation';
   aliases = ['removeMute'];
   description = 'Размучивает человека, если он был замучен';
-  examples = [
+  examples: CommandExample[] = [
     {
       command: 'unmute @TestUser',
       description: 'Убирает мут у пользователя @TestUser',

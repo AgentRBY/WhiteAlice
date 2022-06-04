@@ -3,14 +3,14 @@ import { isSnowflake } from 'distube';
 import { MessageEmbed, PermissionString } from 'discord.js';
 import { Colors } from '../../static/Colors';
 import { Emojis } from '../../static/Emojis';
-import { Command, CommandRunOptions } from '../../structures/Command';
+import { Command, CommandExample, CommandRunOptions } from '../../structures/Command';
 
 class UnbanCommand extends Command {
   name = 'unban';
   category = 'Moderation';
   aliases = ['removeBan'];
   description = 'Разбанивает пользователя, если он был забанен';
-  examples = [
+  examples: CommandExample[] = [
     {
       command: 'unban 908629905539997726',
       description: 'Разбанивает пользователя с айди 908629905539997726',

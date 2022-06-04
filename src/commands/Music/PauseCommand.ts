@@ -1,6 +1,6 @@
 import { ErrorEmbed, SuccessEmbed } from '../../utils/Discord/Embed';
 
-import { Command, CommandRunOptions } from '../../structures/Command';
+import { Command, CommandExample, CommandRunOptions } from '../../structures/Command';
 
 class PauseCommand extends Command {
   name = 'pause';
@@ -8,7 +8,7 @@ class PauseCommand extends Command {
   aliases = ['hold', 'пауза'];
   description = 'Останавливает воспроизведение';
   usage = 'pause';
-  examples = [
+  examples: CommandExample[] = [
     {
       command: 'pause',
       description: 'Остановить воспроизведение текущего трека',

@@ -1,14 +1,14 @@
 import { ErrorEmbed } from '../../utils/Discord/Embed';
 import anilist from 'anilist-node';
 import { formatAnilistAnime } from '../../utils/Media/Anime';
-import { Command, CommandRunOptions } from '../../structures/Command';
+import { Command, CommandExample, CommandRunOptions } from '../../structures/Command';
 
 class AnimeCommand extends Command {
   name = 'anime';
   category = 'Utils';
   aliases = [];
   description = 'Поиск аниме по названию';
-  examples = [
+  examples: CommandExample[] = [
     {
       command: 'anime Naruto',
       description: 'Ищет аниме с названием Naruto',

@@ -4,7 +4,7 @@ import { Emojis, EmojisLinks } from '../../static/Emojis';
 import { Colors } from '../../static/Colors';
 import { ErrorEmbed } from '../../utils/Discord/Embed';
 
-import { Command, CommandRunOptions } from '../../structures/Command';
+import { Command, CommandExample, CommandRunOptions } from '../../structures/Command';
 
 class HelpCommand extends Command {
   name = 'help';
@@ -14,7 +14,7 @@ class HelpCommand extends Command {
     
     Можно так же вызвать добавив к любой команде в конце ключ \`-h\`; например \`>ping -h\``;
   usage = 'help [команда]';
-  examples = [
+  examples: CommandExample[] = [
     {
       command: 'help',
       description: 'Показывает список всех команд',

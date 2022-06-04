@@ -1,6 +1,6 @@
 import { ErrorEmbed, SuccessEmbed } from '../../utils/Discord/Embed';
 
-import { Command, CommandRunOptions } from '../../structures/Command';
+import { Command, CommandExample, CommandRunOptions } from '../../structures/Command';
 
 class SkipCommand extends Command {
   name = 'skip';
@@ -8,7 +8,7 @@ class SkipCommand extends Command {
   aliases = ['s'];
   description = 'Пропускает текущий трек. Если трек последний, завершает работу боту';
   usage = 'skip';
-  examples = [
+  examples: CommandExample[] = [
     {
       command: 'skip',
       description: 'Пропустить текущий трек',

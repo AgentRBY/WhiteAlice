@@ -7,7 +7,7 @@ import { Colors } from '../../static/Colors';
 import { Site, WhitelistSite } from '../../typings/YandexImagesResponse';
 import { generateDefaultButtons, pagination } from '../../utils/Discord/Pagination';
 import { removeQueryParameters } from '../../utils/Common/Strings';
-import { Command, CommandRunOptions } from '../../structures/Command';
+import { Command, CommandExample, CommandRunOptions } from '../../structures/Command';
 
 const request = promisify(require('request'));
 
@@ -16,7 +16,7 @@ class YandexImageSearchCommand extends Command {
   category = 'Image Search';
   aliases = ['yis'];
   description = 'Поиск изображений через Яндекс. Бот ищет картинку через Яндекс и фильтрует результаты по URL';
-  examples = [
+  examples: CommandExample[] = [
     {
       command: 'findImage https://i.imgur.com/KlQUCJG.png',
       description: 'Найти изображение по ссылке',

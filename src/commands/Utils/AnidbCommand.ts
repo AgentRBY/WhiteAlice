@@ -1,13 +1,13 @@
 import { ErrorEmbed } from '../../utils/Discord/Embed';
 import { formatAniDBAnime } from '../../utils/Media/Anime';
-import { Command, CommandRunOptions } from '../../structures/Command';
+import { Command, CommandExample, CommandRunOptions } from '../../structures/Command';
 
 class AnidbCommand extends Command {
   name = 'anidb';
   category = 'Utils';
   aliases = ['adb', 'анидб'];
   description = 'Ищет информацию об аниме в AniDB по id';
-  examples = [
+  examples: CommandExample[] = [
     {
       command: 'anidb 1234',
       description: 'Ищет информацию об аниме с айди 1234',

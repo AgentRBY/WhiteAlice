@@ -6,7 +6,7 @@ import { ErrorEmbed } from '../../utils/Discord/Embed';
 import { formatNames, isGifLink, isImageLink, isLink, removeQueryParameters } from '../../utils/Common/Strings';
 import { generateDefaultButtons, pagination } from '../../utils/Discord/Pagination';
 import { sauceNAORelevantSites } from '../../static/ImageSearch';
-import { Command, CommandRunOptions } from '../../structures/Command';
+import { Command, CommandExample, CommandRunOptions } from '../../structures/Command';
 
 class FindImageCommand extends Command {
   name = 'findImage';
@@ -16,7 +16,7 @@ class FindImageCommand extends Command {
   Допустимые форматы: png, jpeg, jpg, webp, bmp, gif.
   Для gif-анимаций в поиске будет использоваться первый кадр`;
   usage = 'findImage [ссылка на картинку]';
-  examples = [
+  examples: CommandExample[] = [
     {
       command: 'findImage https://i.imgur.com/KlQUCJG.png',
       description: 'Найти изображение по ссылке',

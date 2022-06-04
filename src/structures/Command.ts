@@ -1,7 +1,7 @@
 import { Collection, Message, PermissionString } from 'discord.js';
 import { ExtendClient } from './Client';
 
-interface CommandExample {
+export interface CommandExample {
   command: string;
   description: string;
 }

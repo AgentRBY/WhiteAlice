@@ -2,14 +2,14 @@ import { ErrorEmbed } from '../../utils/Discord/Embed';
 import { MessageEmbed } from 'discord.js';
 import { EmojisLinks } from '../../static/Emojis';
 import { Colors } from '../../static/Colors';
-import { Command, CommandRunOptions } from '../../structures/Command';
+import { Command, CommandExample, CommandRunOptions } from '../../structures/Command';
 
 class QueueInfoCommand extends Command {
   name = 'queueInfo';
   category = 'Music';
   aliases = ['qi'];
   description = 'Показывает информацию о текущем плейлисте';
-  examples = [];
+  examples: CommandExample[] = [];
   usage = 'queueInfo';
 
   async run({ client, message }: CommandRunOptions) {

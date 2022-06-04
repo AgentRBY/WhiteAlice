@@ -4,7 +4,7 @@ import { inspect } from 'util';
 
 import { ErrorEmbed } from '../../utils/Discord/Embed';
 import { Colors } from '../../static/Colors';
-import { Command, CommandRunOptions } from '../../structures/Command';
+import { Command, CommandExample, CommandRunOptions } from '../../structures/Command';
 
 class EvalCommand extends Command {
   name = 'eval';
@@ -12,7 +12,7 @@ class EvalCommand extends Command {
   aliases = [];
   description = 'Выполняет JS код';
   usage = 'eval <code>';
-  examples = [
+  examples: CommandExample[] = [
     {
       command: 'eval console.log("")',
       description: 'Выводит в консоль пустую строку',

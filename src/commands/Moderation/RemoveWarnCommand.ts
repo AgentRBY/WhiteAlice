@@ -4,14 +4,14 @@ import { MessageEmbed, PermissionString } from 'discord.js';
 import { Colors } from '../../static/Colors';
 import { Emojis } from '../../static/Emojis';
 import { getMemberBaseId } from '../../utils/Other';
-import { Command, CommandRunOptions } from '../../structures/Command';
+import { Command, CommandExample, CommandRunOptions } from '../../structures/Command';
 
 class RemoveWarnCommand extends Command {
   name = 'removeWarn';
   category = 'Moderation';
   aliases = ['deleteWarn', 'delWarn', 'unWarn'];
   description = 'Позволяет удалить предупреждение у пользователя.';
-  examples = [
+  examples: CommandExample[] = [
     {
       command: 'removeWarn @TestUser 2',
       description: 'Удалить предупреждение №2 у пользователя TestUser',

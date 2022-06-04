@@ -3,7 +3,7 @@ import { MessageEmbed } from 'discord.js';
 import { Colors } from '../../static/Colors';
 import { EmojisLinks } from '../../static/Emojis';
 import { Note } from '../../typings/GuildModel';
-import { Command, CommandRunOptions } from '../../structures/Command';
+import { Command, CommandExample, CommandRunOptions } from '../../structures/Command';
 
 class NoteCommand extends Command {
   name = 'note';
@@ -19,7 +19,7 @@ class NoteCommand extends Command {
   Вторым аргументом должно быть имя заметки.
   
   Для создания и удаления заметок нужно право \`Управлять сообщениями\``;
-  examples = [
+  examples: CommandExample[] = [
     {
       command: 'note example',
       description: 'Выводит заметку `example`',

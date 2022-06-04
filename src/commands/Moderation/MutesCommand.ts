@@ -4,14 +4,14 @@ import moment from 'moment';
 import { Colors } from '../../static/Colors';
 import { momentToDiscordDate } from '../../utils/Common/Date';
 import { getMemberBaseId } from '../../utils/Other';
-import { Command, CommandRunOptions } from '../../structures/Command';
+import { Command, CommandExample, CommandRunOptions } from '../../structures/Command';
 
 class MutesCommand extends Command {
   name = 'mutes';
   category = 'Moderation';
   aliases = [];
   description = 'Выводит список всех мутов пользователя';
-  examples = [
+  examples: CommandExample[] = [
     {
       command: 'mutes @TestUser',
       description: 'Выводит список всех мутов пользователя TestUser.',

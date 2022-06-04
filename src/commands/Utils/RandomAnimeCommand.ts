@@ -4,7 +4,7 @@ import { upAllFirstLatter } from '../../utils/Common/Strings';
 import { ErrorEmbed } from '../../utils/Discord/Embed';
 import { getRandomInt } from '../../utils/Common/Number';
 import { SortList } from '../../static/Anilist';
-import { Command, CommandRunOptions } from '../../structures/Command';
+import { Command, CommandExample, CommandRunOptions } from '../../structures/Command';
 
 class RandomAnimeCommand extends Command {
   name = 'randomAnime';
@@ -12,7 +12,7 @@ class RandomAnimeCommand extends Command {
   aliases = [];
   description =
     'Ищет случайное аниме по тегам. Теги перечисляются через пробел, если в теге два слова, то писать через нижнее подчёркивание (_)';
-  examples = [
+  examples: CommandExample[] = [
     {
       command: 'randomAnime Food',
       description: 'Выводит случайное аниме с тегом Food',

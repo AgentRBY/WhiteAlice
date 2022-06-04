@@ -1,12 +1,12 @@
 import { ErrorEmbed, SuccessEmbed } from '../../utils/Discord/Embed';
-import { Command, CommandRunOptions } from '../../structures/Command';
+import { Command, CommandExample, CommandRunOptions } from '../../structures/Command';
 
 class RemoveSongCommand extends Command {
   name = 'removeSong';
   category = 'Music';
   aliases = ['rs', 'deleteSong'];
   description = 'Позволяет убрать песню по номеру. Номер песни можно узнать в команде >queue';
-  examples = [
+  examples: CommandExample[] = [
     {
       command: '>removeSong 3',
       description: 'Удаляет 3ю песню из плейлиста',

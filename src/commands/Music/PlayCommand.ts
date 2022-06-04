@@ -1,7 +1,7 @@
 import { ErrorEmbed } from '../../utils/Discord/Embed';
 
 import { TextChannel } from 'discord.js';
-import { Command, CommandRunOptions } from '../../structures/Command';
+import { Command, CommandExample, CommandRunOptions } from '../../structures/Command';
 
 class PlayCommand extends Command {
   name = 'play';
@@ -9,7 +9,7 @@ class PlayCommand extends Command {
   aliases = ['p', 'плэй', 'музыка', 'запустить'];
   description = 'Проиграть трек. Поддерживает запросы и ссылки на YouTube, ссылки на плейлисты в Spotify и SoundCloud';
   usage = 'play <запрос>';
-  examples = [
+  examples: CommandExample[] = [
     {
       command: 'play Never Gonna Give You Up',
       description: 'Воспроизводит `Never Gonna Give You Up` от `Rick Astley`',

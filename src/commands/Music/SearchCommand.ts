@@ -2,7 +2,7 @@ import { ErrorEmbed } from '../../utils/Discord/Embed';
 import { Message, MessageEmbed, TextChannel } from 'discord.js';
 import { EmojisLinks } from '../../static/Emojis';
 import { Colors } from '../../static/Colors';
-import { Command, CommandRunOptions } from '../../structures/Command';
+import { Command, CommandExample, CommandRunOptions } from '../../structures/Command';
 
 class SearchCommand extends Command {
   name = 'search';
@@ -15,7 +15,7 @@ class SearchCommand extends Command {
   
   Доступные ключи:
   hl:L или hl:Limit - устанавливает количество ответов при поиске, максимальное значение - 30`;
-  examples = [
+  examples: CommandExample[] = [
     {
       command: 'search Never Gonna Give You Up',
       description: 'Выдаёт 10 результатов по запросу `Never Gonna Give You Up`',

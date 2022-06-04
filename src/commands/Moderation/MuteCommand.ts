@@ -7,7 +7,7 @@ import { Emojis } from '../../static/Emojis';
 import { KARMA_FOR_MUTE } from '../../static/Punishment';
 import { getMemberBaseId } from '../../utils/Other';
 import { Mute } from '../../typings/MemberModel';
-import { Command, CommandRunOptions } from '../../structures/Command';
+import { Command, CommandExample, CommandRunOptions } from '../../structures/Command';
 
 class MuteCommand extends Command {
   name = 'mute';
@@ -24,7 +24,7 @@ class MuteCommand extends Command {
   Список всех мутов у пользователя можно посмотреть командой >mutes
   
   Каждый мут даёт +${KARMA_FOR_MUTE} кармы.`;
-  examples = [
+  examples: CommandExample[] = [
     {
       command: 'mute @TestUser 1d',
       description: 'Выдаёт мут пользователю @TestUser на 1 день',

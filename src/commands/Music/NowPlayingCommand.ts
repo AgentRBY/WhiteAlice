@@ -2,14 +2,14 @@ import { ErrorEmbed } from '../../utils/Discord/Embed';
 import { MessageEmbed } from 'discord.js';
 import { Colors } from '../../static/Colors';
 import { Emojis } from '../../static/Emojis';
-import { Command, CommandRunOptions } from '../../structures/Command';
+import { Command, CommandExample, CommandRunOptions } from '../../structures/Command';
 
 class NowPlayingCommand extends Command {
   name = 'nowPlaying';
   category = 'Music';
   aliases = ['np'];
   description = 'Показывает песню, которая сейчас играет';
-  examples = [
+  examples: CommandExample[] = [
     {
       command: 'nowPlaying',
       description: 'Покажет текущую песню',

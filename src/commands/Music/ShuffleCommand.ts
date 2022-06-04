@@ -1,12 +1,12 @@
 import { ErrorEmbed, SuccessEmbed } from '../../utils/Discord/Embed';
-import { Command, CommandRunOptions } from '../../structures/Command';
+import { Command, CommandExample, CommandRunOptions } from '../../structures/Command';
 
 class ShuffleCommand extends Command {
   name = 'shuffle';
   category = 'Music';
   aliases = ['random'];
   description = 'Перемешивает песни в плейлисте';
-  examples = [
+  examples: CommandExample[] = [
     {
       command: 'shuffle',
       description: 'Перемешивает песни в плейлисте',

@@ -5,7 +5,7 @@ import { Emojis } from '../../static/Emojis';
 import { isNumber } from '../../utils/Common/Number';
 import { KARMA_FOR_BAN } from '../../static/Punishment';
 import { Ban } from '../../typings/MemberModel';
-import { Command, CommandRunOptions } from '../../structures/Command';
+import { Command, CommandExample, CommandRunOptions } from '../../structures/Command';
 
 class BanCommand extends Command {
   name = 'ban';
@@ -19,7 +19,7 @@ class BanCommand extends Command {
   Список всех банов у пользователя можно просмотреть командой >bans
   
   Каждый бан даёт +${KARMA_FOR_BAN} кармы`;
-  examples = [
+  examples: CommandExample[] = [
     {
       command: 'ban @TestUser',
       description: 'Забанить пользователя @TestUser',

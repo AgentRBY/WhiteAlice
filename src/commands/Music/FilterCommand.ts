@@ -1,6 +1,6 @@
 import { ErrorEmbed, SuccessEmbed } from '../../utils/Discord/Embed';
 import { AvailableFilters } from '../../static/Music';
-import { Command, CommandRunOptions } from '../../structures/Command';
+import { Command, CommandExample, CommandRunOptions } from '../../structures/Command';
 
 class FilterCommand extends Command {
   name = 'filter';
@@ -9,7 +9,7 @@ class FilterCommand extends Command {
   description = `Накладывает фильтр на песню. 
   Список доступных фильтров можно просмотреть по команде >filter list. 
   Что бы отключить фильтры пропишите >filter clear`;
-  examples = [
+  examples: CommandExample[] = [
     {
       command: 'filter bassboost',
       description: 'Включает фильтр bassboost к песне',

@@ -1,6 +1,6 @@
 import { ErrorEmbed } from '../../utils/Discord/Embed';
 import { formatNHentaiManga } from '../../utils/Media/Manga';
-import { Command, CommandRunOptions } from '../../structures/Command';
+import { Command, CommandExample, CommandRunOptions } from '../../structures/Command';
 
 const nHentai = require('nhentai');
 
@@ -9,7 +9,7 @@ class HentaiCommand extends Command {
   category = 'Utils';
   aliases = [];
   description = 'Поиск хентая на nHentai по запросу';
-  examples = [
+  examples: CommandExample[] = [
     {
       command: 'hentai Sword Art Online',
       description: 'Выдаст хентай по тематике Sword Art Online',

@@ -1,13 +1,13 @@
 import { ErrorEmbed, SuccessEmbed } from '../../utils/Discord/Embed';
 import { PermissionString } from 'discord.js';
-import { Command, CommandRunOptions } from '../../structures/Command';
+import { Command, CommandExample, CommandRunOptions } from '../../structures/Command';
 
 class RemoveMediaChannelCommand extends Command {
   name = 'removeMediaChannel';
   category = 'Administration';
   aliases = ['removeFromMediaChannels'];
   description = 'Удаляет канал из списка Каналов только для медиа контента';
-  examples = [
+  examples: CommandExample[] = [
     {
       command: 'removeMediaChannel 910989430557392947',
       description: 'Удалить канал с айди 910989430557392947 из списка Каналов только для медиа контента',

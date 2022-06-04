@@ -5,7 +5,7 @@ import { EmojisLinks } from '../../static/Emojis';
 
 import { Song } from 'distube';
 import { generateDefaultButtons, pagination } from '../../utils/Discord/Pagination';
-import { Command, CommandRunOptions } from '../../structures/Command';
+import { Command, CommandExample, CommandRunOptions } from '../../structures/Command';
 
 class QueueCommand extends Command {
   name = 'queue';
@@ -13,7 +13,7 @@ class QueueCommand extends Command {
   aliases = ['q', 'playlist', 'плейлист', 'очередь'];
   description = 'Показывает плейлист со всеми треками добавленными в очередь';
   usage = 'queue';
-  examples = [
+  examples: CommandExample[] = [
     {
       command: 'queue',
       description: 'Показывает список треков',

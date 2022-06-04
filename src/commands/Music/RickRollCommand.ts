@@ -1,11 +1,11 @@
-import { Command, CommandRunOptions } from '../../structures/Command';
+import { Command, CommandExample, CommandRunOptions } from '../../structures/Command';
 
 class RickRollCommand extends Command {
   name = 'rickRoll';
   category = 'Music';
   aliases = [];
   description = 'Never Gonna Give You Up';
-  examples = [];
+  examples: CommandExample[] = [];
   usage = 'rickRoll';
 
   async run({ client, message }: CommandRunOptions) {
