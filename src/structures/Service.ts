@@ -12,6 +12,7 @@ import { WarnsAction } from '../services/MemberServices/WarnsAction';
 import { MutesAction } from '../services/MemberServices/MutesAction';
 import { BansAction } from '../services/MemberServices/BansAction';
 import { serviceMixin } from '../utils/Other';
+import { CustomVoiceAction } from '../services/GuildServices/CustomVoiceAction';
 
 export interface Service
   extends PrefixAction,
@@ -21,7 +22,8 @@ export interface Service
     NotesAction,
     WarnsAction,
     MutesAction,
-    BansAction {}
+    BansAction,
+    CustomVoiceAction {}
 
 export class Service extends serviceMixin(
   PrefixAction,
@@ -32,6 +34,7 @@ export class Service extends serviceMixin(
   WarnsAction,
   MutesAction,
   BansAction,
+  CustomVoiceAction,
 ) {
   client: ExtendClient;
 

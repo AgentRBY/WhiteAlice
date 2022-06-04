@@ -6,6 +6,7 @@ export interface IGuildModel {
   testersID: string[];
   notes: Note[];
   mediaChannels: string[];
+  customVoices: CustomVoice;
 }
 
 export interface Note {
@@ -13,4 +14,8 @@ export interface Note {
   content: string;
   createdAt: number;
   createdBy: string;
+}
+
+export interface CustomVoice {
+  baseVoiceChannel: string;
 }

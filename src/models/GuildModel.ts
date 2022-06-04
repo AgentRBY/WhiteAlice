@@ -13,6 +13,9 @@ const GuildSchema = new Schema<IGuildModel>({
     },
   ],
   mediaChannels: [String],
+  customVoices: {
+    baseVoiceChannel: String,
+  },
 });
 
 export const GuildModel = model<IGuildModel>('GuildData', GuildSchema);
