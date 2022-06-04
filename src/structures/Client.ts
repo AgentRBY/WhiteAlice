@@ -1,4 +1,4 @@
-import { Client, ClientEvents, Collection, Intents } from 'discord.js';
+import { Client, ClientEvents, Collection, Intents, Snowflake } from 'discord.js';
 import { promisify } from 'util';
 import { glob } from 'glob';
 import { EventType } from '../typings/Event';
@@ -20,16 +20,17 @@ import { Command } from './Command';
 const globPromise = promisify(glob);
 
 export class ExtendClient extends Client {
-  commands: Collection<string, Command> = new Collection();
+  commands: Collection<string, Command> = new Collection(); // <Name, Command>
   categories: Set<string> = new Set();
-  aliases: Collection<string, string> = new Collection();
+  aliases: Collection<string, string> = new Collection(); // <Alias, OriginalCommandName>
   disTube: DisTube;
   aniDB = new AniDB({ client: 'hltesttwo', version: 9 });
   config = process.env;
-  invites: Collection<string, Collection<string, number>> = new Collection();
+  invites: Collection<string, Collection<string, number>> = new Collection(); // <InviteCode, <AuthorId, Uses>
   memberBase: CacheManager<MongoData<IMemberModel>>;
   guildBase: CacheManager<MongoData<IGuildModel>>;
   service: Service;
+  customVoicesState: Collection<Snowflake, [Snowflake, Snowflake]> = new Collection(); // <VoiceId, [AuthorId,TextChannelId]>
 
   constructor() {
     super({
