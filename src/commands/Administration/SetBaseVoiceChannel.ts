@@ -1,13 +1,13 @@
 import { Command, CommandExample, CommandRunOptions } from '../../structures/Command';
 import { ErrorEmbed, SuccessEmbed } from '../../utils/Discord/Embed';
 
-class AddBaseVoiceChannel extends Command {
-  name = 'addBaseVoiceChannel';
+class SetBaseVoiceChannel extends Command {
+  name = 'setBaseVoiceChannel';
   category = 'Administration';
   aliases = [];
   description = '';
   examples: CommandExample[] = [];
-  usage = 'addBaseVoiceChannel';
+  usage = 'setBaseVoiceChannel';
 
   async run({ client, message, args }: CommandRunOptions) {
     const channelID = message.mentions.channels.first()?.id || args[0];
@@ -48,4 +48,4 @@ class AddBaseVoiceChannel extends Command {
   }
 }
 
-export default new AddBaseVoiceChannel();
+export default new SetBaseVoiceChannel();
