@@ -2,18 +2,18 @@ import { ErrorEmbed, SuccessEmbed } from '../../utils/Discord/Embed';
 import { PermissionString } from 'discord.js';
 import { Command, CommandExample, CommandRunOptions } from '../../structures/Command';
 
-class AddMediaChannelCommand extends Command {
-  name = 'addMediaChannel';
+class SetMediaChannelCommand extends Command {
+  name = 'setMediaChannel';
   category = 'Administration';
   aliases = ['addToMediaChannels'];
   description = 'Добавляет канал в список Каналов только для медиа контента';
   examples: CommandExample[] = [
     {
-      command: 'addMediaChannel 910989430557392947',
+      command: 'setMediaChannel 910989430557392947',
       description: 'Добавить канал с айди 910989430557392947 в список Каналов только для медиа контента',
     },
   ];
-  usage = 'addMediaChannel <айди>';
+  usage = 'setMediaChannel <айди>';
   memberPermissions: PermissionString[] = ['BAN_MEMBERS'];
 
   async run({ client, message, args }: CommandRunOptions) {
@@ -43,7 +43,7 @@ class AddMediaChannelCommand extends Command {
       return;
     }
 
-    client.service.addMediaChannel(message.guildId, channelId);
+    client.service.setMediaChannel(message.guildId, channelId);
 
     const embed = SuccessEmbed(`Канал <#${channelId}> добавлен как Канал только для медиа контента`);
     message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
@@ -51,4 +51,4 @@ class AddMediaChannelCommand extends Command {
   }
 }
 
-export default new AddMediaChannelCommand();
+export default new SetMediaChannelCommand();

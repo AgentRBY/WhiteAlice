@@ -14,7 +14,7 @@ export class MediaChannelsAction {
     return GuildData.mediaChannels.includes(channelID);
   }
 
-  async addMediaChannel(this: Service, id: Snowflake, channelID: string): Promise<void> {
+  async setMediaChannel(this: Service, id: Snowflake, channelID: string): Promise<void> {
     const GuildData = await this.getGuildData(id);
 
     GuildData.mediaChannels.push(channelID);
