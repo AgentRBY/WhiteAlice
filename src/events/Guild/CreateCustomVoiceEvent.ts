@@ -1,6 +1,9 @@
 import { Event } from '../../structures/Event';
 import { ExtendClient } from '../../structures/Client';
-import { VoiceState } from 'discord.js';
+import { MessageActionRow, MessageButton, MessageEmbed, Util, VoiceState } from 'discord.js';
+import { Emojis, EmojisLinks } from '../../static/Emojis';
+import { Colors } from '../../static/Colors';
+import { VoiceButtons } from '../../typings/Interactions';
 
 export default new Event({
   name: 'voiceStateUpdate',
@@ -18,13 +21,19 @@ export default new Event({
 
     const customVoice = await newState.channel.parent.createChannel(`${newState.member.displayName}`, {
       type: 'GUILD_VOICE',
-      reason: `Create new custom voice channel for ${newState.member.displayName}`,
+      reason: `Create a new custom voice channel for ${newState.member.displayName}`,
     });
-    newState.setChannel(customVoice, `Create new custom voice channel for ${newState.member.displayName}`);
+    newState.setChannel(customVoice, `Create a new custom voice channel for ${newState.member.displayName}`);
+
+    const bitrate = newState.guild.maximumBitrate - 64_000;
+
+    if (bitrate > 64_000) {
+      customVoice.setBitrate(bitrate);
+    }
 
     const customChannel = await newState.channel.parent.createChannel(`чат-${newState.member.displayName}`, {
       type: 'GUILD_TEXT',
-      reason: `Create new custom text channel for ${newState.member.displayName}`,
+      reason: `Create a new custom text channel for ${newState.member.displayName}`,
       permissionOverwrites: [
         {
           id: newState.guild.id, // everyone
@@ -40,6 +49,48 @@ export default new Event({
         },
       ],
     });
+
+    const embed = new MessageEmbed().setColor(Colors.Blue).setAuthor({
+      name: `Голосовой канал ${newState.member.displayName}`,
+      iconURL: EmojisLinks.Headphone,
+    }).setDescription(` 
+        **Это пользовательский голосовой канал созданный ${Util.escapeMarkdown(newState.member.displayName)}**
+        
+        ┏ **Доступные команды:**
+        ┣ \`>vcName\`  - сменить имя голосового канала
+        ┣ \`>vcLock\` - закрыть голосовой канал
+        ┣ \`>vcUnlock\` - открыть голосовой канал
+        ┣ \`>vcBitrate\` - установить битрейт голосового канала
+        ┣ \`>vcKick\` - кикнуть участника из голосового канала
+        ┣ \`>vcLimit\` - установить лимит пользователей в голосовом канале
+        ┗ \`>vcGame\` - установить канал как игровой
+      `);
+
+    const buttons = new MessageActionRow().setComponents(
+      new MessageButton()
+        .setLabel('Закрыть канал')
+        .setCustomId(VoiceButtons.LockVoiceChannel)
+        .setStyle('PRIMARY')
+        .setEmoji('🔒'),
+      new MessageButton()
+        .setLabel('Установить максимальный битрейт')
+        .setCustomId(VoiceButtons.SetMaxBitrate)
+        .setStyle('PRIMARY')
+        .setEmoji(Emojis.Music),
+      new MessageButton()
+        .setLabel('Установить канал как игровой')
+        .setCustomId(VoiceButtons.SetGameVoiceChannel)
+        .setStyle('PRIMARY')
+        .setEmoji(Emojis.Play),
+      new MessageButton()
+        .setLabel('Кикнуть пользователя из канала')
+        .setCustomId(VoiceButtons.KickUserFromVoiceChannel)
+        .setStyle('DANGER')
+        .setEmoji('🚪'),
+    );
+
+    const message = await customChannel.send({ embeds: [embed], components: [buttons] });
+    message.pin();
 
     client.customVoicesState.set(customVoice.id, [newState.member.id, customChannel.id]);
   },

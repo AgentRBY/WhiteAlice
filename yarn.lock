@@ -1883,6 +1883,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"discord-modals@npm:^1.3.7":
+  version: 1.3.7
+  resolution: "discord-modals@npm:1.3.7"
+  peerDependencies:
+    discord.js: "*"
+  checksum: b67c2a8181d7ca07c86531d6f6bcb54325aca85d0da95cad5399455f440b468369074e5cfd77c3c69ad394dd3dfce514e5bb9578dfb11f54d2447916ed8af4bd
+  languageName: node
+  linkType: hard
+
 "discord.js@npm:^13.7.0":
   version: 13.7.0
   resolution: "discord.js@npm:13.7.0"
@@ -3090,6 +3099,7 @@ __metadata:
     "@typescript-eslint/parser": ^5.23.0
     anidbjs: ^2.4.4
     anilist-node: ^1.12.0
+    discord-modals: ^1.3.7
     discord.js: ^13.7.0
     distube: 3.3.4
     dotenv: ^16.0.1

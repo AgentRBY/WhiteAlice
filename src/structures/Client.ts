@@ -16,6 +16,7 @@ import { GuildModel } from '../models/GuildModel';
 import { Service } from './Service';
 import Logger from '../utils/Logger';
 import { Command } from './Command';
+import discordModals from 'discord-modals';
 
 const globPromise = promisify(glob);
 
@@ -40,6 +41,7 @@ export class ExtendClient extends Client {
         Intents.FLAGS.GUILD_VOICE_STATES,
         Intents.FLAGS.GUILD_INVITES,
         Intents.FLAGS.GUILD_MEMBERS,
+        Intents.FLAGS.GUILD_PRESENCES,
       ],
     });
   }
@@ -75,6 +77,7 @@ export class ExtendClient extends Client {
       getCallback: this.getGuildBase,
     });
 
+    discordModals(this);
     await this.login(process.env.botToken);
   }
 

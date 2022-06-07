@@ -22,6 +22,7 @@
     "@distube/ytdl-core": "latest",
     "anidbjs": "^2.4.4",
     "anilist-node": "^1.12.0",
+    "discord-modals": "^1.3.7",
     "discord.js": "^13.7.0",
     "distube": "3.3.4",
     "glob": "^7.2.0",

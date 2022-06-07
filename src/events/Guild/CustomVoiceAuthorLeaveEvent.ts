@@ -1,6 +1,9 @@
 import { Event } from '../../structures/Event';
 import { ExtendClient } from '../../structures/Client';
-import { VoiceState } from 'discord.js';
+import { MessageActionRow, MessageButton, MessageEmbed, TextChannel, VoiceState } from 'discord.js';
+import { EmojisLinks } from '../../static/Emojis';
+import { VoiceButtons } from '../../typings/Interactions';
+import { Colors } from '../../static/Colors';
 
 export default new Event({
   name: 'voiceStateUpdate',
@@ -26,7 +29,25 @@ export default new Event({
       return;
     }
 
+    const embed = new MessageEmbed()
+      .setColor(Colors.Blue)
+      .setAuthor({
+        name: `Голосовой канал ${oldState.member.displayName}`,
+        iconURL: EmojisLinks.Headphone,
+      })
+      .setDescription('Автор голосового канала вышел. Место владельца свободно');
+
+    const button = new MessageActionRow().setComponents(
+      new MessageButton()
+        .setStyle('SUCCESS')
+        .setLabel('Стать владельцем голосового канала')
+        .setCustomId(VoiceButtons.MakeMeOwner),
+    );
+
     const textChannelId = client.customVoicesState.get(oldState.channelId)[1];
+
+    const channel = (await newState.guild.channels.cache.get(textChannelId)) as TextChannel;
+    channel.send({ embeds: [embed], components: [button] });
 
     client.customVoicesState.set(oldState.channel.id, [null, textChannelId]);
   },

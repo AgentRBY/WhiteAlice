@@ -23,3 +23,10 @@ export function serviceMixin(...actions: Constructor[]) {
 export function getMemberBaseId(member: GuildMember): MemberBaseId {
   return `${member.id}-${member.guild.id}`;
 }
+
+export function includesInEnum<VariableType, Enum extends Record<string, VariableType>>(
+  item: VariableType,
+  enumItem: Enum,
+): item is Enum[keyof Enum] {
+  return Object.values(enumItem).includes(item);
+}
