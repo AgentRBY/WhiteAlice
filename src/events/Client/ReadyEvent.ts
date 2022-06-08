@@ -9,6 +9,11 @@ import Logger from '../../utils/Logger';
 export default new Event({
   name: 'ready',
   run: async (client: ExtendClient) => {
+    Logger.success(`${client.user.username} ready`);
+    await client.guilds.fetch();
+    Logger.info(`Working on ${client.guilds.cache.size} guilds`);
+    Logger.info(`Active ${client.commands.size} commands on ${client.categories.size} categories`);
+
     await sleep(1000);
 
     client.guilds.cache.forEach(async (guild) => {
@@ -25,9 +30,5 @@ export default new Event({
     setInterval(() => {
       client.user.setActivity(Activities[getRandomInt(0, Activities.length - 1)]);
     }, 120_000);
-
-    Logger.success(`${client.user.username} ready`);
-    await client.guilds.fetch();
-    Logger.info(`Working on ${client.guilds.cache.size} guilds`);
   },
 });
