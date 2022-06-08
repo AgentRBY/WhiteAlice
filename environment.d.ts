@@ -2,19 +2,18 @@
 
 export interface Environment {
   botToken: string;
-  environment: "dev" | "prod" | "debug";
+  environment: 'development' | 'production';
   prefix: string;
   ownersID: string;
   sauceNAOToken: string;
   mongoURI: string;
-  mode: "production" | "testing" | "development";
+  devGuildID: string;
   yandexYU: string;
   distubeCookie: string;
 }
 
 declare global {
   namespace NodeJS {
-    interface ProcessEnv extends Environment {
-    }
+    interface ProcessEnv extends Environment {}
   }
 }

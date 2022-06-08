@@ -17,11 +17,13 @@ import { Service } from './Service';
 import Logger from '../utils/Logger';
 import { Command } from './Command';
 import discordModals from 'discord-modals';
+import { ContextCommand } from './ContextCommand';
 
 const globPromise = promisify(glob);
 
 export class ExtendClient extends Client {
-  commands: Collection<string, Command> = new Collection(); // <Name, Command>
+  commonCommands: Collection<string, Command> = new Collection(); // <Name, Command>
+  contextCommands: Collection<string, ContextCommand> = new Collection(); // <Name, ContextCommand>
   categories: Set<string> = new Set();
   aliases: Collection<string, string> = new Collection(); // <Alias, OriginalCommandName>
   disTube: DisTube;
@@ -65,8 +67,10 @@ export class ExtendClient extends Client {
 
     this.service = new Service(this);
 
-    await this.loadCommands();
+    await this.loadCommonCommands();
     await this.loadEvents();
+
+    await this.loadContextCommands();
 
     this.memberBase = new CacheManager({
       maxCacheSize: 100,
@@ -90,19 +94,31 @@ export class ExtendClient extends Client {
     return file;
   }
 
-  private async loadCommands() {
-    const commandFiles = await globPromise(`${__dirname}/../commands/**/*.{js,ts}`);
+  private async loadCommonCommands() {
+    const commonCommandFiles = await globPromise(`${__dirname}/../commands/Common/**/*.{js,ts}`);
 
-    commandFiles.map(async (commandFile: string) => {
-      const file: Command = await ExtendClient.importFile(commandFile);
+    commonCommandFiles.map(async (commonCommandFile: string) => {
+      const file: Command = await ExtendClient.importFile(commonCommandFile);
 
       if (file.name) {
-        this.commands.set(file.name.toLowerCase(), file);
+        this.commonCommands.set(file.name.toLowerCase(), file);
         this.categories.add(file.category.toLowerCase());
 
         if (file.aliases?.length) {
           file.aliases.map((alias: string) => this.aliases.set(alias.toLowerCase(), file.name.toLowerCase()));
         }
+      }
+    });
+  }
+
+  private async loadContextCommands() {
+    const contextCommandFiles = await globPromise(`${__dirname}/../commands/Context/**/*.{js,ts}`);
+
+    contextCommandFiles.map(async (contextCommandFile: string) => {
+      const file: ContextCommand = await ExtendClient.importFile(contextCommandFile);
+
+      if (file.name) {
+        this.contextCommands.set(file.name, file);
       }
     });
   }

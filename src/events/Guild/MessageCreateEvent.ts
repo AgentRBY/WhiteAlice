@@ -38,7 +38,7 @@ export default new Event({
     }
 
     if (message.content === `<@${client.user.id}>` || message.content === `<@!${client.user.id}>`) {
-      client.commands.get('ping').run({ client, message, args: [] });
+      client.commonCommands.get('ping').run({ client, message, args: [] });
       return;
     }
 
@@ -50,7 +50,7 @@ export default new Event({
 
     const args = message.content.slice(prefix.length).trim().split(/ +/g);
     const cmd = args.shift()?.toLowerCase() ?? '';
-    const command = client.commands.get(cmd) || client.commands.get(client.aliases.get(cmd) || '');
+    const command = client.commonCommands.get(cmd) || client.commonCommands.get(client.aliases.get(cmd) || '');
 
     if (!command) {
       return;
@@ -97,7 +97,7 @@ export default new Event({
     });
 
     if (attributes.has('help') || attributes.has('h')) {
-      client.commands.get('help').run({ client, message, args: [command.name] });
+      client.commonCommands.get('help').run({ client, message, args: [command.name] });
       return;
     }
 

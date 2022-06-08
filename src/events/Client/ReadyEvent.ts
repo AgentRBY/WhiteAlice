@@ -9,10 +9,23 @@ import Logger from '../../utils/Logger';
 export default new Event({
   name: 'ready',
   run: async (client: ExtendClient) => {
-    Logger.success(`${client.user.username} ready`);
     await client.guilds.fetch();
+
+    const commands = [...client.contextCommands.values()];
+
+    if (client.config.environment === 'development') {
+      const guild = client.guilds.cache.get(client.config.devGuildID);
+      await guild.commands.set(commands);
+
+      Logger.info(`Register commands to ${guild.name} guild`);
+    } else {
+      await client.application.commands.set(commands);
+    }
+
+    Logger.success(`${client.user.username} ready`);
     Logger.info(`Working on ${client.guilds.cache.size} guilds`);
-    Logger.info(`Active ${client.commands.size} commands on ${client.categories.size} categories`);
+    Logger.info(`Active ${client.commonCommands.size} common commands on ${client.categories.size} categories`);
+    Logger.info(`Active ${client.contextCommands.size} context commands`);
 
     await sleep(1000);
 

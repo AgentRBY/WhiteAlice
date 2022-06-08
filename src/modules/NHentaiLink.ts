@@ -12,5 +12,5 @@ export function NHentaiLink(client: ExtendClient, message: Message): void {
 
   const id = match[2];
 
-  client.commands.get('nhentai').run({ client, message, args: [id] });
+  client.commonCommands.get('nhentai').run({ client, message, args: [id] });
 }

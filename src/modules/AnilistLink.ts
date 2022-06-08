@@ -12,5 +12,5 @@ export function AnilistLink(client: ExtendClient, message: Message): void {
 
   const id = match[2];
 
-  client.commands.get('anilist').run({ client, message, args: [id] });
+  client.commonCommands.get('anilist').run({ client, message, args: [id] });
 }
