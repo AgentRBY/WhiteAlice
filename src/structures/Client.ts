@@ -1,8 +1,8 @@
-import { Client, ClientEvents, Collection, Intents, Snowflake } from 'discord.js';
+import { Client, Collection, Intents, Snowflake } from 'discord.js';
 import { promisify } from 'util';
 import { glob } from 'glob';
 import { EventType } from '../typings/Event';
-import { DisTube, DisTubeEvents } from 'distube';
+import { DisTube } from 'distube';
 import SoundCloudPlugin from '@distube/soundcloud';
 import SpotifyPlugin from '@distube/spotify';
 import AniDB from 'anidbjs';
@@ -15,15 +15,17 @@ import { MemberModel } from '../models/MemberModel';
 import { GuildModel } from '../models/GuildModel';
 import { Service } from './Service';
 import Logger from '../utils/Logger';
-import { Command } from './Command';
+import { CommonCommand } from './Commands/CommonCommand';
 import discordModals from 'discord-modals';
-import { ContextCommand } from './ContextCommand';
+import { ContextCommand } from './Commands/ContextCommand';
+import { SlashCommand } from './Commands/SlashCommand';
 
 const globPromise = promisify(glob);
 
 export class ExtendClient extends Client {
-  commonCommands: Collection<string, Command> = new Collection(); // <Name, Command>
+  commonCommands: Collection<string, CommonCommand> = new Collection(); // <Name, CommonCommand>
   contextCommands: Collection<string, ContextCommand> = new Collection(); // <Name, ContextCommand>
+  slashCommands: Collection<string, SlashCommand> = new Collection(); // <Name, ContextCommand>
   categories: Set<string> = new Set();
   aliases: Collection<string, string> = new Collection(); // <Alias, OriginalCommandName>
   disTube: DisTube;
@@ -71,6 +73,7 @@ export class ExtendClient extends Client {
     await this.loadEvents();
 
     await this.loadContextCommands();
+    await this.loadSlashCommands();
 
     this.memberBase = new CacheManager({
       maxCacheSize: 100,
@@ -94,50 +97,60 @@ export class ExtendClient extends Client {
     return file;
   }
 
+  private async loadFiles<T>(path: `/${string}`): Promise<T[]> {
+    const files = await globPromise(`${__dirname}/..` + path);
+
+    return Promise.all(files.map(async (file) => await ExtendClient.importFile(file)));
+  }
+
   private async loadCommonCommands() {
-    const commonCommandFiles = await globPromise(`${__dirname}/../commands/Common/**/*.{js,ts}`);
+    const commonCommandFiles = await this.loadFiles<CommonCommand>('/commands/Common/**/*.{js,ts}');
 
-    commonCommandFiles.map(async (commonCommandFile: string) => {
-      const file: Command = await ExtendClient.importFile(commonCommandFile);
+    commonCommandFiles.map(async (command) => {
+      if (command.name) {
+        this.commonCommands.set(command.name.toLowerCase(), command);
+        this.categories.add(command.category.toLowerCase());
 
-      if (file.name) {
-        this.commonCommands.set(file.name.toLowerCase(), file);
-        this.categories.add(file.category.toLowerCase());
-
-        if (file.aliases?.length) {
-          file.aliases.map((alias: string) => this.aliases.set(alias.toLowerCase(), file.name.toLowerCase()));
+        if (command.aliases?.length) {
+          command.aliases.map((alias: string) => this.aliases.set(alias.toLowerCase(), command.name.toLowerCase()));
         }
       }
     });
   }
 
   private async loadContextCommands() {
-    const contextCommandFiles = await globPromise(`${__dirname}/../commands/Context/**/*.{js,ts}`);
+    const contextCommandFiles = await this.loadFiles<ContextCommand>('/commands/Context/**/*.{js,ts}');
 
-    contextCommandFiles.map(async (contextCommandFile: string) => {
-      const file: ContextCommand = await ExtendClient.importFile(contextCommandFile);
+    contextCommandFiles.map(async (contextCommand) => {
+      if (contextCommand.name) {
+        this.contextCommands.set(contextCommand.name, contextCommand);
+      }
+    });
+  }
 
-      if (file.name) {
-        this.contextCommands.set(file.name, file);
+  private async loadSlashCommands() {
+    const slashCommandFiles = await this.loadFiles<SlashCommand>('/commands/Slash/**/*.{js,ts}');
+
+    slashCommandFiles.map(async (slashCommand) => {
+      if (slashCommand.meta?.name) {
+        this.slashCommands.set(slashCommand.meta.name, slashCommand);
       }
     });
   }
 
   private async loadEvents() {
-    const eventFiles = await globPromise(`${__dirname}/../events/**/*.{js,ts}`);
+    const eventFiles = await this.loadFiles<EventType>('/events/**/*.{js,ts}');
 
-    for (const eventFile of eventFiles) {
-      const event: EventType = await ExtendClient.importFile(eventFile);
-
+    eventFiles.map((event) => {
       if (event.name) {
         if (event.type === 'distube') {
-          this.disTube.on(event.name as keyof DisTubeEvents, event.run);
-          continue;
+          this.disTube.on(event.name, event.run);
+          return;
         }
 
-        this.on(event.name as keyof ClientEvents, event.run.bind(null, this));
+        this.on(event.name, event.run.bind(null, this));
       }
-    }
+    });
   }
 
   protected async getMemberBase(id: string): Promise<MongoData<IMemberModel>> {

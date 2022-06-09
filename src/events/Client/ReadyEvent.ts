@@ -9,23 +9,30 @@ import Logger from '../../utils/Logger';
 export default new Event({
   name: 'ready',
   run: async (client: ExtendClient) => {
-    await client.guilds.fetch();
+    try {
+      await client.guilds.fetch();
 
-    const commands = [...client.contextCommands.values()];
+      const slashCommands = [...client.slashCommands.values()];
+      const commands = [...client.contextCommands.values(), ...slashCommands.map((command) => command.meta.toJSON())];
 
-    if (client.config.environment === 'development') {
-      const guild = client.guilds.cache.get(client.config.devGuildID);
-      await guild.commands.set(commands);
+      if (client.config.environment === 'development') {
+        const guild = client.guilds.cache.get(client.config.devGuildID);
 
-      Logger.info(`Register commands to ${guild.name} guild`);
-    } else {
-      await client.application.commands.set(commands);
+        await guild.commands.set(commands);
+
+        Logger.info(`Register ${commands.length} commands to ${guild.name} guild`);
+      } else {
+        await client.application.commands.set(commands);
+      }
+    } catch (error) {
+      console.log(error);
     }
 
     Logger.success(`${client.user.username} ready`);
     Logger.info(`Working on ${client.guilds.cache.size} guilds`);
     Logger.info(`Active ${client.commonCommands.size} common commands on ${client.categories.size} categories`);
     Logger.info(`Active ${client.contextCommands.size} context commands`);
+    Logger.info(`Active ${client.slashCommands.size} slash commands`);
 
     await sleep(1000);
 

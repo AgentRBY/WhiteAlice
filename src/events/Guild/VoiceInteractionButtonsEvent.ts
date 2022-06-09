@@ -12,6 +12,9 @@ export default new Event({
   name: 'interactionCreate',
   type: 'discord',
   run: async (client: ExtendClient, interaction: Interaction) => {
+    if (interaction.isCommand()) {
+    }
+
     if (!interaction.isButton()) {
       return;
     }
