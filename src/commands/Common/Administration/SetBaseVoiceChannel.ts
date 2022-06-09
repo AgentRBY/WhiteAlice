@@ -1,7 +1,7 @@
-import { Command, CommandExample, CommandRunOptions } from '../../../structures/Command';
+import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
 import { ErrorEmbed, SuccessEmbed } from '../../../utils/Discord/Embed';
 
-class SetBaseVoiceChannel extends Command {
+class SetBaseVoiceChannel extends CommonCommand {
   name = 'setBaseVoiceChannel';
   category = 'Administration';
   aliases = [];

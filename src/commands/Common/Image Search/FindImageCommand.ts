@@ -6,9 +6,9 @@ import { ErrorEmbed } from '../../../utils/Discord/Embed';
 import { formatNames, isGifLink, isImageLink, isLink, removeQueryParameters } from '../../../utils/Common/Strings';
 import { generateDefaultButtons, pagination } from '../../../utils/Discord/Pagination';
 import { sauceNAORelevantSites } from '../../../static/ImageSearch';
-import { Command, CommandExample, CommandRunOptions } from '../../../structures/Command';
+import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
 
-class FindImageCommand extends Command {
+class FindImageCommand extends CommonCommand {
   name = 'findImage';
   category = 'Image Search';
   aliases = ['find', 'fi', 'image'];

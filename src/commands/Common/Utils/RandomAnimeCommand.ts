@@ -4,9 +4,9 @@ import { upAllFirstLatter } from '../../../utils/Common/Strings';
 import { ErrorEmbed } from '../../../utils/Discord/Embed';
 import { getRandomInt } from '../../../utils/Common/Number';
 import { SortList } from '../../../static/Anilist';
-import { Command, CommandExample, CommandRunOptions } from '../../../structures/Command';
+import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
 
-class RandomAnimeCommand extends Command {
+class RandomAnimeCommand extends CommonCommand {
   name = 'randomAnime';
   category = 'Utils';
   aliases = [];

@@ -5,9 +5,9 @@ import { Emojis } from '../../../static/Emojis';
 import { isNumber } from '../../../utils/Common/Number';
 import { KARMA_FOR_BAN } from '../../../static/Punishment';
 import { Ban } from '../../../typings/MemberModel';
-import { Command, CommandExample, CommandRunOptions } from '../../../structures/Command';
+import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
 
-class BanCommand extends Command {
+class BanCommand extends CommonCommand {
   name = 'ban';
   category = 'Moderation';
   aliases = [];

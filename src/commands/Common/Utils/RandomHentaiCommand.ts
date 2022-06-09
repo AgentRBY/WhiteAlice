@@ -2,11 +2,11 @@ import { formatNHentaiManga } from '../../../utils/Media/Manga';
 import { Doujin, SearchResult, SortMethods } from 'nhentai';
 import { getRandomInt } from '../../../utils/Common/Number';
 import { ErrorEmbed } from '../../../utils/Discord/Embed';
-import { Command, CommandExample, CommandRunOptions } from '../../../structures/Command';
+import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
 
 const nHentai = require('nhentai');
 
-class RandomHentaiCommand extends Command {
+class RandomHentaiCommand extends CommonCommand {
   name = 'randomHentai';
   category = 'Utils';
   aliases = [];

@@ -3,9 +3,9 @@ import { isSnowflake } from 'distube';
 import { MessageEmbed, PermissionString } from 'discord.js';
 import { Colors } from '../../../static/Colors';
 import { Emojis } from '../../../static/Emojis';
-import { Command, CommandExample, CommandRunOptions } from '../../../structures/Command';
+import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
 
-class UnbanCommand extends Command {
+class UnbanCommand extends CommonCommand {
   name = 'unban';
   category = 'Moderation';
   aliases = ['removeBan'];

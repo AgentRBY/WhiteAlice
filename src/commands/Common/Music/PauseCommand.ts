@@ -1,8 +1,8 @@
 import { ErrorEmbed, SuccessEmbed } from '../../../utils/Discord/Embed';
 
-import { Command, CommandExample, CommandRunOptions } from '../../../structures/Command';
+import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
 
-class PauseCommand extends Command {
+class PauseCommand extends CommonCommand {
   name = 'pause';
   category = 'Music';
   aliases = ['hold', 'пауза'];

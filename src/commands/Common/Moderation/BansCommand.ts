@@ -4,9 +4,9 @@ import { Colors } from '../../../static/Colors';
 import { formatDays, momentToDiscordDate } from '../../../utils/Common/Date';
 import moment from 'moment';
 import { getMemberBaseId } from '../../../utils/Other';
-import { Command, CommandExample, CommandRunOptions } from '../../../structures/Command';
+import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
 
-class BansCommand extends Command {
+class BansCommand extends CommonCommand {
   name = 'bans';
   category = 'Moderation';
   aliases = [];

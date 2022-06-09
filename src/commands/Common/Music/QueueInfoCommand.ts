@@ -2,9 +2,9 @@ import { ErrorEmbed } from '../../../utils/Discord/Embed';
 import { MessageEmbed } from 'discord.js';
 import { EmojisLinks } from '../../../static/Emojis';
 import { Colors } from '../../../static/Colors';
-import { Command, CommandExample, CommandRunOptions } from '../../../structures/Command';
+import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
 
-class QueueInfoCommand extends Command {
+class QueueInfoCommand extends CommonCommand {
   name = 'queueInfo';
   category = 'Music';
   aliases = ['qi'];

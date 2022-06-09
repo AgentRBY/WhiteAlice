@@ -1,9 +1,9 @@
 import { SuccessEmbed } from '../../../utils/Discord/Embed';
 import { KARMA_FOR_BAN, KARMA_FOR_MUTE, KARMA_FOR_WARN } from '../../../static/Punishment';
 import { getMemberBaseId } from '../../../utils/Other';
-import { Command, CommandExample, CommandRunOptions } from '../../../structures/Command';
+import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
 
-class KarmaCommand extends Command {
+class KarmaCommand extends CommonCommand {
   name = 'karma';
   category = 'Moderation';
   aliases = [];

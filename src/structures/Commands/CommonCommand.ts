@@ -1,5 +1,5 @@
 import { Collection, Message, PermissionString } from 'discord.js';
-import { ExtendClient } from './Client';
+import { ExtendClient } from '../Client';
 
 export interface CommandExample {
   command: string;
@@ -14,7 +14,7 @@ export interface CommandRunOptions {
   attributes?: Set<string>;
 }
 
-export class Command {
+export class CommonCommand {
   name: string;
   category: string;
   description: string;

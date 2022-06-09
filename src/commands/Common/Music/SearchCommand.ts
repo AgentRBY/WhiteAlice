@@ -2,9 +2,9 @@ import { ErrorEmbed } from '../../../utils/Discord/Embed';
 import { Message, MessageEmbed, TextChannel } from 'discord.js';
 import { EmojisLinks } from '../../../static/Emojis';
 import { Colors } from '../../../static/Colors';
-import { Command, CommandExample, CommandRunOptions } from '../../../structures/Command';
+import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
 
-class SearchCommand extends Command {
+class SearchCommand extends CommonCommand {
   name = 'search';
   category = 'Music';
   aliases = ['sc'];

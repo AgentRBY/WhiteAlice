@@ -1,8 +1,8 @@
 import { ErrorEmbed, SuccessEmbed } from '../../../utils/Discord/Embed';
 import { AvailableFilters } from '../../../static/Music';
-import { Command, CommandExample, CommandRunOptions } from '../../../structures/Command';
+import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
 
-class FilterCommand extends Command {
+class FilterCommand extends CommonCommand {
   name = 'filter';
   category = 'Music';
   aliases = [];

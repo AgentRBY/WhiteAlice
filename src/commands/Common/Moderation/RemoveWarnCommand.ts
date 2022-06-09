@@ -4,9 +4,9 @@ import { MessageEmbed, PermissionString } from 'discord.js';
 import { Colors } from '../../../static/Colors';
 import { Emojis } from '../../../static/Emojis';
 import { getMemberBaseId } from '../../../utils/Other';
-import { Command, CommandExample, CommandRunOptions } from '../../../structures/Command';
+import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
 
-class RemoveWarnCommand extends Command {
+class RemoveWarnCommand extends CommonCommand {
   name = 'removeWarn';
   category = 'Moderation';
   aliases = ['deleteWarn', 'delWarn', 'unWarn'];

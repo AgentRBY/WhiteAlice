@@ -1,8 +1,8 @@
 import { ErrorEmbed } from '../../../utils/Discord/Embed';
 import { formatAniDBAnime } from '../../../utils/Media/Anime';
-import { Command, CommandExample, CommandRunOptions } from '../../../structures/Command';
+import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
 
-class AnidbCommand extends Command {
+class AnidbCommand extends CommonCommand {
   name = 'anidb';
   category = 'Utils';
   aliases = ['adb', 'анидб'];

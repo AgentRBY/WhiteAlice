@@ -1,4 +1,4 @@
-import { ExtendClient } from './Client';
+import { ExtendClient } from '../Client';
 import { MessageContextMenuInteraction, PermissionString, UserContextMenuInteraction } from 'discord.js';
 
 export type ContextCommandType = 'USER' | 'MESSAGE';

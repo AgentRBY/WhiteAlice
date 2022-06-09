@@ -5,9 +5,9 @@ import { Emojis } from '../../../static/Emojis';
 import { KARMA_FOR_WARN } from '../../../static/Punishment';
 import { getMemberBaseId } from '../../../utils/Other';
 import { Warn } from '../../../typings/MemberModel';
-import { Command, CommandExample, CommandRunOptions } from '../../../structures/Command';
+import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
 
-class WarnCommand extends Command {
+class WarnCommand extends CommonCommand {
   name = 'warn';
   category = 'Moderation';
   aliases = [];

@@ -1,8 +1,8 @@
 import { ErrorEmbed, SuccessEmbed } from '../../../utils/Discord/Embed';
 
-import { Command, CommandExample, CommandRunOptions } from '../../../structures/Command';
+import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
 
-class StopCommand extends Command {
+class StopCommand extends CommonCommand {
   name = 'stop';
   category = 'Music';
   aliases = ['leave', 'disconnect', 'стоп', 'остановить', 'выйти'];

@@ -1,8 +1,8 @@
 import { ErrorEmbed, SuccessEmbed } from '../../../utils/Discord/Embed';
 
-import { Command, CommandExample, CommandRunOptions } from '../../../structures/Command';
+import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
 
-class RepeatCommand extends Command {
+class RepeatCommand extends CommonCommand {
   name = 'repeat';
   category = 'Music';
   aliases = ['loop', 'rp', 'повторить'];

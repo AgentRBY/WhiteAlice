@@ -5,9 +5,9 @@ import { EmojisLinks } from '../../../static/Emojis';
 
 import { Song } from 'distube';
 import { generateDefaultButtons, pagination } from '../../../utils/Discord/Pagination';
-import { Command, CommandExample, CommandRunOptions } from '../../../structures/Command';
+import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
 
-class QueueCommand extends Command {
+class QueueCommand extends CommonCommand {
   name = 'queue';
   category = 'Music';
   aliases = ['q', 'playlist', 'плейлист', 'очередь'];

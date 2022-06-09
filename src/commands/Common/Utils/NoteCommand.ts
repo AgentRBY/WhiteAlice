@@ -3,9 +3,9 @@ import { MessageEmbed } from 'discord.js';
 import { Colors } from '../../../static/Colors';
 import { EmojisLinks } from '../../../static/Emojis';
 import { Note } from '../../../typings/GuildModel';
-import { Command, CommandExample, CommandRunOptions } from '../../../structures/Command';
+import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
 
-class NoteCommand extends Command {
+class NoteCommand extends CommonCommand {
   name = 'note';
   category = 'Utils';
   aliases = ['n'];

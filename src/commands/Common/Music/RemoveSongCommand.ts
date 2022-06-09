@@ -1,7 +1,7 @@
 import { ErrorEmbed, SuccessEmbed } from '../../../utils/Discord/Embed';
-import { Command, CommandExample, CommandRunOptions } from '../../../structures/Command';
+import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
 
-class RemoveSongCommand extends Command {
+class RemoveSongCommand extends CommonCommand {
   name = 'removeSong';
   category = 'Music';
   aliases = ['rs', 'deleteSong'];

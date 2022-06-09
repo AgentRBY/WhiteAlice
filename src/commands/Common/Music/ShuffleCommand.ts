@@ -1,7 +1,7 @@
 import { ErrorEmbed, SuccessEmbed } from '../../../utils/Discord/Embed';
-import { Command, CommandExample, CommandRunOptions } from '../../../structures/Command';
+import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
 
-class ShuffleCommand extends Command {
+class ShuffleCommand extends CommonCommand {
   name = 'shuffle';
   category = 'Music';
   aliases = ['random'];

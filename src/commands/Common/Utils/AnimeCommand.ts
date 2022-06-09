@@ -1,9 +1,9 @@
 import { ErrorEmbed } from '../../../utils/Discord/Embed';
 import anilist from 'anilist-node';
 import { formatAnilistAnime } from '../../../utils/Media/Anime';
-import { Command, CommandExample, CommandRunOptions } from '../../../structures/Command';
+import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
 
-class AnimeCommand extends Command {
+class AnimeCommand extends CommonCommand {
   name = 'anime';
   category = 'Utils';
   aliases = [];

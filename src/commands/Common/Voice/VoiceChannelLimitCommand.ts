@@ -1,9 +1,9 @@
-import { Command, CommandExample, CommandRunOptions } from '../../../structures/Command';
+import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
 import { ErrorEmbed, SuccessEmbed } from '../../../utils/Discord/Embed';
 import { isNumber } from '../../../utils/Common/Number';
 import { VoiceChannel } from 'discord.js';
 
-class VoiceChannelLimit extends Command {
+class VoiceChannelLimit extends CommonCommand {
   name = 'voiceChannelLimit';
   category = 'Voice';
   aliases = ['vcLimit'];

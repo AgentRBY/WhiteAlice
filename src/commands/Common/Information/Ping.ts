@@ -1,9 +1,9 @@
 import { Message, MessageEmbed } from 'discord.js';
 import { Emojis } from '../../../static/Emojis';
 import { Colors } from '../../../static/Colors';
-import { Command, CommandExample, CommandRunOptions } from '../../../structures/Command';
+import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
 
-class PingCommand extends Command {
+class PingCommand extends CommonCommand {
   name = 'ping';
   category = 'Information';
   description = `Показывает пинг:

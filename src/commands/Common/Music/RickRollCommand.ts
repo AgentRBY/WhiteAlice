@@ -1,6 +1,6 @@
-import { Command, CommandExample, CommandRunOptions } from '../../../structures/Command';
+import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
 
-class RickRollCommand extends Command {
+class RickRollCommand extends CommonCommand {
   name = 'rickRoll';
   category = 'Music';
   aliases = [];

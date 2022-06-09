@@ -1,8 +1,8 @@
-import { Command, CommandExample, CommandRunOptions } from '../../../structures/Command';
+import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
 import { ErrorEmbed, SuccessEmbed } from '../../../utils/Discord/Embed';
 import { VoiceChannel } from 'discord.js';
 
-class SetGameVoiceChannel extends Command {
+class SetGameVoiceChannel extends CommonCommand {
   name = 'setGameVoiceChannel';
   category = 'Voice';
   aliases = ['vcGame'];

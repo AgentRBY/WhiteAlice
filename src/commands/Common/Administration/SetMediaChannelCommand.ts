@@ -1,8 +1,8 @@
 import { ErrorEmbed, SuccessEmbed } from '../../../utils/Discord/Embed';
 import { PermissionString } from 'discord.js';
-import { Command, CommandExample, CommandRunOptions } from '../../../structures/Command';
+import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
 
-class SetMediaChannelCommand extends Command {
+class SetMediaChannelCommand extends CommonCommand {
   name = 'setMediaChannel';
   category = 'Administration';
   aliases = ['addToMediaChannels'];

@@ -7,11 +7,11 @@ import { Colors } from '../../../static/Colors';
 import { Site, WhitelistSite } from '../../../typings/YandexImagesResponse';
 import { generateDefaultButtons, pagination } from '../../../utils/Discord/Pagination';
 import { removeQueryParameters } from '../../../utils/Common/Strings';
-import { Command, CommandExample, CommandRunOptions } from '../../../structures/Command';
+import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
 
 const request = promisify(require('request'));
 
-class YandexImageSearchCommand extends Command {
+class YandexImageSearchCommand extends CommonCommand {
   name = 'yandex-image-search';
   category = 'Image Search';
   aliases = ['yis'];

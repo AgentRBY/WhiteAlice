@@ -4,9 +4,9 @@ import { Colors } from '../../../static/Colors';
 import anilist from 'anilist-node';
 import { ButtonInteraction, MessageActionRow, MessageButton, MessageEmbed } from 'discord.js';
 import { isLink, isMediaLink, removeQueryParameters } from '../../../utils/Common/Strings';
-import { Command, CommandExample, CommandRunOptions } from '../../../structures/Command';
+import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
 
-class FindanimeCommand extends Command {
+class FindanimeCommand extends CommonCommand {
   name = 'findanime';
   category = 'Image Search';
   aliases = ['найтианиме', 'fa'];

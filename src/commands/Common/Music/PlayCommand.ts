@@ -1,9 +1,9 @@
 import { ErrorEmbed } from '../../../utils/Discord/Embed';
 
 import { TextChannel } from 'discord.js';
-import { Command, CommandExample, CommandRunOptions } from '../../../structures/Command';
+import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
 
-class PlayCommand extends Command {
+class PlayCommand extends CommonCommand {
   name = 'play';
   category = 'Music';
   aliases = ['p', 'плэй', 'музыка', 'запустить'];

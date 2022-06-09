@@ -1,9 +1,9 @@
-import { Command, CommandExample, CommandRunOptions } from '../../../structures/Command';
+import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
 import { ErrorEmbed } from '../../../utils/Discord/Embed';
 import { MessageEmbed, VoiceChannel } from 'discord.js';
 import { Colors } from '../../../static/Colors';
 
-class UnlockVoiceChannel extends Command {
+class UnlockVoiceChannel extends CommonCommand {
   name = 'unlockVoiceChannel';
   category = 'Voice';
   aliases = ['vcUnlock'];

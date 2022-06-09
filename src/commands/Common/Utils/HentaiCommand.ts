@@ -1,10 +1,10 @@
 import { ErrorEmbed } from '../../../utils/Discord/Embed';
 import { formatNHentaiManga } from '../../../utils/Media/Manga';
-import { Command, CommandExample, CommandRunOptions } from '../../../structures/Command';
+import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
 
 const nHentai = require('nhentai');
 
-class HentaiCommand extends Command {
+class HentaiCommand extends CommonCommand {
   name = 'hentai';
   category = 'Utils';
   aliases = [];

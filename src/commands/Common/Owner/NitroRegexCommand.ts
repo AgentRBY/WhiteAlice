@@ -2,9 +2,9 @@ import { MessageEmbed } from 'discord.js';
 
 import { DISCORD_NITRO_SCAM_REGEX } from '../../../modules/AntiScam';
 import { Colors } from '../../../static/Colors';
-import { Command, CommandExample, CommandRunOptions } from '../../../structures/Command';
+import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
 
-class NitroRegexCommand extends Command {
+class NitroRegexCommand extends CommonCommand {
   name = 'nitro-regex';
   category = 'Owner';
   aliases = ['нитро-скам'];

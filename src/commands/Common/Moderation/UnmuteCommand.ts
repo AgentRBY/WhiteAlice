@@ -4,9 +4,9 @@ import { MessageEmbed, PermissionString } from 'discord.js';
 import { Emojis } from '../../../static/Emojis';
 import { Colors } from '../../../static/Colors';
 import { getMemberBaseId } from '../../../utils/Other';
-import { Command, CommandExample, CommandRunOptions } from '../../../structures/Command';
+import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
 
-class UnmuteCommand extends Command {
+class UnmuteCommand extends CommonCommand {
   name = 'unmute';
   category = 'Moderation';
   aliases = ['removeMute'];

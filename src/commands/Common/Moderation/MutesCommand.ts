@@ -4,9 +4,9 @@ import moment from 'moment';
 import { Colors } from '../../../static/Colors';
 import { momentToDiscordDate } from '../../../utils/Common/Date';
 import { getMemberBaseId } from '../../../utils/Other';
-import { Command, CommandExample, CommandRunOptions } from '../../../structures/Command';
+import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
 
-class MutesCommand extends Command {
+class MutesCommand extends CommonCommand {
   name = 'mutes';
   category = 'Moderation';
   aliases = [];

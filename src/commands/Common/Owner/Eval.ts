@@ -4,9 +4,9 @@ import { inspect } from 'util';
 
 import { ErrorEmbed } from '../../../utils/Discord/Embed';
 import { Colors } from '../../../static/Colors';
-import { Command, CommandExample, CommandRunOptions } from '../../../structures/Command';
+import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
 
-class EvalCommand extends Command {
+class EvalCommand extends CommonCommand {
   name = 'eval';
   category = 'Owner';
   aliases = [];

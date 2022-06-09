@@ -4,9 +4,9 @@ import { Emojis, EmojisLinks } from '../../../static/Emojis';
 import { Colors } from '../../../static/Colors';
 import { ErrorEmbed } from '../../../utils/Discord/Embed';
 
-import { Command, CommandExample, CommandRunOptions } from '../../../structures/Command';
+import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
 
-class HelpCommand extends Command {
+class HelpCommand extends CommonCommand {
   name = 'help';
   category = 'Information';
   aliases = ['commands', 'хелп', 'команды', 'h'];

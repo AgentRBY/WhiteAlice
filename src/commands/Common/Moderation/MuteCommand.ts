@@ -7,9 +7,9 @@ import { Emojis } from '../../../static/Emojis';
 import { KARMA_FOR_MUTE } from '../../../static/Punishment';
 import { getMemberBaseId } from '../../../utils/Other';
 import { Mute } from '../../../typings/MemberModel';
-import { Command, CommandExample, CommandRunOptions } from '../../../structures/Command';
+import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
 
-class MuteCommand extends Command {
+class MuteCommand extends CommonCommand {
   name = 'mute';
   category = 'Moderation';
   aliases = [];
@@ -65,7 +65,7 @@ class MuteCommand extends Command {
     const forceMute = attributes.has('F') || attributes.has('-F');
 
     if (targetMember.communicationDisabledUntilTimestamp > Date.now() && !forceMute) {
-      const duration = Date.now() - targetMember.communicationDisabledUntilTimestamp;
+      const duration = targetMember.communicationDisabledUntilTimestamp - Date.now();
 
       const embed = ErrorEmbed('Пользователь уже в муте');
       embed.setFooter({

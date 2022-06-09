@@ -3,9 +3,9 @@ import { MessageEmbed } from 'discord.js';
 import { Colors } from '../../../static/Colors';
 import { Emojis } from '../../../static/Emojis';
 
-import { Command, CommandExample, CommandRunOptions } from '../../../structures/Command';
+import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
 
-class VolumeCommand extends Command {
+class VolumeCommand extends CommonCommand {
   name = 'volume';
   category = 'Music';
   aliases = ['v', 'set-volume', 'громкость', 'установить-громкость'];
