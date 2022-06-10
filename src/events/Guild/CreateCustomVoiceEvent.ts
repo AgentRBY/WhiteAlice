@@ -25,7 +25,7 @@ export default new Event({
       permissionOverwrites: [
         {
           id: client.user.id,
-          allow: 'MANAGE_CHANNELS',
+          allow: ['MANAGE_CHANNELS', 'CONNECT', 'SPEAK'],
         },
       ],
     });
