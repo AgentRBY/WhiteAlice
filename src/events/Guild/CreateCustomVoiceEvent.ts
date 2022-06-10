@@ -22,6 +22,12 @@ export default new Event({
     const customVoice = await newState.channel.parent.createChannel(`${newState.member.displayName}`, {
       type: 'GUILD_VOICE',
       reason: `Create a new custom voice channel for ${newState.member.displayName}`,
+      permissionOverwrites: [
+        {
+          id: client.user.id,
+          allow: ['MANAGE_CHANNELS', 'MANAGE_ROLES'],
+        },
+      ],
     });
     newState.setChannel(customVoice, `Create a new custom voice channel for ${newState.member.displayName}`);
 
@@ -45,7 +51,7 @@ export default new Event({
         },
         {
           id: client.user.id,
-          allow: 'VIEW_CHANNEL',
+          allow: ['VIEW_CHANNEL', 'MANAGE_CHANNELS'],
         },
       ],
     });
