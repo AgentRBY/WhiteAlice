@@ -4,7 +4,7 @@ import { ErrorEmbed, SuccessEmbed } from '../../../utils/Discord/Embed';
 class ChangeVoiceNameCommand extends CommonCommand {
   name = 'changeVoiceName';
   category = 'Voice';
-  aliases = ['vcChangeName'];
+  aliases = ['vcChangeName', 'vcName'];
   description = 'Изменить имя пользовательского голосового канала. Имя не может быть длиннее 100 символов';
   examples: CommandExample[] = [
     {
