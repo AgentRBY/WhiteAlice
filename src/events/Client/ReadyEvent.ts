@@ -9,23 +9,23 @@ import Logger from '../../utils/Logger';
 export default new Event({
   name: 'ready',
   run: async (client: ExtendClient) => {
-    try {
-      await client.guilds.fetch();
+    await client.guilds.fetch();
 
-      const slashCommands = [...client.slashCommands.values()];
-      const commands = [...client.contextCommands.values(), ...slashCommands.map((command) => command.meta.toJSON())];
+    const slashCommands = [...client.slashCommands.values()];
+    const commands = [...client.contextCommands.values(), ...slashCommands.map((command) => command.meta.toJSON())];
 
-      if (client.config.environment === 'development') {
-        const guild = client.guilds.cache.get(client.config.devGuildID);
+    if (client.config.environment === 'development' && client.config.devGuildID) {
+      const guild = client.guilds.cache.get(client.config.devGuildID);
 
-        await guild.commands.set(commands);
-
-        Logger.info(`Register ${commands.length} commands to ${guild.name} guild`);
+      if (!guild) {
+        Logger.error('Guild not found, commands not registered');
       } else {
-        await client.application.commands.set(commands);
+        await guild.commands.set(commands);
+        Logger.info(`Register ${commands.length} commands to ${guild.name} guild`);
       }
-    } catch (error) {
-      console.log(error);
+    } else {
+      await client.application.commands.set(commands);
+      Logger.info(`Register ${commands.length} commands to ${client.user.username} application`);
     }
 
     Logger.success(`${client.user.username} ready`);
