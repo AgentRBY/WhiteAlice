@@ -3,8 +3,12 @@ import { sep } from 'path';
 import { upFirstLetter } from './Common/Strings';
 
 class Logger {
-  public static error(error: Error): void {
-    console.log(`${picoColors.red('➤')}  ${picoColors.bgRed(' Error ')} ${this.formatError(error)}`);
+  public static error(error: Error | string): void {
+    console.log(
+      `${picoColors.red('➤')}  ${picoColors.bgRed(' Error ')} ${
+        error instanceof Error ? this.formatError(error) : error
+      }`,
+    );
   }
 
   public static info(text: string): void {
