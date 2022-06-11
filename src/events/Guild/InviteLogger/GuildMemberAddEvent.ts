@@ -1,7 +1,7 @@
-import { Event } from '../../structures/Event';
-import { ExtendClient } from '../../structures/Client';
+import { Event } from '../../../structures/Event';
+import { ExtendClient } from '../../../structures/Client';
 import { Collection, GuildMember, TextChannel } from 'discord.js';
-import { InfoEmbed } from '../../utils/Discord/Embed';
+import { InfoEmbed } from '../../../utils/Discord/Embed';
 
 export default new Event({
   name: 'guildMemberAdd',

@@ -1,11 +1,11 @@
-import { Event } from '../../structures/Event';
-import { ExtendClient } from '../../structures/Client';
+import { Event } from '../../../structures/Event';
+import { ExtendClient } from '../../../structures/Client';
 import { GuildMember, Interaction, Message, MessageButton, MessageEmbed, TextChannel, VoiceChannel } from 'discord.js';
-import { VoiceButtons, VoiceModals, VoiceSelects } from '../../typings/Interactions';
-import { includesInEnum } from '../../utils/Other';
-import { Colors } from '../../static/Colors';
-import { Emojis } from '../../static/Emojis';
-import { ErrorEmbed } from '../../utils/Discord/Embed';
+import { VoiceButtons, VoiceModals, VoiceSelects } from '../../../typings/Interactions';
+import { includesInEnum } from '../../../utils/Other';
+import { Colors } from '../../../static/Colors';
+import { Emojis } from '../../../static/Emojis';
+import { ErrorEmbed } from '../../../utils/Discord/Embed';
 import { Modal, SelectMenuComponent, showModal } from 'discord-modals';
 
 export default new Event({

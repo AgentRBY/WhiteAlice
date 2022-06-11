@@ -1,9 +1,9 @@
-import { VoiceModals, VoiceSelects } from '../../typings/Interactions';
+import { VoiceModals, VoiceSelects } from '../../../typings/Interactions';
 import { ModalSubmitInteraction } from 'discord-modals';
-import { ExtendClient } from '../../structures/Client';
-import { Event } from '../../structures/Event';
-import { includesInEnum } from '../../utils/Other';
-import { ErrorEmbed, SuccessEmbed } from '../../utils/Discord/Embed';
+import { ExtendClient } from '../../../structures/Client';
+import { Event } from '../../../structures/Event';
+import { includesInEnum } from '../../../utils/Other';
+import { ErrorEmbed, SuccessEmbed } from '../../../utils/Discord/Embed';
 
 // TODO: replace to discord.js Modals
 export default new Event({

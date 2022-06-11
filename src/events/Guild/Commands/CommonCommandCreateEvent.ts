@@ -1,15 +1,8 @@
-import { Event } from '../../structures/Event';
+import { Event } from '../../../structures/Event';
 import { Collection, Message } from 'discord.js';
-import { ExtendClient } from '../../structures/Client';
-import { AntiScamModule } from '../../modules/AntiScam';
-import { ErrorEmbed } from '../../utils/Discord/Embed';
-import Permissions from '../../static/Permissions';
-import { AntiPingModule } from '../../modules/AntiPing';
-import { NHentaiLink } from '../../modules/NHentaiLink';
-import { AniDBLink } from '../../modules/AniDBLink';
-import { AnilistLink } from '../../modules/AnilistLink';
-import { MediaChannel } from '../../modules/MediaChannel';
-import { getMemberBaseId } from '../../utils/Other';
+import { ExtendClient } from '../../../structures/Client';
+import { ErrorEmbed } from '../../../utils/Discord/Embed';
+import Permissions from '../../../static/Permissions';
 
 export default new Event({
   name: 'messageCreate',
@@ -19,26 +12,6 @@ export default new Event({
     }
 
     if (client.config.mode === 'development' && !client.getOwners().includes(message.author.id)) {
-      return;
-    }
-
-    AntiScamModule(client, message);
-    AntiPingModule(client, message);
-
-    NHentaiLink(client, message);
-    AniDBLink(client, message);
-    AnilistLink(client, message);
-
-    MediaChannel(client, message);
-
-    client.service.incrementMessageCount(getMemberBaseId(message.member));
-
-    if ((await client.service.getKarma(getMemberBaseId(message.member))) === undefined) {
-      client.service.recalculateKarma(getMemberBaseId(message.member));
-    }
-
-    if (message.content === `<@${client.user.id}>` || message.content === `<@!${client.user.id}>`) {
-      client.commonCommands.get('ping').run({ client, message, args: [] });
       return;
     }
 

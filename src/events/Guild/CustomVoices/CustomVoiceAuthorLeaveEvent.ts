@@ -1,9 +1,9 @@
-import { Event } from '../../structures/Event';
-import { ExtendClient } from '../../structures/Client';
+import { Event } from '../../../structures/Event';
+import { ExtendClient } from '../../../structures/Client';
 import { MessageActionRow, MessageButton, MessageEmbed, TextChannel, VoiceState } from 'discord.js';
-import { EmojisLinks } from '../../static/Emojis';
-import { VoiceButtons } from '../../typings/Interactions';
-import { Colors } from '../../static/Colors';
+import { EmojisLinks } from '../../../static/Emojis';
+import { VoiceButtons } from '../../../typings/Interactions';
+import { Colors } from '../../../static/Colors';
 
 export default new Event({
   name: 'voiceStateUpdate',

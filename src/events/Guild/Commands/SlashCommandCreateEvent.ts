@@ -1,5 +1,5 @@
-import { Event } from '../../structures/Event';
-import { ExtendClient } from '../../structures/Client';
+import { Event } from '../../../structures/Event';
+import { ExtendClient } from '../../../structures/Client';
 import { Interaction } from 'discord.js';
 
 export default new Event({
