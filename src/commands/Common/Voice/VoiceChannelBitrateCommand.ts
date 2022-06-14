@@ -2,6 +2,7 @@ import { CommandExample, CommandRunOptions, CommonCommand } from '../../../struc
 import { ErrorEmbed, SuccessEmbed } from '../../../utils/Discord/Embed';
 import { isNumber } from '../../../utils/Common/Number';
 import { VoiceChannel } from 'discord.js';
+import { IsCustomVoice } from '../../../utils/Decorators/VoiceDecorators';
 
 class VoiceChannelBitrate extends CommonCommand {
   name = 'voiceChannelBitrate';
@@ -38,41 +39,22 @@ class VoiceChannelBitrate extends CommonCommand {
   ];
   usage = 'voiceChannelBitrate <битрейт|max|min|reset>';
 
-  async run({ client, message, args }: CommandRunOptions) {
-    if (!message.member.voice.channelId) {
-      const embed = ErrorEmbed('Вы не находитесь в голосовом канале');
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
-      return;
-    }
-
-    const customVoiceChannelInfo = client.customVoicesState.get(message.member.voice.channelId);
-
-    if (!customVoiceChannelInfo) {
-      const embed = ErrorEmbed('Это не пользовательский голосовой канал');
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
-      return;
-    }
-
-    if (customVoiceChannelInfo[0] !== message.member.id) {
-      const embed = ErrorEmbed('Вы не являетесь автором этого голосового канала');
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
-      return;
-    }
-
+  @IsCustomVoice()
+  async run({ message, args }: CommandRunOptions) {
     const maxBitrate = message.guild.maximumBitrate;
 
     let bitrate = Number(args[0]);
 
-    if (args[0] === 'max') {
-      bitrate = maxBitrate / 1000;
-    }
-
-    if (args[0] === 'min') {
-      bitrate = 8;
-    }
-
-    if (args[0] === 'reset') {
-      bitrate = 64;
+    switch (args[0]) {
+      case 'max':
+        bitrate = maxBitrate / 1000;
+        break;
+      case 'min':
+        bitrate = 8;
+        break;
+      case 'reset':
+        bitrate = 64;
+        break;
     }
 
     if (!isNumber(bitrate)) {

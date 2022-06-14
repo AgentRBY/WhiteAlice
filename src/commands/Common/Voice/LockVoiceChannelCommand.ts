@@ -1,9 +1,9 @@
 import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
-import { ErrorEmbed } from '../../../utils/Discord/Embed';
-import { MessageEmbed, VoiceChannel } from 'discord.js';
+import { Message, MessageEmbed, VoiceChannel } from 'discord.js';
 import { Colors } from '../../../static/Colors';
+import { IsCustomVoice } from '../../../utils/Decorators/VoiceDecorators';
 
-class LockVoiceChannel extends CommonCommand {
+export class LockVoiceChannel extends CommonCommand {
   name = 'lockVoiceChannel';
   category = 'Voice';
   aliases = ['vcLock'];
@@ -18,27 +18,12 @@ class LockVoiceChannel extends CommonCommand {
   ];
   usage = 'lockVoiceChannel';
 
-  async run({ client, message }: CommandRunOptions) {
-    if (!message.member.voice.channelId) {
-      const embed = ErrorEmbed('Вы не находитесь в голосовом канале');
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
-      return;
-    }
+  @IsCustomVoice()
+  async run({ message }: CommandRunOptions) {
+    LockVoiceChannel.changeChannelLockStatus(message);
+  }
 
-    const customVoiceChannelInfo = client.customVoicesState.get(message.member.voice.channelId);
-
-    if (!customVoiceChannelInfo) {
-      const embed = ErrorEmbed('Это не пользовательский голосовой канал');
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
-      return;
-    }
-
-    if (customVoiceChannelInfo[0] !== message.member.id) {
-      const embed = ErrorEmbed('Вы не являетесь автором этого голосового канала');
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
-      return;
-    }
-
+  public static changeChannelLockStatus(message: Message) {
     const voiceChannel = message.guild.channels.cache.get(message.member.voice.channelId) as VoiceChannel;
 
     const isUnlocked = !voiceChannel.permissionsFor(message.guild.id).has('CONNECT');

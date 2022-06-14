@@ -1,6 +1,7 @@
 import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
 import { ErrorEmbed, SuccessEmbed } from '../../../utils/Discord/Embed';
 import { VoiceChannel } from 'discord.js';
+import { IsCustomVoice } from '../../../utils/Decorators/VoiceDecorators';
 
 class SetGameVoiceChannel extends CommonCommand {
   name = 'setGameVoiceChannel';
@@ -24,27 +25,8 @@ class SetGameVoiceChannel extends CommonCommand {
   ];
   usage = 'setGameVoiceChannel';
 
-  async run({ client, message }: CommandRunOptions) {
-    if (!message.member.voice.channelId) {
-      const embed = ErrorEmbed('Вы не находитесь в голосовом канале');
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
-      return;
-    }
-
-    const customVoiceChannelInfo = client.customVoicesState.get(message.member.voice.channelId);
-
-    if (!customVoiceChannelInfo) {
-      const embed = ErrorEmbed('Это не пользовательский голосовой канал');
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
-      return;
-    }
-
-    if (customVoiceChannelInfo[0] !== message.member.id) {
-      const embed = ErrorEmbed('Вы не являетесь автором этого голосового канала');
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
-      return;
-    }
-
+  @IsCustomVoice()
+  async run({ message }: CommandRunOptions) {
     const userActivity = message.member.presence?.activities[0];
 
     if (!userActivity) {

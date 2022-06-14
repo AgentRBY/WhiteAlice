@@ -2,6 +2,7 @@ import { CommandExample, CommandRunOptions, CommonCommand } from '../../../struc
 import { ErrorEmbed, SuccessEmbed } from '../../../utils/Discord/Embed';
 import { isNumber } from '../../../utils/Common/Number';
 import { VoiceChannel } from 'discord.js';
+import { IsCustomVoice } from '../../../utils/Decorators/VoiceDecorators';
 
 class VoiceChannelLimit extends CommonCommand {
   name = 'voiceChannelLimit';
@@ -31,27 +32,8 @@ class VoiceChannelLimit extends CommonCommand {
   ];
   usage = 'voiceChannelLimit <лимит|current>';
 
-  async run({ client, message, args }: CommandRunOptions) {
-    if (!message.member.voice.channelId) {
-      const embed = ErrorEmbed('Вы не находитесь в голосовом канале');
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
-      return;
-    }
-
-    const customVoiceChannelInfo = client.customVoicesState.get(message.member.voice.channelId);
-
-    if (!customVoiceChannelInfo) {
-      const embed = ErrorEmbed('Это не пользовательский голосовой канал');
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
-      return;
-    }
-
-    if (customVoiceChannelInfo[0] !== message.member.id) {
-      const embed = ErrorEmbed('Вы не являетесь автором этого голосового канала');
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
-      return;
-    }
-
+  @IsCustomVoice()
+  async run({ message, args }: CommandRunOptions) {
     let limit = Number(args[0]);
 
     const voiceChannel = message.guild.channels.cache.get(message.member.voice.channelId) as VoiceChannel;
