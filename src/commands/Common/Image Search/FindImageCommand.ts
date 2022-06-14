@@ -53,7 +53,7 @@ class FindImageCommand extends CommonCommand {
     try {
       results = await SauceNAOApi(link, { db: 999 });
     } catch {
-      const errorEmbed = ErrorEmbed('**Произошла ошибка, попробуйте позже**');
+      const errorEmbed = ErrorEmbed('**Произошла ошибка, попробуйте ещё раз**');
       return message.reply({ embeds: [errorEmbed], allowedMentions: { repliedUser: false } });
     }
 
