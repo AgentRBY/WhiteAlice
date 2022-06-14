@@ -1,6 +1,7 @@
-import { ErrorEmbed, SuccessEmbed } from '../../../utils/Discord/Embed';
+import { SuccessEmbed } from '../../../utils/Discord/Embed';
 
 import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
+import { IsChannelForMusic } from '../../../utils/Decorators/MusicDecorators';
 
 class StopCommand extends CommonCommand {
   name = 'stop';
@@ -15,19 +16,11 @@ class StopCommand extends CommonCommand {
     },
   ];
 
+  @IsChannelForMusic()
   async run({ client, message }: CommandRunOptions) {
     const queue = client.disTube.getQueue(message);
 
-    if (!queue && !message.guild?.me?.voice.channel) {
-      const errorEmbed = ErrorEmbed('**Сейчас нет активных сессий**');
-      return message.reply({ embeds: [errorEmbed], allowedMentions: { repliedUser: false } });
-    }
-
-    if (message.guild?.me?.voice.channel) {
-      message.guild?.me?.voice.disconnect();
-    } else {
-      await client.disTube.stop(message);
-    }
+    await queue.stop();
 
     const embed = SuccessEmbed('**Выхожу...**');
     return message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });

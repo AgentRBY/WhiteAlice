@@ -3,6 +3,7 @@ import { Message, MessageEmbed, TextChannel } from 'discord.js';
 import { EmojisLinks } from '../../../static/Emojis';
 import { Colors } from '../../../static/Colors';
 import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
+import { IsUserInVoice } from '../../../utils/Decorators/MusicDecorators';
 
 class SearchCommand extends CommonCommand {
   name = 'search';
@@ -32,12 +33,8 @@ class SearchCommand extends CommonCommand {
   ];
   usage = 'search <запрос>';
 
+  @IsUserInVoice()
   async run({ client, message, args, attributes, keys }: CommandRunOptions) {
-    if (!message.member?.voice.channel) {
-      const embed = ErrorEmbed('**Вы не находитесь в голосовом канале**');
-      return message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
-    }
-
     if (!args.length) {
       const embed = ErrorEmbed('**Вы не указали запрос**');
       return message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });

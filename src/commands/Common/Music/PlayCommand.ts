@@ -2,6 +2,7 @@ import { ErrorEmbed } from '../../../utils/Discord/Embed';
 
 import { TextChannel } from 'discord.js';
 import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
+import { IsUserInVoice } from '../../../utils/Decorators/MusicDecorators';
 
 class PlayCommand extends CommonCommand {
   name = 'play';
@@ -20,12 +21,8 @@ class PlayCommand extends CommonCommand {
     },
   ];
 
+  @IsUserInVoice()
   async run({ client, message, args }: CommandRunOptions) {
-    if (!message.member?.voice.channel) {
-      const embed = ErrorEmbed('**Вы не находитесь в голосовом канале**');
-      return message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
-    }
-
     if (!args.length) {
       const embed = ErrorEmbed('**Вы не указали запрос**');
       return message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
@@ -38,8 +35,7 @@ class PlayCommand extends CommonCommand {
         textChannel: message.channel as TextChannel,
       });
     } catch (error) {
-      const embed = ErrorEmbed(`**Произошла ошибка ${error}**`);
-      return message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      client.disTube.emit('error', message.channel as TextChannel, error);
     }
   }
 }

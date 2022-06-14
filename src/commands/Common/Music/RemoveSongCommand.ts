@@ -1,5 +1,7 @@
 import { ErrorEmbed, SuccessEmbed } from '../../../utils/Discord/Embed';
 import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
+import { IsChannelForMusic } from '../../../utils/Decorators/MusicDecorators';
+import { isNumber } from '../../../utils/Common/Number';
 
 class RemoveSongCommand extends CommonCommand {
   name = 'removeSong';
@@ -14,13 +16,9 @@ class RemoveSongCommand extends CommonCommand {
   ];
   usage = 'removeSong';
 
+  @IsChannelForMusic()
   async run({ client, message, args }: CommandRunOptions) {
     const queue = client.disTube.getQueue(message);
-
-    if (!queue) {
-      const errorEmbed = ErrorEmbed('**Плейлист пуст**');
-      return message.reply({ embeds: [errorEmbed], allowedMentions: { repliedUser: false } });
-    }
 
     if (queue.songs.length === 1) {
       const embed = ErrorEmbed('**Нечего удалять**');
@@ -30,10 +28,10 @@ class RemoveSongCommand extends CommonCommand {
 
     const songId = Number(args[0]);
 
-    if (!songId || Number.isNaN(songId)) {
+    if (!isNumber(songId)) {
       const embed = ErrorEmbed('**Введите айди трека**');
       embed.setFooter({
-        text: 'Примечание: айди трека это - номер трека в плейлисте, его можно узнать прописав команду >queue',
+        text: 'Подсказка: айди трека это - номер трека в плейлисте, его можно узнать прописав команду >queue',
       });
       message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
       return;
@@ -42,7 +40,7 @@ class RemoveSongCommand extends CommonCommand {
     if (songId <= 0 || songId > queue.songs.length) {
       const embed = ErrorEmbed('**Песни под данным айди не найдено**');
       embed.setFooter({
-        text: 'Примечание: айди трека это - номер трека в плейлисте, его можно узнать прописав команду >queue',
+        text: 'Подсказка: айди трека это - номер трека в плейлисте, его можно узнать прописав команду >queue',
       });
       message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
       return;

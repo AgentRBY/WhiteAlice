@@ -1,8 +1,8 @@
-import { ErrorEmbed } from '../../../utils/Discord/Embed';
 import { MessageEmbed } from 'discord.js';
 import { Colors } from '../../../static/Colors';
 import { Emojis } from '../../../static/Emojis';
 import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
+import { IsChannelForMusic } from '../../../utils/Decorators/MusicDecorators';
 
 class NowPlayingCommand extends CommonCommand {
   name = 'nowPlaying';
@@ -17,13 +17,9 @@ class NowPlayingCommand extends CommonCommand {
   ];
   usage = 'nowPlaying';
 
+  @IsChannelForMusic()
   async run({ client, message }: CommandRunOptions) {
     const queue = client.disTube.getQueue(message);
-
-    if (!queue) {
-      const errorEmbed = ErrorEmbed('**Сейчас нет активных сессий**');
-      return message.reply({ embeds: [errorEmbed], allowedMentions: { repliedUser: false } });
-    }
 
     const song = queue.songs[0];
 

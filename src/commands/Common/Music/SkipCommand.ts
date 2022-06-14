@@ -1,6 +1,8 @@
 import { ErrorEmbed, SuccessEmbed } from '../../../utils/Discord/Embed';
 
 import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
+import { IsChannelForMusic } from '../../../utils/Decorators/MusicDecorators';
+import { isNumber } from '../../../utils/Common/Number';
 
 class SkipCommand extends CommonCommand {
   name = 'skip';
@@ -15,13 +17,9 @@ class SkipCommand extends CommonCommand {
     },
   ];
 
+  @IsChannelForMusic()
   async run({ client, message, args }: CommandRunOptions) {
     const queue = client.disTube.getQueue(message);
-
-    if (!queue) {
-      const errorEmbed = ErrorEmbed('**Плейлист пуст**');
-      return message.reply({ embeds: [errorEmbed], allowedMentions: { repliedUser: false } });
-    }
 
     if (queue.songs.length === 1) {
       const errorEmbed = SuccessEmbed('**Это была последняя песня в плейлисте, бот будет остановлен**');
@@ -29,38 +27,32 @@ class SkipCommand extends CommonCommand {
       return message.reply({ embeds: [errorEmbed], allowedMentions: { repliedUser: false } });
     }
 
-    try {
-      const skipCount = Number.isNaN(Number(args[0])) ? 1 : Number(args[0]);
+    const skipCount = Number(args[0] || 1);
 
-      if (skipCount > queue.songs.length) {
-        const errorEmbed = ErrorEmbed('**В плейлисте нет столько песен**');
-        return message.reply({ embeds: [errorEmbed], allowedMentions: { repliedUser: false } });
-      }
+    if (!isNumber(skipCount) || skipCount < 1) {
+      const embed = ErrorEmbed('**Вы указали неправильное число пропусков**');
+      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      return;
+    }
 
-      if (skipCount > 10) {
-        const errorEmbed = ErrorEmbed('**Нельзя пропустить больше 10 песен**');
-        return message.reply({ embeds: [errorEmbed], allowedMentions: { repliedUser: false } });
-      }
-
-      for (let index = 0; index < skipCount; index++) {
-        await client.disTube.skip(message);
-      }
-
-      const embed =
-        skipCount > 1
-          ? SuccessEmbed(
-              `**Было пропущено ${skipCount} песен. Сейчас играет: 
-         ➤ ${queue.songs[skipCount - 1].name} - \`${queue.songs[skipCount - 1].formattedDuration}\`**`,
-            )
-          : SuccessEmbed(
-              `**Песня была пропущена. Сейчас играет: 
-         ➤ ${queue.songs[0].name} - \`${queue.songs[0].formattedDuration}\`**`,
-            );
-      return message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
-    } catch (error) {
-      const errorEmbed = ErrorEmbed(`**Произошла ошибка ${error}**`);
+    if (skipCount > queue.songs.length) {
+      const errorEmbed = ErrorEmbed('**В плейлисте нет столько песен**').setFooter({
+        text: `Текущее количество песен в плейлисте: ${queue.songs.length}`,
+      });
       return message.reply({ embeds: [errorEmbed], allowedMentions: { repliedUser: false } });
     }
+
+    await queue.jump(skipCount);
+
+    console.log(queue.songs);
+    const embed = SuccessEmbed(
+      skipCount > 1
+        ? `**Было пропущено ${skipCount} песен. Сейчас играет: 
+         ➤ ${queue.songs[1].name} - \`${queue.songs[1].formattedDuration}\`**`
+        : `**Песня была пропущена. Сейчас играет: 
+         ➤ ${queue.songs[1].name} - \`${queue.songs[1].formattedDuration}\`**`,
+    );
+    return message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
   }
 }
 

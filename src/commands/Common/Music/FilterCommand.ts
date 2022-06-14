@@ -1,6 +1,7 @@
 import { ErrorEmbed, SuccessEmbed } from '../../../utils/Discord/Embed';
 import { AvailableFilters } from '../../../static/Music';
 import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
+import { IsChannelForMusic } from '../../../utils/Decorators/MusicDecorators';
 
 class FilterCommand extends CommonCommand {
   name = 'filter';
@@ -25,14 +26,9 @@ class FilterCommand extends CommonCommand {
   ];
   usage = 'filter <имя фильтра | list | clear>';
 
+  @IsChannelForMusic()
   async run({ client, message, args }: CommandRunOptions) {
     const queue = client.disTube.getQueue(message);
-
-    if (!queue) {
-      const errorEmbed = ErrorEmbed('**Сейчас нет активных сессий**');
-      return message.reply({ embeds: [errorEmbed], allowedMentions: { repliedUser: false } });
-    }
-
     const filter = args[0];
 
     if (!filter) {

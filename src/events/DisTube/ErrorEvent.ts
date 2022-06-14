@@ -7,6 +7,7 @@ export default new Event({
   type: 'distube',
   run: (channel: TextChannel, error: Error) => {
     const message = error.message.split('\n').pop();
+
     switch (message) {
       case 'Unknown Playlist':
         const embed = ErrorEmbed(
@@ -15,6 +16,12 @@ export default new Event({
         );
         channel.send({ embeds: [embed] });
         return;
+      case "Couldn't find any data in embed page that we know how to parse": {
+        const embed = ErrorEmbed(`**Произошла ошибка:** не удалось найти данные в плейлисте Spotify.
+          Скорее всего вы указали ссылку на приватный плейлист`);
+        channel.send({ embeds: [embed], allowedMentions: { repliedUser: false } });
+        return;
+      }
       default:
         channel.send({ embeds: [ErrorEmbed(`Произошла ошибка: ${error}`)] });
         break;

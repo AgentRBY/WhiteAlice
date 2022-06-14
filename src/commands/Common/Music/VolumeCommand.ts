@@ -4,6 +4,8 @@ import { Colors } from '../../../static/Colors';
 import { Emojis } from '../../../static/Emojis';
 
 import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
+import { IsChannelForMusic } from '../../../utils/Decorators/MusicDecorators';
+import { isNumber } from '../../../utils/Common/Number';
 
 class VolumeCommand extends CommonCommand {
   name = 'volume';
@@ -22,20 +24,15 @@ class VolumeCommand extends CommonCommand {
     },
   ];
 
+  @IsChannelForMusic()
   async run({ client, message, args }: CommandRunOptions) {
-    const queue = client.disTube.getQueue(message);
+    let volume = Number(args[0]);
 
-    if (!queue) {
-      const errorEmbed = ErrorEmbed('**Плейлист пуст**');
-      return message.reply({ embeds: [errorEmbed], allowedMentions: { repliedUser: false } });
-    }
-    if (args.length && args[0] === 'default') {
-      args[0] = '50';
+    if (args[0] === 'default') {
+      volume = 50;
     }
 
-    const volume = args.length && Number.parseInt(args[0]);
-
-    if (!volume || Number.isNaN(volume) || volume > 100 || volume < 1) {
+    if (!isNumber(volume) || volume > 100 || volume < 1) {
       const errorEmbed = ErrorEmbed('**Укажите значение громкости в процентах от 1 до 100**');
       return message.reply({ embeds: [errorEmbed], allowedMentions: { repliedUser: false } });
     }

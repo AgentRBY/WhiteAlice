@@ -1,6 +1,7 @@
-import { ErrorEmbed, SuccessEmbed } from '../../../utils/Discord/Embed';
+import { SuccessEmbed } from '../../../utils/Discord/Embed';
 
 import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
+import { IsChannelForMusic } from '../../../utils/Decorators/MusicDecorators';
 
 class PauseCommand extends CommonCommand {
   name = 'pause';
@@ -15,17 +16,13 @@ class PauseCommand extends CommonCommand {
     },
   ];
 
+  @IsChannelForMusic()
   async run({ client, message }: CommandRunOptions) {
     const queue = client.disTube.getQueue(message);
 
-    if (!queue) {
-      const errorEmbed = ErrorEmbed('**Сейчас нет активных сессий**');
-      return message.reply({ embeds: [errorEmbed], allowedMentions: { repliedUser: false } });
-    }
-
     if (!queue.playing) {
-      const embed = SuccessEmbed('**Трек был возобновлён.**');
       await client.disTube.resume(message);
+      const embed = SuccessEmbed('**Трек был возобновлён.**');
       return message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
     }
 

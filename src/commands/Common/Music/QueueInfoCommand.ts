@@ -1,8 +1,8 @@
-import { ErrorEmbed } from '../../../utils/Discord/Embed';
 import { MessageEmbed } from 'discord.js';
 import { EmojisLinks } from '../../../static/Emojis';
 import { Colors } from '../../../static/Colors';
 import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
+import { IsQueueExist } from '../../../utils/Decorators/MusicDecorators';
 
 class QueueInfoCommand extends CommonCommand {
   name = 'queueInfo';
@@ -12,13 +12,9 @@ class QueueInfoCommand extends CommonCommand {
   examples: CommandExample[] = [];
   usage = 'queueInfo';
 
+  @IsQueueExist()
   async run({ client, message }: CommandRunOptions) {
     const queue = client.disTube.getQueue(message);
-
-    if (!queue) {
-      const errorEmbed = ErrorEmbed('**Плейлист пуст**');
-      return message.reply({ embeds: [errorEmbed], allowedMentions: { repliedUser: false } });
-    }
 
     const embed = new MessageEmbed()
       .setAuthor({

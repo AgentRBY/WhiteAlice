@@ -1,5 +1,6 @@
-import { ErrorEmbed, SuccessEmbed } from '../../../utils/Discord/Embed';
+import { SuccessEmbed } from '../../../utils/Discord/Embed';
 import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
+import { IsChannelForMusic } from '../../../utils/Decorators/MusicDecorators';
 
 class ShuffleCommand extends CommonCommand {
   name = 'shuffle';
@@ -14,13 +15,9 @@ class ShuffleCommand extends CommonCommand {
   ];
   usage = 'shuffle';
 
+  @IsChannelForMusic()
   async run({ client, message }: CommandRunOptions) {
     const queue = client.disTube.getQueue(message);
-
-    if (!queue) {
-      const errorEmbed = ErrorEmbed('**Плейлист пуст**');
-      return message.reply({ embeds: [errorEmbed], allowedMentions: { repliedUser: false } });
-    }
 
     await queue.shuffle();
 

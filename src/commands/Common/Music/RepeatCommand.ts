@@ -1,6 +1,7 @@
 import { ErrorEmbed, SuccessEmbed } from '../../../utils/Discord/Embed';
 
 import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
+import { IsChannelForMusic } from '../../../utils/Decorators/MusicDecorators';
 
 class RepeatCommand extends CommonCommand {
   name = 'repeat';
@@ -23,13 +24,9 @@ class RepeatCommand extends CommonCommand {
     },
   ];
 
+  @IsChannelForMusic()
   async run({ client, message, args }: CommandRunOptions) {
     const queue = client.disTube.getQueue(message);
-
-    if (!queue) {
-      const errorEmbed = ErrorEmbed('**Плейлист пуст**');
-      return message.reply({ embeds: [errorEmbed], allowedMentions: { repliedUser: false } });
-    }
 
     if (queue.repeatMode) {
       const errorEmbed = SuccessEmbed('**Повторение выключено**');

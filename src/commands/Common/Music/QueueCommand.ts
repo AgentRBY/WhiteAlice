@@ -1,4 +1,3 @@
-import { ErrorEmbed } from '../../../utils/Discord/Embed';
 import { MessageActionRow, MessageEmbed } from 'discord.js';
 import { Colors } from '../../../static/Colors';
 import { EmojisLinks } from '../../../static/Emojis';
@@ -6,6 +5,7 @@ import { EmojisLinks } from '../../../static/Emojis';
 import { Song } from 'distube';
 import { generateDefaultButtons, pagination } from '../../../utils/Discord/Pagination';
 import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
+import { IsQueueExist } from '../../../utils/Decorators/MusicDecorators';
 
 class QueueCommand extends CommonCommand {
   name = 'queue';
@@ -20,14 +20,9 @@ class QueueCommand extends CommonCommand {
     },
   ];
 
+  @IsQueueExist()
   async run({ client, message }: CommandRunOptions) {
     const queue = client.disTube.getQueue(message);
-
-    if (!queue) {
-      const errorEmbed = ErrorEmbed('**Плейлист пуст**');
-      return message.reply({ embeds: [errorEmbed], allowedMentions: { repliedUser: false } });
-    }
-
     const songsPerPage = 20;
 
     const generateEmbed = (songs: Song[], page: number, pages: number) => {
