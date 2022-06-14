@@ -7,6 +7,7 @@ import { formatNames, isGifLink, isImageLink, isLink, removeQueryParameters } fr
 import { generateDefaultButtons, pagination } from '../../../utils/Discord/Pagination';
 import { sauceNAORelevantSites } from '../../../static/ImageSearch';
 import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
+import Logger from '../../../utils/Logger';
 
 class FindImageCommand extends CommonCommand {
   name = 'findImage';
@@ -52,7 +53,8 @@ class FindImageCommand extends CommonCommand {
 
     try {
       results = await SauceNAOApi(link, { db: 999 });
-    } catch {
+    } catch (error) {
+      Logger.error(error);
       const errorEmbed = ErrorEmbed('**Произошла ошибка, попробуйте ещё раз**');
       return message.reply({ embeds: [errorEmbed], allowedMentions: { repliedUser: false } });
     }
