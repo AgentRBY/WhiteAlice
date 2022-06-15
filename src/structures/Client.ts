@@ -173,7 +173,7 @@ export class ExtendClient extends Client {
     if (!GuildData) {
       GuildData = await GuildModel.create({
         _id: id,
-        prefix: this.config.prefix || '>',
+        prefix: process.env.prefix || '>',
       });
 
       await GuildData.save();
