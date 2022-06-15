@@ -20,6 +20,17 @@ export function serviceMixin(...actions: Constructor[]) {
   return BaseClass;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function insertMethods(target: any, source: Constructor): any {
+  Object.getOwnPropertyNames(source.prototype)
+    .filter((key) => !['constructor', 'prototype'].includes(key))
+    .forEach((key) => {
+      target[key] = source.prototype[key];
+    });
+
+  return target;
+}
+
 export function getMemberBaseId(member: GuildMember): MemberBaseId {
   return `${member.id}-${member.guild.id}`;
 }

@@ -1,5 +1,6 @@
 import { ExtendClient } from '../structures/Client';
 import { Message } from 'discord.js';
+import { ExtendedMessage } from '../structures/ExtendedMessage';
 
 const ANILIST_REGEX = /https?:\/\/(www\.)?anilist\.co\/anime\/(\d+)/;
 
@@ -12,5 +13,6 @@ export function AnilistLink(client: ExtendClient, message: Message): void {
 
   const id = match[2];
 
-  client.commonCommands.get('anilist').run({ client, message, args: [id] });
+  const extendedMessage = ExtendedMessage.getInstance(message);
+  client.commonCommands.get('anilist').run({ client, message: extendedMessage, args: [id] });
 }

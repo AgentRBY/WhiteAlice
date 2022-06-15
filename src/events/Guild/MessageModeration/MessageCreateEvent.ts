@@ -8,6 +8,7 @@ import { AniDBLink } from '../../../modules/AniDBLink';
 import { AnilistLink } from '../../../modules/AnilistLink';
 import { MediaChannel } from '../../../modules/MediaChannel';
 import { getMemberBaseId } from '../../../utils/Other';
+import { ExtendedMessage } from '../../../structures/ExtendedMessage';
 
 export default new Event({
   name: 'messageCreate',
@@ -28,7 +29,9 @@ export default new Event({
     client.service.incrementMessageCount(getMemberBaseId(message.member));
 
     if (message.content === `<@${client.user.id}>` || message.content === `<@!${client.user.id}>`) {
-      client.commonCommands.get('ping').run({ client, message, args: [] });
+      const extendedMessage = ExtendedMessage.getInstance(message);
+
+      client.commonCommands.get('ping').run({ client, message: extendedMessage, args: [] });
       return;
     }
   },

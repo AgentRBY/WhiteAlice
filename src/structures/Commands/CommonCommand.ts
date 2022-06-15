@@ -1,5 +1,6 @@
 import { Collection, Message, PermissionString } from 'discord.js';
 import { ExtendClient } from '../Client';
+import { ExtendedMessage } from '../ExtendedMessage';
 
 export interface CommandExample {
   command: string;
@@ -8,7 +9,7 @@ export interface CommandExample {
 
 export interface CommandRunOptions {
   client: ExtendClient;
-  message: Message;
+  message: ExtendedMessage & Message;
   args: string[];
   keys?: Collection<string, string>;
   attributes?: Set<string>;

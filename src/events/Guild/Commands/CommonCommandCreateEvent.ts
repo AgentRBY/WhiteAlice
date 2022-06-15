@@ -3,6 +3,7 @@ import { Collection, Message } from 'discord.js';
 import { ExtendClient } from '../../../structures/Client';
 import { ErrorEmbed } from '../../../utils/Discord/Embed';
 import Permissions from '../../../static/Permissions';
+import { ExtendedMessage } from '../../../structures/ExtendedMessage';
 
 export default new Event({
   name: 'messageCreate',
@@ -69,11 +70,13 @@ export default new Event({
       }
     });
 
+    const extendedMessage = ExtendedMessage.getInstance(message);
+
     if (attributes.has('help') || attributes.has('h')) {
-      client.commonCommands.get('help').run({ client, message, args: [command.name] });
+      client.commonCommands.get('help').run({ client, message: extendedMessage, args: [command.name] });
       return;
     }
 
-    command.run({ client, message, args: cleanArgs, keys, attributes });
+    command.run({ client, message: extendedMessage, args: cleanArgs, keys, attributes });
   },
 });
