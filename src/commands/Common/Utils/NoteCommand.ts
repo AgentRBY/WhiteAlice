@@ -1,4 +1,3 @@
-import { ErrorEmbed, SuccessEmbed } from '../../../utils/Discord/Embed';
 import { MessageEmbed } from 'discord.js';
 import { Colors } from '../../../static/Colors';
 import { EmojisLinks } from '../../../static/Emojis';
@@ -40,30 +39,26 @@ class NoteCommand extends CommonCommand {
 
     if (commandType === 'create') {
       if (!message.member.permissions.has('MANAGE_MESSAGES')) {
-        const embed = ErrorEmbed('У вас нет прав на создание заметки');
-        message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+        message.sendError('У вас нет прав на создание заметки');
         return;
       }
 
       const name = args[1];
 
       if (!name) {
-        const embed = ErrorEmbed('Введите имя новой заметки');
-        message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+        message.sendError('Введите имя новой заметки');
         return;
       }
 
       const content = args.slice(2).join(' ');
 
       if (await client.service.isNoteExist(message.guildId, name)) {
-        const embed = ErrorEmbed('Заметка с таким именем уже существует');
-        message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+        message.sendError('Заметка с таким именем уже существует');
         return;
       }
 
       if (!content) {
-        const embed = ErrorEmbed('Введите контент новой заметки');
-        message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+        message.sendError('Введите контент новой заметки');
         return;
       }
 
@@ -76,52 +71,45 @@ class NoteCommand extends CommonCommand {
 
       client.service.addNote(message.guildId, note);
 
-      const embed = SuccessEmbed(`Заметка \`${note.name}\` была создана`);
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      message.sendSuccess(`Заметка \`${note.name}\` была создана`);
       return;
     }
 
     if (commandType === 'delete' || commandType === 'remove') {
       if (!message.member.permissions.has('MANAGE_MESSAGES')) {
-        const embed = ErrorEmbed('У вас нет прав на создание заметки');
-        message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+        message.sendError('У вас нет прав на создание заметки');
         return;
       }
 
       const name = args[1];
 
       if (!name) {
-        const embed = ErrorEmbed('Введите имя заметки, которую хотите удалить');
-        message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+        message.sendError('Введите имя заметки, которую хотите удалить');
         return;
       }
 
       if (!(await client.service.isNoteExist(message.guildId, name))) {
-        const embed = ErrorEmbed('Заметка с таким именем не найдена');
-        message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+        message.sendError('Заметка с таким именем не найдена');
         return;
       }
 
       client.service.removeNote(message.guildId, name);
 
-      const embed = SuccessEmbed(`Заметка ${name} была удалена`);
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      message.sendSuccess(`Заметка ${name} была удалена`);
       return;
     }
 
     const noteName = commandType;
 
     if (!noteName) {
-      const embed = ErrorEmbed('Введите имя заметки');
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      message.sendError('Введите имя заметки');
       return;
     }
 
     const note = await client.service.getNote(message.guildId, noteName);
 
     if (!note) {
-      const embed = ErrorEmbed('Заметка с таким именем не найдена');
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      message.sendError('Заметка с таким именем не найдена');
       return;
     }
 

@@ -1,4 +1,3 @@
-import { ErrorEmbed } from '../../../utils/Discord/Embed';
 import anilist from 'anilist-node';
 import { formatAnilistAnime } from '../../../utils/Media/Anime';
 import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
@@ -20,8 +19,7 @@ class AnimeCommand extends CommonCommand {
     const name = args.join(' ');
 
     if (!name) {
-      const embed = ErrorEmbed('**Введите имя аниме**');
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      message.sendError('**Введите имя аниме**');
       return;
     }
 

@@ -1,5 +1,4 @@
 import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
-import { ErrorEmbed, SuccessEmbed } from '../../../utils/Discord/Embed';
 
 class SetBaseVoiceChannel extends CommonCommand {
   name = 'setBaseVoiceChannel';
@@ -13,38 +12,32 @@ class SetBaseVoiceChannel extends CommonCommand {
     const channelID = message.mentions.channels.first()?.id || args[0];
 
     if (!channelID) {
-      const embed = ErrorEmbed('Введите айди голосового канала');
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      message.sendError('Введите айди голосового канала');
       return;
     }
 
     const voiceChannel = message.guild.channels.cache.get(channelID);
 
     if (!voiceChannel) {
-      const embed = ErrorEmbed('Канала с таким айди не существует');
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      message.sendError('Канала с таким айди не существует');
       return;
     }
 
     if (voiceChannel.type !== 'GUILD_VOICE') {
-      const embed = ErrorEmbed('Неверный тип канала. Укажите голосовой канал');
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      message.sendError('Неверный тип канала. Укажите голосовой канал');
       return;
     }
 
     if (await client.service.isBaseVoiceChannel(message.guildId, channelID)) {
-      const embed = ErrorEmbed('Канал уже добавлен');
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      message.sendError('Канал уже добавлен');
       return;
     }
 
     await client.service.setBaseVoiceChannel(message.guildId, channelID);
 
-    const embed = SuccessEmbed(
+    message.sendSuccess(
       `Канал ${voiceChannel} добавлен как базовый голосовой канал для модуля Пользовательских голосовых каналов`,
     );
-    message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
-    return;
   }
 }
 

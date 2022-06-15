@@ -1,5 +1,3 @@
-import { ErrorEmbed } from '../../../utils/Discord/Embed';
-
 import { TextChannel } from 'discord.js';
 import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
 import { IsUserInVoice } from '../../../utils/Decorators/MusicDecorators';
@@ -24,8 +22,7 @@ class PlayCommand extends CommonCommand {
   @IsUserInVoice()
   async run({ client, message, args }: CommandRunOptions) {
     if (!args.length) {
-      const embed = ErrorEmbed('**Вы не указали запрос**');
-      return message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      message.sendError('**Вы не указали запрос**');
     }
 
     try {

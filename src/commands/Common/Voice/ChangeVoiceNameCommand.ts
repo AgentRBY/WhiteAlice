@@ -1,5 +1,4 @@
 import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
-import { ErrorEmbed, SuccessEmbed } from '../../../utils/Discord/Embed';
 import { IsCustomVoice } from '../../../utils/Decorators/VoiceDecorators';
 
 class ChangeVoiceNameCommand extends CommonCommand {
@@ -20,14 +19,12 @@ class ChangeVoiceNameCommand extends CommonCommand {
     const name = args.join(' ');
 
     if (!name) {
-      const embed = ErrorEmbed('Укажите новое имя голосового канала');
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      message.sendError('Укажите новое имя голосового канала');
       return;
     }
 
     if (name.length > 100) {
-      const embed = ErrorEmbed('Имя голосового канала не может быть длиннее 100 символов');
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      message.sendError('Имя голосового канала не может быть длиннее 100 символов');
       return;
     }
 
@@ -35,8 +32,7 @@ class ChangeVoiceNameCommand extends CommonCommand {
 
     voiceChannel.setName(name);
 
-    const embed = SuccessEmbed(`Имя голосового канала ${voiceChannel} изменено на **${name}**`);
-    message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+    message.sendSuccess(`Имя голосового канала ${voiceChannel} изменено на **${name}**`);
     return;
   }
 }

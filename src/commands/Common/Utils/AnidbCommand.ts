@@ -1,4 +1,3 @@
-import { ErrorEmbed } from '../../../utils/Discord/Embed';
 import { formatAniDBAnime } from '../../../utils/Media/Anime';
 import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
 
@@ -19,8 +18,7 @@ class AnidbCommand extends CommonCommand {
     const animeID = args.length ? Number(args[0]) : null;
 
     if (!animeID || Number.isNaN(animeID)) {
-      const errorEmbed = ErrorEmbed('**Укажите айди аниме**');
-      return message.reply({ embeds: [errorEmbed], allowedMentions: { repliedUser: false } });
+      message.sendError('**Укажите айди аниме**');
     }
 
     let anime;
@@ -28,11 +26,9 @@ class AnidbCommand extends CommonCommand {
       anime = await client.aniDB.anime(animeID);
     } catch (error) {
       if (error.status === 'Banned') {
-        const errorEmbed = ErrorEmbed('**Превышено ограничение на использования API сервиса. Попробуйте позже**');
-        return message.reply({ embeds: [errorEmbed], allowedMentions: { repliedUser: false } });
+        message.sendError('**Превышено ограничение на использования API сервиса. Попробуйте позже**');
       } else {
-        const errorEmbed = ErrorEmbed('**Аниме с данным айди не найдено**');
-        return message.reply({ embeds: [errorEmbed], allowedMentions: { repliedUser: false } });
+        message.sendError('**Аниме с данным айди не найдено**');
       }
     }
 

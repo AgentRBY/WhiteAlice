@@ -1,4 +1,3 @@
-import { ErrorEmbed } from '../../../utils/Discord/Embed';
 import { TraceMoe } from 'trace.moe.ts';
 import { Colors } from '../../../static/Colors';
 import anilist from 'anilist-node';
@@ -34,15 +33,17 @@ class FindanimeCommand extends CommonCommand {
     }
 
     if (!link || !isLink(link)) {
-      const errorEmbed = ErrorEmbed('**Введите ссылку на изображение**');
-      return message.reply({ embeds: [errorEmbed], allowedMentions: { repliedUser: false } });
+      message.sendError('**Введите ссылку на изображение**');
     }
 
     if (!isMediaLink(link.toLowerCase())) {
-      const errorEmbed = ErrorEmbed(
+      message.sendError(
         '**Ссылка не ведёт на изображение или видео. Допустимые форматы: `png, jpeg, jpg, webp, bmp, gif, mp4`**',
-      ).setFooter({ text: 'Для gif-анимаций и видео в поиске будет использоваться первый кадр' });
-      return message.reply({ embeds: [errorEmbed], allowedMentions: { repliedUser: false } });
+        {
+          footer: { text: 'Для gif-анимаций и видео в поиске будет использоваться первый кадр' },
+        },
+      );
+      return;
     }
 
     const traceClient = new TraceMoe();
@@ -52,14 +53,17 @@ class FindanimeCommand extends CommonCommand {
     });
 
     if (response.error) {
-      const errorEmbed = ErrorEmbed(`**Произошла ошибка ${response.error}**`).setFooter({ text: 'Попробуйте позже' });
-      return message.reply({ embeds: [errorEmbed], allowedMentions: { repliedUser: false } });
+      message.sendError(`**Произошла ошибка ${response.error}**`, {
+        footer: {
+          text: 'Попробуйте позже',
+        },
+      });
+      return;
     }
     const anime = response.result.find((anime) => anime.similarity > 0.86);
 
     if (!anime) {
-      const errorEmbed = ErrorEmbed('**Результаты не найдены**');
-      return message.reply({ embeds: [errorEmbed], allowedMentions: { repliedUser: false } });
+      message.sendError('**Результаты не найдены**');
     }
 
     const animeInfo = await new anilist().media.anime(anime.anilist as number);

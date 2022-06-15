@@ -1,4 +1,3 @@
-import { ErrorEmbed, SuccessEmbed } from '../../../utils/Discord/Embed';
 import { PermissionString } from 'discord.js';
 import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
 
@@ -21,8 +20,8 @@ class DeleteMessageCommand extends CommonCommand {
     const messageId = args[0];
 
     if (!messageId) {
-      const embed = ErrorEmbed('Сообщение не найдено');
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } }).then(() => {
+      const reply = message.sendError('Сообщение не найдено');
+      reply.then(() => {
         setTimeout(() => {
           message.delete();
         }, 5000);
@@ -34,8 +33,8 @@ class DeleteMessageCommand extends CommonCommand {
       .fetch(messageId)
       .then((m) => m)
       .catch(() => {
-        const embed = ErrorEmbed('Сообщение не найдено');
-        message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } }).then(() => {
+        const reply = message.sendError('Сообщение не найдено');
+        reply.then(() => {
           setTimeout(() => {
             message.delete();
           }, 5000);
@@ -48,8 +47,8 @@ class DeleteMessageCommand extends CommonCommand {
     }
 
     if (!fetchedMessage.deletable) {
-      const embed = ErrorEmbed('Нет прав на удаление сообщения');
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } }).then(() => {
+      const reply = message.sendError('Нет прав на удаление сообщения');
+      reply.then(() => {
         setTimeout(() => {
           message.delete();
         }, 5000);
@@ -59,8 +58,8 @@ class DeleteMessageCommand extends CommonCommand {
 
     fetchedMessage.delete();
 
-    const embed = SuccessEmbed(`Сообщение от пользователя ${fetchedMessage.member} было удалено`);
-    message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } }).then(() => {
+    const reply = message.sendSuccess(`Сообщение от пользователя ${fetchedMessage.member} было удалено`);
+    reply.then(() => {
       setTimeout(() => {
         message.delete();
       }, 5000);

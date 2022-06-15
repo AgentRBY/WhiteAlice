@@ -1,7 +1,6 @@
 import { MessageEmbed } from 'discord.js';
 import { Colors } from '../../../static/Colors';
 import { Emojis } from '../../../static/Emojis';
-import { ErrorEmbed } from '../../../utils/Discord/Embed';
 import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
 
 class NotesCommand extends CommonCommand {
@@ -21,8 +20,7 @@ class NotesCommand extends CommonCommand {
     const notes = await client.service.getNotes(message.guildId);
 
     if (!notes) {
-      const embed = ErrorEmbed('На данном сервере отсутствуют заметки');
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      message.sendError('На данном сервере отсутствуют заметки');
       return;
     }
 

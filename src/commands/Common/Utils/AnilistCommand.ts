@@ -1,5 +1,3 @@
-import { ErrorEmbed } from '../../../utils/Discord/Embed';
-
 import anilist from 'anilist-node';
 import { formatAnilistAnime } from '../../../utils/Media/Anime';
 import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
@@ -21,15 +19,13 @@ class AnilistCommand extends CommonCommand {
     const animeID = args.length ? Number(args[0]) : null;
 
     if (!animeID || Number.isNaN(animeID)) {
-      const errorEmbed = ErrorEmbed('**Укажите айди аниме**');
-      return message.reply({ embeds: [errorEmbed], allowedMentions: { repliedUser: false } });
+      message.sendError('**Укажите айди аниме**');
     }
 
     const animeInfo = await new anilist().media.anime(animeID);
 
     if (Array.isArray(animeInfo)) {
-      const errorEmbed = ErrorEmbed('**Аниме с данным айди не найдено**');
-      return message.reply({ embeds: [errorEmbed], allowedMentions: { repliedUser: false } });
+      message.sendError('**Аниме с данным айди не найдено**');
     }
 
     const embed = await formatAnilistAnime(animeInfo);

@@ -1,4 +1,3 @@
-import { ErrorEmbed, SuccessEmbed } from '../../../utils/Discord/Embed';
 import { PermissionString } from 'discord.js';
 import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
 
@@ -15,21 +14,18 @@ class PrefixCommand extends CommonCommand {
     const prefix = args[0];
 
     if (!prefix) {
-      const embed = ErrorEmbed('Укажите префикс');
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      message.sendError('Укажите префикс');
       return;
     }
 
     if (prefix.length > 3) {
-      const embed = ErrorEmbed('Длинна префикса не может быть больше 3 символов');
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      message.sendError('Длинна префикса не может быть больше 3 символов');
       return;
     }
 
     client.service.setPrefix(message.guildId, prefix);
 
-    const embed = SuccessEmbed(`Префикс успешно изменён на \`${prefix}\``);
-    message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+    message.sendSuccess(`Префикс успешно изменён на \`${prefix}\``);
   }
 }
 

@@ -1,7 +1,6 @@
 import { formatNHentaiManga } from '../../../utils/Media/Manga';
 import { Doujin, SearchResult, SortMethods } from 'nhentai';
 import { getRandomInt } from '../../../utils/Common/Number';
-import { ErrorEmbed } from '../../../utils/Discord/Embed';
 import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
 
 const nHentai = require('nhentai');
@@ -41,8 +40,7 @@ class RandomHentaiCommand extends CommonCommand {
       : await nHentaiApi.randomDoujin();
 
     if (!manga) {
-      const embed = ErrorEmbed('**Хентай с такими тегами не найден**');
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      message.sendError('**Хентай с такими тегами не найден**');
       return;
     }
 

@@ -1,5 +1,3 @@
-import { SuccessEmbed } from '../../../utils/Discord/Embed';
-
 import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
 import { IsChannelForMusic } from '../../../utils/Decorators/MusicDecorators';
 
@@ -22,8 +20,7 @@ class StopCommand extends CommonCommand {
 
     await queue.stop();
 
-    const embed = SuccessEmbed('**Выхожу...**');
-    return message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+    message.sendSuccess('**Выхожу...**');
   }
 }
 

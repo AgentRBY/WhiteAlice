@@ -1,5 +1,4 @@
 import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
-import { ErrorEmbed, SuccessEmbed } from '../../../utils/Discord/Embed';
 import { isNumber } from '../../../utils/Common/Number';
 import { VoiceChannel } from 'discord.js';
 import { IsCustomVoice } from '../../../utils/Decorators/VoiceDecorators';
@@ -48,37 +47,34 @@ class VoiceChannelLimit extends CommonCommand {
     }
 
     if (!isNumber(limit)) {
-      const embed = ErrorEmbed('Введите корректное число');
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      message.sendError('Введите корректное число');
       return;
     }
 
     if (limit > 99) {
-      const embed = ErrorEmbed('Лимит не может быть больше 99');
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      message.sendError('Лимит не может быть больше 99');
       return;
     }
 
     if (limit < 0) {
-      const embed = ErrorEmbed('Лимит не может быть меньше 0');
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      message.sendError('Лимит не может быть меньше 0');
       return;
     }
 
     if (limit === 0) {
       voiceChannel.setUserLimit(0);
 
-      const embed = SuccessEmbed('Лимит пользователей в голосовом канале убран');
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      message.sendSuccess('Лимит пользователей в голосовом канале убран');
       return;
     }
 
     voiceChannel.setUserLimit(limit);
 
-    const embed = SuccessEmbed(`Лимит пользователей в голосовом канале установлен на ${limit}`);
-    embed.setFooter({ text: `Подсказка: что бы убрать лимит пропишите >${this.name} 0` });
-    message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
-    return;
+    message.sendSuccess(`Лимит пользователей в голосовом канале установлен на ${limit}`, {
+      footer: {
+        text: `Подсказка: что бы убрать лимит пропишите >${this.name} 0`,
+      },
+    });
   }
 }
 

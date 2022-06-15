@@ -1,7 +1,6 @@
 import sagiri from 'sagiri';
 import { MessageActionRow, MessageEmbed } from 'discord.js';
 import { Colors } from '../../../static/Colors';
-import { ErrorEmbed } from '../../../utils/Discord/Embed';
 
 import { formatNames, isGifLink, isImageLink, isLink, removeQueryParameters } from '../../../utils/Common/Strings';
 import { generateDefaultButtons, pagination } from '../../../utils/Discord/Pagination';
@@ -37,15 +36,17 @@ class FindImageCommand extends CommonCommand {
     }
 
     if (!link || !isLink(link)) {
-      const errorEmbed = ErrorEmbed('**Введите ссылку на изображение**');
-      return message.reply({ embeds: [errorEmbed], allowedMentions: { repliedUser: false } });
+      message.sendError('**Введите ссылку на изображение**');
     }
 
     if (!isImageLink(link.toLowerCase()) && !isGifLink(link.toLowerCase())) {
-      const errorEmbed = ErrorEmbed(
-        '**Ссылка не ведёт на изображение. Допустимые форматы: `png, jpeg, jpg, webp, bmp, gif`**',
-      ).setFooter({ text: 'Для gif-анимаций в поиске будет использоваться первый кадр' });
-      return message.reply({ embeds: [errorEmbed], allowedMentions: { repliedUser: false } });
+      message.sendError(
+        '**Ссылка не ведёт на изображение или видео. Допустимые форматы: `png, jpeg, jpg, webp, bmp, gif`**',
+        {
+          footer: { text: 'Для gif-анимаций и видео в поиске будет использоваться первый кадр' },
+        },
+      );
+      return;
     }
 
     const SauceNAOApi = sagiri(client.config.sauceNAOToken);
@@ -55,15 +56,13 @@ class FindImageCommand extends CommonCommand {
       results = await SauceNAOApi(link, { db: 999 });
     } catch (error) {
       Logger.error(error);
-      const errorEmbed = ErrorEmbed('**Произошла ошибка, попробуйте ещё раз**');
-      return message.reply({ embeds: [errorEmbed], allowedMentions: { repliedUser: false } });
+      message.sendError('**Произошла ошибка, попробуйте ещё раз**');
     }
 
     results = results.filter((result) => result.similarity > 50);
 
     if (!results.length) {
-      const errorEmbed = ErrorEmbed('**Результаты не найдены**');
-      return message.reply({ embeds: [errorEmbed], allowedMentions: { repliedUser: false } });
+      message.sendError('**Результаты не найдены**');
     }
 
     let filteredSites = results.filter((result) => sauceNAORelevantSites.has(result.site));

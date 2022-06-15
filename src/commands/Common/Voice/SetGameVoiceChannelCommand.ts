@@ -1,5 +1,4 @@
 import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
-import { ErrorEmbed, SuccessEmbed } from '../../../utils/Discord/Embed';
 import { VoiceChannel } from 'discord.js';
 import { IsCustomVoice } from '../../../utils/Decorators/VoiceDecorators';
 
@@ -30,8 +29,7 @@ class SetGameVoiceChannel extends CommonCommand {
     const userActivity = message.member.presence?.activities[0];
 
     if (!userActivity) {
-      const embed = ErrorEmbed('Вы не находитесь в игре или не слушаете музыку');
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      message.sendError('Вы не находитесь в игре или не слушаете музыку');
       return;
     }
 
@@ -63,8 +61,7 @@ class SetGameVoiceChannel extends CommonCommand {
     const channelName = `${activityName} ${userActivity.name}`;
     voiceChannel.setName(channelName);
 
-    const embed = SuccessEmbed(`Имя канала установлено как \`${channelName}\``);
-    message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+    message.sendSuccess(`Имя канала установлено как \`${channelName}\``);
     return;
   }
 }

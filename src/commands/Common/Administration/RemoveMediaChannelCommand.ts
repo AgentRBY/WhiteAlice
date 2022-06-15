@@ -1,4 +1,3 @@
-import { ErrorEmbed, SuccessEmbed } from '../../../utils/Discord/Embed';
 import { PermissionString } from 'discord.js';
 import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
 
@@ -20,21 +19,18 @@ class RemoveMediaChannelCommand extends CommonCommand {
     const channelId = args[0];
 
     if (!channelId) {
-      const embed = ErrorEmbed('Укажите айди канала');
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      message.sendError('Укажите айди канала');
       return;
     }
 
     if (!(await client.service.isMediaChannel(message.guildId, channelId))) {
-      const embed = ErrorEmbed('Канал не найдено в списке Каналов только для медиа контента');
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      message.sendError('Канал не найдено в списке Каналов только для медиа контента');
       return;
     }
 
     client.service.removeMediaChannel(message.guildId, channelId);
 
-    const embed = SuccessEmbed('Канал удален из списка Каналов только для медиа контента');
-    message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+    message.sendSuccess('Канал удален из списка Каналов только для медиа контента');
     return;
   }
 }

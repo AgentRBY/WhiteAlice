@@ -1,4 +1,4 @@
-import { ErrorEmbed, SuccessEmbed } from '../../../utils/Discord/Embed';
+import { SuccessEmbed } from '../../../utils/Discord/Embed';
 import { MessageEmbed, PermissionString } from 'discord.js';
 import { Colors } from '../../../static/Colors';
 import { Emojis } from '../../../static/Emojis';
@@ -32,8 +32,7 @@ class WarnCommand extends CommonCommand {
     const targetMember = message.mentions.members.first();
 
     if (!targetMember) {
-      const embed = ErrorEmbed('**Введите пользователя**');
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      message.sendError('**Введите пользователя**');
       return;
     }
 

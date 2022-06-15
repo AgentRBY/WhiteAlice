@@ -1,4 +1,4 @@
-import { ErrorEmbed, SuccessEmbed } from '../../../utils/Discord/Embed';
+import { SuccessEmbed } from '../../../utils/Discord/Embed';
 import { MessageEmbed, PermissionString } from 'discord.js';
 import { Colors } from '../../../static/Colors';
 import { Emojis } from '../../../static/Emojis';
@@ -42,27 +42,23 @@ class BanCommand extends CommonCommand {
     const userId = member?.id || args[0];
 
     if (!userId) {
-      const embed = ErrorEmbed('Введите пользователя');
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      message.sendError('Введите пользователя');
       return;
     }
 
     await message.guild.bans.fetch();
     if (message.guild.bans.cache.get(userId)) {
-      const embed = ErrorEmbed('Пользователь уже в бане');
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      message.sendError('Пользователь уже в бане');
       return;
     }
 
     if (member && !member.bannable) {
-      const embed = ErrorEmbed('У меня нет прав, что бы забанить этого пользователя');
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      message.sendError('У меня нет прав, что бы забанить этого пользователя');
       return;
     }
 
     if (member?.roles.highest.comparePositionTo(message.guild.me.roles.highest) >= 0) {
-      const embed = ErrorEmbed('У вас нет прав, что бы замутить этого пользователя');
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      message.sendError('У вас нет прав, что бы замутить этого пользователя');
       return;
     }
 
@@ -72,10 +68,11 @@ class BanCommand extends CommonCommand {
       messageDeleteCountInDays = Number(keys.get('hl:D') || keys.get('hl:d'));
 
       if (!isNumber(messageDeleteCountInDays) || messageDeleteCountInDays < 0 || messageDeleteCountInDays > 7) {
-        const embed = ErrorEmbed('Количество дней введено неправильно').setFooter({
-          text: 'Количество дней должно быть от 1 до 7',
+        message.sendError('Количество дней введено неправильно', {
+          footer: {
+            text: 'Количество дней должно быть от 1 до 7',
+          },
         });
-        message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
         return;
       }
     }

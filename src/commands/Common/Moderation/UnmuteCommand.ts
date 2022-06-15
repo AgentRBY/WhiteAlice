@@ -1,4 +1,4 @@
-import { ErrorEmbed, SuccessEmbed } from '../../../utils/Discord/Embed';
+import { SuccessEmbed } from '../../../utils/Discord/Embed';
 import moment from 'moment';
 import { MessageEmbed, PermissionString } from 'discord.js';
 import { Emojis } from '../../../static/Emojis';
@@ -29,14 +29,12 @@ class UnmuteCommand extends CommonCommand {
     const targetMember = message.mentions.members.first();
 
     if (!targetMember) {
-      const embed = ErrorEmbed('Пользователь не найден');
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      message.sendError('Пользователь не найден');
       return;
     }
 
     if (!targetMember.isCommunicationDisabled()) {
-      const embed = ErrorEmbed('Пользователь не в муте');
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      message.sendError('Пользователь не в муте');
       return;
     }
 

@@ -1,5 +1,3 @@
-import { ErrorEmbed, SuccessEmbed } from '../../../utils/Discord/Embed';
-
 import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
 import { IsChannelForMusic } from '../../../utils/Decorators/MusicDecorators';
 
@@ -29,22 +27,23 @@ class RepeatCommand extends CommonCommand {
     const queue = client.disTube.getQueue(message);
 
     if (queue.repeatMode) {
-      const errorEmbed = SuccessEmbed('**Повторение выключено**');
-      client.disTube.setRepeatMode(message, 0);
-      return message.reply({ embeds: [errorEmbed], allowedMentions: { repliedUser: false } });
+      queue.setRepeatMode(0);
+
+      message.sendSuccess('**Повторение выключено**');
+      return;
     }
 
     const modes = ['off', 'disable', 'song', 'queue', 'playlist'];
 
     if (args[0] && !modes.includes(args[0])) {
-      const errorEmbed = ErrorEmbed(
+      message.sendError(
         `**Неизвестный тип, пожалуйста укажите один из этих типов:**
-     \`song\` - повторять только песню 
-     \`queue\` - повторять весь плейлист (по умолчанию) 
-     \`off\` - выключить повторение
-    `,
+        \`song\` - повторять только песню 
+        \`queue\` - повторять весь плейлист (по умолчанию) 
+        \`off\` - выключить повторение
+        `,
       );
-      return message.reply({ embeds: [errorEmbed], allowedMentions: { repliedUser: false } });
+      return;
     }
 
     const mode = args[0] || '';
@@ -60,11 +59,9 @@ class RepeatCommand extends CommonCommand {
       modeMessage = '**Установлено повторение песни**';
     }
 
-    client.disTube.setRepeatMode(message, modeCode);
+    queue.setRepeatMode(modeCode);
 
-    const embed = SuccessEmbed(modeMessage);
-
-    return message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+    message.sendSuccess(modeMessage);
   }
 }
 

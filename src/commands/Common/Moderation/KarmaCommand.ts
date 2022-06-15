@@ -1,4 +1,3 @@
-import { SuccessEmbed } from '../../../utils/Discord/Embed';
 import { KARMA_FOR_BAN, KARMA_FOR_MUTE, KARMA_FOR_WARN } from '../../../static/Punishment';
 import { getMemberBaseId } from '../../../utils/Other';
 import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
@@ -25,14 +24,11 @@ class KarmaCommand extends CommonCommand {
     const karma = await client.service.getKarma(getMemberBaseId(member));
 
     if (!karma) {
-      const embed = SuccessEmbed('У вас нет кармы');
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      message.sendSuccess('У вас нет кармы');
       return;
     }
 
-    const embed = SuccessEmbed(`Ваша карма: ${karma}`);
-
-    message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+    message.sendSuccess(`Ваша карма: ${karma}`);
     return;
   }
 }

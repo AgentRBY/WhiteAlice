@@ -1,8 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { MessageEmbed } from 'discord.js';
 import { inspect } from 'util';
-
-import { ErrorEmbed } from '../../../utils/Discord/Embed';
 import { Colors } from '../../../static/Colors';
 import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
 
@@ -22,8 +20,7 @@ class EvalCommand extends CommonCommand {
 
   async run({ client, message, args }: CommandRunOptions) {
     if (!args.length) {
-      const errorEmbed = ErrorEmbed('**Введите любой код.**');
-      return message.reply({ embeds: [errorEmbed], allowedMentions: { repliedUser: false } });
+      message.sendError('**Введите любой код.**');
     }
     try {
       const result = await eval(args.join(' '));

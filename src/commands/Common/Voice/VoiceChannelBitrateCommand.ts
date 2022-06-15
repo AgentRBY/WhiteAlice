@@ -1,5 +1,4 @@
 import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
-import { ErrorEmbed, SuccessEmbed } from '../../../utils/Discord/Embed';
 import { isNumber } from '../../../utils/Common/Number';
 import { VoiceChannel } from 'discord.js';
 import { IsCustomVoice } from '../../../utils/Decorators/VoiceDecorators';
@@ -58,20 +57,17 @@ class VoiceChannelBitrate extends CommonCommand {
     }
 
     if (!isNumber(bitrate)) {
-      const embed = ErrorEmbed('Введите корректный битрейт');
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      message.sendError('Введите корректный битрейт');
       return;
     }
 
     if (bitrate * 1000 > maxBitrate) {
-      const embed = ErrorEmbed(`Битрейт не может быть установлен больше чем ${maxBitrate / 1000}`);
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      message.sendError(`Битрейт не может быть установлен больше чем ${maxBitrate / 1000}`);
       return;
     }
 
     if (bitrate < 8) {
-      const embed = ErrorEmbed('Битрейт не может быть меньше 8');
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      message.sendError('Битрейт не может быть меньше 8');
       return;
     }
 
@@ -79,8 +75,7 @@ class VoiceChannelBitrate extends CommonCommand {
 
     voiceChannel.setBitrate(bitrate * 1000);
 
-    const embed = SuccessEmbed(`Битрейт голосового канала установлен на ${bitrate} Кбит/с`);
-    message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+    message.sendSuccess(`Битрейт голосового канала установлен на ${bitrate} Кбит/с`);
     return;
   }
 }

@@ -1,4 +1,4 @@
-import { ErrorEmbed, SuccessEmbed } from '../../../utils/Discord/Embed';
+import { SuccessEmbed } from '../../../utils/Discord/Embed';
 import { isNumber } from '../../../utils/Common/Number';
 import { MessageEmbed, PermissionString } from 'discord.js';
 import { Colors } from '../../../static/Colors';
@@ -28,35 +28,35 @@ class RemoveWarnCommand extends CommonCommand {
     const targetMember = message.mentions.members.first();
 
     if (!targetMember) {
-      const embed = ErrorEmbed('Введите пользователя');
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      message.sendError('Введите пользователя');
       return;
     }
     const warningNumber = Number(args[1]);
 
     if (!isNumber(warningNumber)) {
-      const embed = ErrorEmbed('Введите номер предупреждения').setFooter({
-        text: `Что бы узнать номер предупреждения пользователя введите >warns ${targetMember.user.tag}`,
+      message.sendError('Введите номер предупреждения', {
+        footer: {
+          text: `Что бы узнать номер предупреждения пользователя введите >warns ${targetMember.user.tag}`,
+        },
       });
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
       return;
     }
 
     const warns = await client.service.getWarns(getMemberBaseId(targetMember));
 
     if (warns.length < warningNumber) {
-      const embed = ErrorEmbed('У пользователя нет предупреждения под этим номером').setFooter({
-        text: `Что бы узнать номер предупреждения пользователя введите >warns ${targetMember.user.tag}`,
+      message.sendError('У пользователя нет предупреждения под этим номером', {
+        footer: {
+          text: `Что бы узнать номер предупреждения пользователя введите >warns ${targetMember.user.tag}`,
+        },
       });
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
       return;
     }
 
     const warnId = warningNumber - 1;
 
     if (warns[warnId].removed) {
-      const embed = ErrorEmbed('Предупреждение уже удалено');
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      message.sendError('Предупреждение уже удалено');
       return;
     }
 

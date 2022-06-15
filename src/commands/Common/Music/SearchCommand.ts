@@ -1,4 +1,3 @@
-import { ErrorEmbed } from '../../../utils/Discord/Embed';
 import { Message, MessageEmbed, TextChannel } from 'discord.js';
 import { EmojisLinks } from '../../../static/Emojis';
 import { Colors } from '../../../static/Colors';
@@ -36,21 +35,18 @@ class SearchCommand extends CommonCommand {
   @IsUserInVoice()
   async run({ client, message, args, attributes, keys }: CommandRunOptions) {
     if (!args.length) {
-      const embed = ErrorEmbed('**Вы не указали запрос**');
-      return message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      message.sendError('**Вы не указали запрос**');
     }
 
     const limit = Number(keys.get('hl:Limit') || keys.get('hl:L')) || 10;
 
     if (limit > 30) {
-      const embed = ErrorEmbed('**Лимит не может быть больше 30**');
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      message.sendError('**Лимит не может быть больше 30**');
       return;
     }
 
     if (limit < 0) {
-      const embed = ErrorEmbed('**Лимит не может быть меньше нуля**');
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      message.sendError('**Лимит не может быть меньше нуля**');
       return;
     }
 
@@ -67,8 +63,7 @@ class SearchCommand extends CommonCommand {
       .catch(() => {});
 
     if (!searchResults) {
-      const embed = ErrorEmbed('Результаты не найдены');
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      message.sendError('Результаты не найдены');
       return;
     }
 
@@ -113,8 +108,7 @@ class SearchCommand extends CommonCommand {
         });
       })
       .catch(() => {
-        const embed = ErrorEmbed('Вы не выбрали никакую песню');
-        message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+        message.sendError('Вы не выбрали никакую песню');
         return;
       });
   }

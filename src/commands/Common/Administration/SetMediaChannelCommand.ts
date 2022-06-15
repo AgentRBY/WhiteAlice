@@ -1,4 +1,3 @@
-import { ErrorEmbed, SuccessEmbed } from '../../../utils/Discord/Embed';
 import { PermissionString } from 'discord.js';
 import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
 
@@ -20,33 +19,28 @@ class SetMediaChannelCommand extends CommonCommand {
     const channelId = args[0];
 
     if (!channelId) {
-      const embed = ErrorEmbed('Укажите айди канала');
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      message.sendError('Укажите айди канала');
       return;
     }
 
     if (!message.guild.channels.cache.has(channelId)) {
-      const embed = ErrorEmbed('Канала с таким айди не существует');
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      message.sendError('Канала с таким айди не существует');
       return;
     }
 
     if (message.guild.channels.cache.get(channelId).type !== 'GUILD_TEXT') {
-      const embed = ErrorEmbed('Неверный тип канала. Укажите текстовый канал');
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      message.sendError('Неверный тип канала. Укажите текстовый канал');
       return;
     }
 
     if (await client.service.isMediaChannel(message.guildId, channelId)) {
-      const embed = ErrorEmbed('Канал уже добавлен');
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      message.sendError('Канал уже добавлен');
       return;
     }
 
     client.service.setMediaChannel(message.guildId, channelId);
 
-    const embed = SuccessEmbed(`Канал <#${channelId}> добавлен как Канал только для медиа контента`);
-    message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+    message.sendSuccess(`Канал <#${channelId}> добавлен как Канал только для медиа контента`);
     return;
   }
 }

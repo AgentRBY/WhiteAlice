@@ -77,7 +77,7 @@ class MuteCommand extends SlashCommand {
 
     if (!(targetMember instanceof GuildMember)) {
       const embed = ErrorEmbed('Ошибка');
-      interaction.reply({ embeds: [embed], allowedMentions: { repliedUser: false }, ephemeral: true });
+      interaction.reply({ embeds: [embed], ephemeral: true });
       return;
     }
 
@@ -88,7 +88,7 @@ class MuteCommand extends SlashCommand {
       targetMember.permissions.has('ADMINISTRATOR')
     ) {
       const embed = ErrorEmbed('У вас нет прав, что бы замутить этого пользователя');
-      interaction.reply({ embeds: [embed], allowedMentions: { repliedUser: false }, ephemeral: true });
+      interaction.reply({ embeds: [embed], ephemeral: true });
       return;
     }
 
@@ -102,7 +102,7 @@ class MuteCommand extends SlashCommand {
         text: `Осталось до размута: ${formatDurationInPast(moment.duration(duration))}`,
       });
 
-      interaction.reply({ embeds: [embed], allowedMentions: { repliedUser: false }, ephemeral: true });
+      interaction.reply({ embeds: [embed], ephemeral: true });
       return;
     }
 

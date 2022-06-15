@@ -1,4 +1,3 @@
-import { SuccessEmbed } from '../../../utils/Discord/Embed';
 import { MessageEmbed } from 'discord.js';
 import { Colors } from '../../../static/Colors';
 import { formatDays, momentToDiscordDate } from '../../../utils/Common/Date';
@@ -25,8 +24,10 @@ class BansCommand extends CommonCommand {
     const bans = await client.service.getBans(getMemberBaseId(member));
 
     if (!bans.length) {
-      const embed = SuccessEmbed('Баны отсутствуют');
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      // const embed = SuccessEmbed('Баны отсутствуют');
+      // message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      // return;
+      message.sendSuccess('Баны отсутствуют');
       return;
     }
 

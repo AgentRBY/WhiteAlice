@@ -1,4 +1,3 @@
-import { ErrorEmbed } from '../../../utils/Discord/Embed';
 import { formatNHentaiManga } from '../../../utils/Media/Manga';
 import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
 
@@ -21,8 +20,7 @@ class HentaiCommand extends CommonCommand {
     const name = args.join(' ');
 
     if (!name) {
-      const embed = ErrorEmbed('**Пожалуйста, введите имя хентая**');
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      message.sendError('**Пожалуйста, введите имя хентая**');
       return;
     }
 

@@ -2,7 +2,6 @@ import { EmbedFieldData, MessageEmbed } from 'discord.js';
 import { upAllFirstLatter } from '../../../utils/Common/Strings';
 import { Emojis, EmojisLinks } from '../../../static/Emojis';
 import { Colors } from '../../../static/Colors';
-import { ErrorEmbed } from '../../../utils/Discord/Embed';
 
 import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
 
@@ -58,8 +57,7 @@ class HelpCommand extends CommonCommand {
       client.commonCommands.get(client.aliases.get(args[0].toLowerCase()) || '');
 
     if (!command) {
-      const errorEmbed = ErrorEmbed(`**Команда не найдена. Введите \`${prefix}help\` для списка команд**`);
-      return message.reply({ embeds: [errorEmbed], allowedMentions: { repliedUser: false } });
+      message.sendError(`**Команда не найдена. Введите \`${prefix}help\` для списка команд**`);
     }
 
     let description = `**➤ Команда**: \`${prefix}${command.name}\`

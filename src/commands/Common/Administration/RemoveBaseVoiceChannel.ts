@@ -1,5 +1,4 @@
 import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
-import { ErrorEmbed, SuccessEmbed } from '../../../utils/Discord/Embed';
 
 class RemoveBaseVoiceChannel extends CommonCommand {
   name = 'removeBaseVoiceChannel';
@@ -14,18 +13,15 @@ class RemoveBaseVoiceChannel extends CommonCommand {
     const voiceChannel = message.guild.channels.cache.get(voiceChannelId);
 
     if (!voiceChannel) {
-      const embed = ErrorEmbed('Базовой голосовой канал не найден');
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      message.sendError('Базовой голосовой канал не найден');
       return;
     }
 
     await client.service.removeBaseVoiceChannel(message.guildId);
 
-    const embed = SuccessEmbed(
+    message.sendSuccess(
       `Канал ${voiceChannel} удалён из списка базовых голосовых каналов для модуля Пользовательских голосовых каналов`,
     );
-    message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
-    return;
   }
 }
 

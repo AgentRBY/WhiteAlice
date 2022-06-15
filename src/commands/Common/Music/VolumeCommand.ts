@@ -1,4 +1,3 @@
-import { ErrorEmbed } from '../../../utils/Discord/Embed';
 import { MessageEmbed } from 'discord.js';
 import { Colors } from '../../../static/Colors';
 import { Emojis } from '../../../static/Emojis';
@@ -33,8 +32,7 @@ class VolumeCommand extends CommonCommand {
     }
 
     if (!isNumber(volume) || volume > 100 || volume < 1) {
-      const errorEmbed = ErrorEmbed('**Укажите значение громкости в процентах от 1 до 100**');
-      return message.reply({ embeds: [errorEmbed], allowedMentions: { repliedUser: false } });
+      message.sendError('**Укажите значение громкости в процентах от 1 до 100**');
     }
 
     await client.disTube.setVolume(message, volume);

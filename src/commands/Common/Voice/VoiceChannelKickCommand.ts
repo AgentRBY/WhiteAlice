@@ -1,5 +1,4 @@
 import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
-import { ErrorEmbed, SuccessEmbed } from '../../../utils/Discord/Embed';
 import { VoiceChannel } from 'discord.js';
 import { IsCustomVoice } from '../../../utils/Decorators/VoiceDecorators';
 
@@ -26,29 +25,25 @@ class VoiceChannelKick extends CommonCommand {
     const userId = member?.id;
 
     if (!userId) {
-      const embed = ErrorEmbed('Пользователь не найден');
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      message.sendError('Пользователь не найден');
       return;
     }
 
     if (userId === message.author.id) {
-      const embed = ErrorEmbed('Вы не можете кикнуть себя');
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      message.sendError('Вы не можете кикнуть себя');
       return;
     }
 
     const voiceChannel = message.guild.channels.cache.get(message.member.voice.channelId) as VoiceChannel;
 
     if (!voiceChannel.members.get(userId)) {
-      const embed = ErrorEmbed('Пользователь не находится в текущем голосовом канале');
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      message.sendError('Пользователь не находится в текущем голосовом канале');
       return;
     }
 
     member.voice.disconnect(`Kicked from custom voice by ${message.member.displayName}`);
 
-    const embed = SuccessEmbed(`Пользователь ${member} был кикнут из голосового канала`);
-    message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+    message.sendSuccess(`Пользователь ${member} был кикнут из голосового канала`);
     return;
   }
 }

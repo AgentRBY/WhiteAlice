@@ -1,4 +1,4 @@
-import { ErrorEmbed, SuccessEmbed } from '../../../utils/Discord/Embed';
+import { SuccessEmbed } from '../../../utils/Discord/Embed';
 import { formatDuration, formatDurationInPast, getDurationFromString } from '../../../utils/Common/Date';
 import moment from 'moment';
 import { MessageEmbed, PermissionString } from 'discord.js';
@@ -46,8 +46,7 @@ class MuteCommand extends CommonCommand {
     const targetMember = message.mentions.members.first();
 
     if (!targetMember) {
-      const embed = ErrorEmbed('Пользователь не найден');
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      message.sendError('Пользователь не найден');
       return;
     }
 
@@ -57,8 +56,7 @@ class MuteCommand extends CommonCommand {
       targetMember.roles.highest.comparePositionTo(message.guild.me.roles.highest) >= 0 ||
       targetMember.permissions.has('ADMINISTRATOR')
     ) {
-      const embed = ErrorEmbed('У вас нет прав, что бы замутить этого пользователя');
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      message.sendError('У вас нет прав, что бы замутить этого пользователя');
       return;
     }
 
@@ -67,21 +65,23 @@ class MuteCommand extends CommonCommand {
     if (targetMember.communicationDisabledUntilTimestamp > Date.now() && !forceMute) {
       const duration = targetMember.communicationDisabledUntilTimestamp - Date.now();
 
-      const embed = ErrorEmbed('Пользователь уже в муте');
-      embed.setFooter({
-        text: `Осталось до размута: ${moment.duration(duration).locale('ru').humanize()}`,
+      message.sendError('Пользователь уже в муте', {
+        footer: {
+          text: `Осталось до размута: ${moment.duration(duration).locale('ru').humanize()}`,
+        },
       });
 
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
       return;
     }
 
     const time = getDurationFromString(args[1]?.toLowerCase());
 
     if (!time) {
-      const embed = ErrorEmbed('Введена неправильная дата');
-      embed.setFooter({ text: 'Подробнее о формате даты можно почитать в помощи о команде' });
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      message.sendError('Введена неправильная дата', {
+        footer: {
+          text: 'Подробнее о формате даты можно почитать в помощи о команде',
+        },
+      });
       return;
     }
 

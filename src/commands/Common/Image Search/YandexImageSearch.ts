@@ -1,4 +1,3 @@
-import { ErrorEmbed } from '../../../utils/Discord/Embed';
 import { generateYandexSearchLink, getSitesFromYandexResponse } from '../../../utils/Media/ImageSearch';
 import { promisify } from 'util';
 import { yandexWhitelistSites } from '../../../static/ImageSearch';
@@ -53,8 +52,7 @@ class YandexImageSearchCommand extends CommonCommand {
     }
 
     if (!imageLink) {
-      const embed = ErrorEmbed('**Введите ссылку на изображение**');
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      message.sendError('**Введите ссылку на изображение**');
       return;
     }
 
@@ -63,8 +61,7 @@ class YandexImageSearchCommand extends CommonCommand {
     const result = await request(yandexImageLink).then((response) => getSitesFromYandexResponse(response));
 
     if (!result) {
-      const embed = ErrorEmbed('**Результаты не найдены**');
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      message.sendError('**Результаты не найдены**');
       return;
     }
 
@@ -86,8 +83,7 @@ class YandexImageSearchCommand extends CommonCommand {
       .sort((firstSite, secondarySite) => secondarySite.info.priority - firstSite.info.priority);
 
     if (!filteredSites.length) {
-      const embed = ErrorEmbed('**Результаты не найдены**');
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      message.sendError('**Результаты не найдены**');
       return;
     }
 

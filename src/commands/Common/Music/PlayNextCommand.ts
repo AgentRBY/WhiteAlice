@@ -1,4 +1,3 @@
-import { ErrorEmbed } from '../../../utils/Discord/Embed';
 import { MessageEmbed } from 'discord.js';
 import { EmojisLinks } from '../../../static/Emojis';
 import { Colors } from '../../../static/Colors';
@@ -26,8 +25,7 @@ class PlayNextCommand extends CommonCommand {
   @IsUserInVoice()
   async run({ client, message, args, attributes }: CommandRunOptions) {
     if (!args.length) {
-      const embed = ErrorEmbed('**Вы не указали запрос**');
-      return message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      message.sendError('**Вы не указали запрос**');
     }
 
     const skipSong = attributes.has('S') || attributes.has('s');

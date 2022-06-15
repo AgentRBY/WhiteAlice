@@ -1,4 +1,3 @@
-import { ErrorEmbed } from '../../../utils/Discord/Embed';
 import { isNumber } from '../../../utils/Common/Number';
 import { formatNHentaiManga } from '../../../utils/Media/Manga';
 import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
@@ -22,8 +21,7 @@ class NHentaiCommand extends CommonCommand {
     const id = args[0];
 
     if (!id || !isNumber(id)) {
-      const embed = ErrorEmbed('**Укажите айди манги**');
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      message.sendError('**Укажите айди манги**');
       return;
     }
 
@@ -32,8 +30,7 @@ class NHentaiCommand extends CommonCommand {
     const manga = await nHentaiApi.fetchDoujin(id);
 
     if (!manga) {
-      const embed = ErrorEmbed('**Манга не найдена**');
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      message.sendError('**Манга не найдена**');
       return;
     }
 

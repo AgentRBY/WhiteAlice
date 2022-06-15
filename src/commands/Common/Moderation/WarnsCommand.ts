@@ -1,4 +1,3 @@
-import { SuccessEmbed } from '../../../utils/Discord/Embed';
 import { MessageEmbed } from 'discord.js';
 import moment from 'moment';
 import { Colors } from '../../../static/Colors';
@@ -25,8 +24,7 @@ class WarnsCommand extends CommonCommand {
     const warns = await client.service.getWarns(getMemberBaseId(targetMember));
 
     if (!warns.length) {
-      const embed = SuccessEmbed('Предупреждения отсутствуют');
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      message.sendSuccess('Предупреждения отсутствуют');
       return;
     }
 

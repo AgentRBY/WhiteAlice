@@ -1,4 +1,4 @@
-import { ErrorEmbed, SuccessEmbed } from '../../../utils/Discord/Embed';
+import { SuccessEmbed } from '../../../utils/Discord/Embed';
 import { isSnowflake } from 'distube';
 import { MessageEmbed, PermissionString } from 'discord.js';
 import { Colors } from '../../../static/Colors';
@@ -28,29 +28,25 @@ class UnbanCommand extends CommonCommand {
     const userId = args[0];
 
     if (!userId) {
-      const embed = ErrorEmbed('Введите айди пользователя');
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      message.sendError('Введите айди пользователя');
       return;
     }
 
     if (!isSnowflake(userId)) {
-      const embed = ErrorEmbed('Указан неверный айди');
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      message.sendError('Указан неверный айди');
       return;
     }
 
     const user = await client.users.fetch(userId).catch(() => {});
 
     if (!user) {
-      const embed = ErrorEmbed('Пользователь не найден');
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      message.sendError('Пользователь не найден');
       return;
     }
 
     await message.guild.bans.fetch();
     if (!message.guild.bans.cache.get(user.id)) {
-      const embed = ErrorEmbed('Пользователь не забанен');
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      message.sendError('Пользователь не забанен');
       return;
     }
 

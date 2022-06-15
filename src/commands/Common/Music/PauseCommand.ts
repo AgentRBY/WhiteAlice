@@ -1,5 +1,3 @@
-import { SuccessEmbed } from '../../../utils/Discord/Embed';
-
 import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
 import { IsChannelForMusic } from '../../../utils/Decorators/MusicDecorators';
 
@@ -21,14 +19,13 @@ class PauseCommand extends CommonCommand {
     const queue = client.disTube.getQueue(message);
 
     if (!queue.playing) {
-      await client.disTube.resume(message);
-      const embed = SuccessEmbed('**Трек был возобновлён.**');
-      return message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      queue.resume();
+      message.sendSuccess('**Трек был возобновлён.**');
+      return;
     }
 
-    await client.disTube.pause(message);
-    const embed = SuccessEmbed('**Трек был приостановлен.**');
-    return message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+    queue.pause();
+    message.sendSuccess('**Трек был приостановлен.**');
   }
 }
 

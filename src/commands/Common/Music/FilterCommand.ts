@@ -1,4 +1,3 @@
-import { ErrorEmbed, SuccessEmbed } from '../../../utils/Discord/Embed';
 import { AvailableFilters } from '../../../static/Music';
 import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
 import { IsChannelForMusic } from '../../../utils/Decorators/MusicDecorators';
@@ -34,15 +33,13 @@ class FilterCommand extends CommonCommand {
     if (!filter) {
       const activeFilters = queue.filters.join('`, `');
 
-      const embed = SuccessEmbed(`Текущие фильтры: \`${activeFilters || 'отсутствуют'}\``);
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      message.sendSuccess(`Текущие фильтры: \`${activeFilters || 'отсутствуют'}\``);
       return;
     }
 
     if (filter === 'list') {
       const availableFilters = [...AvailableFilters].join('`, `');
-      const embed = SuccessEmbed(`Доступные фильтры: \`${availableFilters}\``);
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      message.sendSuccess(`Доступные фильтры: \`${availableFilters}\``);
       return;
     }
 
@@ -50,22 +47,20 @@ class FilterCommand extends CommonCommand {
 
     if (disableAliases.has(filter)) {
       queue.setFilter(false);
-      const embed = SuccessEmbed('Фильтры убраны');
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      message.sendSuccess('Фильтры убраны');
       return;
     }
 
     if (!AvailableFilters.has(filter)) {
-      const embed = ErrorEmbed('Фильтр не найден');
-      embed.setFooter({ text: 'Что-бы узнать доступные фильтры пропишите >filters list' });
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      message.sendError('Фильтр не найден', {
+        footer: { text: 'Что-бы узнать доступные фильтры пропишите >filters list' },
+      });
       return;
     }
 
     queue.setFilter(filter);
 
-    const embed = SuccessEmbed(`Фильтр \`${filter}\` успешно применён`);
-    message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+    message.sendSuccess(`Фильтр \`${filter}\` успешно применён`);
     return;
   }
 }

@@ -1,7 +1,6 @@
 import anilist from 'anilist-node';
 import { formatAnilistAnime } from '../../../utils/Media/Anime';
 import { upAllFirstLatter } from '../../../utils/Common/Strings';
-import { ErrorEmbed } from '../../../utils/Discord/Embed';
 import { getRandomInt } from '../../../utils/Common/Number';
 import { SortList } from '../../../static/Anilist';
 import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
@@ -28,8 +27,7 @@ class RandomAnimeCommand extends CommonCommand {
     const tags = args.map((argument) => `"${upAllFirstLatter(argument.replace('_', ' '))}"`);
 
     if (!tags.length) {
-      const embed = ErrorEmbed('**Введите один или несколько тегов**');
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      message.sendError('**Введите один или несколько тегов**');
       return;
     }
     const totalResults = await new anilist().searchEntry.anime(
@@ -52,8 +50,7 @@ class RandomAnimeCommand extends CommonCommand {
     );
 
     if (!searchResult.media.length) {
-      const embed = ErrorEmbed('**Результаты не найдены**');
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      message.sendError('**Результаты не найдены**');
       return;
     }
 

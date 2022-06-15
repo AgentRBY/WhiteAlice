@@ -1,4 +1,3 @@
-import { SuccessEmbed } from '../../../utils/Discord/Embed';
 import { MessageEmbed } from 'discord.js';
 import moment from 'moment';
 import { Colors } from '../../../static/Colors';
@@ -25,8 +24,7 @@ class MutesCommand extends CommonCommand {
     const mutes = await client.service.getMutes(getMemberBaseId(targetMember));
 
     if (!mutes.length) {
-      const embed = SuccessEmbed('Муты отсутствуют');
-      message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      message.sendSuccess('Муты отсутствуют');
       return;
     }
 
