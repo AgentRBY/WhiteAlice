@@ -73,6 +73,12 @@ class MuteCommand extends SlashCommand {
     });
 
   async run({ client, interaction }: SlashCommandRunOptions) {
+    if (!interaction.memberPermissions.has('BAN_MEMBERS')) {
+      const embed = ErrorEmbed('У вас нет прав на эту команду');
+      interaction.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      return;
+    }
+
     const targetMember = interaction.options.getMember('пользователь', true);
 
     if (!(targetMember instanceof GuildMember)) {
