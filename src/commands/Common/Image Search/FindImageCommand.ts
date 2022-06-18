@@ -63,6 +63,7 @@ class FindImageCommand extends CommonCommand {
 
     if (!results.length) {
       message.sendError('**Результаты не найдены**');
+      return;
     }
 
     let filteredSites = results.filter((result) => sauceNAORelevantSites.has(result.site));
