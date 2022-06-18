@@ -34,6 +34,7 @@ class FindanimeCommand extends CommonCommand {
 
     if (!link || !isLink(link)) {
       message.sendError('**Введите ссылку на изображение**');
+      return;
     }
 
     if (!isMediaLink(link.toLowerCase())) {
@@ -64,6 +65,7 @@ class FindanimeCommand extends CommonCommand {
 
     if (!anime) {
       message.sendError('**Результаты не найдены**');
+      return;
     }
 
     const animeInfo = await new anilist().media.anime(anime.anilist as number);

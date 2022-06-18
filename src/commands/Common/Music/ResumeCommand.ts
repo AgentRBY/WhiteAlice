@@ -20,6 +20,7 @@ class ResumeCommand extends CommonCommand {
 
     if (queue.playing) {
       message.sendError('**Трек не приостановлен.**');
+      return;
     }
 
     queue.resume();

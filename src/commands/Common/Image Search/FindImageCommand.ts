@@ -37,6 +37,7 @@ class FindImageCommand extends CommonCommand {
 
     if (!link || !isLink(link)) {
       message.sendError('**Введите ссылку на изображение**');
+      return;
     }
 
     if (!isImageLink(link.toLowerCase()) && !isGifLink(link.toLowerCase())) {
@@ -57,6 +58,7 @@ class FindImageCommand extends CommonCommand {
     } catch (error) {
       Logger.error(error);
       message.sendError('**Произошла ошибка, попробуйте ещё раз**');
+      return;
     }
 
     results = results.filter((result) => result.similarity > 50);

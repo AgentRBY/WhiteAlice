@@ -36,6 +36,7 @@ class SearchCommand extends CommonCommand {
   async run({ client, message, args, attributes, keys }: CommandRunOptions) {
     if (!args.length) {
       message.sendError('**Вы не указали запрос**');
+      return;
     }
 
     const limit = Number(keys.get('hl:Limit') || keys.get('hl:L')) || 10;

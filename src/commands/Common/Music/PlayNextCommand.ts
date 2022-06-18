@@ -26,6 +26,7 @@ class PlayNextCommand extends CommonCommand {
   async run({ client, message, args, attributes }: CommandRunOptions) {
     if (!args.length) {
       message.sendError('**Вы не указали запрос**');
+      return;
     }
 
     const skipSong = attributes.has('S') || attributes.has('s');

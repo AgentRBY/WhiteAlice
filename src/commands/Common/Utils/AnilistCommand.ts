@@ -20,12 +20,14 @@ class AnilistCommand extends CommonCommand {
 
     if (!animeID || Number.isNaN(animeID)) {
       message.sendError('**Укажите айди аниме**');
+      return;
     }
 
     const animeInfo = await new anilist().media.anime(animeID);
 
     if (Array.isArray(animeInfo)) {
       message.sendError('**Аниме с данным айди не найдено**');
+      return;
     }
 
     const embed = await formatAnilistAnime(animeInfo);

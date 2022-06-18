@@ -23,6 +23,7 @@ class PlayCommand extends CommonCommand {
   async run({ client, message, args }: CommandRunOptions) {
     if (!args.length) {
       message.sendError('**Вы не указали запрос**');
+      return;
     }
 
     try {

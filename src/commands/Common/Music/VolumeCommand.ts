@@ -33,6 +33,7 @@ class VolumeCommand extends CommonCommand {
 
     if (!isNumber(volume) || volume > 100 || volume < 1) {
       message.sendError('**Укажите значение громкости в процентах от 1 до 100**');
+      return;
     }
 
     await client.disTube.setVolume(message, volume);

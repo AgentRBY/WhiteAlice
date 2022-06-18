@@ -21,7 +21,9 @@ class EvalCommand extends CommonCommand {
   async run({ client, message, args }: CommandRunOptions) {
     if (!args.length) {
       message.sendError('**Введите любой код.**');
+      return;
     }
+
     try {
       const result = await eval(args.join(' '));
       const embed = new MessageEmbed().setColor(Colors.Green);

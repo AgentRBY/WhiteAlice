@@ -58,6 +58,7 @@ class HelpCommand extends CommonCommand {
 
     if (!command) {
       message.sendError(`**Команда не найдена. Введите \`${prefix}help\` для списка команд**`);
+      return;
     }
 
     let description = `**➤ Команда**: \`${prefix}${command.name}\`

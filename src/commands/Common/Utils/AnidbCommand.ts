@@ -19,6 +19,7 @@ class AnidbCommand extends CommonCommand {
 
     if (!animeID || Number.isNaN(animeID)) {
       message.sendError('**Укажите айди аниме**');
+      return;
     }
 
     let anime;
