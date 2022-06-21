@@ -40,6 +40,6 @@ export class WarnsAction {
   async calculateWarnsKarma(this: Service, id: MemberBaseId): Promise<number> {
     const MemberData = await this.getMemberData(id);
 
-    return MemberData.warns.length * KARMA_FOR_WARN;
+    return MemberData.warns.filter((warn) => !warn.removed).length * KARMA_FOR_WARN;
   }
 }
