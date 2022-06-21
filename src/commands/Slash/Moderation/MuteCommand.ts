@@ -75,7 +75,7 @@ class MuteCommand extends SlashCommand {
   async run({ client, interaction }: SlashCommandRunOptions) {
     if (!interaction.memberPermissions.has('BAN_MEMBERS')) {
       const embed = ErrorEmbed('У вас нет прав на эту команду');
-      interaction.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+      interaction.reply({ embeds: [embed], ephemeral: true });
       return;
     }
 
@@ -149,7 +149,7 @@ class MuteCommand extends SlashCommand {
 
     client.service.addMute(getMemberBaseId(targetMember), mute);
 
-    interaction.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+    interaction.reply({ embeds: [embed] });
     targetMember.send({ embeds: [directEmbed] });
   }
 }
