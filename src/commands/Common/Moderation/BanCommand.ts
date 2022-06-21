@@ -46,6 +46,13 @@ class BanCommand extends CommonCommand {
       return;
     }
 
+    const user = await client.users.fetch(userId).catch(() => {});
+
+    if (!user) {
+      message.sendError('Пользователь не найден');
+      return;
+    }
+
     await message.guild.bans.fetch();
     if (message.guild.bans.cache.get(userId)) {
       message.sendError('Пользователь уже в бане');
@@ -78,8 +85,6 @@ class BanCommand extends CommonCommand {
     }
 
     const reason = args.slice(1).join(' ');
-
-    const user = await client.users.fetch(userId);
 
     const embed = SuccessEmbed(`Пользователь ${member || user} был забанен`);
     const directEmbed = new MessageEmbed()
