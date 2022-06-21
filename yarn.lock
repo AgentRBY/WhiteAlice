@@ -2553,6 +2553,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"fast-fuzzy@npm:^1.11.2":
+  version: 1.11.2
+  resolution: "fast-fuzzy@npm:1.11.2"
+  dependencies:
+    graphemesplit: ^2.4.1
+  checksum: 147502fd05f7122b746140747f1d39684ed8eb73ffacc02aef949a48b1d758049bde214836016309eaa9e170505d809089b3c2bfc5d8a228653b43914591f999
+  languageName: node
+  linkType: hard
+
 "fast-glob@npm:^3.2.9":
   version: 3.2.11
   resolution: "fast-glob@npm:3.2.11"
@@ -3037,6 +3046,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"graphemesplit@npm:^2.4.1":
+  version: 2.4.4
+  resolution: "graphemesplit@npm:2.4.4"
+  dependencies:
+    js-base64: ^3.6.0
+    unicode-trie: ^2.0.0
+  checksum: 81db7c4277855bb86df9fb3c2bb37105010b4275e145a18490e0c579096f7b1ff41784d76bbf5540c31db8e629d0ca0710615d29cb157f65c429eff64cd13ae4
+  languageName: node
+  linkType: hard
+
 "har-schema@npm:^2.0.0":
   version: 2.0.0
   resolution: "har-schema@npm:2.0.0"
@@ -3152,6 +3171,7 @@ __metadata:
     eslint-plugin-import: ^2.26.0
     eslint-plugin-prettier: ^4.0.0
     eslint-plugin-unicorn: ^42.0.0
+    fast-fuzzy: ^1.11.2
     glob: ^7.2.0
     husky: ^8.0.1
     lint-staged: ^13.0.2
@@ -3639,6 +3659,13 @@ __metadata:
   version: 0.1.2
   resolution: "isstream@npm:0.1.2"
   checksum: 1eb2fe63a729f7bdd8a559ab552c69055f4f48eb5c2f03724430587c6f450783c8f1cd936c1c952d0a927925180fcc892ebd5b174236cf1065d4bd5bdb37e963
+  languageName: node
+  linkType: hard
+
+"js-base64@npm:^3.6.0":
+  version: 3.7.2
+  resolution: "js-base64@npm:3.7.2"
+  checksum: 573f28e9a27c3df60096d4d3f551bcb4fcb6d49161cf83396e9bad9b76f94736a70bb70b8808fe834dff2a388f76604ba09d6e153bbf181646e407720139fa5b
   languageName: node
   linkType: hard
 
@@ -6163,6 +6190,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"tiny-inflate@npm:^1.0.0":
+  version: 1.0.3
+  resolution: "tiny-inflate@npm:1.0.3"
+  checksum: 4086a1f8938dafa4a20c63b099aeb47bf8fef5aca991bf4ea4b35dd2684fa52363b2c19b3e76660311e7613cb7c4f063bc48751b9bdf9555e498d997c30bc2d6
+  languageName: node
+  linkType: hard
+
 "tiny-typed-emitter@npm:^2.1.0":
   version: 2.1.0
   resolution: "tiny-typed-emitter@npm:2.1.0"
@@ -6465,6 +6499,16 @@ __metadata:
     has-symbols: ^1.0.2
     which-boxed-primitive: ^1.0.2
   checksum: 89d950e18fb45672bc6b3c961f1e72c07beb9640c7ceed847b571ba6f7d2af570ae1a2584cfee268b9d9ea1e3293f7e33e0bc29eaeb9f8e8a0bab057ff9e6bba
+  languageName: node
+  linkType: hard
+
+"unicode-trie@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "unicode-trie@npm:2.0.0"
+  dependencies:
+    pako: ^0.2.5
+    tiny-inflate: ^1.0.0
+  checksum: 19e637ce20953ec1fbfa9087abef4746a50352679b833be27924e4ba7ad753cc4073b74263747ccfccb5e38b30b17468cbb96f361eb49903ff8602396280b5a4
   languageName: node
   linkType: hard
 
