@@ -14,10 +14,13 @@ class MuteCommand extends SlashCommand {
       .addField('🖥️ До сервера', `${client.ws.ping}мс`, true)
       .addField(
         `${Emojis.Discord} До Discord`,
-        `${interaction.createdAt.getMilliseconds() - time.getMilliseconds()}мс`,
+        `${time.getMilliseconds() - interaction.createdAt.getMilliseconds()}мс`,
         true,
       )
-      .setColor(Colors.Green);
+      .setColor(Colors.Green)
+      .setFooter({
+        text: 'Дискорд неверно выдает дату отправления команды, поэтому к задержке До Discord можно добавлять примерно 200мс задержки',
+      });
 
     await interaction.reply({ embeds: [embed] });
   }
