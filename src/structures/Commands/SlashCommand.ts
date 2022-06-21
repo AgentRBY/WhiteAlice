@@ -4,11 +4,16 @@ import {
   SlashCommandSubcommandsOnlyBuilder,
 } from '@discordjs/builders';
 import { ExtendClient } from '../Client';
-import { CommandInteraction } from 'discord.js';
+import { AutocompleteInteraction, CommandInteraction } from 'discord.js';
 
 export interface SlashCommandRunOptions {
   client: ExtendClient;
   interaction: CommandInteraction;
+}
+
+export interface AutocompleteRunOptions {
+  client: ExtendClient;
+  interaction: AutocompleteInteraction;
 }
 
 export class SlashCommand {
@@ -20,6 +25,11 @@ export class SlashCommand {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   run(options: SlashCommandRunOptions) {
+    return;
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  handleAutocomplete(options: AutocompleteRunOptions) {
     return;
   }
 }
