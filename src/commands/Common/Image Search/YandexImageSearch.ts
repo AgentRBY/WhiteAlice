@@ -61,7 +61,11 @@ class YandexImageSearchCommand extends CommonCommand {
     const result = await request(yandexImageLink).then((response) => getSitesFromYandexResponse(response));
 
     if (!result) {
-      message.sendError('**Результаты не найдены**');
+      message.sendError('**Результаты не найдены**', {
+        footer: {
+          text: 'Подсказка: попробуйте обрезать изображение, если на нём есть лишний контент или черные полосы',
+        },
+      });
       return;
     }
 

@@ -64,7 +64,11 @@ class FindanimeCommand extends CommonCommand {
     const anime = response.result.find((anime) => anime.similarity > 0.86);
 
     if (!anime) {
-      message.sendError('**Результаты не найдены**');
+      message.sendError('**Результаты не найдены**', {
+        footer: {
+          text: 'Подсказка: попробуйте обрезать изображение, если на нём есть лишний контент или черные полосы',
+        },
+      });
       return;
     }
 

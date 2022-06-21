@@ -64,7 +64,11 @@ class FindImageCommand extends CommonCommand {
     results = results.filter((result) => result.similarity > 50);
 
     if (!results.length) {
-      message.sendError('**Результаты не найдены**');
+      message.sendError('**Результаты не найдены**', {
+        footer: {
+          text: 'Подсказка: попробуйте обрезать изображение, если на нём есть лишний контент или черные полосы',
+        },
+      });
       return;
     }
 
