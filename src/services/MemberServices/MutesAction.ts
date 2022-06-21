@@ -78,4 +78,10 @@ export class MutesAction {
     MemberData.karma = karmaForWarns + karmaForMutes + karmaForBans;
     await this.setMemberData(id, MemberData);
   }
+
+  async calculateMutesKarma(this: Service, id: MemberBaseId): Promise<number> {
+    const MemberData = await this.getMemberData(id);
+
+    return MemberData.mutes.filter((mute) => !mute.unmuted).length * KARMA_FOR_MUTE;
+  }
 }

@@ -29,10 +29,12 @@ class MutesCommand extends CommonCommand {
       return;
     }
 
-    const embed = new MessageEmbed().setColor(Colors.Blue).addFields(
-      mutes.map((mute, index) => ({
-        name: `Мут №${index + 1}`,
-        value: `**Выдан:** ${message.guild.members.cache.get(mute.givenBy) || 'Неизвестно'}
+    const embed = new MessageEmbed()
+      .setColor(Colors.Blue)
+      .addFields(
+        mutes.map((mute, index) => ({
+          name: `Мут №${index + 1}`,
+          value: `**Выдан:** ${message.guild.members.cache.get(mute.givenBy) || 'Неизвестно'}
                 **Причина:** ${mute.reason || 'Отсутствует'}
                 **Выдан:** ${momentToDiscordDate(moment(mute.date))}
                 **Истекает:** ${momentToDiscordDate(moment(mute.time + mute.date))}
@@ -45,9 +47,10 @@ class MutesCommand extends CommonCommand {
                 ${mute.unmutedReason ? `**Причина размута:** ${mute.unmutedReason}` : ''}`
                     : ''
                 }`,
-        inline: true,
-      })),
-    );
+          inline: true,
+        })),
+      )
+      .setFooter({ text: `Карма за муты: ${await client.service.calculateMutesKarma(getMemberBaseId(targetMember))}` });
 
     message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
   }
