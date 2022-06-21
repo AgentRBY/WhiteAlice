@@ -1,4 +1,4 @@
-import { Guild, GuildMember, MessageMentions, Snowflake } from 'discord.js';
+import { Guild, GuildMember, Message, MessageMentions, Snowflake } from 'discord.js';
 
 export const getMemberById = (guild: Guild, id: Snowflake): GuildMember => {
   return guild.members.cache.get(id);
@@ -44,3 +44,7 @@ export const getMembersFromLines = (guild: Guild, lines: string[]): GuildMember[
 
   return members;
 };
+
+export function getMemberFromMessage(message: Message): GuildMember | null {
+  return message.mentions.members.first() || message.guild.members.cache.get(message.content.split(' ')[1]);
+}

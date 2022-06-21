@@ -5,6 +5,7 @@ import { Emojis } from '../../../static/Emojis';
 import { Colors } from '../../../static/Colors';
 import { getMemberBaseId } from '../../../utils/Other';
 import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
+import { getMemberFromMessage } from '../../../utils/Discord/Users';
 
 class UnmuteCommand extends CommonCommand {
   name = 'unmute';
@@ -26,7 +27,7 @@ class UnmuteCommand extends CommonCommand {
   memberPermissions: PermissionString[] = ['BAN_MEMBERS'];
 
   async run({ client, message, args }: CommandRunOptions) {
-    const targetMember = message.mentions.members.first();
+    const targetMember = getMemberFromMessage(message);
 
     if (!targetMember) {
       message.sendError('Пользователь не найден');

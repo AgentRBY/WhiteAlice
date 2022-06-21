@@ -1,6 +1,7 @@
 import { KARMA_FOR_BAN, KARMA_FOR_MUTE, KARMA_FOR_WARN } from '../../../static/Punishment';
 import { getMemberBaseId } from '../../../utils/Other';
 import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
+import { getMemberFromMessage } from '../../../utils/Discord/Users';
 
 class KarmaCommand extends CommonCommand {
   name = 'karma';
@@ -19,7 +20,7 @@ class KarmaCommand extends CommonCommand {
   usage = 'karma [пользователь]';
 
   async run({ client, message }: CommandRunOptions) {
-    const member = message.mentions.members.first() || message.member;
+    const member = getMemberFromMessage(message) || message.member;
 
     const karma = await client.service.getKarma(getMemberBaseId(member));
 

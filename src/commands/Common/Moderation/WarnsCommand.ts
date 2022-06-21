@@ -4,6 +4,7 @@ import { Colors } from '../../../static/Colors';
 import { momentToDiscordDate } from '../../../utils/Common/Date';
 import { getMemberBaseId } from '../../../utils/Other';
 import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
+import { getMemberFromMessage } from '../../../utils/Discord/Users';
 
 class WarnsCommand extends CommonCommand {
   name = 'warns';
@@ -19,7 +20,7 @@ class WarnsCommand extends CommonCommand {
   usage = 'warn [пользователь]';
 
   async run({ client, message }: CommandRunOptions) {
-    const targetMember = message.mentions.members.first() || message.member;
+    const targetMember = getMemberFromMessage(message) || message.member;
 
     const warns = await client.service.getWarns(getMemberBaseId(targetMember));
 

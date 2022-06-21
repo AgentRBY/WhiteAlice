@@ -6,6 +6,7 @@ import { KARMA_FOR_WARN } from '../../../static/Punishment';
 import { getMemberBaseId } from '../../../utils/Other';
 import { Warn } from '../../../typings/MemberModel';
 import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
+import { getMemberFromMessage } from '../../../utils/Discord/Users';
 
 class WarnCommand extends CommonCommand {
   name = 'warn';
@@ -29,10 +30,10 @@ class WarnCommand extends CommonCommand {
   memberPermissions: PermissionString[] = ['BAN_MEMBERS'];
 
   async run({ client, message, args }: CommandRunOptions) {
-    const targetMember = message.mentions.members.first();
+    const targetMember = getMemberFromMessage(message);
 
     if (!targetMember) {
-      message.sendError('**Введите пользователя**');
+      message.sendError('**Пользователь не найден**');
       return;
     }
 

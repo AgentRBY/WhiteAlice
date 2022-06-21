@@ -4,6 +4,7 @@ import { formatDays, momentToDiscordDate } from '../../../utils/Common/Date';
 import moment from 'moment';
 import { getMemberBaseId } from '../../../utils/Other';
 import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
+import { getMemberFromMessage } from '../../../utils/Discord/Users';
 
 class BansCommand extends CommonCommand {
   name = 'bans';
@@ -19,14 +20,11 @@ class BansCommand extends CommonCommand {
   usage = 'bans [пользователь]';
 
   async run({ client, message }: CommandRunOptions) {
-    const member = message.mentions.members.first() || message.member;
+    const member = getMemberFromMessage(message) || message.member;
 
     const bans = await client.service.getBans(getMemberBaseId(member));
 
     if (!bans.length) {
-      // const embed = SuccessEmbed('Баны отсутствуют');
-      // message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
-      // return;
       message.sendSuccess('Баны отсутствуют');
       return;
     }

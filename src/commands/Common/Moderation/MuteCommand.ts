@@ -8,6 +8,7 @@ import { KARMA_FOR_MUTE } from '../../../static/Punishment';
 import { getMemberBaseId } from '../../../utils/Other';
 import { Mute } from '../../../typings/MemberModel';
 import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
+import { getMemberFromMessage } from '../../../utils/Discord/Users';
 
 class MuteCommand extends CommonCommand {
   name = 'mute';
@@ -43,7 +44,7 @@ class MuteCommand extends CommonCommand {
   memberPermissions: PermissionString[] = ['BAN_MEMBERS'];
 
   async run({ client, message, args, attributes }: CommandRunOptions) {
-    const targetMember = message.mentions.members.first();
+    const targetMember = getMemberFromMessage(message);
 
     if (!targetMember) {
       message.sendError('Пользователь не найден');

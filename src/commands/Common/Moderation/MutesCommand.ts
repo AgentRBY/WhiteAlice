@@ -4,6 +4,7 @@ import { Colors } from '../../../static/Colors';
 import { momentToDiscordDate } from '../../../utils/Common/Date';
 import { getMemberBaseId } from '../../../utils/Other';
 import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
+import { getMemberFromMessage } from '../../../utils/Discord/Users';
 
 class MutesCommand extends CommonCommand {
   name = 'mutes';
@@ -19,7 +20,7 @@ class MutesCommand extends CommonCommand {
   usage = 'mutes [пользователь]';
 
   async run({ client, message }: CommandRunOptions) {
-    const targetMember = message.mentions.members.first() || message.member;
+    const targetMember = getMemberFromMessage(message) || message.member;
 
     const mutes = await client.service.getMutes(getMemberBaseId(targetMember));
 

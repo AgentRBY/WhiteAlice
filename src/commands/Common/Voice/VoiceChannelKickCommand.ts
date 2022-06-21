@@ -1,6 +1,7 @@
 import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
 import { VoiceChannel } from 'discord.js';
 import { IsCustomVoice } from '../../../utils/Decorators/VoiceDecorators';
+import { getMemberFromMessage } from '../../../utils/Discord/Users';
 
 class VoiceChannelKick extends CommonCommand {
   name = 'voiceChannelKick';
@@ -20,8 +21,8 @@ class VoiceChannelKick extends CommonCommand {
   usage = 'voiceChannelKick <пользователь>';
 
   @IsCustomVoice()
-  async run({ message, args }: CommandRunOptions) {
-    const member = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
+  async run({ message }: CommandRunOptions) {
+    const member = getMemberFromMessage(message);
     const userId = member?.id;
 
     if (!userId) {
