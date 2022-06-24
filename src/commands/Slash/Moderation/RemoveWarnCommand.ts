@@ -87,16 +87,16 @@ class RemoveWarnCommand extends SlashCommand {
   }
 
   async handleAutocomplete({ client, interaction }: AutocompleteRunOptions) {
+    const focusedValue = interaction.options.getFocused(true);
+
+    if (focusedValue.name !== 'предупреждение') {
+      return;
+    }
+
     const targetUserId = interaction.options.data.find((option) => option.name === 'пользователь').value;
     const targetMember = interaction.guild.members.cache.get(targetUserId as string);
 
     if (!(targetMember instanceof GuildMember)) {
-      return;
-    }
-
-    const focusedValue = interaction.options.getFocused(true);
-
-    if (focusedValue.name !== 'предупреждение') {
       return;
     }
 
