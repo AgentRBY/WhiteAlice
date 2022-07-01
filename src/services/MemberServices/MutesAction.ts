@@ -1,6 +1,10 @@
 import { Service } from '../../structures/Service';
-import { MemberBaseId, Mute } from '../../typings/MemberModel';
+import { IMemberModel, MemberBaseId, Mute } from '../../typings/MemberModel';
 import { KARMA_FOR_BAN, KARMA_FOR_MUTE, KARMA_FOR_WARN } from '../../static/Punishment';
+import { MemberModel } from '../../models/MemberModel';
+import { Snowflake } from 'discord.js';
+import { MongoData } from '../../typings/Database';
+import { PipelineStage } from 'mongoose';
 
 export class MutesAction {
   async getMutes(this: Service, id: MemberBaseId): Promise<Mute[]> {
@@ -83,5 +87,52 @@ export class MutesAction {
     const MemberData = await this.getMemberData(id);
 
     return MemberData.mutes.filter((mute) => !mute.unmuted).length * KARMA_FOR_MUTE;
+  }
+
+  async getCurrentMutes(this: Service, guildId: Snowflake): Promise<MongoData<IMemberModel>[]> {
+    const filterMutesByTimeAndUnMuted: PipelineStage = {
+      $set: {
+        mutes: {
+          $filter: {
+            input: '$mutes',
+            as: 'mute',
+            cond: {
+              $and: [
+                {
+                  $gte: [
+                    {
+                      $add: ['$$mute.time', '$$mute.date'],
+                    },
+                    Date.now(),
+                  ],
+                },
+                {
+                  $not: '$$mute.unmuted',
+                },
+              ],
+            },
+          },
+        },
+      },
+    };
+
+    const addMutesSizeField: PipelineStage = {
+      $addFields: {
+        mutesSize: {
+          $size: '$mutes',
+        },
+      },
+    };
+
+    const sortByMutedSizeAndGuildId: PipelineStage = {
+      $match: {
+        _id: new RegExp(`\\d+-${guildId}`),
+        mutesSize: {
+          $ne: 0,
+        },
+      },
+    };
+
+    return MemberModel.aggregate([filterMutesByTimeAndUnMuted, addMutesSizeField, sortByMutedSizeAndGuildId]);
   }
 }
