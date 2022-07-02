@@ -98,7 +98,7 @@ class UnmuteCommand extends SlashCommand {
 
     const filteredBans = searcher.search(focusedValue.value as string);
 
-    await interaction.respond(filteredBans);
+    await interaction.respond(filteredBans.slice(0, 25));
   }
 }
 
