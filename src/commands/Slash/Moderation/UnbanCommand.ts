@@ -92,7 +92,7 @@ class UnbanCommand extends SlashCommand {
 
     const filteredBans = searcher.search(focusedValue.value as string);
 
-    await interaction.respond(filteredBans.slice(0, 25));
+    await interaction.respond(filteredBans.slice(0, 24));
   }
 }
 

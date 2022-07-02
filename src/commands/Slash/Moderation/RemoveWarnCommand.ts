@@ -131,7 +131,7 @@ class RemoveWarnCommand extends SlashCommand {
 
     const filteredWarns = searcher.search(focusedValue.value as string);
 
-    await interaction.respond(filteredWarns.slice(0, 25));
+    await interaction.respond(filteredWarns.slice(0, 24));
   }
 }
 
