@@ -72,7 +72,7 @@ class UnbanCommand extends SlashCommand {
       return;
     }
 
-    const bans = await interaction.guild.bans.fetch();
+    const bans = await interaction.guild.bans.fetch({ limit: 25 });
 
     const mappedBans = bans.map((ban) => {
       return {
@@ -92,7 +92,7 @@ class UnbanCommand extends SlashCommand {
 
     const filteredBans = searcher.search(focusedValue.value as string);
 
-    await interaction.respond(filteredBans.slice(0, 25));
+    await interaction.respond(filteredBans);
   }
 }
 

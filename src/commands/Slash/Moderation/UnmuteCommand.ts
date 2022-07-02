@@ -73,6 +73,7 @@ class UnmuteCommand extends SlashCommand {
     const currentMutes = await client.service.getCurrentMutes(interaction.guild.id);
 
     const mappedMutes = currentMutes
+      .slice(0, 25)
       .map((user) => {
         const member = interaction.guild.members.cache.get(user._id.split('-')[0]);
 
@@ -98,7 +99,7 @@ class UnmuteCommand extends SlashCommand {
 
     const filteredBans = searcher.search(focusedValue.value as string);
 
-    await interaction.respond(filteredBans.slice(0, 25));
+    await interaction.respond(filteredBans);
   }
 }
 
