@@ -108,7 +108,6 @@ class RemoveWarnCommand extends SlashCommand {
     }
 
     const mappedWarns = warns
-      .slice(0, 25)
       .map((warn, index) => {
         if (warn.removed) {
           return;
@@ -122,7 +121,7 @@ class RemoveWarnCommand extends SlashCommand {
       .filter(Boolean);
 
     if (focusedValue.value === '') {
-      await interaction.respond(mappedWarns);
+      await interaction.respond(mappedWarns.slice(0, 25));
       return;
     }
 
@@ -132,7 +131,7 @@ class RemoveWarnCommand extends SlashCommand {
 
     const filteredWarns = searcher.search(focusedValue.value as string);
 
-    await interaction.respond(filteredWarns);
+    await interaction.respond(filteredWarns.slice(0, 25));
   }
 }
 
