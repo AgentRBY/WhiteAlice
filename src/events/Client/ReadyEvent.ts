@@ -1,4 +1,4 @@
-import { Event } from '../../structures/Event';
+import { DiscordEvent, DiscordEventNames } from '../../structures/Event';
 import { ExtendClient } from '../../structures/Client';
 import { Collection } from 'discord.js';
 import { Activities } from '../../static/Activities';
@@ -6,9 +6,10 @@ import { getRandomInt } from '../../utils/Common/Number';
 import { sleep } from '../../utils/Common/Strings';
 import Logger from '../../utils/Logger';
 
-export default new Event({
-  name: 'ready',
-  run: async (client: ExtendClient) => {
+class Ready extends DiscordEvent<'ready'> {
+  name: DiscordEventNames = 'ready';
+
+  async run(client: ExtendClient) {
     await client.guilds.fetch();
 
     const slashCommands = [...client.slashCommands.values()];
@@ -49,5 +50,7 @@ export default new Event({
     setInterval(() => {
       client.user.setActivity(Activities[getRandomInt(0, Activities.length - 1)]);
     }, 120_000);
-  },
-});
+  }
+}
+
+export default new Ready();

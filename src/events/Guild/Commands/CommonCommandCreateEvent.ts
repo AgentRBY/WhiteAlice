@@ -1,13 +1,14 @@
-import { Event } from '../../../structures/Event';
+import { DiscordEvent, DiscordEventNames } from '../../../structures/Event';
 import { Collection, Message } from 'discord.js';
 import { ExtendClient } from '../../../structures/Client';
 import { ErrorEmbed } from '../../../utils/Discord/Embed';
 import Permissions from '../../../static/Permissions';
 import { ExtendedMessage } from '../../../structures/ExtendedMessage';
 
-export default new Event({
-  name: 'messageCreate',
-  run: async (client: ExtendClient, message: Message) => {
+class CommonCommandCreate extends DiscordEvent<'messageCreate'> {
+  name: DiscordEventNames = 'messageCreate';
+
+  async run(client: ExtendClient, message: Message) {
     if (!message.member || !message.guild || !message.guild.me || message.channel.type === 'DM' || message.system) {
       return;
     }
@@ -78,5 +79,7 @@ export default new Event({
     }
 
     command.run({ client, message: extendedMessage, args: cleanArgs, keys, attributes });
-  },
-});
+  }
+}
+
+export default new CommonCommandCreate();

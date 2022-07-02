@@ -1,11 +1,12 @@
 import { TextChannel } from 'discord.js';
-import { Event } from '../../structures/Event';
+import { DisTubeEvent, DisTubeEventNames } from '../../structures/Event';
 import { ErrorEmbed } from '../../utils/Discord/Embed';
+import { ExtendClient } from '../../structures/Client';
 
-export default new Event({
-  name: 'error',
-  type: 'distube',
-  run: (channel: TextChannel, error: Error) => {
+class GuildDelete extends DisTubeEvent<'error'> {
+  name: DisTubeEventNames = 'error';
+
+  run(client: ExtendClient, channel: TextChannel, error: Error) {
     const message = error.message.split('\n').pop();
 
     switch (message) {
@@ -26,5 +27,7 @@ export default new Event({
         channel.send({ embeds: [ErrorEmbed(`Произошла ошибка: ${error}`)] });
         break;
     }
-  },
-});
+  }
+}
+
+export default new GuildDelete();

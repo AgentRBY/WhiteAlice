@@ -1,14 +1,14 @@
-import { Event } from '../../../structures/Event';
+import { DiscordEvent, DiscordEventNames } from '../../../structures/Event';
 import { ExtendClient } from '../../../structures/Client';
 import { MessageActionRow, MessageButton, MessageEmbed, Util, VoiceState } from 'discord.js';
 import { Emojis, EmojisLinks } from '../../../static/Emojis';
 import { Colors } from '../../../static/Colors';
 import { VoiceButtons } from '../../../typings/Interactions';
 
-export default new Event({
-  name: 'voiceStateUpdate',
-  type: 'discord',
-  run: async (client: ExtendClient, oldState: VoiceState, newState: VoiceState) => {
+class CreateCustomVoice extends DiscordEvent<'voiceStateUpdate'> {
+  name: DiscordEventNames = 'voiceStateUpdate';
+
+  async run(client: ExtendClient, oldState: VoiceState, newState: VoiceState) {
     const baseVoiceChannelId = await client.service.getBaseVoiceChannel(newState.guild.id);
 
     if (!baseVoiceChannelId || !newState.channel) {
@@ -99,5 +99,7 @@ export default new Event({
     message.pin();
 
     client.customVoicesState.set(customVoice.id, [newState.member.id, customChannel.id]);
-  },
-});
+  }
+}
+
+export default new CreateCustomVoice();

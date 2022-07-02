@@ -1,13 +1,14 @@
 import { MessageEmbed } from 'discord.js';
 import { Colors } from '../../static/Colors';
 import { EmojisLinks } from '../../static/Emojis';
-import { Event } from '../../structures/Event';
+import { DisTubeEvent, DisTubeEventNames } from '../../structures/Event';
 import { Queue, Song } from 'distube';
+import { ExtendClient } from '../../structures/Client';
 
-export default new Event({
-  name: 'addSong',
-  type: 'distube',
-  run: (queue: Queue, song: Song) => {
+class GuildDelete extends DisTubeEvent<'addSong'> {
+  name: DisTubeEventNames = 'addSong';
+
+  run(client: ExtendClient, queue: Queue, song: Song) {
     const embed = new MessageEmbed()
       .setAuthor({
         name: 'Музыка',
@@ -18,5 +19,7 @@ export default new Event({
       .setColor(Colors.Green);
 
     queue.textChannel.send({ embeds: [embed] });
-  },
-});
+  }
+}
+
+export default new GuildDelete();

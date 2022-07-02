@@ -1,11 +1,11 @@
-import { Event } from '../../../structures/Event';
+import { DiscordEvent, DiscordEventNames } from '../../../structures/Event';
 import { ExtendClient } from '../../../structures/Client';
 import { Interaction } from 'discord.js';
 
-export default new Event({
-  name: 'interactionCreate',
-  type: 'discord',
-  run: async (client: ExtendClient, interaction: Interaction) => {
+class SlashCommandAutocompleteCreate extends DiscordEvent<'interactionCreate'> {
+  name: DiscordEventNames = 'interactionCreate';
+
+  run(client: ExtendClient, interaction: Interaction) {
     if (!interaction.isAutocomplete()) {
       return;
     }
@@ -16,5 +16,7 @@ export default new Event({
 
     const command = client.slashCommands.get(interaction.commandName);
     command.handleAutocomplete({ client, interaction });
-  },
-});
+  }
+}
+
+export default new SlashCommandAutocompleteCreate();

@@ -1,4 +1,4 @@
-import { Event } from '../../../structures/Event';
+import { DiscordEvent, DiscordEventNames } from '../../../structures/Event';
 import { ExtendClient } from '../../../structures/Client';
 import { GuildMember, Interaction, Message, MessageButton, MessageEmbed, TextChannel, VoiceChannel } from 'discord.js';
 import { VoiceButtons, VoiceModals, VoiceSelects } from '../../../typings/Interactions';
@@ -8,10 +8,10 @@ import { Emojis } from '../../../static/Emojis';
 import { ErrorEmbed } from '../../../utils/Discord/Embed';
 import { Modal, SelectMenuComponent, showModal } from 'discord-modals';
 
-export default new Event({
-  name: 'interactionCreate',
-  type: 'discord',
-  run: async (client: ExtendClient, interaction: Interaction) => {
+class VoiceInteractionButtons extends DiscordEvent<'interactionCreate'> {
+  name: DiscordEventNames = 'interactionCreate';
+
+  run(client: ExtendClient, interaction: Interaction) {
     if (interaction.isCommand()) {
     }
 
@@ -205,5 +205,7 @@ export default new Event({
         return;
       }
     }
-  },
-});
+  }
+}
+
+export default new VoiceInteractionButtons();

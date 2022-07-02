@@ -1,11 +1,12 @@
-import { Event } from '../../../structures/Event';
+import { DiscordEvent, DiscordEventNames } from '../../../structures/Event';
 import { ExtendClient } from '../../../structures/Client';
 import { Collection, GuildMember, TextChannel } from 'discord.js';
 import { InfoEmbed } from '../../../utils/Discord/Embed';
 
-export default new Event({
-  name: 'guildMemberAdd',
-  run: async (client: ExtendClient, member: GuildMember) => {
+class GuildMemberAdd extends DiscordEvent<'guildMemberAdd'> {
+  name: DiscordEventNames = 'guildMemberAdd';
+
+  async run(client: ExtendClient, member: GuildMember) {
     if (!member.guild.me.permissions.has('MANAGE_GUILD')) {
       return;
     }
@@ -37,5 +38,7 @@ export default new Event({
     const codeUses = new Collection<string, number>();
     newInvites.each((inv) => codeUses.set(inv.code, inv.uses));
     client.invites.set(member.guild.id, codeUses);
-  },
-});
+  }
+}
+
+export default new GuildMemberAdd();

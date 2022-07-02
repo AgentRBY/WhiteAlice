@@ -1,11 +1,11 @@
-import { Event } from '../../../structures/Event';
+import { DiscordEvent, DiscordEventNames } from '../../../structures/Event';
 import { ExtendClient } from '../../../structures/Client';
 import { DMChannel, GuildChannel } from 'discord.js';
 
-export default new Event({
-  name: 'channelDelete',
-  type: 'discord',
-  run: async (client: ExtendClient, channel: DMChannel | GuildChannel) => {
+class DeleteBasicVoiceChannel extends DiscordEvent<'channelDelete'> {
+  name: DiscordEventNames = 'channelDelete';
+
+  async run(client: ExtendClient, channel: DMChannel | GuildChannel) {
     if (channel instanceof DMChannel) {
       return;
     }
@@ -25,5 +25,7 @@ export default new Event({
     }
 
     await client.service.removeBaseVoiceChannel(channel.guild.id);
-  },
-});
+  }
+}
+
+export default new DeleteBasicVoiceChannel();

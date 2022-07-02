@@ -1,7 +1,6 @@
 import { Client, Collection, Intents, Snowflake } from 'discord.js';
 import { promisify } from 'util';
 import { glob } from 'glob';
-import { EventType } from '../typings/Event';
 import { DisTube } from 'distube';
 import SoundCloudPlugin from '@distube/soundcloud';
 import SpotifyPlugin from '@distube/spotify';
@@ -19,10 +18,11 @@ import { CommonCommand } from './Commands/CommonCommand';
 import discordModals from 'discord-modals';
 import { ContextCommand } from './Commands/ContextCommand';
 import { SlashCommand } from './Commands/SlashCommand';
+import { DiscordEvent, DiscordEventNames, DisTubeEvent, DisTubeEventNames } from './Event';
 
 const globPromise = promisify(glob);
 
-export class ExtendClient extends Client {
+export class ExtendClient extends Client<true> {
   commonCommands: Collection<string, CommonCommand> = new Collection(); // <Name, CommonCommand>
   contextCommands: Collection<string, ContextCommand> = new Collection(); // <Name, ContextCommand>
   slashCommands: Collection<string, SlashCommand> = new Collection(); // <Name, ContextCommand>
@@ -139,16 +139,21 @@ export class ExtendClient extends Client {
   }
 
   private async loadEvents() {
-    const eventFiles = await this.loadFiles<EventType>('/events/**/*.{js,ts}');
+    const eventFiles = await this.loadFiles<DiscordEvent<DiscordEventNames> | DisTubeEvent<DisTubeEventNames>>(
+      '/events/**/*.{js,ts}',
+    );
 
     eventFiles.map((event) => {
       if (event.name) {
-        if (event.type === 'distube') {
-          this.disTube.on(event.name, event.run);
+        if (event instanceof DisTubeEvent) {
+          this.disTube.on(event.name, event.run.bind(null, this));
           return;
         }
 
-        this.on(event.name, event.run.bind(null, this));
+        if (event instanceof DiscordEvent) {
+          this.on(event.name, event.run.bind(null, this));
+          return;
+        }
       }
     });
   }

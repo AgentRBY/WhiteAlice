@@ -1,16 +1,17 @@
 import { VoiceModals, VoiceSelects } from '../../../typings/Interactions';
 import { ModalSubmitInteraction } from 'discord-modals';
 import { ExtendClient } from '../../../structures/Client';
-import { Event } from '../../../structures/Event';
+import { DiscordEvent, DiscordEventNames } from '../../../structures/Event';
 import { includesInEnum } from '../../../utils/Other';
 import { ErrorEmbed, SuccessEmbed } from '../../../utils/Discord/Embed';
 
 // TODO: replace to discord.js Modals
-export default new Event({
+// @ts-ignore
+class VoiceInteractionModals extends DiscordEvent<'modalSubmit'> {
   // @ts-ignore
-  name: 'modalSubmit',
-  type: 'discord',
-  run: async (client: ExtendClient, interaction: ModalSubmitInteraction) => {
+  name: DiscordEventNames = 'modalSubmit';
+
+  run(client: ExtendClient, interaction: ModalSubmitInteraction) {
     if (!includesInEnum(interaction.customId, VoiceModals)) {
       return;
     }
@@ -36,5 +37,7 @@ export default new Event({
       } из голосового канала`,
     );
     interaction.reply({ embeds: [embed], allowedMentions: { repliedUser: false }, ephemeral: true });
-  },
-});
+  }
+}
+
+export default new VoiceInteractionModals();

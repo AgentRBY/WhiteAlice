@@ -1,11 +1,11 @@
-import { Event } from '../../../structures/Event';
+import { DiscordEvent, DiscordEventNames } from '../../../structures/Event';
 import { ExtendClient } from '../../../structures/Client';
 import { TextChannel, VoiceState } from 'discord.js';
 
-export default new Event({
-  name: 'voiceStateUpdate',
-  type: 'discord',
-  run: async (client: ExtendClient, oldState: VoiceState, newState: VoiceState) => {
+class JoinToCustomVoice extends DiscordEvent<'voiceStateUpdate'> {
+  name: DiscordEventNames = 'voiceStateUpdate';
+
+  async run(client: ExtendClient, oldState: VoiceState, newState: VoiceState) {
     const baseVoiceChannelId = await client.service.getBaseVoiceChannel(newState.guild.id);
 
     if (!baseVoiceChannelId || !newState.channel || newState.member.id === client.user.id) {
@@ -22,5 +22,7 @@ export default new Event({
     customTextChannel.permissionOverwrites.create(newState.member.id, {
       VIEW_CHANNEL: true,
     });
-  },
-});
+  }
+}
+
+export default new JoinToCustomVoice();

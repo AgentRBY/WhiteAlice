@@ -1,11 +1,11 @@
-import { Event } from '../../../structures/Event';
+import { DiscordEvent, DiscordEventNames } from '../../../structures/Event';
 import { ExtendClient } from '../../../structures/Client';
 import { TextChannel, VoiceState } from 'discord.js';
 
-export default new Event({
-  name: 'voiceStateUpdate',
-  type: 'discord',
-  run: async (client: ExtendClient, oldState: VoiceState, newState: VoiceState) => {
+class LeaveFromCustomVoice extends DiscordEvent<'voiceStateUpdate'> {
+  name: DiscordEventNames = 'voiceStateUpdate';
+
+  async run(client: ExtendClient, oldState: VoiceState, newState: VoiceState) {
     const baseVoiceChannelId = await client.service.getBaseVoiceChannel(newState.guild.id);
 
     if (!baseVoiceChannelId || !oldState.channel || oldState.member.id === client.user.id) {
@@ -26,5 +26,7 @@ export default new Event({
     customTextChannel.permissionOverwrites.create(oldState.member.id, {
       VIEW_CHANNEL: false,
     });
-  },
-});
+  }
+}
+
+export default new LeaveFromCustomVoice();

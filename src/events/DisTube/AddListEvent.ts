@@ -1,14 +1,15 @@
 import { MessageEmbed } from 'discord.js';
 import { Colors } from '../../static/Colors';
 import { EmojisLinks } from '../../static/Emojis';
-import { Event } from '../../structures/Event';
+import { DisTubeEvent, DisTubeEventNames } from '../../structures/Event';
 import { Playlist, Queue } from 'distube';
 import { upFirstLetter } from '../../utils/Common/Strings';
+import { ExtendClient } from '../../structures/Client';
 
-export default new Event({
-  name: 'addList',
-  type: 'distube',
-  run: (queue: Queue, playlist: Playlist) => {
+class GuildDelete extends DisTubeEvent<'addList'> {
+  name: DisTubeEventNames = 'addList';
+
+  run(client: ExtendClient, queue: Queue, playlist: Playlist) {
     const embed = new MessageEmbed()
       .setAuthor({ name: 'Музыка', iconURL: EmojisLinks.Music })
       .setDescription(`Плейлист \`${playlist.name}\` из добавлен в очередь!`)
@@ -16,5 +17,7 @@ export default new Event({
       .setColor(Colors.Green);
 
     queue.textChannel.send({ embeds: [embed] });
-  },
-});
+  }
+}
+
+export default new GuildDelete();

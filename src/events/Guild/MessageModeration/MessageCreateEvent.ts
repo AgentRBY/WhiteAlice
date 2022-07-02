@@ -1,4 +1,4 @@
-import { Event } from '../../../structures/Event';
+import { DiscordEvent, DiscordEventNames } from '../../../structures/Event';
 import { Message } from 'discord.js';
 import { ExtendClient } from '../../../structures/Client';
 import { AntiScamModule } from '../../../modules/AntiScam';
@@ -10,9 +10,10 @@ import { MediaChannel } from '../../../modules/MediaChannel';
 import { getMemberBaseId } from '../../../utils/Other';
 import { ExtendedMessage } from '../../../structures/ExtendedMessage';
 
-export default new Event({
-  name: 'messageCreate',
-  run: async (client: ExtendClient, message: Message) => {
+class MessageModeration extends DiscordEvent<'messageCreate'> {
+  name: DiscordEventNames = 'messageCreate';
+
+  run(client: ExtendClient, message: Message) {
     if (!message.member || !message.guild || !message.guild.me || message.channel.type === 'DM' || message.system) {
       return;
     }
@@ -34,5 +35,7 @@ export default new Event({
       client.commonCommands.get('ping').run({ client, message: extendedMessage, args: [] });
       return;
     }
-  },
-});
+  }
+}
+
+export default new MessageModeration();

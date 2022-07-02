@@ -1,14 +1,14 @@
-import { Event } from '../../../structures/Event';
+import { DiscordEvent, DiscordEventNames } from '../../../structures/Event';
 import { ExtendClient } from '../../../structures/Client';
 import { MessageActionRow, MessageButton, MessageEmbed, TextChannel, VoiceState } from 'discord.js';
 import { EmojisLinks } from '../../../static/Emojis';
 import { VoiceButtons } from '../../../typings/Interactions';
 import { Colors } from '../../../static/Colors';
 
-export default new Event({
-  name: 'voiceStateUpdate',
-  type: 'discord',
-  run: async (client: ExtendClient, oldState: VoiceState, newState: VoiceState) => {
+class CustomVoiceAuthorLeave extends DiscordEvent<'voiceStateUpdate'> {
+  name: DiscordEventNames = 'voiceStateUpdate';
+
+  async run(client: ExtendClient, oldState: VoiceState, newState: VoiceState) {
     const baseVoiceChannelId = await client.service.getBaseVoiceChannel(newState.guild.id);
 
     if (!baseVoiceChannelId || !oldState.channel) {
@@ -50,5 +50,7 @@ export default new Event({
     channel.send({ embeds: [embed], components: [button] });
 
     client.customVoicesState.set(oldState.channel.id, [null, textChannelId]);
-  },
-});
+  }
+}
+
+export default new CustomVoiceAuthorLeave();
