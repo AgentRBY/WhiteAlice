@@ -98,7 +98,8 @@ export class ExtendClient extends Client<true> {
   }
 
   private async loadFiles<T>(path: `/${string}`): Promise<T[]> {
-    const files = await globPromise(`${__dirname}/..` + path);
+    const rootDirectory = __dirname.replaceAll('\\', '/');
+    const files = await globPromise(`${rootDirectory}/..` + path);
 
     return Promise.all(files.map(async (file) => await ExtendClient.importFile(file)));
   }
