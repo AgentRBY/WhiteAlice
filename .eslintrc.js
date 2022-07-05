@@ -37,6 +37,7 @@ module.exports = {
     'unicorn/no-array-reduce': 'off',
     'unicorn/consistent-function-scoping': 'off',
     'unicorn/no-new-array': 'off',
+    'unicorn/prefer-top-level-await': 'off',
     'import/no-unresolved': 'off',
     '@typescript-eslint/no-var-requires': 'off',
     '@typescript-eslint/ban-ts-comment': 'off',
