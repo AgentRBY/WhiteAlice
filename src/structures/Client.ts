@@ -65,7 +65,10 @@ export class ExtendClient extends Client<true> {
       },
     });
 
-    await mongoose.connect(process.env.mongoURI).catch((error) => Logger.error(error));
+    await mongoose
+      .connect(process.env.mongoURI)
+      .then(() => Logger.success('Success connected to MongoDB'))
+      .catch((error) => Logger.error(error));
 
     this.service = new Service(this);
 
@@ -83,6 +86,10 @@ export class ExtendClient extends Client<true> {
       maxCacheSize: 100,
       getCallback: this.getGuildBase,
     });
+
+    Logger.info(`Loaded ${this.commonCommands.size} common commands on ${this.categories.size} categories`);
+    Logger.info(`Loaded ${this.contextCommands.size} context commands`);
+    Logger.info(`Loaded ${this.slashCommands.size} slash commands`);
 
     discordModals(this);
     await this.login(process.env.botToken);

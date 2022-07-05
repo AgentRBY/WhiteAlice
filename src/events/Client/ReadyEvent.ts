@@ -22,18 +22,15 @@ class Ready extends DiscordEvent<'ready'> {
         Logger.error('Guild not found, commands not registered');
       } else {
         await guild.commands.set(commands);
-        Logger.info(`Register ${commands.length} commands to ${guild.name} guild`);
+        Logger.info(`Register ${commands.length} interaction to ${guild.name} guild`);
       }
     } else {
       await client.application.commands.set(commands);
-      Logger.info(`Register ${commands.length} commands to ${client.user.username} application`);
+      Logger.info(`Register ${commands.length} interaction to ${client.user.username} application`);
     }
 
     Logger.success(`${client.user.username} ready`);
     Logger.info(`Working on ${client.guilds.cache.size} guilds`);
-    Logger.info(`Active ${client.commonCommands.size} common commands on ${client.categories.size} categories`);
-    Logger.info(`Active ${client.contextCommands.size} context commands`);
-    Logger.info(`Active ${client.slashCommands.size} slash commands`);
 
     await sleep(1000);
 
