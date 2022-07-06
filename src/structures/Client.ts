@@ -65,7 +65,7 @@ export class ExtendClient extends Client<true> {
       },
     });
 
-    await mongoose
+    mongoose
       .connect(process.env.mongoURI)
       .then(() => Logger.success('Success connected to MongoDB'))
       .catch((error) => Logger.error(error));
