@@ -87,7 +87,7 @@ class Report extends CommonCommand {
   }
 
   private getOnlineModerators(guild: Guild, moderatorRoleId: Snowflake) {
-    return guild.roles.cache.get(moderatorRoleId).members.filter((member) => member.presence.status === 'online');
+    return guild.roles.cache.get(moderatorRoleId).members.filter((member) => member.presence?.status === 'online');
   }
 }
 
