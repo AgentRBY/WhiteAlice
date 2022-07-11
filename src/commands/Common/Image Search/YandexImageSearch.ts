@@ -5,7 +5,7 @@ import { MessageActionRow, MessageEmbed } from 'discord.js';
 import { Colors } from '../../../static/Colors';
 import { Site, WhitelistSite } from '../../../typings/YandexImagesResponse';
 import { generateDefaultButtons, pagination } from '../../../utils/Discord/Pagination';
-import { removeQueryParameters } from '../../../utils/Common/Strings';
+import { removeLessAndGreaterSymbols, removeQueryParameters } from '../../../utils/Common/Strings';
 import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
 
 const request = promisify(require('request'));
@@ -40,23 +40,23 @@ class YandexImageSearchCommand extends CommonCommand {
       return;
     }
 
-    let imageLink;
+    let link;
 
     if (message.attachments.size) {
       const attachment = message.attachments.first();
-      imageLink = removeQueryParameters(attachment.url || attachment.proxyURL);
+      link = removeQueryParameters(attachment.url || attachment.proxyURL);
     }
 
     if (args.length) {
-      imageLink = removeQueryParameters(args[0]);
+      link = removeLessAndGreaterSymbols(removeQueryParameters(args[0]));
     }
 
-    if (!imageLink) {
+    if (!link) {
       message.sendError('**Введите ссылку на изображение**');
       return;
     }
 
-    const yandexImageLink = generateYandexSearchLink(imageLink, client.config.yandexYU);
+    const yandexImageLink = generateYandexSearchLink(link, client.config.yandexYU);
 
     const result = await request(yandexImageLink).then((response) => getSitesFromYandexResponse(response));
 

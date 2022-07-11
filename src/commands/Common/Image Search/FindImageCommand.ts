@@ -2,7 +2,14 @@ import sagiri from 'sagiri';
 import { MessageActionRow, MessageEmbed } from 'discord.js';
 import { Colors } from '../../../static/Colors';
 
-import { formatNames, isGifLink, isImageLink, isLink, removeQueryParameters } from '../../../utils/Common/Strings';
+import {
+  formatNames,
+  isGifLink,
+  isImageLink,
+  isLink,
+  removeLessAndGreaterSymbols,
+  removeQueryParameters,
+} from '../../../utils/Common/Strings';
 import { generateDefaultButtons, pagination } from '../../../utils/Discord/Pagination';
 import { sauceNAORelevantSites } from '../../../static/ImageSearch';
 import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
@@ -32,7 +39,7 @@ class FindImageCommand extends CommonCommand {
     }
 
     if (args.length) {
-      link = removeQueryParameters(args[0]);
+      link = removeLessAndGreaterSymbols(removeQueryParameters(args[0]));
     }
 
     if (!link || !isLink(link)) {
