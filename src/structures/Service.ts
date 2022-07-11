@@ -13,6 +13,8 @@ import { MutesAction } from '../services/MemberServices/MutesAction';
 import { BansAction } from '../services/MemberServices/BansAction';
 import { serviceMixin } from '../utils/Other';
 import { CustomVoiceAction } from '../services/GuildServices/CustomVoiceAction';
+import { UpdateQuery } from 'mongoose';
+import { MemberModel } from '../models/MemberModel';
 
 export interface Service
   extends PrefixAction,
@@ -51,11 +53,22 @@ export class Service extends serviceMixin(
     return this.client.memberBase.get(id);
   }
 
-  async setGuildData(guildId: Snowflake, GuildData: MongoData<IGuildModel>): Promise<void> {
-    await this.client.guildBase.update(guildId, GuildData).save();
+  setGuildData(guildId: Snowflake, GuildData: MongoData<IGuildModel>) {
+    this.client.guildBase.update(guildId, GuildData);
   }
 
-  async setMemberData(id: MemberBaseId, MemberData: MongoData<IMemberModel>): Promise<void> {
-    await this.client.memberBase.update(id, MemberData).save();
+  setMemberData(id: MemberBaseId, MemberData: MongoData<IMemberModel>) {
+    this.client.memberBase.update(id, MemberData);
+  }
+
+  async updateMemberData(id: MemberBaseId, query: UpdateQuery<IMemberModel>) {
+    let MemberData: MongoData<IMemberModel>;
+
+    await MemberModel.findByIdAndUpdate(id, query, { new: true }).then((document) => {
+      this.setMemberData(id, document);
+      MemberData = document;
+    });
+
+    return MemberData;
   }
 }

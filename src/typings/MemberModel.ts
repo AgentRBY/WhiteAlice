@@ -6,6 +6,7 @@ export interface IMemberModel {
   warns: Warn[];
   mutes: Mute[];
   bans: Ban[];
+  profile: Profile;
   karma: number;
 }
 
@@ -38,4 +39,23 @@ export interface Punishment {
   date: number;
   givenBy: string;
   reason?: string;
+}
+
+interface Profile {
+  xp: number;
+  level: number;
+  messageCount: number;
+  customization: Customization;
+  achievements: Achievement[];
+}
+
+interface Customization {
+  color: string;
+  background: string;
+  frame: string;
+}
+
+interface Achievement {
+  name: string;
+  description: string;
 }

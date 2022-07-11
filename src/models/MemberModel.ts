@@ -45,6 +45,31 @@ const MemberSchema = new Schema<IMemberModel>({
       },
     },
   ],
+  profile: {
+    xp: {
+      type: Number,
+      default: 0,
+    },
+    level: {
+      type: Number,
+      default: 1,
+    },
+    messageCount: {
+      type: Number,
+      default: 0,
+    },
+    customization: {
+      color: String,
+      background: String,
+      frame: String,
+    },
+    achievements: [
+      {
+        name: String,
+        description: String,
+      },
+    ],
+  },
   karma: Number,
 });
 
