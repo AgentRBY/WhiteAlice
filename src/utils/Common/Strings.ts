@@ -45,6 +45,14 @@ export function removeQueryParameters(text: string): string {
   return text.split('?')[0];
 }
 
+export function removeLessAndGreaterSymbols(text: string): string {
+  if (text.startsWith('<') && text.endsWith('>')) {
+    return text.slice(1, -1);
+  }
+
+  return text;
+}
+
 export async function sleep(ms: number): Promise<unknown> {
   return new Promise((resolve) => {
     setTimeout(resolve, ms);

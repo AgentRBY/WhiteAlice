@@ -2,7 +2,7 @@ import { TraceMoe } from 'trace.moe.ts';
 import { Colors } from '../../../static/Colors';
 import anilist from 'anilist-node';
 import { ButtonInteraction, MessageActionRow, MessageButton, MessageEmbed } from 'discord.js';
-import { isLink, isMediaLink, removeQueryParameters } from '../../../utils/Common/Strings';
+import { isLink, isMediaLink, removeLessAndGreaterSymbols, removeQueryParameters } from '../../../utils/Common/Strings';
 import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
 
 class FindanimeCommand extends CommonCommand {
@@ -29,8 +29,10 @@ class FindanimeCommand extends CommonCommand {
     }
 
     if (args.length) {
-      link = removeQueryParameters(args[0]);
+      link = removeLessAndGreaterSymbols(removeQueryParameters(args[0]));
     }
+
+    console.log(link);
 
     if (!link || !isLink(link)) {
       message.sendError('**Введите ссылку на изображение**');
