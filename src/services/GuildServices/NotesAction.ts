@@ -16,17 +16,14 @@ export class NotesAction {
   }
 
   async addNote(this: Service, id: Snowflake, note: Note): Promise<void> {
-    const GuildData = await this.getGuildData(id);
-
-    GuildData.notes.push(note);
-    this.setGuildData(id, GuildData);
+    this.updateGuildData(id, { $push: { notes: note } });
   }
 
   async removeNote(this: Service, id: Snowflake, noteName: string): Promise<void> {
     const GuildData = await this.getGuildData(id);
 
-    GuildData.notes = GuildData.notes.filter((note) => note.name !== noteName);
-    this.setGuildData(id, GuildData);
+    const notes = GuildData.notes.filter((note) => note.name !== noteName);
+    this.updateGuildData(id, { notes });
   }
 
   async isNoteExist(this: Service, id: Snowflake, noteName: string): Promise<Note> {

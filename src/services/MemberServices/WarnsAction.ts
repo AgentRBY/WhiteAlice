@@ -10,12 +10,8 @@ export class WarnsAction {
   }
 
   async addWarn(this: Service, id: MemberBaseId, warn: Warn) {
-    const MemberData = await this.getMemberData(id);
-
-    MemberData.warns.push(warn);
-
+    await this.updateMemberData(id, { $push: { warns: warn } });
     await this.addKarma(id, KARMA_FOR_WARN);
-    await this.setMemberData(id, MemberData);
   }
 
   async removeWarn(this: Service, id: MemberBaseId, warnId: number, removedBy: string, reason?: string) {
@@ -33,8 +29,8 @@ export class WarnsAction {
       removedReason: reason,
     };
 
+    await this.updateMemberData(id, { warns: MemberData.warns });
     await this.removeKarma(id, KARMA_FOR_WARN);
-    await this.setMemberData(id, MemberData);
   }
 
   async calculateWarnsKarma(this: Service, id: MemberBaseId): Promise<number> {

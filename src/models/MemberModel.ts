@@ -70,7 +70,10 @@ const MemberSchema = new Schema<IMemberModel>({
       },
     ],
   },
-  karma: Number,
+  karma: {
+    type: Number,
+    default: 0,
+  },
 });
 
 export const MemberModel = model<IMemberModel>('MemberData', MemberSchema);

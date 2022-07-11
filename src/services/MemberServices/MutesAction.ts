@@ -14,12 +14,8 @@ export class MutesAction {
   }
 
   async addMute(this: Service, id: MemberBaseId, mute: Mute): Promise<void> {
-    const MemberData = await this.getMemberData(id);
-
-    MemberData.mutes.push(mute);
-
+    await this.updateMemberData(id, { $push: { mutes: mute } });
     await this.addKarma(id, KARMA_FOR_MUTE);
-    await this.setMemberData(id, MemberData);
   }
 
   async removeMute(this: Service, id: MemberBaseId, unmutedBy: string, reason?: string): Promise<void> {
@@ -38,8 +34,8 @@ export class MutesAction {
       unmutedReason: reason,
     };
 
+    await this.updateMemberData(id, { mutes: MemberData.mutes });
     await this.removeKarma(id, KARMA_FOR_MUTE);
-    await this.setMemberData(id, MemberData);
   }
 
   async calculateMuteTime(this: Service, id: MemberBaseId, time: number): Promise<number> {
@@ -55,17 +51,14 @@ export class MutesAction {
   }
 
   async addKarma(this: Service, id: MemberBaseId, amount: number): Promise<void> {
-    const MemberData = await this.getMemberData(id);
-
-    MemberData.karma = (MemberData.karma || 0) + amount;
-    await this.setMemberData(id, MemberData);
+    await this.updateMemberData(id, { $inc: { karma: amount } });
   }
 
   async removeKarma(this: Service, id: MemberBaseId, amount: number): Promise<void> {
     const MemberData = await this.getMemberData(id);
 
-    MemberData.karma -= amount;
-    await this.setMemberData(id, MemberData);
+    const karma = MemberData.karma - amount;
+    await this.updateMemberData(id, { karma });
   }
 
   async recalculateKarma(this: Service, id: MemberBaseId): Promise<void> {
@@ -79,8 +72,9 @@ export class MutesAction {
     const karmaForMutes = mutes.length * KARMA_FOR_MUTE;
     const karmaForBans = bans.length * KARMA_FOR_BAN;
 
-    MemberData.karma = karmaForWarns + karmaForMutes + karmaForBans;
-    await this.setMemberData(id, MemberData);
+    const karma = karmaForWarns + karmaForMutes + karmaForBans;
+
+    await this.updateMemberData(id, { karma });
   }
 
   async calculateMutesKarma(this: Service, id: MemberBaseId): Promise<number> {

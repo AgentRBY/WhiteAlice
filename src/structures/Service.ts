@@ -15,6 +15,7 @@ import { serviceMixin } from '../utils/Other';
 import { CustomVoiceAction } from '../services/GuildServices/CustomVoiceAction';
 import { UpdateQuery } from 'mongoose';
 import { MemberModel } from '../models/MemberModel';
+import { GuildModel } from '../models/GuildModel';
 
 export interface Service
   extends PrefixAction,
@@ -53,11 +54,11 @@ export class Service extends serviceMixin(
     return this.client.memberBase.get(id);
   }
 
-  setGuildData(guildId: Snowflake, GuildData: MongoData<IGuildModel>) {
+  private setGuildData(guildId: Snowflake, GuildData: MongoData<IGuildModel>) {
     this.client.guildBase.update(guildId, GuildData);
   }
 
-  setMemberData(id: MemberBaseId, MemberData: MongoData<IMemberModel>) {
+  private setMemberData(id: MemberBaseId, MemberData: MongoData<IMemberModel>) {
     this.client.memberBase.update(id, MemberData);
   }
 
@@ -70,5 +71,16 @@ export class Service extends serviceMixin(
     });
 
     return MemberData;
+  }
+
+  async updateGuildData(id: Snowflake, query: UpdateQuery<IGuildModel>) {
+    let GuildData: MongoData<IGuildModel>;
+
+    await GuildModel.findByIdAndUpdate(id, query, { new: true }).then((document) => {
+      this.setGuildData(id, document);
+      GuildData = document;
+    });
+
+    return GuildData;
   }
 }

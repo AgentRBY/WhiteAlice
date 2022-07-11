@@ -10,10 +10,7 @@ export class BansAction {
   }
 
   async addBan(this: Service, id: MemberBaseId, ban: Ban) {
-    const MemberData = await this.getMemberData(id);
-
-    MemberData.bans.push(ban);
-    await this.setMemberData(id, MemberData);
+    this.updateGuildData(id, { $push: { bans: ban } });
   }
 
   async removeBan(this: Service, id: MemberBaseId, unbannedBy: string, reason?: string) {
@@ -33,7 +30,7 @@ export class BansAction {
     };
 
     await this.removeKarma(id, KARMA_FOR_BAN);
-    await this.setMemberData(id, MemberData);
+    await this.updateMemberData(id, { bans: MemberData.bans });
   }
 
   async calculateBansKarma(this: Service, id: MemberBaseId) {

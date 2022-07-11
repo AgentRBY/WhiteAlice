@@ -15,16 +15,13 @@ export class MediaChannelsAction {
   }
 
   async setMediaChannel(this: Service, id: Snowflake, channelID: string): Promise<void> {
-    const GuildData = await this.getGuildData(id);
-
-    GuildData.mediaChannels.push(channelID);
-    this.setGuildData(id, GuildData);
+    this.updateGuildData(id, { $push: { mediaChannels: channelID } });
   }
 
   async removeMediaChannel(this: Service, id: Snowflake, channelID: string): Promise<void> {
     const GuildData = await this.getGuildData(id);
 
-    GuildData.mediaChannels = GuildData.mediaChannels.filter((channel) => channel !== channelID);
-    this.setGuildData(id, GuildData);
+    const channels = GuildData.mediaChannels.filter((channel) => channel !== channelID);
+    this.updateGuildData(id, { mediaChannels: channels });
   }
 }
