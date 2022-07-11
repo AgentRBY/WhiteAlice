@@ -32,8 +32,6 @@ class FindanimeCommand extends CommonCommand {
       link = removeLessAndGreaterSymbols(removeQueryParameters(args[0]));
     }
 
-    console.log(link);
-
     if (!link || !isLink(link)) {
       message.sendError('**Введите ссылку на изображение**');
       return;

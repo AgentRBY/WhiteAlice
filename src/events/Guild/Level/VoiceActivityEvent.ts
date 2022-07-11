@@ -20,8 +20,6 @@ class VoiceActivity extends DiscordEvent<'voiceStateUpdate'> {
 
       const timeInVoiceInMinutes = Math.floor(moment(timeInVoice).unix() / 60);
 
-      console.log(timeInVoiceInMinutes);
-
       if (timeInVoiceInMinutes > 0) {
         const xpToAdd = getRandomInt(15, 25) * timeInVoiceInMinutes;
 
