@@ -3,7 +3,7 @@ import { Guild, MessageActionRow, MessageButton, MessageEmbed, Snowflake } from 
 import { Colors } from '../../../static/Colors';
 import { Emojis } from '../../../static/Emojis';
 
-class Report extends CommonCommand {
+export class Report extends CommonCommand {
   name = 'report';
   category = 'Moderation';
   aliases = [];
@@ -43,7 +43,7 @@ class Report extends CommonCommand {
     // TODO: Change to DB query
     const moderatorRoleId = '748279346258509955';
 
-    const moderators = this.getOnlineModerators(message.guild, moderatorRoleId);
+    const moderators = Report.getOnlineModerators(message.guild, moderatorRoleId);
 
     if (!moderators.size) {
       message.sendError('Нет модераторов онлайн');
@@ -86,7 +86,7 @@ class Report extends CommonCommand {
     return;
   }
 
-  private getOnlineModerators(guild: Guild, moderatorRoleId: Snowflake) {
+  public static getOnlineModerators(guild: Guild, moderatorRoleId: Snowflake) {
     return guild.roles.cache.get(moderatorRoleId).members.filter((member) => member.presence?.status === 'online');
   }
 }

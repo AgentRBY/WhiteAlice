@@ -8,13 +8,15 @@ export interface ContextCommandRunOptions<T extends ContextCommandType> {
   interaction: T extends 'USER' ? UserContextMenuInteraction : MessageContextMenuInteraction;
 }
 
+export type ContextCommandRun<T extends ContextCommandType> = Partial<ContextCommandRunOptions<T>>;
+
 export class ContextCommand {
   name: string;
   type: ContextCommandType;
   memberPermission?: PermissionString[];
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  run(options: Partial<ContextCommandRunOptions<ContextCommandType>>) {
+  run(options: ContextCommandRun<ContextCommandType>) {
     return;
   }
 }
