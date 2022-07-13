@@ -11,6 +11,10 @@ class Logger {
     );
   }
 
+  public static warn(text: string): void {
+    console.log(`${picoColors.yellow('➤')}  ${picoColors.bgYellow(' Warn ')} ${text}`);
+  }
+
   public static info(text: string): void {
     console.log(`${picoColors.blue('➤')}  ${picoColors.bgBlue(' Info ')} ${text}`);
   }
