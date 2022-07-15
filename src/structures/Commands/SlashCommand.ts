@@ -8,7 +8,7 @@ import { AutocompleteInteraction, CommandInteraction } from 'discord.js';
 
 export interface SlashCommandRunOptions {
   client: ExtendClient;
-  interaction: CommandInteraction;
+  interaction: CommandInteraction<'cached'>;
 }
 
 export interface AutocompleteRunOptions {

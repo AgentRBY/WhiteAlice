@@ -6,6 +6,10 @@ class SlashCommandCreate extends DiscordEvent<'interactionCreate'> {
   name: DiscordEventNames = 'interactionCreate';
 
   run(client: ExtendClient, interaction: Interaction) {
+    if (!interaction.inCachedGuild()) {
+      return;
+    }
+
     if (!interaction.isCommand()) {
       return;
     }
