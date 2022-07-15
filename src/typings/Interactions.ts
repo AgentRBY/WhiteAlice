@@ -13,3 +13,7 @@ export enum VoiceModals {
 export enum VoiceSelects {
   KickUserFromVoiceChannel = 'kickUserFromVoiceChannelSelect',
 }
+
+export enum RoleSelect {
+  SelectRole = 'selectRole',
+}
