@@ -56,6 +56,15 @@ class RoleSelectCommand extends SlashCommand {
         .addStringOption((option) =>
           option.setName('описание').setDescription('Описание для компонента выбора роли').setRequired(false),
         ),
+    )
+    .addSubcommand((option) =>
+      option
+        .setName('remove')
+        .setDescription('Удалить роль из компонента выбора роли')
+        .addStringOption((option) => option.setName('сообщение').setDescription('Айди сообщения').setRequired(true))
+        .addRoleOption((option) =>
+          option.setName('роль').setDescription('Роль, которую нужно удалить').setRequired(true),
+        ),
     );
 
   async run(options: SlashCommandRunOptions) {
@@ -65,12 +74,14 @@ class RoleSelectCommand extends SlashCommand {
     }
 
     const subcommand = options.interaction.options.getSubcommand();
-    console.log(subcommand);
+
     switch (subcommand) {
       case 'message':
         return this.runMessage(options);
       case 'add':
         return this.runAdd(options);
+      case 'remove':
+        return this.runRemove(options);
     }
   }
 
@@ -177,7 +188,54 @@ class RoleSelectCommand extends SlashCommand {
       components: [new MessageActionRow().addComponents(select)],
     });
 
-    const embed = SuccessEmbed('Роль добавлена');
+    const embed = SuccessEmbed(`Роль ${role} добавлена`);
+    interaction.reply({ embeds: [embed], ephemeral: true });
+  }
+
+  // /role remove
+  private async runRemove({ interaction }: SlashCommandRunOptions) {
+    const messageId = interaction.options.getString('сообщение', true);
+    const message = await interaction.channel.messages.fetch(messageId);
+
+    if (!message) {
+      const embed = ErrorEmbed('Сообщение не найдено');
+      interaction.reply({ embeds: [embed], ephemeral: true });
+      return;
+    }
+
+    if (!message.components[0]?.components[0]?.customId.startsWith(RoleSelect.SelectRole)) {
+      const embed = ErrorEmbed('Сообщение не является компонентом выбора ролей');
+      interaction.reply({ embeds: [embed], ephemeral: true });
+      return;
+    }
+
+    const role = interaction.options.getRole('роль', true);
+    const isMultiselect = message.components[0].components[0].customId.includes('multiselect');
+
+    const select = message.components[0].components[0] as MessageSelectMenu;
+
+    if (!select.options.some((option) => option.value)) {
+      const embed = ErrorEmbed('Эта роль не найдена в компоненте');
+      interaction.reply({ embeds: [embed], ephemeral: true });
+    }
+
+    select.spliceOptions(
+      select.options.findIndex((option) => option.value === role.id),
+      1,
+    );
+
+    if (isMultiselect) {
+      select.setMaxValues(select.options.length);
+    }
+
+    message.edit({
+      embeds: message.embeds,
+      ...(message.content ? { content: message.content } : {}),
+      files: [...message.attachments.values()],
+      components: [new MessageActionRow().addComponents(select)],
+    });
+
+    const embed = SuccessEmbed(`Роль ${role} удалена`);
     interaction.reply({ embeds: [embed], ephemeral: true });
   }
 }
