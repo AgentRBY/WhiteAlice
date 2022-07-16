@@ -214,9 +214,16 @@ class RoleSelectCommand extends SlashCommand {
 
     const select = message.components[0].components[0] as MessageSelectMenu;
 
-    if (!select.options.some((option) => option.value)) {
+    if (select.options.length === 1) {
+      const embed = ErrorEmbed('Это последняя роль в компоненте, её нельзя удалить');
+      interaction.reply({ embeds: [embed], ephemeral: true });
+      return;
+    }
+
+    if (!select.options.some((option) => option.value === role.id)) {
       const embed = ErrorEmbed('Эта роль не найдена в компоненте');
       interaction.reply({ embeds: [embed], ephemeral: true });
+      return;
     }
 
     select.spliceOptions(
