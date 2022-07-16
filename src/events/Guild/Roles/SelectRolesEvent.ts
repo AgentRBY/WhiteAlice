@@ -2,7 +2,7 @@ import { DiscordEvent, DiscordEventNames } from '../../../structures/Event';
 import { ExtendClient } from '../../../structures/Client';
 import { Interaction, MessageEmbed, Role } from 'discord.js';
 import { RoleSelect } from '../../../typings/Interactions';
-import { SuccessEmbed } from '../../../utils/Discord/Embed';
+import { ErrorEmbed, SuccessEmbed } from '../../../utils/Discord/Embed';
 import { Emojis } from '../../../static/Emojis';
 import { Colors } from '../../../static/Colors';
 
@@ -54,17 +54,18 @@ class SelectRoleEvent extends DiscordEvent<'interactionCreate'> {
       }
     }
 
+    if (!rolesToAdd.length && !rolesToRemove.length) {
+      const embed = ErrorEmbed('Роли не обновлены, попробуйте ещё раз');
+      interaction.reply({ embeds: [embed], ephemeral: true });
+      return;
+    }
+
     await interaction.member.roles.add(rolesToAdd);
     await interaction.member.roles.remove(rolesToRemove);
 
     const formattedAddedRoles = `\`${rolesToAdd.map((role) => role.name).join('`, `')}\``;
     const formattedRemovedRoles = `\`${rolesToRemove.map((role) => role.name).join('`, `')}\``;
 
-    // const embed = SuccessEmbed(
-    //   `${rolesToAdd.length ? `Роль(и) \`${formattedAddedRoles.join('`, `')}\` добавлена(ы)\n` : ''}${
-    //     rolesToRemove.length ? `$Роль(и) \`${formattedRemovedRoles.join('`, `')}\` удалена(ы)` : ''
-    //   }`,
-    // );
     const embed = new MessageEmbed().setColor(Colors.Blue);
 
     if (rolesToAdd.length) {
