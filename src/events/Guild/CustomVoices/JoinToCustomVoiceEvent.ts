@@ -6,7 +6,7 @@ class JoinToCustomVoice extends DiscordEvent<'voiceStateUpdate'> {
   name: DiscordEventNames = 'voiceStateUpdate';
 
   async run(client: ExtendClient, oldState: VoiceState, newState: VoiceState) {
-    if (!oldState.streaming && newState.streaming) {
+    if ((!oldState.streaming && newState.streaming) || (!oldState.selfVideo && newState.selfVideo)) {
       return;
     }
 
