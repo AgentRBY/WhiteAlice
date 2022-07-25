@@ -5,7 +5,7 @@ import { CommandExample, CommandRunOptions, CommonCommand } from '../../../struc
 class AnilistCommand extends CommonCommand {
   name = 'anilist';
   category = 'Utils';
-  aliases = ['al', 'анилист'];
+  aliases = ['al'];
   description = 'Ищет информацию об аниме в AniList по id';
   examples: CommandExample[] = [
     {

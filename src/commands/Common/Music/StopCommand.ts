@@ -4,7 +4,7 @@ import { IsChannelForMusic } from '../../../utils/Decorators/MusicDecorators';
 class StopCommand extends CommonCommand {
   name = 'stop';
   category = 'Music';
-  aliases = ['leave', 'disconnect', 'стоп', 'остановить', 'выйти'];
+  aliases = ['leave', 'disconnect'];
   description = 'Завершает работу бота и выходит из канала';
   usage = 'stop';
   examples: CommandExample[] = [

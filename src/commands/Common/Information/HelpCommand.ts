@@ -8,7 +8,7 @@ import { CommandExample, CommandRunOptions, CommonCommand } from '../../../struc
 class HelpCommand extends CommonCommand {
   name = 'help';
   category = 'Information';
-  aliases = ['commands', 'хелп', 'команды', 'h'];
+  aliases = ['commands', 'h'];
   description = `Показывает список всех команд или информацию по конкретной команде
     
     Можно так же вызвать добавив к любой команде в конце ключ \`-h\`; например \`>ping -h\``;

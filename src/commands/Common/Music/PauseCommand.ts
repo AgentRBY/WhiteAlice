@@ -4,7 +4,7 @@ import { IsChannelForMusic } from '../../../utils/Decorators/MusicDecorators';
 class PauseCommand extends CommonCommand {
   name = 'pause';
   category = 'Music';
-  aliases = ['hold', 'пауза'];
+  aliases = ['hold'];
   description = 'Останавливает воспроизведение';
   usage = 'pause';
   examples: CommandExample[] = [

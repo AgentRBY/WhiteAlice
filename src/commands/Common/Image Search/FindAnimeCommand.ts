@@ -8,7 +8,7 @@ import { CommandExample, CommandRunOptions, CommonCommand } from '../../../struc
 class FindanimeCommand extends CommonCommand {
   name = 'findanime';
   category = 'Image Search';
-  aliases = ['найтианиме', 'fa'];
+  aliases = ['fa'];
   description = `Ищет аниме по ссылке картинку через trace.moe
   Допустимые форматы: png, jpeg, jpg, webp, bmp, gif, mp4
   Для gif-анимаций и видео в поиске будет использоваться первый кадр`;

@@ -9,7 +9,7 @@ import { isNumber } from '../../../utils/Common/Number';
 class VolumeCommand extends CommonCommand {
   name = 'volume';
   category = 'Music';
-  aliases = ['v', 'set-volume', 'громкость', 'установить-громкость'];
+  aliases = ['v', 'set-volume'];
   description = 'Устанавливает громкость бота в процентах. По умолчанию значение громкости 50%';
   usage = 'volume <значение>';
   examples: CommandExample[] = [

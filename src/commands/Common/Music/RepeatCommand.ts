@@ -4,7 +4,7 @@ import { IsChannelForMusic } from '../../../utils/Decorators/MusicDecorators';
 class RepeatCommand extends CommonCommand {
   name = 'repeat';
   category = 'Music';
-  aliases = ['loop', 'rp', 'повторить'];
+  aliases = ['loop', 'rp'];
   description = `Позволяет повторить трек или плейлист. 
      Возможны три значения: 
      \`song\` - повторять только песню 

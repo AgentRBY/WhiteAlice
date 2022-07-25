@@ -7,7 +7,6 @@ import { CommandExample, CommandRunOptions, CommonCommand } from '../../../struc
 class NitroRegexCommand extends CommonCommand {
   name = 'nitro-regex';
   category = 'Owner';
-  aliases = ['нитро-скам'];
   description =
     'Показывает REGEX по которому определяется являться ли ссылка скамом или, если есть первый аргумент, показывает является ли ссылка скамом.';
   examples: CommandExample[] = [

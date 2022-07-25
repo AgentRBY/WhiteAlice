@@ -5,7 +5,7 @@ import { IsUserInVoice } from '../../../utils/Decorators/MusicDecorators';
 class PlayCommand extends CommonCommand {
   name = 'play';
   category = 'Music';
-  aliases = ['p', 'плэй', 'музыка', 'запустить', 'addSong'];
+  aliases = ['p', 'addSong'];
   description = 'Проиграть трек. Поддерживает запросы и ссылки на YouTube, ссылки на плейлисты в Spotify и SoundCloud';
   usage = 'play <запрос>';
   examples: CommandExample[] = [

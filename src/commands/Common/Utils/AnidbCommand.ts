@@ -4,7 +4,7 @@ import { CommandExample, CommandRunOptions, CommonCommand } from '../../../struc
 class AnidbCommand extends CommonCommand {
   name = 'anidb';
   category = 'Utils';
-  aliases = ['adb', 'анидб'];
+  aliases = ['adb'];
   description = 'Ищет информацию об аниме в AniDB по id';
   examples: CommandExample[] = [
     {

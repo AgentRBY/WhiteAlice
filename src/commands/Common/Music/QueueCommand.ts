@@ -10,7 +10,7 @@ import { IsQueueExist } from '../../../utils/Decorators/MusicDecorators';
 class QueueCommand extends CommonCommand {
   name = 'queue';
   category = 'Music';
-  aliases = ['q', 'playlist', 'плейлист', 'очередь'];
+  aliases = ['q', 'playlist'];
   description = 'Показывает плейлист со всеми треками добавленными в очередь';
   usage = 'queue';
   examples: CommandExample[] = [
