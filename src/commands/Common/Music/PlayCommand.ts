@@ -21,6 +21,14 @@ class PlayCommand extends CommonCommand {
 
   @IsUserInVoice()
   async run({ client, message, args }: CommandRunOptions) {
+    const queue = client.disTube.getQueue(message);
+
+    if (!args.length && queue?.playing) {
+      queue.resume();
+      message.sendSuccess('**Трек был возобновлён**');
+      return;
+    }
+
     if (!args.length) {
       message.sendError('**Вы не указали запрос**');
       return;
