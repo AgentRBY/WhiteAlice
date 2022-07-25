@@ -6,10 +6,6 @@ class LeaveFromCustomVoice extends DiscordEvent<'voiceStateUpdate'> {
   name: DiscordEventNames = 'voiceStateUpdate';
 
   async run(client: ExtendClient, oldState: VoiceState, newState: VoiceState) {
-    if ((!oldState.streaming && newState.streaming) || (!oldState.selfVideo && newState.selfVideo)) {
-      return;
-    }
-
     const baseVoiceChannelId = await client.service.getBaseVoiceChannel(newState.guild.id);
 
     if (!baseVoiceChannelId || !oldState.channel || oldState.member.id === client.user.id) {
