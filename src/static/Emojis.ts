@@ -13,7 +13,7 @@ export const Emojis: Record<EmojisType, string> = {
   Play: '<:PlayEmoji:893470688449540156>',
   Headphone: '<:HeadphoneEmoji:843168295174799381>',
   Music: '<:MusicEmoji:893497286334775306>',
-  Discord: '<:DiscordEmoji:907303499363151932>',
+  Discord: '<:DiscordEmoji:1001056688608116756>',
 };
 
 export const EmojisLinks: Record<EmojisType, string> = {
@@ -31,7 +31,7 @@ export const EmojisLinks: Record<EmojisType, string> = {
   Play: 'https://cdn.discordapp.com/emojis/893470688449540156.png',
   Headphone: 'https://cdn.discordapp.com/emojis/843168295174799381.png',
   Music: 'https://cdn.discordapp.com/emojis/893497286334775306.png',
-  Discord: 'https://cdn.discordapp.com/emojis/907303499363151932.png',
+  Discord: 'https://cdn.discordapp.com/emojis/1001056688608116756.png',
 };
 
 type EmojisType =
