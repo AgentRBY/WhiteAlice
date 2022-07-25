@@ -3644,7 +3644,7 @@ __metadata:
     lint-staged: ^13.0.3
     moment: ^2.29.3
     mongoose: ^6.4.2
-    nhentai: ^3.0.0
+    nhentai-api: ^3.4.3
     node-html-parser: ^5.3.3
     nodemon: ^2.0.18
     picocolors: ^1.0.0
@@ -4956,12 +4956,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nhentai@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "nhentai@npm:3.0.0"
-  dependencies:
-    node-fetch: ^2.6.1
-  checksum: cd0e8da2e024a9827e5b1e218512298e05e6f065427268389ae96605f46c737d66e88a10e96320fef63dde07928cbb0a1073555f29b88765e7e599e046c12611
+"nhentai-api@npm:^3.4.3":
+  version: 3.4.3
+  resolution: "nhentai-api@npm:3.4.3"
+  checksum: f51789f4fd45e73956f301f3411d69d2f05578173f4523701a5417bee0d747ccd113cd81d84234e1f817b3287cbdcceb86cca7d1ba8298451c969f64255f43ca
   languageName: node
   linkType: hard
 

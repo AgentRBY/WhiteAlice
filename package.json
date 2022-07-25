@@ -33,7 +33,7 @@
     "glob": "^8.0.3",
     "moment": "^2.29.3",
     "mongoose": "^6.4.2",
-    "nhentai": "^3.0.0",
+    "nhentai-api": "^3.4.3",
     "node-html-parser": "^5.3.3",
     "picocolors": "^1.0.0",
     "pm2": "^5.2.0",

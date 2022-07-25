@@ -1,8 +1,7 @@
 import { isNumber } from '../../../utils/Common/Number';
 import { formatNHentaiManga } from '../../../utils/Media/Manga';
 import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
-
-const nHentai = require('nhentai');
+import { nHentai } from './HentaiCommand';
 
 class NHentaiCommand extends CommonCommand {
   name = 'nHentai';
@@ -18,16 +17,14 @@ class NHentaiCommand extends CommonCommand {
   usage = 'nHentai <айди>';
 
   async run({ message, args }: CommandRunOptions) {
-    const id = args[0];
+    const id = Number(args[0]);
 
-    if (!id || !isNumber(id)) {
+    if (!isNumber(id)) {
       message.sendError('**Укажите айди манги**');
       return;
     }
 
-    const nHentaiApi = new nHentai.API();
-
-    const manga = await nHentaiApi.fetchDoujin(id);
+    const manga = await nHentai.getBook(id);
 
     if (!manga) {
       message.sendError('**Манга не найдена**');
@@ -39,7 +36,7 @@ class NHentaiCommand extends CommonCommand {
     message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } }).then((message_) => {
       const excludedTags = new Set(['lolicon', 'shotacon', 'guro', 'coprophagia', 'scat']);
 
-      if (manga.tags.tags.some((tag) => excludedTags.has(tag.name))) {
+      if (manga.tags.some((tag) => excludedTags.has(tag.name))) {
         setTimeout(() => message_.delete(), 30_000);
       }
     });

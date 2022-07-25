@@ -1,7 +1,16 @@
 import { formatNHentaiManga } from '../../../utils/Media/Manga';
 import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
+import { API } from 'nhentai-api';
 
-const nHentai = require('nhentai');
+export const nHentai = new API({
+  hosts: {
+    api: '35.186.156.165',
+    images: 'i.nhentai.net',
+    thumbs: 't.nhentai.net',
+  },
+  ssl: false,
+  agent: null,
+});
 
 class HentaiCommand extends CommonCommand {
   name = 'hentai';
@@ -24,17 +33,15 @@ class HentaiCommand extends CommonCommand {
       return;
     }
 
-    const nHentaiApi = new nHentai.API();
-
-    const searchResult = await nHentaiApi.search(name);
-    const manga = searchResult.doujins[0];
+    const searchResult = await nHentai.search(name);
+    const manga = searchResult.books[0];
 
     const embed = formatNHentaiManga(manga);
 
     message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } }).then((message_) => {
       const excludedTags = new Set(['lolicon', 'shotacon', 'guro', 'coprophagia', 'scat']);
 
-      if (manga.tags.tags.some((tag) => excludedTags.has(tag.name))) {
+      if (manga.tags.some((tag) => excludedTags.has(tag.name))) {
         setTimeout(() => message_.delete(), 30_000);
       }
     });
