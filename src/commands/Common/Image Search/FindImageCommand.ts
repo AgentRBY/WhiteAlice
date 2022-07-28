@@ -1,4 +1,4 @@
-import sagiri from 'sagiri-fork';
+import sagiri, { SagiriResult } from 'sagiri-fork';
 import { MessageActionRow, MessageEmbed } from 'discord.js';
 import { Colors } from '../../../static/Colors';
 
@@ -58,7 +58,7 @@ class FindImageCommand extends CommonCommand {
     }
 
     const SauceNAOApi = sagiri(client.config.sauceNAOToken);
-    let results = [];
+    let results: SagiriResult[] = [];
 
     try {
       results = await SauceNAOApi(link, { db: 999 });
@@ -86,9 +86,11 @@ class FindImageCommand extends CommonCommand {
     }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const generateEmbed = (site: any, sites: any[], page: number, pages: number) => {
+    const generateEmbed = (site: SagiriResult, sites: SagiriResult[], page: number, pages: number) => {
       const characters =
-        site.raw.data.characters || sites.find((site) => Boolean(site.raw.data.characters))?.characters;
+        site.raw.data.characters || sites.find((site) => Boolean(site.raw.data.characters))?.raw.data.characters;
+      console.log(site);
+      console.log(site.raw.data);
 
       const author = site.authorName
         ? `[${site.authorName}](${site.authorUrl})`
@@ -99,8 +101,13 @@ class FindImageCommand extends CommonCommand {
       let description = `**Автор:** ${author || 'Не найдено'}
        **Персонажи:** ${characters ? formatNames(characters) : 'Не найдено'}
        **Точность совпадения:** ${site.similarity}
-       **Найдено на:** ${site.site}
-       **Ссылка:** [клик](${site.url})`;
+       **Найдено на:** ${site.site} ${site.site === 'Kemono' ? `(${site.raw.data.service_name})` : ''}
+       **Ссылка на оригинал:** [клик](${site.url})
+       ${
+         site.site === 'Kemono'
+           ? `**Ссылка на Kemono**: [клик](https://kemono.party/${site.raw.data.service}/user/${site.raw.data.user_id}/post/${site.raw.data.id})`
+           : ''
+       }`;
 
       const embed = new MessageEmbed().setDescription(description).setThumbnail(site.thumbnail).setColor(Colors.Green);
 
@@ -111,7 +118,7 @@ class FindImageCommand extends CommonCommand {
            **Эпизод**: ${anime.part}
            **Из момента:** ${anime.est_time}
            **Точность совпадения:** ${site.similarity}
-           **Найдено на:** ${site.site}
+           **Найдено на:** ${site.site} 
            **Ссылка:** [клик](${site.url})`;
 
         if (anime.anidb_aid) {
