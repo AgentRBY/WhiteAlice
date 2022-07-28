@@ -89,8 +89,6 @@ class FindImageCommand extends CommonCommand {
     const generateEmbed = (site: SagiriResult, sites: SagiriResult[], page: number, pages: number) => {
       const characters =
         site.raw.data.characters || sites.find((site) => Boolean(site.raw.data.characters))?.raw.data.characters;
-      console.log(site);
-      console.log(site.raw.data);
 
       const author = site.authorName
         ? `[${site.authorName}](${site.authorUrl})`
