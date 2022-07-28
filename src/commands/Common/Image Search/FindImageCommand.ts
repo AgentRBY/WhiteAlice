@@ -1,4 +1,4 @@
-import sagiri from 'sagiri';
+import sagiri from 'sagiri-fork';
 import { MessageActionRow, MessageEmbed } from 'discord.js';
 import { Colors } from '../../../static/Colors';
 
