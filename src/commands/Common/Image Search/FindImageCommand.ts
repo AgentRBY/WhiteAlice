@@ -62,6 +62,7 @@ class FindImageCommand extends CommonCommand {
 
     try {
       results = await SauceNAOApi(link, { db: 999 });
+      // console.log(results);
     } catch (error) {
       Logger.error(error);
       message.sendError('**Произошла ошибка, попробуйте ещё раз**');
@@ -69,6 +70,7 @@ class FindImageCommand extends CommonCommand {
     }
 
     results = results.filter((result) => result.similarity > 50);
+    console.log(results);
 
     if (!results.length) {
       message.sendError('**Результаты не найдены**', {
