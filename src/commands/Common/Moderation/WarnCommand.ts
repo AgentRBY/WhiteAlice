@@ -12,21 +12,17 @@ class WarnCommand extends CommonCommand {
   name = 'warn';
   category = 'Moderation';
   aliases = [];
-  description = `Выдаёт предупреждение пользователю. 
+  description = `Выдаёт предупреждение пользователю с указанной причиной. 
   Каждое предупреждение даёт +${KARMA_FOR_WARN} кармы.
   
   Список всех предупреждений у пользователя можно посмотреть командой >warns`;
   examples: CommandExample[] = [
     {
-      command: 'warn @TestUser',
-      description: 'Выдаёт предупреждение пользователю TestUser',
-    },
-    {
       command: 'warn @TestUser Плохое поведение',
       description: 'Выдаёт предупреждение пользователю TestUser с причиной "Плохое поведение"',
     },
   ];
-  usage = 'warn <пользователь> [причина]';
+  usage = 'warn <пользователь> <причина>';
   memberPermissions: PermissionString[] = ['BAN_MEMBERS'];
 
   async run({ client, message, args }: CommandRunOptions) {
@@ -41,7 +37,14 @@ class WarnCommand extends CommonCommand {
 
     const reason = args.slice(1).join(' ');
 
-    const embed = SuccessEmbed(`Пользователю ${targetMember} было выдано предупреждение`).setTimestamp();
+    if (!reason) {
+      message.sendError('Укажите причину');
+      return;
+    }
+
+    const embed = SuccessEmbed(`Пользователю ${targetMember} было выдано предупреждение`)
+      .setTimestamp()
+      .setFooter({ text: `Причина: ${reason}` });
 
     const directEmbed = new MessageEmbed()
       .setDescription(
@@ -49,12 +52,8 @@ class WarnCommand extends CommonCommand {
         Это уже ваше \`${warns.length + 1}\` предупреждение`,
       )
       .setColor(Colors.Red)
-      .setTimestamp();
-
-    if (reason) {
-      embed.setFooter({ text: `Причина: ${reason}` });
-      directEmbed.setFooter({ text: `Причина: ${reason}` });
-    }
+      .setTimestamp()
+      .setFooter({ text: `Причина: ${reason}` });
 
     const warn: Warn = {
       date: Date.now(),

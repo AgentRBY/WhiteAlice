@@ -18,10 +18,7 @@ class WarnCommand extends SlashCommand {
         .setRequired(true);
     })
     .addStringOption((option) => {
-      return option
-        .setName('причина')
-        .setDescription('Причина, из-за которой выдано предупреждение')
-        .setRequired(false);
+      return option.setName('причина').setDescription('Причина, из-за которой выдано предупреждение').setRequired(true);
     });
 
   async run({ client, interaction }: SlashCommandRunOptions) {
@@ -41,9 +38,11 @@ class WarnCommand extends SlashCommand {
 
     const warns = await client.service.getWarns(getMemberBaseId(targetMember));
 
-    const reason = interaction.options.getString('причина', false);
+    const reason = interaction.options.getString('причина', true);
 
-    const embed = SuccessEmbed(`Пользователю ${targetMember} было выдано предупреждение`).setTimestamp();
+    const embed = SuccessEmbed(`Пользователю ${targetMember} было выдано предупреждение`)
+      .setTimestamp()
+      .setFooter({ text: `Причина: ${reason}` });
 
     const directEmbed = new MessageEmbed()
       .setDescription(
@@ -53,12 +52,8 @@ class WarnCommand extends SlashCommand {
         Это уже ваше \`${warns.length + 1}\` предупреждение`,
       )
       .setColor(Colors.Red)
-      .setTimestamp();
-
-    if (reason) {
-      embed.setFooter({ text: `Причина: ${reason}` });
-      directEmbed.setFooter({ text: `Причина: ${reason}` });
-    }
+      .setTimestamp()
+      .setFooter({ text: `Причина: ${reason}` });
 
     const warn: Warn = {
       date: Date.now(),
