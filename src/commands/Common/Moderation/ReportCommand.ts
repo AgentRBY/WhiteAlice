@@ -93,7 +93,7 @@ export class Report extends CommonCommand {
       const role = guild.roles.cache.get(roleId);
 
       role.members
-        .filter((member) => member.presence.status !== 'offline')
+        .filter((member) => member.presence && member.presence.status !== 'offline')
         .forEach((member) => presentModerators.push(member));
     });
 
