@@ -7,6 +7,7 @@ export interface IGuildModel {
   notes: Note[];
   mediaChannels: string[];
   customVoices: CustomVoice;
+  moderators: string[];
 }
 
 export interface Note {

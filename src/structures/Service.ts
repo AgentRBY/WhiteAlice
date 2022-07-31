@@ -16,6 +16,7 @@ import { CustomVoiceAction } from '../services/GuildServices/CustomVoiceAction';
 import { UpdateQuery } from 'mongoose';
 import { MemberModel } from '../models/MemberModel';
 import { GuildModel } from '../models/GuildModel';
+import { ModeratorsAction } from '../services/GuildServices/ModeratorsAction';
 
 export interface Service
   extends PrefixAction,
@@ -26,7 +27,8 @@ export interface Service
     WarnsAction,
     MutesAction,
     BansAction,
-    CustomVoiceAction {}
+    CustomVoiceAction,
+    ModeratorsAction {}
 
 export class Service extends serviceMixin(
   PrefixAction,
@@ -38,6 +40,7 @@ export class Service extends serviceMixin(
   MutesAction,
   BansAction,
   CustomVoiceAction,
+  ModeratorsAction,
 ) {
   client: ExtendClient;
 

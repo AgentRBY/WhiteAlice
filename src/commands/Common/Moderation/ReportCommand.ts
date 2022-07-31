@@ -1,7 +1,8 @@
 import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
-import { Guild, MessageActionRow, MessageButton, MessageEmbed, Snowflake } from 'discord.js';
+import { Guild, GuildMember, MessageActionRow, MessageButton, MessageEmbed, Snowflake } from 'discord.js';
 import { Colors } from '../../../static/Colors';
 import { Emojis } from '../../../static/Emojis';
+import { client } from '../../../app';
 
 export class Report extends CommonCommand {
   name = 'report';
@@ -40,12 +41,11 @@ export class Report extends CommonCommand {
 
     const reason = args.join(' ');
 
-    // TODO: Change to DB query
-    const moderatorRoleId = '748279346258509955';
+    const moderatorsRoleIds = await client.service.getModerators(message.guild.id);
 
-    const moderators = Report.getOnlineModerators(message.guild, moderatorRoleId);
+    const moderators = Report.getOnlineModerators(message.guild, moderatorsRoleIds);
 
-    if (!moderators.size) {
+    if (!moderators.length) {
       message.sendError('Нет модераторов онлайн');
       return;
     }
@@ -86,8 +86,18 @@ export class Report extends CommonCommand {
     return;
   }
 
-  public static getOnlineModerators(guild: Guild, moderatorRoleId: Snowflake) {
-    return guild.roles.cache.get(moderatorRoleId).members.filter((member) => member.presence?.status === 'online');
+  public static getOnlineModerators(guild: Guild, moderatorRoleId: Snowflake[]) {
+    const presentModerators: GuildMember[] = [];
+
+    moderatorRoleId.forEach((roleId) => {
+      const role = guild.roles.cache.get(roleId);
+
+      role.members
+        .filter((member) => member.presence.status !== 'offline')
+        .forEach((member) => presentModerators.push(member));
+    });
+
+    return presentModerators;
   }
 }
 

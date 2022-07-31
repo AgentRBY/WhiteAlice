@@ -4,6 +4,8 @@ import { ErrorEmbed, SuccessEmbed } from '../../../utils/Discord/Embed';
 import { Colors } from '../../../static/Colors';
 import { Emojis } from '../../../static/Emojis';
 import { Report } from '../../Common/Moderation/ReportCommand';
+import { client } from '../../../app';
+import { isImageLink } from '../../../utils/Common/Strings';
 
 class ReportCommand extends ContextCommand {
   name = 'Пожаловаться';
@@ -29,12 +31,11 @@ class ReportCommand extends ContextCommand {
       return;
     }
 
-    // TODO: Change to DB query
-    const moderatorRoleId = '748279346258509955';
+    const moderatorsRoleIds = await client.service.getModerators(interaction.guild.id);
 
-    const moderators = Report.getOnlineModerators(interaction.guild, moderatorRoleId);
+    const moderators = Report.getOnlineModerators(interaction.guild, moderatorsRoleIds);
 
-    if (!moderators.size) {
+    if (!moderators.length) {
       const embed = ErrorEmbed('Нет модераторов онлайн');
       interaction.reply({ embeds: [embed], ephemeral: true });
       return;
@@ -44,11 +45,15 @@ class ReportCommand extends ContextCommand {
       .setTitle('Жалоба на пользователя')
       .setDescription(
         `Пользователь ${interaction.user} пожаловался на сообщение пользователя ${reportedMessage.author}
-        Содержание сообщения:
-        \`\`\`${reportedMessage.content}\`\`\``,
+        Содержение сообщения:
+        ${!reportedMessage.content.includes('```') ? `> ${reportedMessage.content}` : ''}`,
       )
       .setColor(Colors.Blue)
       .setTimestamp();
+
+    if (reportedMessage.attachments.size && isImageLink(reportedMessage.attachments.first().url)) {
+      embed.setImage(reportedMessage.attachments.first().url);
+    }
 
     const buttons = new MessageActionRow().addComponents(
       new MessageButton()
