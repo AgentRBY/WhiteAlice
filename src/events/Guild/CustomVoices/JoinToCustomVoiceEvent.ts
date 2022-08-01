@@ -6,6 +6,10 @@ class JoinToCustomVoice extends DiscordEvent<'voiceStateUpdate'> {
   name: DiscordEventNames = 'voiceStateUpdate';
 
   async run(client: ExtendClient, oldState: VoiceState, newState: VoiceState) {
+    if (oldState.channel === newState?.channel) {
+      return;
+    }
+
     const baseVoiceChannelId = await client.service.getBaseVoiceChannel(newState.guild.id);
 
     if (!baseVoiceChannelId || !newState.channel || newState.member.id === client.user.id) {

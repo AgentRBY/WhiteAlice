@@ -9,7 +9,7 @@ class CustomVoiceAuthorLeave extends DiscordEvent<'voiceStateUpdate'> {
   name: DiscordEventNames = 'voiceStateUpdate';
 
   async run(client: ExtendClient, oldState: VoiceState, newState: VoiceState) {
-    if (oldState.channel === newState?.channel) {
+    if (oldState?.channel === newState?.channel) {
       return;
     }
 
