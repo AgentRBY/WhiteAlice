@@ -28,12 +28,6 @@ class SelectRoleEvent extends DiscordEvent<'interactionCreate'> {
       return;
     }
 
-    if (!interaction.values.length) {
-      const embed = SuccessEmbed('Выберите хотя бы одну роль');
-      interaction.reply({ embeds: [embed], ephemeral: true });
-      return;
-    }
-
     const allRolesIdInSelect = new Set(interaction.component.options.map((option) => option.value));
     const userRoles = interaction.member.roles.cache.filter((role) => allRolesIdInSelect.has(role.id));
 
