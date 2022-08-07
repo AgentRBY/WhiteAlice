@@ -11,11 +11,11 @@ class RoleSelectCommand extends SlashCommand {
     .setDescription('Взаимодействие с ролями')
     .addSubcommandGroup((option) =>
       option
-        .setName('create')
-        .setDescription('Создать')
+        .setName('message')
+        .setDescription('Взаимодействие с сообщениями с компонентом выбора роли')
         .addSubcommand((option) =>
           option
-            .setName('message')
+            .setName('create')
             .setDescription('Добавить на сообщение компонент выбора роли')
             .addChannelOption(
               (option) =>
@@ -36,6 +36,29 @@ class RoleSelectCommand extends SlashCommand {
             )
             .addStringOption((option) =>
               option.setName('плейсхолдер').setDescription('Плейсхолдер для компонента выбора роли'),
+            ),
+        )
+        .addSubcommand((option) =>
+          option
+            .setName('edit')
+            .setDescription('Редактировать уже существующее сообщение с компонентом выбора роли')
+            .addStringOption((option) =>
+              option
+                .setName('сообщение')
+                .setDescription('Айди сообщения, которое будет скопировано для контента')
+                .setRequired(true),
+            )
+            .addBooleanOption((option) =>
+              option
+                .setName('мультивыбор')
+                .setDescription('Дать возможность' + ' пользователю выбирать несколько ролей')
+                .setRequired(false),
+            )
+            .addStringOption((option) =>
+              option
+                .setName('плейсхолдер')
+                .setDescription('Плейсхолдер для компонента' + ' выбора роли')
+                .setRequired(false),
             ),
         ),
     )
@@ -74,19 +97,20 @@ class RoleSelectCommand extends SlashCommand {
     }
 
     const subcommand = options.interaction.options.getSubcommand();
-
     switch (subcommand) {
-      case 'message':
-        return this.runMessage(options);
       case 'add':
         return this.runAdd(options);
       case 'remove':
         return this.runRemove(options);
+      case 'create':
+        return this.runMessageCreate(options);
+      case 'edit':
+        return this.runMessageEdit(options);
     }
   }
 
-  // /role create message
-  private async runMessage({ interaction }: SlashCommandRunOptions) {
+  // /role message create
+  private async runMessageCreate({ interaction }: SlashCommandRunOptions) {
     const messageId = interaction.options.getString('сообщение', true);
     const message = await interaction.channel.messages.fetch(messageId).catch(() => {});
 
@@ -243,6 +267,68 @@ class RoleSelectCommand extends SlashCommand {
     });
 
     const embed = SuccessEmbed(`Роль ${role} удалена`);
+    interaction.reply({ embeds: [embed], ephemeral: true });
+  }
+
+  // /role message edit
+  private async runMessageEdit({ interaction }: SlashCommandRunOptions) {
+    const messageId = interaction.options.getString('сообщение', true);
+    const message = await interaction.channel.messages.fetch(messageId).catch(() => {});
+
+    if (!message) {
+      const embed = ErrorEmbed('Сообщение не найдено');
+      embed.setFooter({ text: 'Подсказка: сообщение должно быть в том же канале, где выполняется команда' });
+      interaction.reply({ embeds: [embed], ephemeral: true });
+      return;
+    }
+
+    const select = message.components[0]?.components.find((component) =>
+      component.customId.startsWith(RoleSelect.SelectRole),
+    ) as MessageSelectMenu;
+
+    if (!select) {
+      const embed = ErrorEmbed('В сообщении нет компонента выбора роли');
+      interaction.reply({ embeds: [embed], ephemeral: true });
+      return;
+    }
+
+    const placeholder = interaction.options.getString('плейсхолдер');
+    const multichoise = interaction.options.getBoolean('мультивыбор');
+
+    if (!placeholder && multichoise === null) {
+      const embed = ErrorEmbed('Укажите плейсхолдер или режим мультивыбора');
+      interaction.reply({ embeds: [embed], ephemeral: true });
+      return;
+    }
+
+    if (multichoise !== null) {
+      select.setMaxValues(multichoise ? select.options.length : 1);
+    }
+
+    if (placeholder) {
+      select.setPlaceholder(placeholder);
+    }
+
+    const row = new MessageActionRow().addComponents(select);
+
+    await message.edit({
+      ...(message.content ? { content: message.content } : {}),
+      embeds: message.embeds,
+      files: [...message.attachments.values()],
+      components: [row],
+    });
+
+    let response = 'Компонент выбора ролей изменен:';
+
+    if (multichoise !== null) {
+      response += multichoise ? '\nМульивыбор добавлен' : '\nМульивыбор удалён';
+    }
+
+    if (placeholder) {
+      response += `\nПлейсхолдер изменён на ${placeholder}`;
+    }
+
+    const embed = SuccessEmbed(response);
     interaction.reply({ embeds: [embed], ephemeral: true });
   }
 }
