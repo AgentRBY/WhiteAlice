@@ -19,6 +19,7 @@ import discordModals from 'discord-modals';
 import { ContextCommand } from './Commands/ContextCommand';
 import { SlashCommand } from './Commands/SlashCommand';
 import { DiscordEvent, DiscordEventNames, DisTubeEvent, DisTubeEventNames } from './Event';
+import { Client as NotionClient } from '@notionhq/client';
 
 const globPromise = promisify(glob);
 
@@ -29,6 +30,7 @@ export class ExtendClient extends Client<true> {
   categories: Set<string> = new Set();
   aliases: Collection<string, string> = new Collection(); // <Alias, OriginalCommandName>
   disTube: DisTube;
+  notion: NotionClient;
   aniDB = new AniDB({ client: 'hltesttwo', version: 9 });
   config = process.env;
   invites: Collection<string, Collection<string, number>> = new Collection(); // <InviteCode, <AuthorId, Uses>
@@ -71,6 +73,10 @@ export class ExtendClient extends Client<true> {
       .catch((error) => Logger.error(error));
 
     this.service = new Service(this);
+
+    this.notion = new NotionClient({
+      auth: this.config.notionToken,
+    });
 
     await this.loadCommonCommands();
     await this.loadEvents();

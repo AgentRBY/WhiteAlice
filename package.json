@@ -1,7 +1,7 @@
 {
-  "name": "hlbot",
+  "name": "white_alice",
   "version": "1.0.0",
-  "description": "HL Discord Bot",
+  "description": "White Alice: Multi-proposal Discord Bot",
   "main": "index.js",
   "scripts": {
     "dev": "concurrently -p none \"yarn dev:compile\" \"yarn dev:watch -q\"",
@@ -23,6 +23,7 @@
     "@distube/soundcloud": "^1.1.0",
     "@distube/spotify": "^1.2.1",
     "@distube/ytdl-core": "latest",
+    "@notionhq/client": "^2.1.1",
     "anidbjs": "^2.4.4",
     "anilist-node": "^1.12.1",
     "discord-modals": "^1.3.7",

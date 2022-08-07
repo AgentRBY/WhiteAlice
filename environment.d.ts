@@ -10,6 +10,7 @@ export interface Environment {
   devGuildID: string;
   yandexYU: string;
   distubeCookie: string;
+  notionToken: string;
 }
 
 declare global {

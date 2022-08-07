@@ -14,7 +14,7 @@ class BanCommand extends CommonCommand {
   description = `Выдаёт бан пользователю
   Каждый бан добавляет +100% к времени мута
   
-  Можно очистить сообщения пользователя за последние пару дней (от 1 до 7) добавив ключ hl:D
+  Можно очистить сообщения пользователя за последние пару дней (от 1 до 7) добавив ключ wl:D
   
   Список всех банов у пользователя можно просмотреть командой >bans
   
@@ -29,7 +29,7 @@ class BanCommand extends CommonCommand {
       description: 'Забанить пользователя @TestUser с причиной `Плохой человек`',
     },
     {
-      command: 'ban 908629905539997726 hl:D 6',
+      command: 'ban 908629905539997726 wl:D 6',
       description: 'Забанить пользователя с айди `908629905539997726` и удалить его сообщения за последние 5 дней',
     },
   ];
@@ -71,8 +71,8 @@ class BanCommand extends CommonCommand {
 
     let messageDeleteCountInDays = 0;
 
-    if (keys.has('hl:D') || keys.has('hl:d')) {
-      messageDeleteCountInDays = Number(keys.get('hl:D') || keys.get('hl:d'));
+    if (keys.has('wl:D') || keys.has('wl:d')) {
+      messageDeleteCountInDays = Number(keys.get('wl:D') || keys.get('wl:d'));
 
       if (!isNumber(messageDeleteCountInDays) || messageDeleteCountInDays < 0 || messageDeleteCountInDays > 7) {
         message.sendError('Количество дней введено неправильно', {

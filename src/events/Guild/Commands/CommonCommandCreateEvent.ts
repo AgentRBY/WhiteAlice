@@ -54,7 +54,7 @@ class CommonCommandCreate extends DiscordEvent<'messageCreate'> {
     const attributes: Set<string> = new Set();
     const cleanArgs: string[] = [];
 
-    const KEY_REGEX = /^hl:.+/;
+    const KEY_REGEX = /^wl:.+/;
     const ATTRIBUTE_REGEX = /^-(.+)/;
 
     args.forEach((argument, index, array) => {

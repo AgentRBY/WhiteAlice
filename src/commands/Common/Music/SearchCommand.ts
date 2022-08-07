@@ -14,14 +14,14 @@ class SearchCommand extends CommonCommand {
   -S - безопасный поиск
   
   Доступные ключи:
-  hl:L или hl:Limit - устанавливает количество ответов при поиске, максимальное значение - 30`;
+  wl:L или wl:Limit - устанавливает количество ответов при поиске, максимальное значение - 30`;
   examples: CommandExample[] = [
     {
       command: 'search Never Gonna Give You Up',
       description: 'Выдаёт 10 результатов по запросу `Never Gonna Give You Up`',
     },
     {
-      command: 'search Never Gonna Give You Up hl:Limit 15',
+      command: 'search Never Gonna Give You Up wl:Limit 15',
       description: 'Выдаёт 15 результатов по запросу `Never Gonna Give You Up`',
     },
     {
@@ -39,7 +39,7 @@ class SearchCommand extends CommonCommand {
       return;
     }
 
-    const limit = Number(keys.get('hl:Limit') || keys.get('hl:L')) || 10;
+    const limit = Number(keys.get('wl:Limit') || keys.get('wl:L')) || 10;
 
     if (limit > 30) {
       message.sendError('**Лимит не может быть больше 30**');

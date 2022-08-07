@@ -281,6 +281,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@notionhq/client@npm:^2.1.1":
+  version: 2.1.1
+  resolution: "@notionhq/client@npm:2.1.1"
+  dependencies:
+    "@types/node-fetch": ^2.5.10
+    node-fetch: ^2.6.1
+  checksum: 7ad54748c99881aa1a03b9ae447f9115670d7d16e80d63be1e5b0b398cb34491684d784a7186a69b7266661a70d0827bc0e76302a5d61e24f61c5fc9d1482a0e
+  languageName: node
+  linkType: hard
+
 "@npmcli/fs@npm:^2.1.0":
   version: 2.1.1
   resolution: "@npmcli/fs@npm:2.1.1"
@@ -734,7 +744,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node-fetch@npm:^2.6.2":
+"@types/node-fetch@npm:^2.5.10, @types/node-fetch@npm:^2.6.2":
   version: 2.6.2
   resolution: "@types/node-fetch@npm:2.6.2"
   dependencies:
@@ -3318,61 +3328,6 @@ __metadata:
   checksum: b07c165e78b22f031515de61d82c97702e8552ba1c4748fde60a97973178d2e380b9eb75dea602bbcc9c2eb1ca2948e125aac6c1f3bfc9f56b92b09df8124af3
   languageName: node
   linkType: hard
-
-"hlbot@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "hlbot@workspace:."
-  dependencies:
-    "@discordjs/builders": ^0.15.0
-    "@discordjs/opus": ^0.7.0
-    "@discordjs/voice": ^0.10.0
-    "@distube/soundcloud": ^1.1.0
-    "@distube/spotify": ^1.2.1
-    "@distube/ytdl-core": latest
-    "@swc/cli": ^0.1.57
-    "@swc/core": ^1.2.209
-    "@types/eslint": ^8.4.5
-    "@types/eslint-plugin-prettier": ^3.1.0
-    "@types/glob": ^7.2.0
-    "@types/node": ^18.0.1
-    "@types/prettier": ^2.6.3
-    "@types/request": ^2.48.8
-    "@typescript-eslint/eslint-plugin": ^5.30.4
-    "@typescript-eslint/parser": ^5.30.4
-    anidbjs: ^2.4.4
-    anilist-node: ^1.12.1
-    chokidar: ^3.5.3
-    concurrently: ^7.2.2
-    discord-modals: ^1.3.7
-    discord.js: ^13.8.1
-    distube: 3.3.4
-    dotenv: ^16.0.1
-    eslint: ^8.19.0
-    eslint-config-prettier: ^8.5.0
-    eslint-plugin-import: ^2.26.0
-    eslint-plugin-prettier: ^4.2.1
-    eslint-plugin-unicorn: ^43.0.0
-    fast-fuzzy: ^1.11.2
-    glob: ^8.0.3
-    husky: ^8.0.1
-    lint-staged: ^13.0.3
-    moment: ^2.29.3
-    mongoose: ^6.4.2
-    nhentai-api: ^3.4.3
-    node-html-parser: ^5.3.3
-    nodemon: ^2.0.18
-    picocolors: ^1.0.0
-    pm2: ^5.2.0
-    prettier: ^2.7.1
-    request: ^2.88.2
-    sagiri-fork: ^3.2.1
-    trace.moe.ts: ^1.3.9
-    ts-node: ^10.8.2
-    ts-node-dev: ^2.0.0
-    tslib: ^2.4.0
-    typescript: ^4.7.4
-  languageName: unknown
-  linkType: soft
 
 "hosted-git-info@npm:^2.1.4":
   version: 2.8.9
@@ -6832,6 +6787,62 @@ __metadata:
   checksum: 1a5c563d3c1b52d5f893c8b61afe11abc3bab4afac492e8da5bde69d550de701cf9806235f20a47b5c8fa8a1d6a9135841de2596535e998027a54589000e66d1
   languageName: node
   linkType: hard
+
+"white_alice@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "white_alice@workspace:."
+  dependencies:
+    "@discordjs/builders": ^0.15.0
+    "@discordjs/opus": ^0.7.0
+    "@discordjs/voice": ^0.10.0
+    "@distube/soundcloud": ^1.1.0
+    "@distube/spotify": ^1.2.1
+    "@distube/ytdl-core": latest
+    "@notionhq/client": ^2.1.1
+    "@swc/cli": ^0.1.57
+    "@swc/core": ^1.2.209
+    "@types/eslint": ^8.4.5
+    "@types/eslint-plugin-prettier": ^3.1.0
+    "@types/glob": ^7.2.0
+    "@types/node": ^18.0.1
+    "@types/prettier": ^2.6.3
+    "@types/request": ^2.48.8
+    "@typescript-eslint/eslint-plugin": ^5.30.4
+    "@typescript-eslint/parser": ^5.30.4
+    anidbjs: ^2.4.4
+    anilist-node: ^1.12.1
+    chokidar: ^3.5.3
+    concurrently: ^7.2.2
+    discord-modals: ^1.3.7
+    discord.js: ^13.8.1
+    distube: 3.3.4
+    dotenv: ^16.0.1
+    eslint: ^8.19.0
+    eslint-config-prettier: ^8.5.0
+    eslint-plugin-import: ^2.26.0
+    eslint-plugin-prettier: ^4.2.1
+    eslint-plugin-unicorn: ^43.0.0
+    fast-fuzzy: ^1.11.2
+    glob: ^8.0.3
+    husky: ^8.0.1
+    lint-staged: ^13.0.3
+    moment: ^2.29.3
+    mongoose: ^6.4.2
+    nhentai-api: ^3.4.3
+    node-html-parser: ^5.3.3
+    nodemon: ^2.0.18
+    picocolors: ^1.0.0
+    pm2: ^5.2.0
+    prettier: ^2.7.1
+    request: ^2.88.2
+    sagiri-fork: ^3.2.1
+    trace.moe.ts: ^1.3.9
+    ts-node: ^10.8.2
+    ts-node-dev: ^2.0.0
+    tslib: ^2.4.0
+    typescript: ^4.7.4
+  languageName: unknown
+  linkType: soft
 
 "wide-align@npm:^1.1.2, wide-align@npm:^1.1.5":
   version: 1.1.5

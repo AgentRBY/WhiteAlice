@@ -1,13 +1,13 @@
-# HL Bot
+# White Alice
 
-Russian multipurpose Discord Bot for HL Server
+Russian multipurpose Discord Bot
 
 ## How to run
 
 I am using `yarn 3` in a project but you can use any other package manager
 
-- `git clone https://github.com/AgentRBY/HL_Bot`
-- `cd HL_Bot`
+- `git clone https://github.com/AgentRBY/White_Alice`
+- `cd White_Alice`
 - `yarn install`
 - Create an `.env` file and fill it according to the pattern in `environment.d.ts`
 - Required variables:
