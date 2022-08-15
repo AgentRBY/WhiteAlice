@@ -3,6 +3,7 @@ import { Guild, GuildMember, MessageActionRow, MessageButton, MessageEmbed, Snow
 import { Colors } from '../../../static/Colors';
 import { Emojis } from '../../../static/Emojis';
 import { client } from '../../../app';
+import { SuccessEmbed } from '../../../utils/Discord/Embed';
 
 export class Report extends CommonCommand {
   name = 'report';
@@ -22,20 +23,28 @@ export class Report extends CommonCommand {
   usage = 'report [причина]';
 
   async run({ message, args }: CommandRunOptions) {
+    message.delete();
+
     if (!message.reference) {
-      message.sendError('Ответь на сообщение, на которое хотите пожаловаться');
+      message
+        .sendError('Ответь на сообщение, на которое хотите пожаловаться')
+        .then((sentMessage) => setTimeout(() => sentMessage.delete(), 2000));
       return;
     }
 
     const reportedMessage = await message.fetchReference();
 
     if (reportedMessage.author.bot) {
-      message.sendError('Нельзя пожаловаться на бота');
+      message
+        .sendError('Нельзя пожаловаться на бота')
+        .then((sentMessage) => setTimeout(() => sentMessage.delete(), 2000));
       return;
     }
 
     if (reportedMessage.author.id === message.author.id) {
-      message.sendError('Вы не можете пожаловаться сами на себя');
+      message
+        .sendError('Вы не можете пожаловаться сами на себя')
+        .then((sentMessage) => setTimeout(() => sentMessage.delete(), 2000));
       return;
     }
 
@@ -43,10 +52,17 @@ export class Report extends CommonCommand {
 
     const moderatorsRoleIds = await client.service.getModerators(message.guild.id);
 
+    if (!moderatorsRoleIds.length) {
+      message
+        .sendError('Нет ни одной роли модератора на этом сервере')
+        .then((sentMessage) => setTimeout(() => sentMessage.delete(), 2000));
+      return;
+    }
+
     const moderators = Report.getOnlineModerators(message.guild, moderatorsRoleIds);
 
     if (!moderators.length) {
-      message.sendError('Нет модераторов онлайн');
+      message.sendError('Нет модераторов онлайн').then((sentMessage) => setTimeout(() => sentMessage.delete(), 2000));
       return;
     }
 
@@ -82,7 +98,10 @@ export class Report extends CommonCommand {
       moderator.send({ embeds: [embed], components: [buttons] });
     });
 
-    message.sendSuccess('Ваша жалоба была отправлена');
+    const messageEmbed = SuccessEmbed('Ваша жалоба была отправлена');
+    message.channel
+      .send({ embeds: [messageEmbed] })
+      .then((sentMessage) => setTimeout(() => sentMessage.delete(), 1000));
     return;
   }
 
