@@ -19,17 +19,24 @@ class KarmaCommand extends CommonCommand {
   ];
   usage = 'karma [пользователь]';
 
-  async run({ client, message }: CommandRunOptions) {
-    const member = getMemberFromMessage(message) || message.member;
+  async run({ client, message, args }: CommandRunOptions) {
+    const potentialMember = getMemberFromMessage(message);
+
+    if (args.length && !potentialMember) {
+      message.sendError('Пользователь не найден');
+      return;
+    }
+
+    const member = potentialMember || message.member;
 
     const karma = await client.service.getKarma(getMemberBaseId(member));
 
     if (!karma) {
-      message.sendSuccess('У вас нет кармы');
+      message.sendSuccess(`У пользователя ${member} нет кармы`);
       return;
     }
 
-    message.sendSuccess(`Ваша карма: ${karma}`);
+    message.sendSuccess(`Карма пользователя ${member}: ${karma}`);
     return;
   }
 }
