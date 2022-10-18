@@ -34,7 +34,7 @@
     "glob": "^8.0.3",
     "moment": "^2.29.3",
     "mongoose": "^6.4.2",
-    "nhentai-api": "^3.4.3",
+    "nhentai-api": "patch:nhentai-api@npm:3.4.3#.yarn/patches/nhentai-api-npm-3.4.3-a2c03ee4c1.patch",
     "node-html-parser": "^5.3.3",
     "picocolors": "^1.0.0",
     "pm2": "^5.2.0",
@@ -81,8 +81,5 @@
     "*.json": [
       "prettier --write"
     ]
-  },
-  "resolutions": {
-    "nhentai-api@3.4.3": "patch:nhentai-api@npm:3.4.3#.yarn/patches/nhentai-api-npm-3.4.3-a2c03ee4c1.patch"
   }
 }

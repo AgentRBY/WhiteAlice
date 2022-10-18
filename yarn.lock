@@ -4500,10 +4500,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nhentai-api@npm:^3.4.3":
+"nhentai-api@npm:3.4.3":
   version: 3.4.3
   resolution: "nhentai-api@npm:3.4.3"
   checksum: f51789f4fd45e73956f301f3411d69d2f05578173f4523701a5417bee0d747ccd113cd81d84234e1f817b3287cbdcceb86cca7d1ba8298451c969f64255f43ca
+  languageName: node
+  linkType: hard
+
+"nhentai-api@patch:nhentai-api@npm:3.4.3#.yarn/patches/nhentai-api-npm-3.4.3-a2c03ee4c1.patch::locator=white_alice%40workspace%3A.":
+  version: 3.4.3
+  resolution: "nhentai-api@patch:nhentai-api@npm%3A3.4.3#.yarn/patches/nhentai-api-npm-3.4.3-a2c03ee4c1.patch::version=3.4.3&hash=c8d258&locator=white_alice%40workspace%3A."
+  checksum: a5accb6a075574978c2900dda1e3d80b1ffc0752f23c5429655b26ec78bfa5719770815c4703d731b64d174c8b77a736298802cb79cf2470327c99bf34a5ff02
   languageName: node
   linkType: hard
 
@@ -6828,7 +6835,7 @@ __metadata:
     lint-staged: ^13.0.3
     moment: ^2.29.3
     mongoose: ^6.4.2
-    nhentai-api: ^3.4.3
+    nhentai-api: "patch:nhentai-api@npm:3.4.3#.yarn/patches/nhentai-api-npm-3.4.3-a2c03ee4c1.patch"
     node-html-parser: ^5.3.3
     nodemon: ^2.0.18
     picocolors: ^1.0.0
