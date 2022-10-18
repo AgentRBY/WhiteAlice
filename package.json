@@ -81,5 +81,8 @@
     "*.json": [
       "prettier --write"
     ]
+  },
+  "resolutions": {
+    "nhentai-api@3.4.3": "patch:nhentai-api@npm:3.4.3#.yarn/patches/nhentai-api-npm-3.4.3-a2c03ee4c1.patch"
   }
 }

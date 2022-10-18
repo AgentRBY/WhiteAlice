@@ -2,15 +2,7 @@ import { formatNHentaiManga } from '../../../utils/Media/Manga';
 import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
 import { API } from 'nhentai-api';
 
-export const nHentai = new API({
-  hosts: {
-    api: '35.186.156.165',
-    images: 'i.nhentai.net',
-    thumbs: 't.nhentai.net',
-  },
-  ssl: false,
-  agent: null,
-});
+export const nHentai = new API();
 
 class HentaiCommand extends CommonCommand {
   name = 'hentai';
