@@ -98,14 +98,18 @@ class RoleSelectCommand extends SlashCommand {
 
     const subcommand = options.interaction.options.getSubcommand();
     switch (subcommand) {
-      case 'add':
+      case 'add': {
         return this.runAdd(options);
-      case 'remove':
+      }
+      case 'remove': {
         return this.runRemove(options);
-      case 'create':
+      }
+      case 'create': {
         return this.runMessageCreate(options);
-      case 'edit':
+      }
+      case 'edit': {
         return this.runMessageEdit(options);
+      }
     }
   }
 

@@ -45,15 +45,18 @@ class VoiceChannelBitrate extends CommonCommand {
     let bitrate = Number(args[0]);
 
     switch (args[0]) {
-      case 'max':
+      case 'max': {
         bitrate = maxBitrate / 1000;
         break;
-      case 'min':
+      }
+      case 'min': {
         bitrate = 8;
         break;
-      case 'reset':
+      }
+      case 'reset': {
         bitrate = 64;
         break;
+      }
     }
 
     if (!isNumber(bitrate)) {

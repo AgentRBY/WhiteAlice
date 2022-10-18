@@ -36,24 +36,30 @@ class SetGameVoiceChannel extends CommonCommand {
     let activityName: string;
 
     switch (userActivity.type) {
-      case 'PLAYING':
+      case 'PLAYING': {
         activityName = '🎮 Играем в';
         break;
-      case 'LISTENING':
+      }
+      case 'LISTENING': {
         activityName = '🎧 Слушаем';
         break;
-      case 'WATCHING':
+      }
+      case 'WATCHING': {
         activityName = '💻 Смотрим';
         break;
-      case 'STREAMING':
+      }
+      case 'STREAMING': {
         activityName = '🎥 Стримим';
         break;
-      case 'COMPETING':
+      }
+      case 'COMPETING': {
         activityName = '🔪 Сражаемся в';
         break;
-      default:
+      }
+      default: {
         activityName = '🎮 Играем в';
         break;
+      }
     }
 
     const voiceChannel = message.guild.channels.cache.get(message.member.voice.channelId) as VoiceChannel;

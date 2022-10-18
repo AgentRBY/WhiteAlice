@@ -44,10 +44,12 @@ class ModeratorsCommand extends SlashCommand {
     const subcommand = options.interaction.options.getSubcommand();
 
     switch (subcommand) {
-      case 'add':
+      case 'add': {
         return this.runAddRole(options);
-      case 'remove':
+      }
+      case 'remove': {
         return this.runRemoveRole(options);
+      }
     }
   }
 
