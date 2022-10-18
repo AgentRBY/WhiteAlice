@@ -25,6 +25,11 @@ class AnimeCommand extends CommonCommand {
 
     const searchResult = await new anilist().searchEntry.anime(name, null, 1, 1);
 
+    if (!searchResult.media.length) {
+      message.sendError('**Аниме не найдено**');
+      return;
+    }
+
     const anime = await new anilist().media.anime(searchResult.media[0].id);
 
     const embed = await formatAnilistAnime(anime);
