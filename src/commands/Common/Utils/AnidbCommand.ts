@@ -36,9 +36,9 @@ class AnidbCommand extends CommonCommand {
     const embed = formatAniDBAnime(anime);
 
     message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } }).then((message_) => {
-      const tagsBlackList = new Set(['Loli']);
+      const tagsBlackList = new Set(['loli']);
 
-      if (anime.tags.some((tag) => tagsBlackList.has(tag))) {
+      if (anime.tags.some((tag) => tagsBlackList.has(tag.name))) {
         setTimeout(() => message_.delete(), 30_000);
       }
     });
