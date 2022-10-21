@@ -1,6 +1,8 @@
 import { Service } from '../../structures/Service';
 import { MemberBaseId } from '../../typings/MemberModel';
 import { getRandomInt } from '../../utils/Common/Number';
+import { MemberModel } from '../../models/MemberModel';
+import { Snowflake } from 'discord.js';
 
 export class ProfileAction {
   async incrementMessageCount(this: Service, id: MemberBaseId) {
@@ -82,5 +84,20 @@ export class ProfileAction {
       messageCount: 0,
     });
     await this.recalculateLevel(id);
+  }
+
+  async getLeaderboard(this: Service, guildId: Snowflake, limit = 10) {
+    const users = await MemberModel.find(
+      { _id: new RegExp(`\\d+-${guildId}`) },
+      {
+        profile: 1,
+        _id: 1,
+      },
+      { sort: { 'profile.level': -1 }, limit },
+    )
+      .lean()
+      .exec();
+
+    return users.filter((user) => user.profile?.level);
   }
 }
