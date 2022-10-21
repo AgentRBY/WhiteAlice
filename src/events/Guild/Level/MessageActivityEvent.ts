@@ -14,6 +14,10 @@ class MessageActivity extends DiscordEvent<'messageCreate'> {
       return;
     }
 
+    if (message.author.bot) {
+      return;
+    }
+
     if (talkedRecently.has(message.author.id)) {
       return;
     }
