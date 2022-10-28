@@ -1,14 +1,15 @@
-import { DiscordEvent, DiscordEventNames } from '../../../structures/Event';
 import { Message } from 'discord.js';
-import { ExtendClient } from '../../../structures/Client';
-import { AntiScamModule } from '../../../modules/AntiScam';
-import { AntiPingModule } from '../../../modules/AntiPing';
-import { NHentaiLink } from '../../../modules/NHentaiLink';
 import { AniDBLink } from '../../../modules/AniDBLink';
 import { AnilistLink } from '../../../modules/AnilistLink';
+import { AntiNSFW } from '../../../modules/AntiNSFW';
+import { AntiPingModule } from '../../../modules/AntiPing';
+import { AntiScamModule } from '../../../modules/AntiScam';
 import { MediaChannel } from '../../../modules/MediaChannel';
-import { getMemberBaseId } from '../../../utils/Other';
+import { NHentaiLink } from '../../../modules/NHentaiLink';
+import { ExtendClient } from '../../../structures/Client';
+import { DiscordEvent, DiscordEventNames } from '../../../structures/Event';
 import { ExtendedMessage } from '../../../structures/ExtendedMessage';
+import { getMemberBaseId } from '../../../utils/Other';
 
 class MessageModeration extends DiscordEvent<'messageCreate'> {
   name: DiscordEventNames = 'messageCreate';
@@ -20,6 +21,7 @@ class MessageModeration extends DiscordEvent<'messageCreate'> {
 
     AntiScamModule(client, message);
     AntiPingModule(client, message);
+    AntiNSFW(client, message);
 
     NHentaiLink(client, message);
     AniDBLink(client, message);
