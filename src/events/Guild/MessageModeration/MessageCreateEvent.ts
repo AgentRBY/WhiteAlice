@@ -1,7 +1,6 @@
 import { Message } from 'discord.js';
 import { AniDBLink } from '../../../modules/AniDBLink';
 import { AnilistLink } from '../../../modules/AnilistLink';
-import { AntiNSFW } from '../../../modules/AntiNSFW';
 import { AntiPingModule } from '../../../modules/AntiPing';
 import { AntiScamModule } from '../../../modules/AntiScam';
 import { MediaChannel } from '../../../modules/MediaChannel';
@@ -21,7 +20,7 @@ class MessageModeration extends DiscordEvent<'messageCreate'> {
 
     AntiScamModule(client, message);
     AntiPingModule(client, message);
-    AntiNSFW(client, message);
+    // AntiNSFW(client, message);
 
     NHentaiLink(client, message);
     AniDBLink(client, message);
