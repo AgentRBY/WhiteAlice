@@ -1,9 +1,10 @@
-import { TraceMoe } from 'trace.moe.ts';
-import { Colors } from '../../../static/Colors';
 import anilist from 'anilist-node';
 import { ButtonInteraction, MessageActionRow, MessageButton, MessageEmbed } from 'discord.js';
-import { isLink, isMediaLink, removeLessAndGreaterSymbols, removeQueryParameters } from '../../../utils/Common/Strings';
+import { TraceMoe } from 'trace.moe.ts';
+import { Colors } from '../../../static/Colors';
 import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
+import { isMediaLink } from '../../../utils/Common/Strings';
+import { FindImageCommand } from './FindImageCommand';
 
 class FindanimeCommand extends CommonCommand {
   name = 'findanime';
@@ -21,21 +22,7 @@ class FindanimeCommand extends CommonCommand {
   ];
 
   async run({ client, message, args }: CommandRunOptions) {
-    let link: string;
-
-    if (message.attachments.size) {
-      const attachment = message.attachments.first();
-      link = removeQueryParameters(attachment.url || attachment.proxyURL);
-    }
-
-    if (args.length) {
-      link = removeLessAndGreaterSymbols(removeQueryParameters(args[0]));
-    }
-
-    if (!link || !isLink(link)) {
-      message.sendError('**Введите ссылку на изображение**');
-      return;
-    }
+    const link = FindImageCommand.getImageLink(message, args);
 
     if (!isMediaLink(link.toLowerCase())) {
       message.sendError(

@@ -1,12 +1,12 @@
-import { generateYandexSearchLink, getSitesFromYandexResponse } from '../../../utils/Media/ImageSearch';
-import { promisify } from 'util';
-import { yandexWhitelistSites } from '../../../static/ImageSearch';
 import { MessageActionRow, MessageEmbed } from 'discord.js';
+import { promisify } from 'util';
 import { Colors } from '../../../static/Colors';
+import { yandexWhitelistSites } from '../../../static/ImageSearch';
+import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
 import { Site, WhitelistSite } from '../../../typings/YandexImagesResponse';
 import { generateDefaultButtons, pagination } from '../../../utils/Discord/Pagination';
-import { removeLessAndGreaterSymbols, removeQueryParameters } from '../../../utils/Common/Strings';
-import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
+import { generateYandexSearchLink, getSitesFromYandexResponse } from '../../../utils/Media/ImageSearch';
+import { FindImageCommand } from './FindImageCommand';
 
 const request = promisify(require('request'));
 
@@ -40,21 +40,7 @@ class YandexImageSearchCommand extends CommonCommand {
       return;
     }
 
-    let link;
-
-    if (message.attachments.size) {
-      const attachment = message.attachments.first();
-      link = removeQueryParameters(attachment.url || attachment.proxyURL);
-    }
-
-    if (args.length) {
-      link = removeLessAndGreaterSymbols(removeQueryParameters(args[0]));
-    }
-
-    if (!link) {
-      message.sendError('**Введите ссылку на изображение**');
-      return;
-    }
+    const link = FindImageCommand.getImageLink(message, args);
 
     const yandexImageLink = generateYandexSearchLink(link, client.config.yandexYU);
 

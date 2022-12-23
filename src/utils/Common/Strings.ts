@@ -1,3 +1,5 @@
+import { MessageEmbed } from 'discord.js';
+
 export function upFirstLetter(text: string): string {
   return text[0].toUpperCase() + text.slice(1);
 }
@@ -20,6 +22,7 @@ export const LINK_REGEX = /https?:\/\/(www\.)?[\w#%+.:=@~-]{1,256}\.[\d()A-Za-z]
 export const IMAGE_LINK_REGEX = /\.(?:png|jpeg|jpg|webp|bmp)$/;
 export const VIDEO_LINK_REGEX = /\.mp4$/;
 export const GIF_LINK_REGEX = /\.gif$/;
+export const TENOR_LINK_REGEX = /tenor\.com(\/.*)?\/view\//;
 
 export function isLink(text: string): boolean {
   return LINK_REGEX.test(text);
@@ -41,8 +44,26 @@ export function isMediaLink(text: string): boolean {
   return isImageLink(text) || isVideoLink(text) || isGifLink(text);
 }
 
+export function isTenorLink(text: string) {
+  if (!isLink(text)) {
+    return false;
+  }
+
+  return TENOR_LINK_REGEX.test(text);
+}
+
 export function removeQueryParameters(text: string): string {
   return text.split('?')[0];
+}
+
+export function getTenorLink(embeds: MessageEmbed[]): string | undefined {
+  for (const embed of embeds) {
+    if (isTenorLink(embed.url)) {
+      return embed.thumbnail.url;
+    }
+  }
+
+  return;
 }
 
 export function removeLessAndGreaterSymbols(text: string): string {

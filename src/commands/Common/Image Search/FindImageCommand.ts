@@ -1,9 +1,12 @@
+import { Message, MessageActionRow, MessageEmbed } from 'discord.js';
 import sagiri, { SagiriResult } from 'sagiri-fork';
-import { MessageActionRow, MessageEmbed } from 'discord.js';
 import { Colors } from '../../../static/Colors';
+import { sauceNAORelevantSites } from '../../../static/ImageSearch';
+import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
 
 import {
   formatNames,
+  getTenorLink,
   isGifLink,
   isImageLink,
   isLink,
@@ -11,11 +14,9 @@ import {
   removeQueryParameters,
 } from '../../../utils/Common/Strings';
 import { generateDefaultButtons, pagination } from '../../../utils/Discord/Pagination';
-import { sauceNAORelevantSites } from '../../../static/ImageSearch';
-import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
 import Logger from '../../../utils/Logger';
 
-class FindImageCommand extends CommonCommand {
+export class FindImageCommand extends CommonCommand {
   name = 'findImage';
   category = 'Image Search';
   aliases = ['find', 'fi', 'image'];
@@ -31,16 +32,7 @@ class FindImageCommand extends CommonCommand {
   ];
 
   async run({ client, message, args }: CommandRunOptions) {
-    let link;
-
-    if (message.attachments.size) {
-      const attachment = message.attachments.first();
-      link = removeQueryParameters(attachment.url || attachment.proxyURL);
-    }
-
-    if (args.length) {
-      link = removeLessAndGreaterSymbols(removeQueryParameters(args[0]));
-    }
+    const link = FindImageCommand.getImageLink(message, args);
 
     if (!link || !isLink(link)) {
       message.sendError('**Введите ссылку на изображение**');
@@ -145,6 +137,29 @@ class FindImageCommand extends CommonCommand {
     });
 
     pagination(replyMessage, pages);
+  }
+
+  public static getImageLink(message: Message, args: string[]): string | undefined {
+    let link;
+
+    if (message.attachments.size) {
+      const attachment = message.attachments.first();
+      link = removeQueryParameters(attachment.url || attachment.proxyURL);
+    }
+
+    if (args.length) {
+      link = removeLessAndGreaterSymbols(removeQueryParameters(args[0]));
+    }
+
+    if (message.embeds.length) {
+      const tenorGifLink = getTenorLink(message.embeds);
+
+      if (tenorGifLink) {
+        link = tenorGifLink;
+      }
+    }
+
+    return link;
   }
 }
 
