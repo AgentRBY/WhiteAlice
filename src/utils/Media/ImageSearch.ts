@@ -1,5 +1,5 @@
-import { Response } from 'request';
 import HTMLParser from 'node-html-parser';
+import { Response } from 'request';
 import { YandexImagesResponse } from '../../typings/YandexImagesResponse';
 
 export const generateYandexSearchLink = (imageLink: string, yu: string) => {
@@ -24,7 +24,13 @@ export const generateYandexSearchLink = (imageLink: string, yu: string) => {
 };
 
 export const getSitesFromYandexResponse = (response: Response): YandexImagesResponse => {
-  const parsedHTML = HTMLParser(JSON.parse(response.body).blocks[0].html);
+  const jsonResponse = JSON.parse(response.body);
+
+  if (!jsonResponse) {
+    return null;
+  }
+
+  const parsedHTML = HTMLParser(jsonResponse.blocks[0].html);
 
   if (parsedHTML.querySelector('.CbirOtherSizes-EmptyMessage')) {
     return null;
