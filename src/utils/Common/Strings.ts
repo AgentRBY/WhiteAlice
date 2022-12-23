@@ -53,6 +53,10 @@ export function isTenorLink(text: string) {
 }
 
 export function removeQueryParameters(text: string): string {
+  if (!isMediaLink(text)) {
+    return text;
+  }
+
   return text.split('?')[0];
 }
 
