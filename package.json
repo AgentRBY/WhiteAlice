@@ -7,7 +7,7 @@
     "dev": "concurrently -p none \"yarn dev:compile\" \"yarn dev:watch -q\"",
     "dev:watch": "nodemon -w dist ./dist/app.js",
     "dev:compile": "swc ./src -d dist --config-file .swcrc -w ",
-    "start": "npm run build && node ./dist/app.js",
+    "start": "node ./dist/app.js",
     "lint": "eslint ./src --cache",
     "lint:fix": "eslint ./src --fix --cache",
     "prettier": "prettier ./src --write",
