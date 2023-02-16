@@ -32,6 +32,11 @@ export class FindImageCommand extends CommonCommand {
   ];
 
   async run({ client, message, args }: CommandRunOptions) {
+    if (!client.config.sauceNAOToken) {
+      message.sendError('**Ключ API для SauceNAO не найден в переменных среды бота. Команда отключена.**');
+      return;
+    }
+
     const link = FindImageCommand.getImageLink(message, args);
 
     if (!link || !isLink(link)) {

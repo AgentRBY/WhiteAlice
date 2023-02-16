@@ -12,8 +12,8 @@ I am using `pnpm` in a project but you can use any other package manager
 - Create an `.env` file and fill it according to the pattern in `environment.d.ts`
 - Required variables:
     - botToken — Bot token from [Discord Developer Portal](https://discord.com/developers/applications)
-    - mongoURI — MongoDB URI, more info [here](https://www.mongodb.com/docs/manual/reference/connection-string)
 - Optional variables:
+    - mongoURI — MongoDB URI, more info [here](https://www.mongodb.com/docs/manual/reference/connection-string)
     - environment — development or production. If development, application commands set to dev guild (see next)
     - devGuildID — Development Guild ID, used to add application commands if environment set to development
     - prefix — Default bot prefix. If not specified will be used `>`

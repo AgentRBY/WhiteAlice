@@ -1,9 +1,9 @@
-import { DiscordEvent, DiscordEventNames } from '../../../structures/Event';
 import { Collection, Message } from 'discord.js';
-import { ExtendClient } from '../../../structures/Client';
-import { ErrorEmbed } from '../../../utils/Discord/Embed';
 import Permissions from '../../../static/Permissions';
+import { ExtendClient } from '../../../structures/Client';
+import { DiscordEvent, DiscordEventNames } from '../../../structures/Event';
 import { ExtendedMessage } from '../../../structures/ExtendedMessage';
+import { ErrorEmbed } from '../../../utils/Discord/Embed';
 
 class CommonCommandCreate extends DiscordEvent<'messageCreate'> {
   name: DiscordEventNames = 'messageCreate';
@@ -13,11 +13,15 @@ class CommonCommandCreate extends DiscordEvent<'messageCreate'> {
       return;
     }
 
-    if (client.config.mode === 'development' && !client.getOwners().includes(message.author.id)) {
+    if (client.config.environment === 'development' && !client.getOwners().includes(message.author.id)) {
+      const errorEmbed = ErrorEmbed(
+        '**Включен режим разработки. Команды работают только для создателей бота, указанных в `ownersID`**',
+      );
+      message.reply({ embeds: [errorEmbed], allowedMentions: { repliedUser: false } });
       return;
     }
 
-    const prefix = await client.service.getPrefix(message.guildId);
+    const prefix = await client.getPrefix(message.guild.id);
 
     if (!message.content.startsWith(prefix)) {
       return;

@@ -26,6 +26,10 @@ class MessageModeration extends DiscordEvent<'messageCreate'> {
     AniDBLink(client, message);
     AnilistLink(client, message);
 
+    if (!client.config.mongoURI) {
+      return;
+    }
+
     MediaChannel(client, message);
 
     client.service.incrementMessageCount(getMemberBaseId(message.member));

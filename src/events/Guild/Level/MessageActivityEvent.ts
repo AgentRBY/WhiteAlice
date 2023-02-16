@@ -1,8 +1,8 @@
-import { DiscordEvent, DiscordEventNames } from '../../../structures/Event';
-import { ExtendClient } from '../../../structures/Client';
 import { Message, Snowflake } from 'discord.js';
-import { getMemberBaseId } from '../../../utils/Other';
+import { ExtendClient } from '../../../structures/Client';
+import { DiscordEvent, DiscordEventNames } from '../../../structures/Event';
 import { getRandomInt } from '../../../utils/Common/Number';
+import { getMemberBaseId } from '../../../utils/Other';
 
 const talkedRecently = new Set<Snowflake>();
 
@@ -15,6 +15,10 @@ class MessageActivity extends DiscordEvent<'messageCreate'> {
     }
 
     if (message.author.bot) {
+      return;
+    }
+
+    if (!client.config.mongoURI) {
       return;
     }
 

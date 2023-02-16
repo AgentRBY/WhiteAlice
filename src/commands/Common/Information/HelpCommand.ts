@@ -1,9 +1,9 @@
 import { EmbedFieldData, MessageEmbed } from 'discord.js';
-import { upAllFirstLatter } from '../../../utils/Common/Strings';
-import { Emojis, EmojisLinks } from '../../../static/Emojis';
 import { Colors } from '../../../static/Colors';
+import { Emojis, EmojisLinks } from '../../../static/Emojis';
 
 import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
+import { upAllFirstLatter } from '../../../utils/Common/Strings';
 
 class HelpCommand extends CommonCommand {
   name = 'help';
@@ -25,7 +25,7 @@ class HelpCommand extends CommonCommand {
   ];
 
   async run({ client, message, args }: CommandRunOptions) {
-    const prefix = await client.service.getPrefix(message.guildId);
+    const prefix = await client.getPrefix(message.guild.id);
 
     if (!args.length) {
       const fields: EmbedFieldData[] = [...client.categories.keys()].map((category) => {

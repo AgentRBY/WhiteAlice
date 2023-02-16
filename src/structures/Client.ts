@@ -1,25 +1,26 @@
-import { Client, Collection, Intents, Snowflake } from 'discord.js';
-import { promisify } from 'util';
-import { glob } from 'glob';
-import { DisTube } from 'distube';
 import SoundCloudPlugin from '@distube/soundcloud';
 import SpotifyPlugin from '@distube/spotify';
+import { Client as NotionClient } from '@notionhq/client';
 import AniDB from 'anidbjs';
-import mongoose from 'mongoose';
-import { MongoData } from '../typings/Database';
-import { IMemberModel } from '../typings/MemberModel';
-import { CacheManager } from './CacheManager';
-import { IGuildModel } from '../typings/GuildModel';
-import { MemberModel } from '../models/MemberModel';
-import { GuildModel } from '../models/GuildModel';
-import { Service } from './Service';
-import Logger from '../utils/Logger';
-import { CommonCommand } from './Commands/CommonCommand';
 import discordModals from 'discord-modals';
+import { Client, Collection, Intents, Snowflake } from 'discord.js';
+import { DisTube } from 'distube';
+import { glob } from 'glob';
+import mongoose from 'mongoose';
+import { promisify } from 'util';
+import { Environment } from '../../environment';
+import { GuildModel } from '../models/GuildModel';
+import { MemberModel } from '../models/MemberModel';
+import { MongoData } from '../typings/Database';
+import { IGuildModel } from '../typings/GuildModel';
+import { IMemberModel } from '../typings/MemberModel';
+import Logger from '../utils/Logger';
+import { CacheManager } from './CacheManager';
+import { CommonCommand } from './Commands/CommonCommand';
 import { ContextCommand } from './Commands/ContextCommand';
 import { SlashCommand } from './Commands/SlashCommand';
 import { DiscordEvent, DiscordEventNames, DisTubeEvent, DisTubeEventNames } from './Event';
-import { Client as NotionClient } from '@notionhq/client';
+import { Service } from './Service';
 
 const globPromise = promisify(glob);
 
@@ -32,7 +33,7 @@ export class ExtendClient extends Client<true> {
   disTube: DisTube;
   notion: NotionClient;
   aniDB = new AniDB({ client: 'hltesttwo', version: 9 });
-  config = process.env;
+  config: Environment = process.env;
   invites: Collection<string, Collection<string, number>> = new Collection(); // <InviteCode, <AuthorId, Uses>
   memberBase: CacheManager<MongoData<IMemberModel>>;
   guildBase: CacheManager<MongoData<IGuildModel>>;
@@ -53,6 +54,11 @@ export class ExtendClient extends Client<true> {
   }
 
   async start(): Promise<void> {
+    if (!this.config.botToken) {
+      Logger.error('No discord token provided. Bot will not start.');
+      return;
+    }
+
     this.disTube = new DisTube(this, {
       searchSongs: 1,
       searchCooldown: 30,
@@ -67,10 +73,16 @@ export class ExtendClient extends Client<true> {
       },
     });
 
-    mongoose
-      .connect(process.env.mongoURI)
-      .then(() => Logger.success('Success connected to MongoDB'))
-      .catch((error) => Logger.error(error));
+    this.config.environment = this.config.environment || 'development';
+
+    if (this.config.mongoURI) {
+      mongoose
+        .connect(this.config.mongoURI)
+        .then(() => Logger.success('Success connected to MongoDB'))
+        .catch((error) => Logger.error(error));
+    } else {
+      Logger.warn('No MongoDB URI provided. Database features and some commands will not work.');
+    }
 
     this.service = new Service(this);
 
@@ -103,6 +115,10 @@ export class ExtendClient extends Client<true> {
 
   public getOwners(): string[] {
     return this.config.ownersID?.split(',') || [];
+  }
+
+  public async getPrefix(guildId?: string): Promise<string> {
+    return (this.config.mongoURI && guildId ? await this.service.getPrefix(guildId) : this.config.prefix) ?? '>';
   }
 
   private static async importFile(filePath: string) {
