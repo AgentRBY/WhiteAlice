@@ -4,7 +4,7 @@
   "description": "White Alice: Multi-proposal Discord Bot",
   "main": "index.js",
   "scripts": {
-    "dev": "concurrently -p none \"npm run dev:compile\" \"npm run dev:watch -q\"",
+    "dev": "pnpm run /^dev:.*/",
     "dev:watch": "nodemon -w dist ./dist/app.js",
     "dev:compile": "swc ./src -d dist --config-file .swcrc -w ",
     "start": "node ./dist/app.js",
@@ -55,7 +55,6 @@
     "@typescript-eslint/eslint-plugin": "^5.40.1",
     "@typescript-eslint/parser": "^5.40.1",
     "chokidar": "^3.5.3",
-    "concurrently": "^7.4.0",
     "eslint": "^8.25.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-import": "^2.26.0",
