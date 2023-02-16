@@ -47,7 +47,9 @@ class EvalCommand extends CommonCommand {
       message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
     } catch (error) {
       const embed = new MessageEmbed().setColor(Colors.Red);
-      let formattedError = error.message.replace(client.token, 'token').replace(client.config.mongoURI, 'mongouri');
+      let formattedError = error.message
+        .replace(client.token, 'token')
+        .replace(client.config.mongoURI || '', 'mongouri');
 
       if (formattedError.length > 1950) {
         formattedError = formattedError.slice(0, 1950) + '...';
