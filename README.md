@@ -4,11 +4,11 @@ Russian multipurpose Discord Bot
 
 ## How to run
 
-I am using `yarn 3` in a project but you can use any other package manager
+I am using `pnpm` in a project but you can use any other package manager
 
 - `git clone https://github.com/AgentRBY/White_Alice`
 - `cd White_Alice`
-- `yarn install`
+- `pnpm install`
 - Create an `.env` file and fill it according to the pattern in `environment.d.ts`
 - Required variables:
     - botToken — Bot token from [Discord Developer Portal](https://discord.com/developers/applications)
@@ -29,7 +29,7 @@ I am using `yarn 3` in a project but you can use any other package manager
     - [Linux instruction](https://www.tecmint.com/install-ffmpeg-in-linux/)
     - [Windows instruction](https://blog.gregzaal.com/how-to-install-ffmpeg-on-windows/)
     - For Heroku i use [Heroku Buildpack FFmpeg Lasted](https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest)
-- Run `yarn dev` for development or `yarn build` and `yarn start` for production
+- Run `pnpm dev` for development or `pnpm build` and `pnpm start` for production
 
 ## Commands and modules
 
