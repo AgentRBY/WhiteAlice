@@ -13,17 +13,17 @@ class CommonCommandCreate extends DiscordEvent<'messageCreate'> {
       return;
     }
 
+    const prefix = await client.getPrefix(message.guild.id);
+
+    if (!message.content.startsWith(prefix)) {
+      return;
+    }
+
     if (client.config.environment === 'development' && !client.getOwners().includes(message.author.id)) {
       const errorEmbed = ErrorEmbed(
         '**Включен режим разработки. Команды работают только для создателей бота, указанных в `ownersID`**',
       );
       message.reply({ embeds: [errorEmbed], allowedMentions: { repliedUser: false } });
-      return;
-    }
-
-    const prefix = await client.getPrefix(message.guild.id);
-
-    if (!message.content.startsWith(prefix)) {
       return;
     }
 
