@@ -7,58 +7,58 @@ patchedDependencies:
 
 specifiers:
   '@discordjs/builders': ^0.15.0
-  '@discordjs/opus': ^0.8.0
-  '@discordjs/voice': ^0.13.0
-  '@distube/soundcloud': ^1.2.2
-  '@distube/spotify': ^1.4.2
+  '@discordjs/opus': ^0.9.0
+  '@discordjs/voice': ^0.14.0
+  '@distube/soundcloud': ^1.3.0
+  '@distube/spotify': ^1.5.1
   '@distube/ytdl-core': latest
-  '@notionhq/client': ^2.2.1
-  '@swc/cli': ^0.1.57
-  '@swc/core': ^1.3.9
-  '@types/eslint': ^8.4.6
+  '@notionhq/client': ^2.2.3
+  '@swc/cli': ^0.1.62
+  '@swc/core': ^1.3.35
+  '@types/eslint': ^8.21.1
   '@types/eslint-plugin-prettier': ^3.1.0
-  '@types/glob': ^8.0.0
-  '@types/node': ^18.11.0
-  '@types/prettier': ^2.7.1
+  '@types/glob': ^8.0.1
+  '@types/node': ^18.13.0
+  '@types/prettier': ^2.7.2
   '@types/request': ^2.48.8
-  '@typescript-eslint/eslint-plugin': ^5.40.1
-  '@typescript-eslint/parser': ^5.40.1
+  '@typescript-eslint/eslint-plugin': ^5.52.0
+  '@typescript-eslint/parser': ^5.52.0
   anidbjs: ^2.4.4
-  anilist-node: ^1.13.0
+  anilist-node: ^1.13.1
   chokidar: ^3.5.3
   discord-modals: ^1.3.7
   discord.js: ^13.12.0
   distube: 3.3.4
   dotenv: ^16.0.3
   emoji-regex: ^10.2.1
-  eslint: ^8.25.0
-  eslint-config-prettier: ^8.5.0
-  eslint-plugin-import: ^2.26.0
+  eslint: ^8.34.0
+  eslint-config-prettier: ^8.6.0
+  eslint-plugin-import: ^2.27.5
   eslint-plugin-prettier: ^4.2.1
-  eslint-plugin-unicorn: ^44.0.2
-  fast-fuzzy: ^1.11.2
-  glob: ^8.0.3
-  husky: ^8.0.1
-  lint-staged: ^13.0.3
+  eslint-plugin-unicorn: ^45.0.2
+  fast-fuzzy: ^1.12.0
+  glob: ^8.1.0
+  husky: ^8.0.3
+  lint-staged: ^13.1.2
   moment: ^2.29.4
-  mongoose: ^6.6.5
+  mongoose: ^6.9.2
   nhentai-api: 3.4.3
-  node-html-parser: ^6.1.1
+  node-html-parser: ^6.1.4
   nodemon: ^2.0.20
   picocolors: ^1.0.0
-  prettier: ^2.7.1
+  prettier: ^2.8.4
   request: ^2.88.2
   sagiri-fork: ^3.2.1
   trace.moe.ts: ^1.3.10
   ts-node: ^10.9.1
   ts-node-dev: ^2.0.0
-  tslib: ^2.4.0
-  typescript: ^4.8.4
+  tslib: ^2.5.0
+  typescript: ^4.9.5
 
 dependencies:
   '@discordjs/builders': 0.15.0
-  '@discordjs/opus': 0.8.0
-  '@discordjs/voice': 0.13.0_@discordjs+opus@0.8.0
+  '@discordjs/opus': 0.9.0
+  '@discordjs/voice': 0.14.0_@discordjs+opus@0.9.0
   '@distube/soundcloud': 1.3.0_distube@3.3.4
   '@distube/spotify': 1.5.1_distube@3.3.4
   '@distube/ytdl-core': 4.11.7
@@ -67,13 +67,13 @@ dependencies:
   anilist-node: 1.13.1
   discord-modals: 1.3.9_discord.js@13.12.0
   discord.js: 13.12.0
-  distube: 3.3.4_vfhdzl4oz5cvtarugfatjfphxa
+  distube: 3.3.4_h3ry3orxm7fytr357hqkuraqei
   dotenv: 16.0.3
   emoji-regex: 10.2.1
   fast-fuzzy: 1.12.0
   glob: 8.1.0
   moment: 2.29.4
-  mongoose: 6.9.1
+  mongoose: 6.9.2
   nhentai-api: 3.4.3_l4eoegqdj6cfyjre73icupyjpq
   node-html-parser: 6.1.4
   picocolors: 1.0.0
@@ -98,7 +98,7 @@ devDependencies:
   eslint-config-prettier: 8.6.0_eslint@8.34.0
   eslint-plugin-import: 2.27.5_mcvs2y73sfmcxqzpjj5lr7a2m4
   eslint-plugin-prettier: 4.2.1_u5wnrdwibbfomslmnramz52buy
-  eslint-plugin-unicorn: 44.0.2_eslint@8.34.0
+  eslint-plugin-unicorn: 45.0.2_eslint@8.34.0
   husky: 8.0.3
   lint-staged: 13.1.2
   nodemon: 2.0.20
@@ -1000,8 +1000,8 @@ packages:
       - supports-color
     dev: false
 
-  /@discordjs/opus/0.8.0:
-    resolution: {integrity: sha512-uHE7OmHEmP8YM0yvsH3iSdacdeghO0qTkF0CIkV07Tg0qdyOLUVkoZHj5Zcpge9rC4qb/JvTS2xRgttSZLM43Q==}
+  /@discordjs/opus/0.9.0:
+    resolution: {integrity: sha512-NEE76A96FtQ5YuoAVlOlB3ryMPrkXbUCTQICHGKb8ShtjXyubGicjRMouHtP1RpuDdm16cDa+oI3aAMo1zQRUQ==}
     engines: {node: '>=12.0.0'}
     requiresBuild: true
     dependencies:
@@ -1012,13 +1012,13 @@ packages:
       - supports-color
     dev: false
 
-  /@discordjs/voice/0.13.0_@discordjs+opus@0.8.0:
-    resolution: {integrity: sha512-ZzwDmVINaLgkoDUeTJfpN9TkjINMLfTVoLMtEygm0YC5jTTw7AvKGqhc+Ae/2kNLywd0joyFVNrLp94yCkQ9SA==}
+  /@discordjs/voice/0.14.0_@discordjs+opus@0.9.0:
+    resolution: {integrity: sha512-/LV8LSFuJ1c4OEW1ubPg3al2QNpUpwX8ZL+KL+LORmnUFVCtehSaEh+38uDfWg1O/TgiGI5vOLj4ZKql43drcw==}
     engines: {node: '>=16.9.0'}
     dependencies:
       '@types/ws': 8.5.4
       discord-api-types: 0.37.34
-      prism-media: 1.3.4_@discordjs+opus@0.8.0
+      prism-media: 1.3.4_@discordjs+opus@0.9.0
       tslib: 2.5.0
       ws: 8.12.1
     transitivePeerDependencies:
@@ -1035,7 +1035,7 @@ packages:
     peerDependencies:
       distube: 3||4
     dependencies:
-      distube: 3.3.4_vfhdzl4oz5cvtarugfatjfphxa
+      distube: 3.3.4_h3ry3orxm7fytr357hqkuraqei
       soundcloud.ts: 0.4.9
     transitivePeerDependencies:
       - debug
@@ -1046,7 +1046,7 @@ packages:
     peerDependencies:
       distube: ^3.3.1||4
     dependencies:
-      distube: 3.3.4_vfhdzl4oz5cvtarugfatjfphxa
+      distube: 3.3.4_h3ry3orxm7fytr357hqkuraqei
       spotify-uri: 3.0.3
       spotify-url-info: 3.2.3
       spotify-web-api-node: 5.0.2
@@ -1093,6 +1093,16 @@ packages:
     dependencies:
       miniget: 4.2.2
     dev: false
+
+  /@eslint-community/eslint-utils/4.1.2_eslint@8.34.0:
+    resolution: {integrity: sha512-7qELuQWWjVDdVsFQ5+beUl+KPczrEDA7S3zM4QUd/bJl7oXgsmpXaEVqrRTnOBqenOV4rWf2kVZk2Ot085zPWA==}
+    engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+    peerDependencies:
+      eslint: ^6.0.0 || ^7.0.0 || ^8.0.0
+    dependencies:
+      eslint: 8.34.0
+      eslint-visitor-keys: 3.3.0
+    dev: true
 
   /@eslint/eslintrc/1.4.1:
     resolution: {integrity: sha512-XXrH9Uarn0stsyldqDYq8r++mROmWRI1xKMXa640Bb//SY1+ECYX6VzT6Lcx5frD0V30XieqJ0oX9I2Xj5aoMA==}
@@ -2281,7 +2291,7 @@ packages:
       - utf-8-validate
     dev: false
 
-  /distube/3.3.4_vfhdzl4oz5cvtarugfatjfphxa:
+  /distube/3.3.4_h3ry3orxm7fytr357hqkuraqei:
     resolution: {integrity: sha512-izJFDL1dfTzPgTXZbGavyDXDnodkuykVGFSWuFPL9EY83et/qhjQFosLwYoWTJWQN8tG6KPUc5wPi4EZxxy/4g==}
     engines: {node: '>=12.0.0'}
     deprecated: Update to latest version instead
@@ -2293,14 +2303,14 @@ packages:
       '@discordjs/opus':
         optional: true
     dependencies:
-      '@discordjs/opus': 0.8.0
-      '@discordjs/voice': 0.13.0_@discordjs+opus@0.8.0
+      '@discordjs/opus': 0.9.0
+      '@discordjs/voice': 0.14.0_@discordjs+opus@0.9.0
       '@distube/youtube-dl': 2.2.4
       '@distube/ytdl-core': 4.11.7
       '@distube/ytpl': 1.1.1
       '@distube/ytsr': 1.1.9
       discord.js: 13.12.0
-      prism-media: '@codeload.github.com/distubejs/prism-media/tar.gz/main#workaround.tar.gz_@discordjs+opus@0.8.0'
+      prism-media: '@codeload.github.com/distubejs/prism-media/tar.gz/main#workaround.tar.gz_@discordjs+opus@0.9.0'
       tiny-typed-emitter: 2.1.0
     transitivePeerDependencies:
       - ffmpeg-static
@@ -2574,24 +2584,26 @@ packages:
       prettier-linter-helpers: 1.0.0
     dev: true
 
-  /eslint-plugin-unicorn/44.0.2_eslint@8.34.0:
-    resolution: {integrity: sha512-GLIDX1wmeEqpGaKcnMcqRvMVsoabeF0Ton0EX4Th5u6Kmf7RM9WBl705AXFEsns56ESkEs0uyelLuUTvz9Tr0w==}
+  /eslint-plugin-unicorn/45.0.2_eslint@8.34.0:
+    resolution: {integrity: sha512-Y0WUDXRyGDMcKLiwgL3zSMpHrXI00xmdyixEGIg90gHnj0PcHY4moNv3Ppje/kDivdAy5vUeUr7z211ImPv2gw==}
     engines: {node: '>=14.18'}
     peerDependencies:
-      eslint: '>=8.23.1'
+      eslint: '>=8.28.0'
     dependencies:
       '@babel/helper-validator-identifier': 7.19.1
+      '@eslint-community/eslint-utils': 4.1.2_eslint@8.34.0
       ci-info: 3.8.0
       clean-regexp: 1.0.0
       eslint: 8.34.0
-      eslint-utils: 3.0.0_eslint@8.34.0
       esquery: 1.4.2
       indent-string: 4.0.0
       is-builtin-module: 3.2.1
+      jsesc: 3.0.2
       lodash: 4.17.21
       pluralize: 8.0.0
       read-pkg-up: 7.0.1
       regexp-tree: 0.1.24
+      regjsparser: 0.9.1
       safe-regex: 2.1.1
       semver: 7.3.8
       strip-indent: 3.0.0
@@ -3540,6 +3552,17 @@ packages:
     resolution: {integrity: sha512-UVU9dibq2JcFWxQPA6KCqj5O42VOmAY3zQUfEKxU0KpTGXwNoCjkX1e13eHNvw/xPynt6pU0rZ1htjWTNTSXsg==}
     dev: false
 
+  /jsesc/0.5.0:
+    resolution: {integrity: sha512-uZz5UnB7u4T9LvwmFqXii7pZSouaRPorGs5who1Ip7VO0wxanFvBL7GkM6dTHlgX+jhBApRetaWpnDabOeTcnA==}
+    hasBin: true
+    dev: true
+
+  /jsesc/3.0.2:
+    resolution: {integrity: sha512-xKqzzWXDttJuOcawBt4KnKHHIf5oQ/Cxax+0PWFG+DFDgHNAdi+TXECADI+RYiFUMmx8792xsMbbgXj4CwnP4g==}
+    engines: {node: '>=6'}
+    hasBin: true
+    dev: true
+
   /json-buffer/3.0.1:
     resolution: {integrity: sha512-4bV5BfR2mqfQTJm+V5tPPdf+ZpuhiIvTuAB5g8kcrXOZpTT/QwwVRWBywX1ozr6lEuPdbHxwaJlm9G6mI2sfSQ==}
 
@@ -3848,8 +3871,8 @@ packages:
       - aws-crt
     dev: false
 
-  /mongoose/6.9.1:
-    resolution: {integrity: sha512-hOz1ZWV0w6WEVLrj89Wpk7PXDYtDDF6k7/NX79lY5iKqeFtZsceBXW8xW59YFNcW5O3cH32hQ8IbDlhgyBsDMA==}
+  /mongoose/6.9.2:
+    resolution: {integrity: sha512-Yb9rWJhYm+7Yf839QuKx2dXcclbA0GAMxtdDiaedHsOQU+y28cD/8gKYp1wTwwyAjKesqaGfLG4ez7D9lKpwBw==}
     engines: {node: '>=12.0.0'}
     dependencies:
       bson: 4.7.2
@@ -4251,7 +4274,7 @@ packages:
     hasBin: true
     dev: true
 
-  /prism-media/1.3.4_@discordjs+opus@0.8.0:
+  /prism-media/1.3.4_@discordjs+opus@0.9.0:
     resolution: {integrity: sha512-eW7LXORkTCQznZs+eqe9VjGOrLBxcBPXgNyHXMTSRVhphvd/RrxgIR7WaWt4fkLuhshcdT5KHL88LAfcvS3f5g==}
     peerDependencies:
       '@discordjs/opus': ^0.8.0
@@ -4268,7 +4291,7 @@ packages:
       opusscript:
         optional: true
     dependencies:
-      '@discordjs/opus': 0.8.0
+      '@discordjs/opus': 0.9.0
     dev: false
 
   /pseudomap/1.0.2:
@@ -4371,6 +4394,13 @@ packages:
   /regexpp/3.2.0:
     resolution: {integrity: sha512-pq2bWo9mVD43nbts2wGv17XLiNLya+GklZ8kaDLV2Z08gDCsGpnKn9BFMepvWuHCbyVvY7J5o5+BVvoQbmlJLg==}
     engines: {node: '>=8'}
+    dev: true
+
+  /regjsparser/0.9.1:
+    resolution: {integrity: sha512-dQUtn90WanSNl+7mQKcXAgZxvUe7Z0SqXlgzv0za4LwiUhyzBC58yQO3liFoUgu8GiJVInAhJjkj1N0EtQ5nkQ==}
+    hasBin: true
+    dependencies:
+      jsesc: 0.5.0
     dev: true
 
   /request/2.88.2:
@@ -5343,7 +5373,7 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  '@codeload.github.com/distubejs/prism-media/tar.gz/main#workaround.tar.gz_@discordjs+opus@0.8.0':
+  '@codeload.github.com/distubejs/prism-media/tar.gz/main#workaround.tar.gz_@discordjs+opus@0.9.0':
     resolution: {tarball: https://codeload.github.com/distubejs/prism-media/tar.gz/main#workaround.tar.gz}
     id: '@codeload.github.com/distubejs/prism-media/tar.gz/main#workaround.tar.gz'
     name: prism-media
@@ -5363,5 +5393,5 @@ packages:
       opusscript:
         optional: true
     dependencies:
-      '@discordjs/opus': 0.8.0
+      '@discordjs/opus': 0.9.0
     dev: false
