@@ -10,10 +10,14 @@ class VoteCommand extends SlashCommand {
     .setDescription('Создать голосование')
     .addStringOption((option) =>
       option.setName('опции').setDescription('Введите доступные опции через запятую').setRequired(true),
+    )
+    .addStringOption((option) =>
+      option.setName('вопрос').setDescription('Введите вопрос').setRequired(false),
     );
 
   async run({ interaction }: SlashCommandRunOptions) {
     const options = interaction.options.getString('опции', true).split(',');
+    const question = interaction.options.getString('вопрос', false);
 
     if (options.length < 2) {
       const embed = ErrorEmbed('Введите две или больше опции через запятую');
@@ -28,7 +32,7 @@ class VoteCommand extends SlashCommand {
     }
 
     const embed = new MessageEmbed()
-      .setTitle('Голосование')
+      .setTitle(question || 'Голосование')
       .setColor(Colors.Blue)
       .addFields(
         options.map((option, index) => ({
