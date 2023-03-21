@@ -33,7 +33,7 @@ I am using `pnpm` in a project but you can use any other package manager
 
 ### **Bot settings:**
 
-Turn on:
+Turn on this intents in [Discord Developer Portal](https://discord.com/developers/applications):
 - Presence intent 
 - Server members intent
 - Message content intent
