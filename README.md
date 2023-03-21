@@ -31,6 +31,13 @@ I am using `pnpm` in a project but you can use any other package manager
     - For Heroku i use [Heroku Buildpack FFmpeg Lasted](https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest)
 - Run `pnpm dev` for development or `pnpm build` and `pnpm start` for production
 
+### **Bot settings:**
+
+Turn on:
+- Presence intent 
+- Server members intent
+- Message content intent
+
 ## Commands and modules
 
 ### **Common commands:**
