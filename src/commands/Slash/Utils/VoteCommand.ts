@@ -32,7 +32,7 @@ class VoteCommand extends SlashCommand {
     }
 
     const embed = new MessageEmbed()
-      .setTitle(question ? question : 'Голосование')
+      .setTitle(question || 'Голосование')
       .setColor(Colors.Blue)
       .addFields(
         options.map((option, index) => ({
