@@ -14,14 +14,14 @@ class RollCommand extends SlashCommand {
       .setName(KEY_MIN)
       .setDescription('Минимальноe значение')
       .setMinValue(-1024)
-      .setMaxValue(1024)
+      .setMaxValue(1023)
       .setRequired(false)
     )
     .addIntegerOption((option) => option
       .setName(KEY_MAX)
       .setDescription('Максимальноe значение')
       .setMinValue(-1024)
-      .setMaxValue(1024)
+      .setMaxValue(1023)
       .setRequired(false)
     )
     .addIntegerOption((option) => option
@@ -34,7 +34,7 @@ class RollCommand extends SlashCommand {
 
   async run({ interaction }: SlashCommandRunOptions) {
     const min = interaction.options.getInteger(KEY_MIN, false) || 0;
-    const max = interaction.options.getInteger(KEY_MAX, false) || 101;
+    const max = interaction.options.getInteger(KEY_MAX, false) || 100;
     const digits = interaction.options.getInteger(KEY_DIGITS, false);
 
 
@@ -54,7 +54,7 @@ class RollCommand extends SlashCommand {
       return;
     }
 
-    if (min >= max - 1) {
+    if (min >= max) {
       interaction.reply({
         embeds: [
           InfoEmbed('Я достигла комедии. Минимальное число не может быть больше максимального или равняться ему')
@@ -66,7 +66,7 @@ class RollCommand extends SlashCommand {
 
     interaction.reply({
       embeds: [
-        SuccessEmbed(`Ваше случайное число [${min};${max - 1}] - \`${Math.floor(Math.random() * (max - min) + min)}\``)
+        SuccessEmbed(`Ваше случайное число [${min};${max}] - \`${Math.floor(Math.random() * (max - min + 1) + min)}\``)
       ],
       fetchReply: true,
     });
