@@ -1,6 +1,5 @@
 import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
 import { isNumber } from '../../../utils/Common/Number';
-import { InfoEmbed } from '../../../utils/Discord/Embed';
 
 class RollCommand extends CommonCommand {
   name = 'roll';
@@ -15,54 +14,40 @@ class RollCommand extends CommonCommand {
     },
     {
       command: 'roll 10',
-      description: 'Генерирует случайное число в диапозоне [10;100]',
-    },
-    {
-      command: 'roll -1024 1024',
-      description: 'Генерирует случайное число в диапозоне [-1024;1024]',
-    },
+      description: 'Генерирует случайное число в диапозоне [00;10]',
+    }
   ];
-  usage = 'roll [<минимальное значение> [максимальное значение]]';
+  usage = 'roll [максимальное значение]';
 
   async run({ message, args }: CommandRunOptions) {
 
-    if (args.length > 2) {
+    if (args.length > 1) {
       message.sendError('**Слишком много аргументов**');
       return;
     }
 
-    if (args.length === 0) {
-      message.sendSuccess(`Ваше случайное число [0;100] - \`${Math.floor(Math.random() * 101)}\``);
-      return;
-    }
+    let max = 100;
 
     if (args.length === 1) {
-      const min = Number(args[0]);
-
-      if (!isNumber(min)) {
-        message.sendError('**Укажите минимальное значение**');
+      if (args[0].length > 4) {
+        message.sendError('**Число выходит за допустимый диапозон**');
         return;
       }
 
-      message.sendSuccess(`Ваше случайное число [${min};100] - \`${Math.floor(Math.random() * (101 - min) + min)}\``);
+      max = Number(args[0]);
+
+      if (!isNumber(max)) {
+        message.sendError('**Не удается распознать максимальное значение**');
+        return;
+      }
     }
 
-    const min = Number(args[0]);
-    const max = Number(args[1]);
-
-    if (min >= max - 1) {
-      message.reply({
-        embeds: [
-          InfoEmbed('Я достигла комедии. Минимальное число не может быть больше максимального или равняться ему')
-        ],
-        allowedMentions: {
-          repliedUser: false
-        },
-      });
+    if (max <= 0) {
+      message.sendError('Я достигла комедии. Минимальное число не может быть больше максимального или равняться ему');
       return;
     }
 
-    message.sendSuccess(`Ваше случайное число [${min};${max - 1}] - \`${Math.floor(Math.random() * (max - min) + min)}\``)
+    message.sendSuccess(`Ваше случайное число [0;${max}] - \`${Math.floor(Math.random() * (max + 1))}\``);
   }
 }
 
