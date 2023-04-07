@@ -10,11 +10,11 @@ class RollCommand extends CommonCommand {
   examples: CommandExample[] = [
     {
       command: 'roll',
-      description: 'Генерирует случайное число в диапозоне [0;100]',
+      description: 'Генерирует случайное число в диапазоне [0;100]',
     },
     {
       command: 'roll 10',
-      description: 'Генерирует случайное число в диапозоне [00;10]',
+      description: 'Генерирует случайное число в диапазоне [00;10]',
     }
   ];
   usage = 'roll [максимальное значение]';
@@ -30,7 +30,7 @@ class RollCommand extends CommonCommand {
 
     if (args.length === 1) {
       if (args[0].length > 4) {
-        message.sendError('**Число выходит за допустимый диапозон**');
+        message.sendError('**Число выходит за допустимый диапазон**');
         return;
       }
 
