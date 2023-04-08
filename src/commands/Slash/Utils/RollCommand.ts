@@ -1,6 +1,7 @@
 import { SlashCommand, SlashCommandRunOptions } from '../../../structures/Commands/SlashCommand';
 import { SlashCommandBuilder } from '@discordjs/builders';
 import { InfoEmbed, SuccessEmbed } from '../../../utils/Discord/Embed';
+import { getRandomInt } from '../../../utils/Common/Number';
 
 const KEY_MIN = 'минимум';
 const KEY_MAX = 'максимум';
@@ -39,17 +40,18 @@ class RollCommand extends SlashCommand {
 
 
     if (digits) {
-      let randomIntegerString = Math.floor(Math.random() * 10 ** 16).toString();
+      let randomInteger = Math.floor(Math.random() * 10 ** 16).toString();
 
       if (digits >= 16) {
-        randomIntegerString += Math.floor(Math.random() * 10 ** 16).toString();
+        randomInteger += Math.floor(Math.random() * 10 ** 16).toString();
       }
+
+      randomInteger = randomInteger.slice(0, digits);
 
       interaction.reply({
         embeds: [
-          SuccessEmbed(`Ваше случайное число, состоящие из ${digits} цифр - \`${randomIntegerString.slice(0, digits)}\``)
+          SuccessEmbed(`Ваше случайное число, состоящие из ${digits} цифр - \`${randomInteger}\``)
         ],
-        fetchReply: true,
       })
       return;
     }
@@ -64,11 +66,12 @@ class RollCommand extends SlashCommand {
       return;
     }
 
+    const randomInteger = getRandomInt(min, max);
+
     interaction.reply({
       embeds: [
-        SuccessEmbed(`Ваше случайное число [${min};${max}] - \`${Math.floor(Math.random() * (max - min + 1) + min)}\``)
+        SuccessEmbed(`Ваше случайное число [${min};${max}] - \`${randomInteger}\``)
       ],
-      fetchReply: true,
     });
   }
 }
