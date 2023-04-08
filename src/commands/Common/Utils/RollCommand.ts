@@ -14,7 +14,7 @@ class RollCommand extends CommonCommand {
     },
     {
       command: 'roll 10',
-      description: 'Генерирует случайное число в диапазоне [00;10]',
+      description: 'Генерирует случайное число в диапазоне [0;10]',
     }
   ];
   usage = 'roll [максимальное значение]';
