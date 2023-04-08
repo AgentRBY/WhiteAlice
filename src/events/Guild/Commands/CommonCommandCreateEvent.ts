@@ -3,6 +3,7 @@ import Permissions from '../../../static/Permissions';
 import { ExtendClient } from '../../../structures/Client';
 import { DiscordEvent, DiscordEventNames } from '../../../structures/Event';
 import { ExtendedMessage } from '../../../structures/ExtendedMessage';
+import { isNumber } from '../../../utils/Common/Number';
 import { ErrorEmbed } from '../../../utils/Discord/Embed';
 
 class CommonCommandCreate extends DiscordEvent<'messageCreate'> {
@@ -73,7 +74,7 @@ class CommonCommandCreate extends DiscordEvent<'messageCreate'> {
         return keys.set(argument, args[index + 1]);
       }
 
-      if (ATTRIBUTE_REGEX.test(argument)) {
+      if (ATTRIBUTE_REGEX.test(argument) && !isNumber(argument)) {
         return attributes.add(ATTRIBUTE_REGEX.exec(argument)[1]);
       }
 
