@@ -1,5 +1,5 @@
 import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
-import { isNumber } from '../../../utils/Common/Number';
+import { getRandomInt, isNumber } from '../../../utils/Common/Number';
 
 class RollCommand extends CommonCommand {
   name = 'roll';
@@ -47,7 +47,9 @@ class RollCommand extends CommonCommand {
       return;
     }
 
-    message.sendSuccess(`Ваше случайное число [0;${max}] - \`${Math.floor(Math.random() * (max + 1))}\``);
+    const randomInteger = getRandomInt(0, max);
+
+    message.sendSuccess(`Ваше случайное число [0;${max}] - \`${randomInteger}\``);
   }
 }
 
