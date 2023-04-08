@@ -25,7 +25,7 @@ class VoteCommand extends SlashCommand {
       return;
     }
 
-    if (options.length > 9) {
+    if (options.length > 10) {
       const embed = ErrorEmbed('Максимально может быть 10 опций');
       interaction.reply({ embeds: [embed], ephemeral: true });
       return;
@@ -56,6 +56,7 @@ class VoteCommand extends SlashCommand {
         7: '7️⃣',
         8: '8️⃣',
         9: '9️⃣',
+        10: '🔟',
       };
 
       options.forEach((_, index) => {
