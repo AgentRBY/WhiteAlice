@@ -80,7 +80,10 @@ class VoteCommand extends SlashCommand {
   parseOptions(options: string) {
     const NO_ESCAPED_COMMA = /(?<!\\),/;
 
-    return options.split(NO_ESCAPED_COMMA).map((option) => option.trim());
+    return options
+      .split(NO_ESCAPED_COMMA)
+      .map((option) => option.trim())
+      .filter(Boolean);
   }
 }
 
