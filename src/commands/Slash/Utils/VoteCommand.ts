@@ -25,8 +25,8 @@ class VoteCommand extends SlashCommand {
       return;
     }
 
-    if (parsedOptions.length > 25) {
-      const embed = ErrorEmbed('Опций не может быть больше 25');
+    if (parsedOptions.length > 10) {
+      const embed = ErrorEmbed('Опций не может быть больше 10');
       interaction.reply({ embeds: [embed], ephemeral: true });
       return;
     }
