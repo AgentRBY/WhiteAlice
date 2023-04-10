@@ -43,12 +43,6 @@ class VoteCommand extends SlashCommand {
       return;
     }
 
-    if (parsedOptions.length > 10) {
-      const embed = ErrorEmbed('Максимально может быть 10 опций');
-      interaction.reply({ embeds: [embed], ephemeral: true });
-      return;
-    }
-
     const embed = new MessageEmbed()
       .setTitle(question || 'Голосование')
       .setColor(Colors.Blue)
@@ -84,7 +78,7 @@ class VoteCommand extends SlashCommand {
   }
 
   parseOptions(options: string) {
-    const NO_ESCAPED_COMMA = /(?<!\\)/;
+    const NO_ESCAPED_COMMA = /(?<!\\),/;
 
     return options.split(NO_ESCAPED_COMMA).map((option) => option.trim());
   }
