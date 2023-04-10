@@ -19,7 +19,7 @@ class VoteCommand extends SlashCommand {
 
     const parsedOptions = this.parseOptions(options);
 
-    if (question.length > 256) {
+    if (question?.length > 256) {
       const embed = ErrorEmbed('Вопрос не может быть длиннее 256 символов');
       interaction.reply({ embeds: [embed], ephemeral: true });
       return;
