@@ -44,6 +44,9 @@ const Permissions: Record<PermissionString, string> = {
   USE_EXTERNAL_STICKERS: 'Использовать внешние стикеры',
   USE_PRIVATE_THREADS: 'Использовать приватные ветки',
   USE_PUBLIC_THREADS: 'Использовать публичные ветки',
+  SEND_VOICE_MESSAGES: 'Отправлять голосовые сообщения',
+  USE_SOUNDBOARD: 'Использовать Саундборд',
+  VIEW_CREATOR_MONETIZATION_ANALYTICS: 'Просматривать аналитику монетизации создателей контента',
 };
 
 export default Permissions;
