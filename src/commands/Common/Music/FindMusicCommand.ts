@@ -59,23 +59,19 @@ class FindMusic extends CommonCommand {
       return url;
     }
 
-    if (message.reference) {
-      const messageReference = await message.fetchReference();
-
-      url = messageReference.attachments.find((attachment) => isMediaLink(attachment.url))?.url;
-    }
-
-    if (url) {
-      return url;
-    }
-
     url = LINK_REGEX.exec(message.content)?.[0];
 
     if (isMediaLink(url)) {
       return url;
     }
 
-    return '';
+    if (message.reference) {
+      const messageReference = await message.fetchReference();
+
+      url = await this.tryToFindUrl(messageReference);
+    }
+
+    return url || '';
   }
 
   private async findMusic(url: string): Promise<MusicIdentifyModel['result']> {
