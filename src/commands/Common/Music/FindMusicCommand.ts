@@ -3,12 +3,12 @@ import { promisify } from 'util';
 import { client } from '../../../app';
 import { Colors } from '../../../static/Colors';
 import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
-import { MusicIdentifyModel } from '../../../typings/Audd';
+import { MusicIdentifyModel, Result } from '../../../typings/Audd';
 import { isMediaLink, LINK_REGEX } from '../../../utils/Common/Strings';
 
 const requset = promisify(require('request'));
 
-class FindMusic extends CommonCommand {
+export class FindMusic extends CommonCommand {
   name = 'findMusic';
   category = 'Music';
   aliases = ['fm'];
@@ -23,24 +23,29 @@ class FindMusic extends CommonCommand {
   usage = 'findMusic [url]';
 
   async run({ message }: CommandRunOptions) {
-    const url = await this.tryToFindUrl(message);
+    const url = await FindMusic.tryToFindUrl(message);
 
     if (!url) {
-      message.sendError('Аудио не найдено');
+      message.sendError('Видео/Аудио не найдено');
       return;
     }
 
-    const music = await this.findMusic(url);
+    const music = await FindMusic.findMusic(url);
 
     if (!music) {
-      message.sendError('Видео не содержит песни или она не найдена');
+      message.sendError('Видео/Аудио не содержит песни или она не найдена');
       return;
     }
 
+    const embed = FindMusic.generateEmbed(music);
+    message.reply({ embeds: [embed] });
+  }
+
+  public static generateEmbed(music: Result) {
     const isAlbum = music.spotify.album.album_type !== 'single';
     const spotifyLink = `${music.spotify.external_urls.spotify}?go=1`;
 
-    const embed = new MessageEmbed()
+    return new MessageEmbed()
       .setURL(music.song_link)
       .setTitle(music.title)
       .setDescription(
@@ -54,10 +59,9 @@ class FindMusic extends CommonCommand {
       )
       .setThumbnail(music.spotify.album.images[0].url)
       .setColor(Colors.Green);
-    message.reply({ embeds: [embed] });
   }
 
-  private async tryToFindUrl(message: Message) {
+  public static async tryToFindUrl(message: Message, includeReference = true): Promise<string> {
     let url = message.attachments.find((attachment) => isMediaLink(attachment.url))?.url;
 
     if (url) {
@@ -70,16 +74,16 @@ class FindMusic extends CommonCommand {
       return url;
     }
 
-    if (message.reference) {
+    if (message.reference && includeReference) {
       const messageReference = await message.fetchReference();
 
-      url = await this.tryToFindUrl(messageReference);
+      url = await this.tryToFindUrl(messageReference, false);
     }
 
     return url || '';
   }
 
-  private async findMusic(url: string): Promise<MusicIdentifyModel['result']> {
+  public static async findMusic(url: string): Promise<MusicIdentifyModel['result']> {
     const response = await requset({
       method: 'POST',
       url: 'https://api.audd.io/',
