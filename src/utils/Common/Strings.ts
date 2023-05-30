@@ -21,6 +21,7 @@ export function formatNames(text: string, separator = ' '): string {
 export const LINK_REGEX = /https?:\/\/(www\.)?[\w#%+.:=@~-]{1,256}\.[\d()A-Za-z]{1,6}\b([\w#%&()+./:=?@~-]*)/;
 export const IMAGE_LINK_REGEX = /\.(?:png|jpeg|jpg|webp|bmp)$/;
 export const VIDEO_LINK_REGEX = /\.mp4$/;
+export const AUDIO_LINK_REGEX = /\.mp3$/;
 export const GIF_LINK_REGEX = /\.gif$/;
 export const TENOR_LINK_REGEX = /tenor\.com(\/.*)?\/view\//;
 
@@ -42,6 +43,14 @@ export function isGifLink(text: string): boolean {
 
 export function isMediaLink(text: string): boolean {
   return isImageLink(text) || isVideoLink(text) || isGifLink(text);
+}
+
+export function isAudioLink(text: string): boolean {
+  return AUDIO_LINK_REGEX.test(text);
+}
+
+export function isAudioMediaLink(text: string) {
+  return isAudioLink(text) || isVideoLink(text);
 }
 
 export function isTenorLink(text: string) {
@@ -68,6 +77,10 @@ export function getTenorLink(embeds: MessageEmbed[]): string | undefined {
   }
 
   return;
+}
+
+export function getExtension(text: string): string {
+  return text.split('.').pop();
 }
 
 export function removeLessAndGreaterSymbols(text: string): string {

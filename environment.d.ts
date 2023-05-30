@@ -11,6 +11,7 @@ export interface Environment {
   yandexYU: string;
   distubeCookie: string;
   notionToken: string;
+  auddToken: string;
 }
 
 declare global {
