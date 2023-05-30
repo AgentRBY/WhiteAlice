@@ -40,7 +40,7 @@ class FindMusic extends CommonCommand {
       .setTitle(music.title)
       .setDescription(
         `
-      **Автор:** ${music.artist}${isAlbum ? `**Альбом:** ${music.album}` : ''}
+      **Автор:** ${music.artist}${isAlbum ? `\n**Альбом:** ${music.album}` : ''}
       **Таймкод:** ${music.timecode}
       **Лейбл:** ${music.label}
       **Дата выхода:** ${music.release_date}
