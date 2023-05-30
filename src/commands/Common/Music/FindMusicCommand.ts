@@ -32,6 +32,11 @@ class FindMusic extends CommonCommand {
 
     const music = await this.findMusic(url);
 
+    if (!music) {
+      message.sendError('Видео не содержит песни или она не найдена');
+      return;
+    }
+
     const isAlbum = music.spotify.album.album_type !== 'single';
     const spotifyLink = `${music.spotify.external_urls.spotify}?go=1`;
 
