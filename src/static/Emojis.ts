@@ -15,6 +15,7 @@ export const Emojis: Record<EmojisType, string> = {
   Music: '<:MusicEmoji:893497286334775306>',
   Discord: '<:DiscordEmoji:1001056688608116756>',
   Competing: '<:CompetingEmoji:843464794417528872>',
+  Moderation: '<:ModerationEmoji:843094908448407593>',
 };
 
 export const EmojisLinks: Record<EmojisType, string> = {
@@ -34,6 +35,7 @@ export const EmojisLinks: Record<EmojisType, string> = {
   Music: 'https://cdn.discordapp.com/emojis/893497286334775306.png',
   Discord: 'https://cdn.discordapp.com/emojis/1001056688608116756.png',
   Competing: 'https://cdn.discordapp.com/emojis/843464794417528872.png',
+  Moderation: 'https://cdn.discordapp.com/emojis/843094908448407593.png',
 };
 
 type EmojisType =
@@ -52,4 +54,5 @@ type EmojisType =
   | 'Headphone'
   | 'Music'
   | 'Discord'
-  | 'Competing';
+  | 'Competing'
+  | 'Moderation';
