@@ -9,7 +9,7 @@ I am using `pnpm` in a project but you can use any other package manager
 - `git clone https://github.com/AgentRBY/White_Alice`
 - `cd White_Alice`
 - `pnpm install`
-- Create an `.env` file and fill it according to the pattern in `environment.d.ts`
+- Create an `.env` file and fill it according to the pattern in `environment.d.ts` or `.env.example`
 - Required variables:
     - botToken — Bot token from [Discord Developer Portal](https://discord.com/developers/applications)
 - Optional variables:
@@ -23,6 +23,8 @@ I am using `pnpm` in a project but you can use any other package manager
     - sauceNAOToken — SauceNAO token from [SauceNAO API](https://saucenao.com/user.php?page=search-api). If not
       specified, the `findImage` command will not work.
     - yandexYU — Unique user ID in Yandex. I don’t know why it is needed, Yandex search command works without it
+    - auddToken — Audd.io token from [Audd.io API](https://docs.audd.io/). If not specified, the `findMusic` command
+      will not work.
     - distubeCookie — Cookie from YouTube. Necessary for the stable operation of the music
       module. [How to get](https://github.com/fent/node-ytdl-core/blob/784c04eaf9f3cfac0fe0933155adffe0e2e0848a/example/cookies.js#L6-L12)
 - For the music module to work, you also need to install FFmpeg.
@@ -34,7 +36,8 @@ I am using `pnpm` in a project but you can use any other package manager
 ### **Bot settings:**
 
 Turn on this intents in [Discord Developer Portal](https://discord.com/developers/applications):
-- Presence intent 
+
+- Presence intent
 - Server members intent
 - Message content intent
 
@@ -51,7 +54,8 @@ Turn on this intents in [Discord Developer Portal](https://discord.com/developer
 
 ### **Context commands:**
 
-- Works, but no commands added right now
+- `Report` — Report user to moderators
+- `Find Music` — Find music in audio or video file. Works like Shazam
 
 ### **Slash commands:**
 
@@ -64,9 +68,9 @@ Turn on this intents in [Discord Developer Portal](https://discord.com/developer
 - `AniDBLink`, `AnilistLink`, `NHentaiLink` — Display information about anime or hentai when publishing a link to it
 - `MediaChannel` — Create a channel for media (any posts that do not contain links or attachments will be deleted)
 
-## All commands as of 06/11/2022:
+## All commands as of 06/04/2023:
 
-![Commands](https://i.imgur.com/WQzOPzA.png)
+![Commands](https://i.imgur.com/rsYdOFl.png)
 
 
 
