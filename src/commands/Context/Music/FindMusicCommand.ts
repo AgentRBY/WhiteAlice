@@ -1,6 +1,8 @@
 import { Message } from 'discord.js';
 import { ContextCommand, ContextCommandRun, ContextCommandType } from '../../../structures/Commands/ContextCommand';
+import { isMediaLink } from '../../../utils/Common/Strings';
 import { ErrorEmbed } from '../../../utils/Discord/Embed';
+import { tryToFindUrl } from '../../../utils/Discord/Messages';
 import { FindMusic } from '../../Common/Music/FindMusicCommand';
 
 class ReportCommand extends ContextCommand {
@@ -16,7 +18,7 @@ class ReportCommand extends ContextCommand {
       return;
     }
 
-    const url = await FindMusic.tryToFindUrl(message, false);
+    const url = await tryToFindUrl(message, false, isMediaLink);
 
     if (!url) {
       const embed = ErrorEmbed('Видео/Аудио не найдено в этом сообщении');

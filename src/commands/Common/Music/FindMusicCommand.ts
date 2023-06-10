@@ -1,10 +1,11 @@
-import { Message, MessageEmbed } from 'discord.js';
+import { MessageEmbed } from 'discord.js';
 import { promisify } from 'util';
 import { client } from '../../../app';
 import { Colors } from '../../../static/Colors';
 import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
 import { MusicIdentifyModel, Result } from '../../../typings/Audd';
-import { isMediaLink, LINK_REGEX } from '../../../utils/Common/Strings';
+import { isMediaLink } from '../../../utils/Common/Strings';
+import { tryToFindUrl } from '../../../utils/Discord/Messages';
 
 const requset = promisify(require('request'));
 
@@ -23,7 +24,7 @@ export class FindMusic extends CommonCommand {
   usage = 'findMusic [url]';
 
   async run({ message }: CommandRunOptions) {
-    const url = await FindMusic.tryToFindUrl(message);
+    const url = await tryToFindUrl(message, true, isMediaLink);
 
     if (!url) {
       message.sendError('Видео/Аудио не найдено');
@@ -59,28 +60,6 @@ export class FindMusic extends CommonCommand {
       )
       .setThumbnail(music.spotify.album.images[0].url)
       .setColor(Colors.Green);
-  }
-
-  public static async tryToFindUrl(message: Message, includeReference = true): Promise<string> {
-    let url = message.attachments.find((attachment) => isMediaLink(attachment.url))?.url;
-
-    if (url) {
-      return url;
-    }
-
-    url = LINK_REGEX.exec(message.content)?.[0];
-
-    if (isMediaLink(url)) {
-      return url;
-    }
-
-    if (message.reference && includeReference) {
-      const messageReference = await message.fetchReference();
-
-      url = await this.tryToFindUrl(messageReference, false);
-    }
-
-    return url || '';
   }
 
   public static async findMusic(url: string): Promise<MusicIdentifyModel['result']> {

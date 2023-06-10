@@ -40,7 +40,7 @@ class YandexImageSearchCommand extends CommonCommand {
       return;
     }
 
-    const link = FindImageCommand.getImageLink(message, args);
+    const link = await FindImageCommand.getImageLink(message);
 
     const yandexImageLink = generateYandexSearchLink(link, client.config.yandexYU);
 

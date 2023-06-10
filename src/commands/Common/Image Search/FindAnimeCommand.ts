@@ -22,9 +22,9 @@ class FindanimeCommand extends CommonCommand {
   ];
 
   async run({ client, message, args }: CommandRunOptions) {
-    const link = FindImageCommand.getImageLink(message, args);
+    const link = await FindImageCommand.getImageLink(message);
 
-    if (!isMediaLink(link.toLowerCase())) {
+    if (!isMediaLink(link?.toLowerCase())) {
       message.sendError(
         '**Ссылка не ведёт на изображение или видео. Допустимые форматы: `png, jpeg, jpg, webp, bmp, gif, mp4`**',
         {

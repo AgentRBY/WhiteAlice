@@ -10,6 +10,7 @@ import {
   isGifLink,
   isImageLink,
   isLink,
+  LINK_REGEX,
   removeLessAndGreaterSymbols,
   removeQueryParameters,
 } from '../../../utils/Common/Strings';
@@ -37,7 +38,7 @@ export class FindImageCommand extends CommonCommand {
       return;
     }
 
-    const link = FindImageCommand.getImageLink(message, args);
+    const link = await FindImageCommand.getImageLink(message);
 
     if (!link || !isLink(link)) {
       message.sendError('**Введите ссылку на изображение**');
@@ -144,7 +145,7 @@ export class FindImageCommand extends CommonCommand {
     pagination(replyMessage, pages);
   }
 
-  public static getImageLink(message: Message, args: string[]): string | undefined {
+  public static async getImageLink(message: Message, checkReference = true): Promise<string | undefined> {
     let link;
 
     if (message.attachments.size) {
@@ -152,8 +153,12 @@ export class FindImageCommand extends CommonCommand {
       link = removeQueryParameters(attachment.url || attachment.proxyURL);
     }
 
-    if (args.length) {
-      link = removeLessAndGreaterSymbols(removeQueryParameters(args[0]));
+    if (!link && message.content) {
+      link = LINK_REGEX.exec(message.content)?.[0];
+    }
+
+    if (link) {
+      link = removeLessAndGreaterSymbols(removeQueryParameters(link));
     }
 
     if (message.embeds.length) {
@@ -162,6 +167,12 @@ export class FindImageCommand extends CommonCommand {
       if (tenorGifLink) {
         link = tenorGifLink;
       }
+    }
+
+    if (!link && checkReference && message.reference) {
+      const reference = await message.fetchReference();
+
+      return this.getImageLink(reference, false);
     }
 
     return link;
