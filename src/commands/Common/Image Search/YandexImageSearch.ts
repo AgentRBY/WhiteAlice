@@ -27,7 +27,7 @@ class YandexImageSearchCommand extends CommonCommand {
   ];
   usage = 'yandexImageSearch <картинка>';
 
-  async run({ client, message, args, attributes }: CommandRunOptions) {
+  async run({ client, message, attributes }: CommandRunOptions) {
     if (attributes.has('S')) {
       const sites = yandexWhitelistSites.map((site) => site.url);
       const formattedSites = `\n➤ \`${sites.join('`\n ➤ `')}\``;

@@ -21,7 +21,7 @@ class FindanimeCommand extends CommonCommand {
     },
   ];
 
-  async run({ client, message, args }: CommandRunOptions) {
+  async run({ client, message }: CommandRunOptions) {
     const link = await FindImageCommand.getImageLink(message);
 
     if (!isMediaLink(link?.toLowerCase())) {
