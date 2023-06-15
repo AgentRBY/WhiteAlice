@@ -43,7 +43,7 @@ export class FindMusic extends CommonCommand {
   }
 
   public static generateEmbed(music: Result) {
-    const isAlbum = music.spotify.album.album_type !== 'single';
+    const isAlbum = music.album && music.spotify.album.album_type !== 'single';
     const spotifyLink = `${music.spotify.external_urls.spotify}?go=1`;
 
     return new MessageEmbed()
