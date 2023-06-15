@@ -21,7 +21,7 @@ export async function tryToFindUrl(
   if (message.reference && includeReference) {
     const messageReference = await message.fetchReference();
 
-    url = await this.tryToFindUrl(messageReference, false);
+    url = await tryToFindUrl(messageReference, false);
   }
 
   return url || '';
