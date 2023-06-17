@@ -1,8 +1,6 @@
 {
   "compilerOptions": {
-    "lib": [
-      "ESNext"
-    ],
+    "lib": ["ESNext"],
     "module": "CommonJS",
     "moduleResolution": "node",
     "target": "ESNext",
@@ -14,14 +12,10 @@
     "allowSyntheticDefaultImports": true,
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "composite": true,
+    "tsBuildInfoFile": "./node_modules/.cache/.tsbuildinfo"
   },
-  "include": [
-    "src",
-    "environment.d.ts"
-  ],
-  "exclude": [
-    "node_modules",
-    "**/*.spec.ts"
-  ]
+  "include": ["src", "environment.d.ts"],
+  "exclude": ["node_modules", "**/*.spec.ts"]
 }
