@@ -7,7 +7,6 @@ import { Client, Collection, Intents, Snowflake } from 'discord.js';
 import { DisTube } from 'distube';
 import { glob } from 'glob';
 import mongoose from 'mongoose';
-import { promisify } from 'util';
 import { Environment } from '../../environment';
 import { GuildModel } from '../models/GuildModel';
 import { MemberModel } from '../models/MemberModel';
@@ -21,8 +20,6 @@ import { ContextCommand } from './Commands/ContextCommand';
 import { SlashCommand } from './Commands/SlashCommand';
 import { DiscordEvent, DiscordEventNames, DisTubeEvent, DisTubeEventNames } from './Event';
 import { Service } from './Service';
-
-const globPromise = promisify(glob);
 
 export class ExtendClient extends Client<true> {
   commonCommands: Collection<string, CommonCommand> = new Collection(); // <Name, CommonCommand>
@@ -128,7 +125,7 @@ export class ExtendClient extends Client<true> {
 
   private async loadFiles<T>(path: `/${string}`): Promise<T[]> {
     const rootDirectory = __dirname.replaceAll('\\', '/');
-    const files = await globPromise(`${rootDirectory}/..` + path);
+    const files = await glob(`${rootDirectory}/..` + path);
 
     return Promise.all(files.map(async (file) => await ExtendClient.importFile(file)));
   }
