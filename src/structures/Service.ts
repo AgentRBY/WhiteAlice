@@ -1,22 +1,23 @@
-import { ExtendClient } from './Client';
-import { PrefixAction } from '../services/GuildServices/PrefixAction';
-import { TestersAction } from '../services/GuildServices/TestersAction';
-import { IGuildModel } from '../typings/GuildModel';
-import { MongoData } from '../typings/Database';
-import { IMemberModel, MemberBaseId } from '../typings/MemberModel';
-import { MediaChannelsAction } from '../services/GuildServices/MediaChannelsAction';
-import { ProfileAction } from '../services/MemberServices/ProfileAction';
 import { Snowflake } from 'discord.js';
-import { NotesAction } from '../services/GuildServices/NotesAction';
-import { WarnsAction } from '../services/MemberServices/WarnsAction';
-import { MutesAction } from '../services/MemberServices/MutesAction';
-import { BansAction } from '../services/MemberServices/BansAction';
-import { serviceMixin } from '../utils/Other';
-import { CustomVoiceAction } from '../services/GuildServices/CustomVoiceAction';
 import { UpdateQuery } from 'mongoose';
-import { MemberModel } from '../models/MemberModel';
 import { GuildModel } from '../models/GuildModel';
+import { MemberModel } from '../models/MemberModel';
+import { CustomVoiceAction } from '../services/GuildServices/CustomVoiceAction';
+import { MediaChannelsAction } from '../services/GuildServices/MediaChannelsAction';
 import { ModeratorsAction } from '../services/GuildServices/ModeratorsAction';
+import { NotesAction } from '../services/GuildServices/NotesAction';
+import { PrefixAction } from '../services/GuildServices/PrefixAction';
+import { QuoteAction } from '../services/GuildServices/QuoteAction';
+import { TestersAction } from '../services/GuildServices/TestersAction';
+import { BansAction } from '../services/MemberServices/BansAction';
+import { MutesAction } from '../services/MemberServices/MutesAction';
+import { ProfileAction } from '../services/MemberServices/ProfileAction';
+import { WarnsAction } from '../services/MemberServices/WarnsAction';
+import { MongoData } from '../typings/Database';
+import { IGuildModel } from '../typings/GuildModel';
+import { IMemberModel, MemberBaseId } from '../typings/MemberModel';
+import { serviceMixin } from '../utils/Other';
+import { ExtendClient } from './Client';
 
 export interface Service
   extends PrefixAction,
@@ -28,7 +29,8 @@ export interface Service
     MutesAction,
     BansAction,
     CustomVoiceAction,
-    ModeratorsAction {}
+    ModeratorsAction,
+    QuoteAction {}
 
 export class Service extends serviceMixin(
   PrefixAction,
@@ -41,6 +43,7 @@ export class Service extends serviceMixin(
   BansAction,
   CustomVoiceAction,
   ModeratorsAction,
+  QuoteAction,
 ) {
   client: ExtendClient;
 

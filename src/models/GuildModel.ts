@@ -17,6 +17,13 @@ const GuildSchema = new Schema<IGuildModel>({
     baseVoiceChannel: String,
   },
   moderators: [String],
+  quotes: [
+    {
+      author: String,
+      createdAt: Number,
+      content: String,
+    },
+  ],
 });
 
 export const GuildModel = model<IGuildModel>('GuildData', GuildSchema);

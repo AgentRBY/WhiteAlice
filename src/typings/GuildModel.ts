@@ -8,6 +8,13 @@ export interface IGuildModel {
   mediaChannels: string[];
   customVoices: CustomVoice;
   moderators: string[];
+  quotes: Quote[];
+}
+
+interface Quote {
+  content: string;
+  author: string;
+  createdAt: number;
 }
 
 export interface Note {
