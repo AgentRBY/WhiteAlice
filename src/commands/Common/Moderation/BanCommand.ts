@@ -1,11 +1,11 @@
-import { SuccessEmbed } from '../../../utils/Discord/Embed';
 import { MessageEmbed, PermissionString } from 'discord.js';
 import { Colors } from '../../../static/Colors';
 import { Emojis } from '../../../static/Emojis';
-import { isNumber } from '../../../utils/Common/Number';
 import { KARMA_FOR_BAN } from '../../../static/Punishment';
-import { Ban } from '../../../typings/MemberModel';
 import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
+import { Ban } from '../../../typings/MemberModel';
+import { isNumber } from '../../../utils/Common/Number';
+import { SuccessEmbed } from '../../../utils/Discord/Embed';
 
 class BanCommand extends CommonCommand {
   name = 'ban';
@@ -64,7 +64,7 @@ class BanCommand extends CommonCommand {
       return;
     }
 
-    if (member?.roles.highest.comparePositionTo(message.guild.me.roles.highest) >= 0) {
+    if (member?.roles.highest.comparePositionTo(message.guild.members.me.roles.highest) >= 0) {
       message.sendError('У вас нет прав, что бы замутить этого пользователя');
       return;
     }
@@ -109,11 +109,14 @@ class BanCommand extends CommonCommand {
     client.service.addBan(`${userId}-${message.guild.id}`, ban);
 
     await (member || user).send({ embeds: [directEmbed] }).catch(() => {});
-    message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+    message.reply({
+      embeds: [embed],
+      allowedMentions: { repliedUser: false },
+    });
 
     message.guild.bans.create(userId, {
       reason,
-      days: messageDeleteCountInDays,
+      deleteMessageSeconds: messageDeleteCountInDays * 86_400,
     });
   }
 }

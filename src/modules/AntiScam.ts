@@ -27,7 +27,7 @@ export function AntiScamModule(client: ExtendClient, message: Message): void {
         message.delete();
       }
 
-      if (message.guild.me.permissions.has('KICK_MEMBERS')) {
+      if (message.guild.members.me.permissions.has('KICK_MEMBERS')) {
         message.member.kick(`${client.user.username} | Nitro Scam`);
       }
     } catch {}
@@ -42,7 +42,7 @@ export function AntiScamModule(client: ExtendClient, message: Message): void {
         message.delete();
       }
 
-      if (message.guild.me.permissions.has('KICK_MEMBERS')) {
+      if (message.guild.members.me.permissions.has('KICK_MEMBERS')) {
         message.member.kick(`${client.user.username} | Scam link: ${scamLink[0]}`);
       }
     } catch {}

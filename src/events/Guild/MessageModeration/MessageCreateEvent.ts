@@ -14,7 +14,13 @@ class MessageModeration extends DiscordEvent<'messageCreate'> {
   name: DiscordEventNames = 'messageCreate';
 
   run(client: ExtendClient, message: Message) {
-    if (!message.member || !message.guild || !message.guild.me || message.channel.type === 'DM' || message.system) {
+    if (
+      !message.member ||
+      !message.guild ||
+      !message.guild.members.me ||
+      message.channel.type === 'DM' ||
+      message.system
+    ) {
       return;
     }
 
@@ -37,7 +43,11 @@ class MessageModeration extends DiscordEvent<'messageCreate'> {
     if (message.content === `<@${client.user.id}>` || message.content === `<@!${client.user.id}>`) {
       const extendedMessage = ExtendedMessage.getInstance(message);
 
-      client.commonCommands.get('ping').run({ client, message: extendedMessage, args: [] });
+      client.commonCommands.get('ping').run({
+        client,
+        message: extendedMessage,
+        args: [],
+      });
       return;
     }
   }

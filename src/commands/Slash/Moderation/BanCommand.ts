@@ -1,11 +1,11 @@
-import { SlashCommand, SlashCommandRunOptions } from '../../../structures/Commands/SlashCommand';
 import { SlashCommandBuilder } from '@discordjs/builders';
-import { ErrorEmbed, SuccessEmbed } from '../../../utils/Discord/Embed';
 import { GuildMember, MessageEmbed } from 'discord.js';
+import { client } from '../../../app';
 import { Colors } from '../../../static/Colors';
 import { Emojis } from '../../../static/Emojis';
+import { SlashCommand, SlashCommandRunOptions } from '../../../structures/Commands/SlashCommand';
 import { Ban } from '../../../typings/MemberModel';
-import { client } from '../../../app';
+import { ErrorEmbed, SuccessEmbed } from '../../../utils/Discord/Embed';
 
 class BanCommand extends SlashCommand {
   meta = new SlashCommandBuilder()
@@ -24,7 +24,10 @@ class BanCommand extends SlashCommand {
   async run({ interaction }: SlashCommandRunOptions) {
     if (!interaction.memberPermissions.has('BAN_MEMBERS')) {
       const embed = ErrorEmbed('У вас нет прав на эту команду');
-      interaction.reply({ embeds: [embed], ephemeral: true });
+      interaction.reply({
+        embeds: [embed],
+        ephemeral: true,
+      });
       return;
     }
 
@@ -32,7 +35,10 @@ class BanCommand extends SlashCommand {
 
     if (!(targetMember instanceof GuildMember)) {
       const embed = ErrorEmbed('Ошибка');
-      interaction.reply({ embeds: [embed], ephemeral: true });
+      interaction.reply({
+        embeds: [embed],
+        ephemeral: true,
+      });
       return;
     }
 
@@ -40,25 +46,37 @@ class BanCommand extends SlashCommand {
 
     if (interaction.guild.bans.cache.get(targetMember.id)) {
       const embed = ErrorEmbed('Пользователь уже в бане');
-      interaction.reply({ embeds: [embed], ephemeral: true });
+      interaction.reply({
+        embeds: [embed],
+        ephemeral: true,
+      });
       return;
     }
 
     if (!targetMember.bannable) {
       const embed = ErrorEmbed('У меня нет прав, что бы забанить этого пользователя');
-      interaction.reply({ embeds: [embed], ephemeral: true });
+      interaction.reply({
+        embeds: [embed],
+        ephemeral: true,
+      });
       return;
     }
 
     if (!targetMember.bannable) {
       const embed = ErrorEmbed('У меня нет прав, что бы забанить этого пользователя');
-      interaction.reply({ embeds: [embed], ephemeral: true });
+      interaction.reply({
+        embeds: [embed],
+        ephemeral: true,
+      });
       return;
     }
 
-    if (targetMember.roles.highest.comparePositionTo(interaction.guild.me.roles.highest) >= 0) {
+    if (targetMember.roles.highest.comparePositionTo(interaction.guild.members.me.roles.highest) >= 0) {
       const embed = ErrorEmbed('У вас нет прав, что бы замутить этого пользователя');
-      interaction.reply({ embeds: [embed], ephemeral: true });
+      interaction.reply({
+        embeds: [embed],
+        ephemeral: true,
+      });
       return;
     }
 

@@ -1,7 +1,7 @@
-import { DiscordEvent, DiscordEventNames } from '../../structures/Event';
-import { ExtendClient } from '../../structures/Client';
 import { Collection } from 'discord.js';
 import { Activities } from '../../static/Activities';
+import { ExtendClient } from '../../structures/Client';
+import { DiscordEvent, DiscordEventNames } from '../../structures/Event';
 import { getRandomInt } from '../../utils/Common/Number';
 import { sleep } from '../../utils/Common/Strings';
 import Logger from '../../utils/Logger';
@@ -18,11 +18,11 @@ class Ready extends DiscordEvent<'ready'> {
     if (client.config.environment === 'development' && client.config.devGuildID) {
       const guild = client.guilds.cache.get(client.config.devGuildID);
 
-      if (!guild) {
-        Logger.error('Guild not found, commands not registered');
-      } else {
+      if (guild) {
         await guild.commands.set(commands);
         Logger.info(`Register ${commands.length} interaction to ${guild.name} guild`);
+      } else {
+        Logger.error('Guild not found, commands not registered');
       }
     } else {
       await client.application.commands.set(commands);
@@ -35,7 +35,7 @@ class Ready extends DiscordEvent<'ready'> {
     await sleep(1000);
 
     client.guilds.cache.forEach(async (guild) => {
-      if (guild.me.permissions.has('MANAGE_GUILD')) {
+      if (guild.members.me.permissions.has('MANAGE_GUILD')) {
         const fetchedInvites = await guild.invites.fetch();
         const codeUses = new Collection<string, number>();
         fetchedInvites.each((invite) => codeUses.set(invite.code, invite.uses));

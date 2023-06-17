@@ -1,14 +1,14 @@
-import { SuccessEmbed } from '../../../utils/Discord/Embed';
-import { formatDuration, formatDurationInPast, getDurationFromString } from '../../../utils/Common/Date';
-import moment from 'moment';
 import { MessageEmbed, PermissionString } from 'discord.js';
+import moment from 'moment';
 import { Colors } from '../../../static/Colors';
 import { Emojis } from '../../../static/Emojis';
 import { KARMA_FOR_MUTE } from '../../../static/Punishment';
-import { getMemberBaseId } from '../../../utils/Other';
-import { Mute } from '../../../typings/MemberModel';
 import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
+import { Mute } from '../../../typings/MemberModel';
+import { formatDuration, formatDurationInPast, getDurationFromString } from '../../../utils/Common/Date';
+import { SuccessEmbed } from '../../../utils/Discord/Embed';
 import { getMemberFromMessage } from '../../../utils/Discord/Users';
+import { getMemberBaseId } from '../../../utils/Other';
 
 class MuteCommand extends CommonCommand {
   name = 'mute';
@@ -54,7 +54,7 @@ class MuteCommand extends CommonCommand {
     if (
       targetMember.permissions.has('BAN_MEMBERS') ||
       targetMember.permissions.has('MODERATE_MEMBERS') ||
-      targetMember.roles.highest.comparePositionTo(message.guild.me.roles.highest) >= 0 ||
+      targetMember.roles.highest.comparePositionTo(message.guild.members.me.roles.highest) >= 0 ||
       targetMember.permissions.has('ADMINISTRATOR')
     ) {
       message.sendError('У вас нет прав, что бы замутить этого пользователя');
@@ -121,7 +121,10 @@ class MuteCommand extends CommonCommand {
 
     client.service.addMute(getMemberBaseId(targetMember), mute);
 
-    message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+    message.reply({
+      embeds: [embed],
+      allowedMentions: { repliedUser: false },
+    });
     targetMember.send({ embeds: [directEmbed] });
   }
 }

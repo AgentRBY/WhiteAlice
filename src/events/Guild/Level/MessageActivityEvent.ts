@@ -10,7 +10,13 @@ class MessageActivity extends DiscordEvent<'messageCreate'> {
   name: DiscordEventNames = 'messageCreate';
 
   async run(client: ExtendClient, message: Message) {
-    if (!message.member || !message.guild || !message.guild.me || message.channel.type === 'DM' || message.system) {
+    if (
+      !message.member ||
+      !message.guild ||
+      !message.guild.members.me ||
+      message.channel.type === 'DM' ||
+      message.system
+    ) {
       return;
     }
 

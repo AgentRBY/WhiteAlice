@@ -1,6 +1,6 @@
-import { ExtendClient } from '../structures/Client';
 import { Message } from 'discord.js';
 import moment from 'moment';
+import { ExtendClient } from '../structures/Client';
 
 export function AntiPingModule(client: ExtendClient, message: Message) {
   const mentions = message.mentions.members;
@@ -13,7 +13,7 @@ export function AntiPingModule(client: ExtendClient, message: Message) {
 
   if (
     member.permissions.has('MODERATE_MEMBERS') ||
-    member.roles.highest.comparePositionTo(message.guild.me.roles.highest) >= 0
+    member.roles.highest.comparePositionTo(message.guild.members.me.roles.highest) >= 0
   ) {
     return;
   }

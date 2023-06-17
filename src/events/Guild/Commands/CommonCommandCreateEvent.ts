@@ -13,7 +13,7 @@ class CommonCommandCreate extends DiscordEvent<'messageCreate'> {
     if (
       !message.member ||
       !message.guild ||
-      !message.guild.me ||
+      !message.guild.members.me ||
       message.author.bot ||
       message.channel.type === 'DM' ||
       message.system
@@ -31,7 +31,10 @@ class CommonCommandCreate extends DiscordEvent<'messageCreate'> {
       const errorEmbed = ErrorEmbed(
         '**Включен режим разработки. Команды работают только для создателей бота, указанных в `ownersID`**',
       );
-      message.reply({ embeds: [errorEmbed], allowedMentions: { repliedUser: false } });
+      message.reply({
+        embeds: [errorEmbed],
+        allowedMentions: { repliedUser: false },
+      });
       return;
     }
 
@@ -45,7 +48,10 @@ class CommonCommandCreate extends DiscordEvent<'messageCreate'> {
 
     if (command.ownerOnly && !client.getOwners().includes(message.author.id)) {
       const errorEmbed = ErrorEmbed('**У вас нет прав на эту команду**');
-      message.reply({ embeds: [errorEmbed], allowedMentions: { repliedUser: false } });
+      message.reply({
+        embeds: [errorEmbed],
+        allowedMentions: { repliedUser: false },
+      });
       return;
     }
 
@@ -86,11 +92,21 @@ class CommonCommandCreate extends DiscordEvent<'messageCreate'> {
     const extendedMessage = ExtendedMessage.getInstance(message);
 
     if (attributes.has('help') || attributes.has('h')) {
-      client.commonCommands.get('help').run({ client, message: extendedMessage, args: [command.name] });
+      client.commonCommands.get('help').run({
+        client,
+        message: extendedMessage,
+        args: [command.name],
+      });
       return;
     }
 
-    command.run({ client, message: extendedMessage, args: cleanArgs, keys, attributes });
+    command.run({
+      client,
+      message: extendedMessage,
+      args: cleanArgs,
+      keys,
+      attributes,
+    });
   }
 }
 

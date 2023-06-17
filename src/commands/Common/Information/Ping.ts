@@ -1,6 +1,6 @@
 import { Message, MessageEmbed } from 'discord.js';
-import { Emojis } from '../../../static/Emojis';
 import { Colors } from '../../../static/Colors';
+import { Emojis } from '../../../static/Emojis';
 import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
 
 class PingCommand extends CommonCommand {
@@ -22,11 +22,24 @@ class PingCommand extends CommonCommand {
     pingMessage.delete();
 
     const embed = new MessageEmbed()
-      .addField('🖥️ До сервера', `${client.ws.ping}мс`, true)
-      .addField(`${Emojis.Discord} До Discord`, `${pingMessage.createdTimestamp - message.createdTimestamp}мс`, true)
+      .addFields([
+        {
+          name: '🖥️ До сервера',
+          value: `${client.ws.ping}мс`,
+          inline: true,
+        },
+        {
+          name: `${Emojis.Discord} До Discord`,
+          value: `${pingMessage.createdTimestamp - message.createdTimestamp}мс`,
+          inline: true,
+        },
+      ])
       .setColor(Colors.Green);
 
-    await message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+    await message.reply({
+      embeds: [embed],
+      allowedMentions: { repliedUser: false },
+    });
   }
 }
 

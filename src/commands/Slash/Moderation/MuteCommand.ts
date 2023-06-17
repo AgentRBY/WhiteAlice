@@ -1,13 +1,13 @@
-import { SlashCommand, SlashCommandRunOptions } from '../../../structures/Commands/SlashCommand';
 import { SlashCommandBuilder } from '@discordjs/builders';
-import { ErrorEmbed, SuccessEmbed } from '../../../utils/Discord/Embed';
 import { GuildMember, MessageEmbed } from 'discord.js';
-import { getMemberBaseId } from '../../../utils/Other';
-import { formatDuration, formatDurationInPast, getDurationFromString } from '../../../utils/Common/Date';
 import moment from 'moment/moment';
-import { Emojis } from '../../../static/Emojis';
 import { Colors } from '../../../static/Colors';
+import { Emojis } from '../../../static/Emojis';
+import { SlashCommand, SlashCommandRunOptions } from '../../../structures/Commands/SlashCommand';
 import { Mute } from '../../../typings/MemberModel';
+import { formatDuration, formatDurationInPast, getDurationFromString } from '../../../utils/Common/Date';
+import { ErrorEmbed, SuccessEmbed } from '../../../utils/Discord/Embed';
+import { getMemberBaseId } from '../../../utils/Other';
 
 class MuteCommand extends SlashCommand {
   meta = new SlashCommandBuilder()
@@ -75,7 +75,10 @@ class MuteCommand extends SlashCommand {
   async run({ client, interaction }: SlashCommandRunOptions) {
     if (!interaction.memberPermissions.has('BAN_MEMBERS')) {
       const embed = ErrorEmbed('У вас нет прав на эту команду');
-      interaction.reply({ embeds: [embed], ephemeral: true });
+      interaction.reply({
+        embeds: [embed],
+        ephemeral: true,
+      });
       return;
     }
 
@@ -83,18 +86,24 @@ class MuteCommand extends SlashCommand {
 
     if (!(targetMember instanceof GuildMember)) {
       const embed = ErrorEmbed('Ошибка');
-      interaction.reply({ embeds: [embed], ephemeral: true });
+      interaction.reply({
+        embeds: [embed],
+        ephemeral: true,
+      });
       return;
     }
 
     if (
       targetMember.permissions.has('BAN_MEMBERS') ||
       targetMember.permissions.has('MODERATE_MEMBERS') ||
-      targetMember.roles.highest.comparePositionTo(interaction.guild.me.roles.highest) >= 0 ||
+      targetMember.roles.highest.comparePositionTo(interaction.guild.members.me.roles.highest) >= 0 ||
       targetMember.permissions.has('ADMINISTRATOR')
     ) {
       const embed = ErrorEmbed('У вас нет прав, что бы замутить этого пользователя');
-      interaction.reply({ embeds: [embed], ephemeral: true });
+      interaction.reply({
+        embeds: [embed],
+        ephemeral: true,
+      });
       return;
     }
 
@@ -108,7 +117,10 @@ class MuteCommand extends SlashCommand {
         text: `Осталось до размута: ${formatDurationInPast(moment.duration(duration))}`,
       });
 
-      interaction.reply({ embeds: [embed], ephemeral: true });
+      interaction.reply({
+        embeds: [embed],
+        ephemeral: true,
+      });
       return;
     }
 

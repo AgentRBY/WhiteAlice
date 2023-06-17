@@ -1,13 +1,13 @@
-import { DiscordEvent, DiscordEventNames } from '../../../structures/Event';
-import { ExtendClient } from '../../../structures/Client';
 import { Collection, GuildMember, TextChannel } from 'discord.js';
+import { ExtendClient } from '../../../structures/Client';
+import { DiscordEvent, DiscordEventNames } from '../../../structures/Event';
 import { InfoEmbed } from '../../../utils/Discord/Embed';
 
 class GuildMemberAdd extends DiscordEvent<'guildMemberAdd'> {
   name: DiscordEventNames = 'guildMemberAdd';
 
   async run(client: ExtendClient, member: GuildMember) {
-    if (!member.guild.me.permissions.has('MANAGE_GUILD')) {
+    if (!member.guild.members.me.permissions.has('MANAGE_GUILD')) {
       return;
     }
 

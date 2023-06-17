@@ -1,7 +1,7 @@
-import { ExtendClient } from '../structures/Client';
 import { Message, MessageEmbed } from 'discord.js';
 import { Colors } from '../static/Colors';
 import { Emojis } from '../static/Emojis';
+import { ExtendClient } from '../structures/Client';
 
 const LINK_REGEX = /https?:\/\/(www\.)?[\w#%+.:=@~-]{2,256}\.[a-z]{2,4}\b([\w#%&+./:=?@~-]*)/;
 
@@ -17,7 +17,7 @@ export async function MediaChannel(client: ExtendClient, message: Message): Prom
   }
 
   if (
-    message.member.roles.highest.comparePositionTo(message.guild.me.roles.highest) >= 0 ||
+    message.member.roles.highest.comparePositionTo(message.guild.members.me.roles.highest) >= 0 ||
     message.member.permissions.has('ADMINISTRATOR')
   ) {
     return;
