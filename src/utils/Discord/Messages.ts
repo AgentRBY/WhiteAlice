@@ -1,4 +1,4 @@
-import { Message } from 'discord.js';
+import { Message, Snowflake, SnowflakeUtil } from 'discord.js';
 import { isMediaLink, LINK_REGEX } from '../Common/Strings';
 
 export async function tryToFindUrl(
@@ -25,4 +25,12 @@ export async function tryToFindUrl(
   }
 
   return url || '';
+}
+
+export function isSnowflake(id: any): id is Snowflake {
+  try {
+    return SnowflakeUtil.deconstruct(id).timestamp > SnowflakeUtil.EPOCH;
+  } catch {
+    return false;
+  }
 }

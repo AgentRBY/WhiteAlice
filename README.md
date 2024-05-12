@@ -25,12 +25,6 @@ I am using `pnpm` in a project but you can use any other package manager
     - yandexYU — Unique user ID in Yandex. I don’t know why it is needed, Yandex search command works without it
     - auddToken — Audd.io token from [Audd.io API](https://docs.audd.io/). If not specified, the `findMusic` command
       will not work.
-    - distubeCookie — Cookie from YouTube. Necessary for the stable operation of the music
-      module. [How to get](https://github.com/fent/node-ytdl-core/blob/784c04eaf9f3cfac0fe0933155adffe0e2e0848a/example/cookies.js#L6-L12)
-- For the music module to work, you also need to install FFmpeg.
-    - [Linux instruction](https://www.tecmint.com/install-ffmpeg-in-linux/)
-    - [Windows instruction](https://blog.gregzaal.com/how-to-install-ffmpeg-on-windows/)
-    - For Heroku i use [Heroku Buildpack FFmpeg Lasted](https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest)
 - Run `pnpm dev` for development or `pnpm build` and `pnpm start` for production
 
 ### **Bot settings:**
@@ -48,14 +42,12 @@ Turn on this intents in [Discord Developer Portal](https://discord.com/developer
 - `Image Search` — Search anime, manga and other by images
 - `Moderation` — Logging of all actions, the impact of the number of warnings / bans on the duration of the mute and
   more
-- `Music` — Play music in a voice channel. Support YouTube, Spotify and SoundCloud
 - `Utils` — Various commands, like as search for random anime or hentai, anime information and more
 - `Voice` — Custom user voices module
 
 ### **Context commands:**
 
 - `Report` — Report user to moderators
-- `Find Music` — Find music in audio or video file. Works like Shazam
 
 ### **Slash commands:**
 

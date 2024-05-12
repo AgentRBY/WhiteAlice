@@ -1,10 +1,7 @@
-import SoundCloudPlugin from '@distube/soundcloud';
-import SpotifyPlugin from '@distube/spotify';
 import { Client as NotionClient } from '@notionhq/client';
 import AniDB from 'anidbjs';
 import discordModals from 'discord-modals';
 import { Client, Collection, Intents, Snowflake } from 'discord.js';
-import { DisTube } from 'distube';
 import { glob } from 'glob';
 import mongoose from 'mongoose';
 import { Environment } from '../../environment';
@@ -18,7 +15,7 @@ import { CacheManager } from './CacheManager';
 import { CommonCommand } from './Commands/CommonCommand';
 import { ContextCommand } from './Commands/ContextCommand';
 import { SlashCommand } from './Commands/SlashCommand';
-import { DiscordEvent, DiscordEventNames, DisTubeEvent, DisTubeEventNames } from './Event';
+import { DiscordEvent, DiscordEventNames } from './Event';
 import { Service } from './Service';
 
 export class ExtendClient extends Client<true> {
@@ -27,7 +24,6 @@ export class ExtendClient extends Client<true> {
   slashCommands: Collection<string, SlashCommand> = new Collection(); // <Name, ContextCommand>
   categories: Set<string> = new Set();
   aliases: Collection<string, string> = new Collection(); // <Alias, OriginalCommandName>
-  disTube: DisTube;
   notion: NotionClient;
   aniDB = new AniDB({ client: 'hltesttwo', version: 9 });
   config: Environment = process.env;
@@ -55,20 +51,6 @@ export class ExtendClient extends Client<true> {
       Logger.error('No discord token provided. Bot will not start.');
       return;
     }
-
-    this.disTube = new DisTube(this, {
-      searchSongs: 1,
-      searchCooldown: 30,
-      emptyCooldown: 20,
-      leaveOnFinish: true,
-      plugins: [new SoundCloudPlugin(), new SpotifyPlugin()],
-      youtubeCookie: this.config.distubeCookie,
-      youtubeDL: false,
-      nsfw: true,
-      ytdlOptions: {
-        quality: 'highestvideo',
-      },
-    });
 
     this.config.environment = this.config.environment || 'development';
 
@@ -166,21 +148,12 @@ export class ExtendClient extends Client<true> {
   }
 
   private async loadEvents() {
-    const eventFiles = await this.loadFiles<DiscordEvent<DiscordEventNames> | DisTubeEvent<DisTubeEventNames>>(
-      '/events/**/*.{js,ts}',
-    );
+    const eventFiles = await this.loadFiles<DiscordEvent<DiscordEventNames>>('/events/**/*.{js,ts}');
 
     eventFiles.map((event) => {
       if (event.name) {
-        if (event instanceof DisTubeEvent) {
-          this.disTube.on(event.name, event.run.bind(null, this));
-          return;
-        }
-
-        if (event instanceof DiscordEvent) {
-          this.on(event.name, event.run.bind(null, this));
-          return;
-        }
+        this.on(event.name, event.run.bind(null, this));
+        return;
       }
     });
   }

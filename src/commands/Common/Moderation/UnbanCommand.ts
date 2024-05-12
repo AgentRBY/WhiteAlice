@@ -1,9 +1,9 @@
 import { SuccessEmbed } from '../../../utils/Discord/Embed';
-import { isSnowflake } from 'distube';
 import { MessageEmbed, PermissionString } from 'discord.js';
 import { Colors } from '../../../static/Colors';
 import { Emojis } from '../../../static/Emojis';
 import { CommandExample, CommandRunOptions, CommonCommand } from '../../../structures/Commands/CommonCommand';
+import { isSnowflake } from '../../../utils/Discord/Messages';
 
 class UnbanCommand extends CommonCommand {
   name = 'unban';

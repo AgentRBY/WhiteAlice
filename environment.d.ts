@@ -9,7 +9,6 @@ export interface Environment {
   mongoURI: string;
   devGuildID: string;
   yandexYU: string;
-  distubeCookie: string;
   notionToken: string;
   auddToken: string;
 }
