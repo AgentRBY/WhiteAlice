@@ -4,7 +4,7 @@
   "description": "White Alice: Multi-proposal Discord Bot",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon --exec \"npm run build && npm run start\" ./dist/app.js --ignore dist",
+    "dev": "nodemon --exec \"npm run build && npm run start\" ./dist/app.js --ignore dist -e ts",
     "start": "node ./dist/app.js",
     "lint": "eslint ./src --cache",
     "lint:fix": "eslint ./src --fix --cache",

@@ -5,7 +5,7 @@ import { Emojis } from '../../../static/Emojis';
 
 class LevelLeaderboard extends CommonCommand {
   name = 'levelLeaderboard';
-  category = 'Level';
+  category = 'Profile';
   aliases = ['llb'];
   description = '';
   examples: CommandExample[] = [];
