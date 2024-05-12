@@ -1,5 +1,4 @@
 import { Client as NotionClient } from '@notionhq/client';
-import AniDB from 'anidbjs';
 import discordModals from 'discord-modals';
 import { Client, Collection, Intents, Snowflake } from 'discord.js';
 import { glob } from 'glob';
@@ -25,7 +24,6 @@ export class ExtendClient extends Client<true> {
   categories: Set<string> = new Set();
   aliases: Collection<string, string> = new Collection(); // <Alias, OriginalCommandName>
   notion: NotionClient;
-  aniDB = new AniDB({ client: 'hltesttwo', version: 9 });
   config: Environment = process.env;
   invites: Collection<string, Collection<string, number>> = new Collection(); // <InviteCode, <AuthorId, Uses>
   memberBase: CacheManager<MongoData<IMemberModel>>;
