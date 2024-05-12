@@ -15,6 +15,7 @@ class MessageActivity extends DiscordEvent<'messageCreate'> {
       !message.guild ||
       !message.guild.members.me ||
       message.channel.type === 'DM' ||
+      message.member.user.bot ||
       message.system
     ) {
       return;
