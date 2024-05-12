@@ -68,10 +68,5 @@
     "*.json": [
       "prettier --write"
     ]
-  },
-  "pnpm": {
-    "patchedDependencies": {
-      "nhentai-api@3.4.3": "patches/nhentai-api@3.4.3.patch"
-    }
   }
 }

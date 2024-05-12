@@ -4,11 +4,6 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
-patchedDependencies:
-  nhentai-api@3.4.3:
-    hash: l4eoegqdj6cfyjre73icupyjpq
-    path: patches/nhentai-api@3.4.3.patch
-
 importers:
 
   .:
@@ -19,12 +14,6 @@ importers:
       '@notionhq/client':
         specifier: ^2.2.5
         version: 2.2.15
-      anidbjs:
-        specifier: ^2.4.4
-        version: 2.4.4
-      anilist-node:
-        specifier: ^1.14.0
-        version: 1.14.1
       discord-modals:
         specifier: ^1.3.7
         version: 1.3.9(discord.js@13.17.1)
@@ -49,9 +38,6 @@ importers:
       mongoose:
         specifier: ^7.3.0
         version: 7.6.11
-      nhentai-api:
-        specifier: 3.4.3
-        version: 3.4.3(patch_hash=l4eoegqdj6cfyjre73icupyjpq)
       node-html-parser:
         specifier: ^6.1.5
         version: 6.1.13
@@ -64,9 +50,6 @@ importers:
       request:
         specifier: ^2.88.2
         version: 2.88.2
-      sagiri-fork:
-        specifier: ^3.2.1
-        version: 3.2.1
       trace.moe.ts:
         specifier: ^1.3.10
         version: 1.3.10(@swc/core@1.5.5)(@types/node@20.12.11)(typescript@5.4.5)
@@ -491,10 +474,6 @@ packages:
   abbrev@1.1.1:
     resolution: {integrity: sha512-nne9/IiQ/hzIhY6pdDnbBtz7DjPTKrY00P/zvPSm5pOFkl6xuGrGnXn/VtTNNfNtAfZ9/1RtehkszU9qcTii0Q==}
 
-  abort-controller@3.0.0:
-    resolution: {integrity: sha512-h8lQ8tacZYnR3vNQTgibj+tODHI5/+l06Au2Pcriv/Gmet0eaj4TwWH41sO9wnHDiQsEj19q0drzdWdeAHtweg==}
-    engines: {node: '>=6.5'}
-
   acorn-jsx@5.3.2:
     resolution: {integrity: sha512-rq9s+JNhf0IChjtDXxllJ7g41oZk5SlXtp0LHwyA5cejwn7vKmKp4pPri6YEePv2PU65sAsegbXtIinmDFDXgQ==}
     peerDependencies:
@@ -511,12 +490,6 @@ packages:
 
   ajv@6.12.6:
     resolution: {integrity: sha512-j3fVLgvTo527anyYyJOGTYJbG+vnnQYvE0m5mmkc1TK+nxAppkCLMIL0aZ4dblVCNoGShhm+kzE4ZUykBoMg4g==}
-
-  anidbjs@2.4.4:
-    resolution: {integrity: sha512-eRkxuZ5q4O8cgDUx4PqpMEmaZ+ScTQkMIF05oGQVZV6NL0kGYmKmCl+GW4Crm4bi9SofxIyQlqWZiIdgckBJrA==}
-
-  anilist-node@1.14.1:
-    resolution: {integrity: sha512-lWwiof5LFYtr32UcLmmDiihjOdx+V2qQ8KGhQ+5Ccuir5voUC1FiL0rxHV9cgTsJzx3AWK9Fjxtgya0eiOiX8w==}
 
   ansi-escapes@5.0.0:
     resolution: {integrity: sha512-5GFMVX8HqE/TB+FuBJGuO5XG0WrsA6ptUqoODaT/n9mmUaZFkqnBueB4leqGBCmrUHnCnC4PCZTCd0E7QQ83bA==}
@@ -609,9 +582,6 @@ packages:
   bcrypt-pbkdf@1.0.2:
     resolution: {integrity: sha512-qeFIXtP4MSoi6NLqO12WfqARWWuCKi2Rn/9hJLEmtB5yTNr9DqFWkJRCf2qShWzPeAMRnOgCrq0sg/KLv5ES9w==}
 
-  bent@7.3.12:
-    resolution: {integrity: sha512-T3yrKnVGB63zRuoco/7Ybl7BwwGZR0lceoVG5XmQyMIH9s19SV5m+a8qam4if0zQuAmOQTyPTPmsQBdAorGK3w==}
-
   bin-check@4.1.0:
     resolution: {integrity: sha512-b6weQyEUKsDGFlACWSIOfveEnImkJyK/FGW6FAG42loyoquvjdtOIqO6yBFzHyqyVVhNgNkQxxx09SFLK28YnA==}
     engines: {node: '>=4'}
@@ -651,9 +621,6 @@ packages:
   builtin-modules@3.3.0:
     resolution: {integrity: sha512-zhaCDicdLuWN5UbN5IMnFqNMhNfo919sH85y2/ea+5Yg9TsTkeZxpL+JLbp6cgYFS4sRLp3YV4S6yDuqVWHYOw==}
     engines: {node: '>=6'}
-
-  bytesish@0.4.4:
-    resolution: {integrity: sha512-i4uu6M4zuMUiyfZN4RU2+i9+peJh//pXhd9x1oSe1LBkZ3LEbCoygu8W0bXTukU1Jme2txKuotpCZRaC3FLxcQ==}
 
   cacheable-lookup@5.0.4:
     resolution: {integrity: sha512-2/kNscPhpcxrOigMZzbiWF7dz8ilhb/nIHU3EyZiXWXpeq/au8qJ8VhdftMkty3n7Gj6HIGalQG8oiBNB3AJgA==}
@@ -1033,10 +1000,6 @@ packages:
   esutils@2.0.3:
     resolution: {integrity: sha512-kVscqXk4OCp68SZ0dkgEKVi6/8ij300KBWTJq32P/dYeWTSwK41WyTxalN1eRmA5Z9UU/LX9D7FWSmV9SAYx6g==}
     engines: {node: '>=0.10.0'}
-
-  event-target-shim@5.0.1:
-    resolution: {integrity: sha512-i/2XbnSz/uxRCU6+NdVJgKWDTM427+MqYbkQzD321DuCQJUqOuJKIA0IM2+W2xtYHdKOmZ4dR6fExsd4SXL+WQ==}
-    engines: {node: '>=6'}
 
   eventemitter3@5.0.1:
     resolution: {integrity: sha512-GWkBvjiSZK87ELrYOSESUYeVIc9mvLLf/nXalMOS5dYrgZq9o5OVkbZAVM06CVxYsCwH9BDZFPlQTlPA1j4ahA==}
@@ -1694,10 +1657,6 @@ packages:
   natural-compare@1.4.0:
     resolution: {integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==}
 
-  nhentai-api@3.4.3:
-    resolution: {integrity: sha512-IPzoB9/GRVF/wofyao6SfpFIak2GyE8+4F7ipDJXK/vmxV3QPa+7E7+cst2zsXis5j9Yxk3Cf/zodktaM9UU9w==}
-    engines: {node: '>=12'}
-
   node-fetch@2.7.0:
     resolution: {integrity: sha512-c4FRfUm/dbcWZ7U+1Wq0AwCyFL+3nt2bEw05wfxSz+DWpWsitgmSgYmy2dQdWyKC1694ELPqMs/YzUSNozLt8A==}
     engines: {node: 4.x || >=6.0.0}
@@ -2023,13 +1982,6 @@ packages:
 
   safer-buffer@2.1.2:
     resolution: {integrity: sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==}
-
-  sagiri-fork@3.2.1:
-    resolution: {integrity: sha512-04CJm7WUSMSsSQOIGpSIE8I1B66m2egcxwR1xbUSpEaK/zmxDBOByF6UL41AmxPe1xLzol1c3hPVVda08+Z0oQ==}
-    engines: {node: '>=12'}
-
-  sax@1.3.0:
-    resolution: {integrity: sha512-0s+oAmw9zLl1V1cS9BtZN7JAd0cW5e0QH4W3LWEK6a4LaLEA2OTpGYWDY+6XasBLtz6wkm3u1xRw95mRuJ59WA==}
 
   semver-regex@4.0.5:
     resolution: {integrity: sha512-hunMQrEy1T6Jr2uEVjrAIqjwWcQTgOAcIM52C8MY1EZSD3DDNft04XzvYKPqjED65bNVVko0YI38nYeEHCX3yw==}
@@ -2461,14 +2413,6 @@ packages:
       utf-8-validate:
         optional: true
 
-  xml2js@0.4.23:
-    resolution: {integrity: sha512-ySPiMjM0+pLDftHgXY4By0uswI3SPKLDw/i3UXbnO8M/p28zqexCUoPmQFrYD+/1BzhGJSs2i1ERWKJAtiLrug==}
-    engines: {node: '>=4.0.0'}
-
-  xmlbuilder@11.0.1:
-    resolution: {integrity: sha512-fDlsI/kFEx7gLvbecc0/ohLG50fugQp8ryHzMTuW9vSa1GJ0XYWKnhsUx7oie3G98+r56aTQIUB4kht42R3JvA==}
-    engines: {node: '>=4.0'}
-
   xtend@4.0.2:
     resolution: {integrity: sha512-LKYU1iAXJXUgAXn9URjiu+MWhyUXHsvfp7mcuYm9dSUKK0/CjtrUwFAxD82/mCWbtLsGjFIad0wIsod4zrTAEQ==}
     engines: {node: '>=0.4'}
@@ -2867,10 +2811,6 @@ snapshots:
 
   abbrev@1.1.1: {}
 
-  abort-controller@3.0.0:
-    dependencies:
-      event-target-shim: 5.0.1
-
   acorn-jsx@5.3.2(acorn@8.11.3):
     dependencies:
       acorn: 8.11.3
@@ -2885,18 +2825,6 @@ snapshots:
       fast-json-stable-stringify: 2.1.0
       json-schema-traverse: 0.4.1
       uri-js: 4.4.1
-
-  anidbjs@2.4.4:
-    dependencies:
-      got: 11.8.6
-      xml2js: 0.4.23
-
-  anilist-node@1.14.1:
-    dependencies:
-      abort-controller: 3.0.0
-      node-fetch: 2.7.0
-    transitivePeerDependencies:
-      - encoding
 
   ansi-escapes@5.0.0:
     dependencies:
@@ -2999,12 +2927,6 @@ snapshots:
     dependencies:
       tweetnacl: 0.14.5
 
-  bent@7.3.12:
-    dependencies:
-      bytesish: 0.4.4
-      caseless: 0.12.0
-      is-stream: 2.0.1
-
   bin-check@4.1.0:
     dependencies:
       execa: 0.7.0
@@ -3043,8 +2965,6 @@ snapshots:
   buffer-from@1.1.2: {}
 
   builtin-modules@3.3.0: {}
-
-  bytesish@0.4.4: {}
 
   cacheable-lookup@5.0.4: {}
 
@@ -3539,8 +3459,6 @@ snapshots:
   estraverse@5.3.0: {}
 
   esutils@2.0.3: {}
-
-  event-target-shim@5.0.1: {}
 
   eventemitter3@5.0.1: {}
 
@@ -4192,8 +4110,6 @@ snapshots:
 
   natural-compare@1.4.0: {}
 
-  nhentai-api@3.4.3(patch_hash=l4eoegqdj6cfyjre73icupyjpq): {}
-
   node-fetch@2.7.0:
     dependencies:
       whatwg-url: 5.0.0
@@ -4521,16 +4437,6 @@ snapshots:
       regexp-tree: 0.1.27
 
   safer-buffer@2.1.2: {}
-
-  sagiri-fork@3.2.1:
-    dependencies:
-      bent: 7.3.12
-      debug: 4.3.4
-      form-data: 4.0.0
-    transitivePeerDependencies:
-      - supports-color
-
-  sax@1.3.0: {}
 
   semver-regex@4.0.5: {}
 
@@ -4985,13 +4891,6 @@ snapshots:
   wrappy@1.0.2: {}
 
   ws@8.17.0: {}
-
-  xml2js@0.4.23:
-    dependencies:
-      sax: 1.3.0
-      xmlbuilder: 11.0.1
-
-  xmlbuilder@11.0.1: {}
 
   xtend@4.0.2: {}
 
