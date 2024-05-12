@@ -4,7 +4,6 @@ import { AnilistLink } from '../../../modules/AnilistLink';
 import { AntiPingModule } from '../../../modules/AntiPing';
 import { AntiScamModule } from '../../../modules/AntiScam';
 import { MediaChannel } from '../../../modules/MediaChannel';
-import { NHentaiLink } from '../../../modules/NHentaiLink';
 import { ExtendClient } from '../../../structures/Client';
 import { DiscordEvent, DiscordEventNames } from '../../../structures/Event';
 import { ExtendedMessage } from '../../../structures/ExtendedMessage';
@@ -28,7 +27,6 @@ class MessageModeration extends DiscordEvent<'messageCreate'> {
     AntiPingModule(client, message);
     // AntiNSFW(client, message);
 
-    NHentaiLink(client, message);
     AniDBLink(client, message);
     AnilistLink(client, message);
 

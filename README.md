@@ -42,7 +42,7 @@ Turn on this intents in [Discord Developer Portal](https://discord.com/developer
 - `Image Search` — Search anime, manga and other by images
 - `Moderation` — Logging of all actions, the impact of the number of warnings / bans on the duration of the mute and
   more
-- `Utils` — Various commands, like as search for random anime or hentai, anime information and more
+- `Utils` — Various commands, like as search for random anime, get information about anime and more
 - `Voice` — Custom user voices module
 
 ### **Context commands:**
@@ -57,7 +57,7 @@ Turn on this intents in [Discord Developer Portal](https://discord.com/developer
 
 - `AntiPing` — prevents mass mentions of people
 - `AntiScam` — Deleting all messages containing nitro scam links
-- `AniDBLink`, `AnilistLink`, `NHentaiLink` — Display information about anime or hentai when publishing a link to it
+- `AniDBLink`, `AnilistLink` — Display information about anime or hentai when publishing a link to it
 - `MediaChannel` — Create a channel for media (any posts that do not contain links or attachments will be deleted)
 
 ## All commands as of 06/04/2023:
