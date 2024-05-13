@@ -27,7 +27,7 @@ export async function tryToFindUrl(
   return url || '';
 }
 
-export function isSnowflake(id: any): id is Snowflake {
+export function isSnowflake(id: string): id is Snowflake {
   try {
     return SnowflakeUtil.deconstruct(id).timestamp > SnowflakeUtil.EPOCH;
   } catch {

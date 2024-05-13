@@ -21,7 +21,7 @@ export class MutesAction {
   async removeMute(this: Service, id: MemberBaseId, unmutedBy: string, reason?: string): Promise<void> {
     const MemberData = await this.getMemberData(id);
 
-    const mute = MemberData.mutes[MemberData.mutes.length - 1];
+    const mute = MemberData.mutes.at(-1);
 
     MemberData.mutes[MemberData.mutes.length - 1] = {
       date: mute.date,

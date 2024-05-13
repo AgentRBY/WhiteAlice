@@ -46,7 +46,7 @@ class ReportCommand extends ContextCommand {
       .setDescription(
         `Пользователь ${interaction.user} пожаловался на сообщение пользователя ${reportedMessage.author}
         Содержение сообщения:
-        ${!reportedMessage.content.includes('```') ? `> ${reportedMessage.content}` : ''}`,
+        ${reportedMessage.content.includes('```') ? '' : `> ${reportedMessage.content}`}`,
       )
       .setColor(Colors.Blue)
       .setTimestamp();

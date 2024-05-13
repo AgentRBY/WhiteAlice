@@ -16,7 +16,7 @@ export class BansAction {
   async removeBan(this: Service, id: MemberBaseId, unbannedBy: string, reason?: string) {
     const MemberData = await this.getMemberData(id);
 
-    const ban = MemberData.bans[MemberData.bans.length - 1];
+    const ban = MemberData.bans.at(-1);
 
     MemberData.bans[MemberData.bans.length - 1] = {
       date: ban.date,

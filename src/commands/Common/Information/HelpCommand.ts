@@ -102,7 +102,7 @@ class HelpCommand extends CommonCommand {
         name: `Информация про команду ${command.name}`,
         iconURL: EmojisLinks.Info,
       },
-      description: description.replace(/ +/g, ' ').replace(/(?:\n\s\*)+/g, '\n*'),
+      description: description.replaceAll(/ +/g, ' ').replaceAll(/(?:\n\s\*)+/g, '\n*'),
       footer: { text: 'Синтаксис: <> = обязательно, [] = опционально, | - или' },
       color: Colors.Blue,
     });
