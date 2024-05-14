@@ -2,16 +2,6 @@ import { ActivityOptions } from 'discord.js';
 
 export const Activities: ActivityOptions[] = [
   {
-    name: 'тупости с тобой',
-    type: 'COMPETING',
-    url: 'https://discord.gg/kSr6fREFfJ',
-  },
-  {
-    name: 'твой бред',
-    type: 'LISTENING',
-    url: 'https://discord.gg/kSr6fREFfJ',
-  },
-  {
     name: 'Моцарта',
     type: 'LISTENING',
     url: 'https://discord.gg/kSr6fREFfJ',
@@ -43,6 +33,11 @@ export const Activities: ActivityOptions[] = [
   },
   {
     name: 'ColorControl',
+    type: 'PLAYING',
+    url: 'https://discord.gg/kSr6fREFfJ',
+  },
+  {
+    name: 'ClassicGames',
     type: 'PLAYING',
     url: 'https://discord.gg/kSr6fREFfJ',
   },
