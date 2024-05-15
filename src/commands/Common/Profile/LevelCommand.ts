@@ -34,10 +34,13 @@ class Level extends CommonCommand {
 
     const timeInVoiceText = profile.timeInVoice ? ` **|** 🎤 ${profile.timeInVoice}` : '';
 
+    const xpForNextLevel = client.service.getXpByLevel(profile.level + 1) - profile.xp;
+
     const embed = new MessageEmbed()
       .setColor(Colors.Blue)
       .setTitle(`${Emojis.Competing} Уровень пользователя ${Util.escapeMarkdown(targetMember.displayName)}`)
-      .setDescription(`➤ **Уровень:** ${profile.level} **|** **Опыт:** ${Math.round(profile.xp)}${timeInVoiceText}`);
+      .setDescription(`➤ **Уровень:** ${profile.level} **|** **Опыт:** ${Math.round(profile.xp)}${timeInVoiceText}`)
+      .setFooter({ text: `До следующего уровня: ${xpForNextLevel} опыта` });
 
     message.channel.send({ embeds: [embed] });
   }
