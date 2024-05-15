@@ -21,7 +21,7 @@ class VoiceActivity extends DiscordEvent<'voiceStateUpdate'> {
       const timeInVoiceInMinutes = Math.floor(moment(timeInVoice).unix() / 60);
 
       if (timeInVoiceInMinutes > 0) {
-        const xpToAdd = getRandomInt(15, 25) * timeInVoiceInMinutes;
+        const xpToAdd = getRandomInt(10, 20) * timeInVoiceInMinutes;
 
         client.service.incrementXp(getMemberBaseId(oldState.member), xpToAdd);
       }
