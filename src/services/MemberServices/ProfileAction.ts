@@ -30,15 +30,19 @@ export class ProfileAction {
   }
 
   async incrementXp(this: Service, id: MemberBaseId, xpToAdd: number) {
-    const MemberData = await this.getMemberData(id);
-
-    this.updateMemberData(id, { 'profile.xp': MemberData.profile.xp + xpToAdd });
+    this.updateMemberData(id, {
+      $inc: {
+        'profile.xp': xpToAdd,
+      },
+    });
   }
 
   async addTimeInVoice(this: Service, id: MemberBaseId, timeInVoiceMs: number) {
-    const MemberData = await this.getMemberData(id);
-
-    this.updateMemberData(id, { 'profile.timeInVoice': MemberData.profile.timeInVoice + timeInVoiceMs });
+    this.updateMemberData(id, {
+      $inc: {
+        'profile.timeInVoice': timeInVoiceMs,
+      },
+    });
   }
 
   getXpByLevel(this: Service, level: number) {
@@ -46,16 +50,10 @@ export class ProfileAction {
   }
 
   async incrementLevel(this: Service, id: MemberBaseId) {
-    const MemberData = await this.getMemberData(id);
-
-    const memberLevel = MemberData.profile.level;
-    const memberXp = MemberData.profile.xp;
-
-    const nextLevelXp = this.getXpByLevel(memberLevel + 1);
-
     await this.updateMemberData(id, {
-      'profile.level': MemberData.profile.level + 1,
-      'profile.xp': memberXp - nextLevelXp,
+      $inc: {
+        'profile.level': 1,
+      },
     });
   }
 
