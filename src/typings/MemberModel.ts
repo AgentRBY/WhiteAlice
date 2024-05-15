@@ -41,10 +41,11 @@ export interface Punishment {
   reason?: string;
 }
 
-interface Profile {
+export interface Profile {
   xp: number;
   level: number;
   messageCount: number;
+  timeInVoice: number;
   customization: Customization;
   achievements: Achievement[];
 }

@@ -8,26 +8,36 @@ import { getMemberBaseId } from '../../../utils/Other';
 class Level extends CommonCommand {
   name = 'level';
   category = 'Profile';
-  aliases = [];
+  aliases = ['lvl', 'xp', 'уровень', 'опыт'];
   description = 'Показывает уровень участника';
-  examples: CommandExample[] = [];
+  examples: CommandExample[] = [
+    {
+      command: 'level',
+      description: 'Показывает ваш уровень',
+    },
+    {
+      command: 'level @Agent_RBY_',
+      description: `Показывает уровень участника ${Util.escapeMarkdown('Agent_RBY_')}`,
+    },
+  ];
   usage = 'level [ник]';
 
   async run({ message, client }: CommandRunOptions) {
     const targetMember = getMemberFromMessage(message) || message.member;
 
-    const level = await client.service.getCurrentLevel(getMemberBaseId(targetMember));
-    const xp = await client.service.getCurrentXp(getMemberBaseId(targetMember));
+    const profile = await client.service.getMemberProfile(getMemberBaseId(targetMember));
 
-    if (!level || !xp) {
+    if (!profile.xp || !profile.level) {
       message.sendError('Уровень не найдено. Попробуйте позже');
       return;
     }
 
+    const timeInVoiceText = profile.timeInVoice ? ` **|** 🎤 ${profile.timeInVoice}` : '';
+
     const embed = new MessageEmbed()
       .setColor(Colors.Blue)
-      .setTitle(`${Emojis.Competing} Пользователь ${Util.escapeMarkdown(targetMember.displayName)}`)
-      .setDescription(`Уровень: ${level} (${Math.round(xp)} опыта)`);
+      .setTitle(`${Emojis.Competing} Уровень пользователя ${Util.escapeMarkdown(targetMember.displayName)}`)
+      .setDescription(`➤ **Уровень:** ${profile.level} **|** **Опыт:** ${Math.round(profile.xp)}${timeInVoiceText}`);
 
     message.channel.send({ embeds: [embed] });
   }

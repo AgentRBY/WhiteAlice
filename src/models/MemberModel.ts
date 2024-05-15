@@ -58,6 +58,10 @@ const MemberSchema = new Schema<IMemberModel>({
       type: Number,
       default: 0,
     },
+    timeInVoice: {
+      type: Number,
+      default: 0,
+    },
     customization: {
       color: String,
       background: String,

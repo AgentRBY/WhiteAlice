@@ -1,5 +1,9 @@
 import { ExtendClient } from './structures/Client';
 import Logger from './utils/Logger';
+import durationPlugin from 'dayjs/plugin/duration';
+import dayjs from 'dayjs';
+
+dayjs.extend(durationPlugin);
 
 require('dotenv').config();
 

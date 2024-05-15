@@ -23,14 +23,26 @@ export class ProfileAction {
     return MemberData.profile.xp;
   }
 
+  async getMemberProfile(this: Service, id: MemberBaseId) {
+    const MemberData = await this.getMemberData(id);
+
+    return MemberData.profile;
+  }
+
   async incrementXp(this: Service, id: MemberBaseId, xpToAdd: number) {
     const MemberData = await this.getMemberData(id);
 
     this.updateMemberData(id, { 'profile.xp': MemberData.profile.xp + xpToAdd });
   }
 
+  async addTimeInVoice(this: Service, id: MemberBaseId, timeInVoiceMs: number) {
+    const MemberData = await this.getMemberData(id);
+
+    this.updateMemberData(id, { 'profile.timeInVoice': MemberData.profile.timeInVoice + timeInVoiceMs });
+  }
+
   getXpByLevel(this: Service, level: number) {
-    return (5 / 6) * level * (2 * level * level + 27 * level + 91); // XP FORMULA
+    return Math.round((8 / 9) * level * (2 * level * level + 45 * level + 111)); // XP FORMULA
   }
 
   async incrementLevel(this: Service, id: MemberBaseId) {
@@ -88,12 +100,12 @@ export class ProfileAction {
 
   async getLeaderboard(this: Service, guildId: Snowflake, limit = 10) {
     const users = await MemberModel.find(
-      { _id: new RegExp(`\\d+-${guildId}`) },
+      { _id: new RegExp(`\\d+-${guildId}`), 'profile.xp': { $gt: 0 } },
       {
         profile: 1,
         _id: 1,
       },
-      { sort: { 'profile.level': -1 }, limit },
+      { sort: { 'profile.level': -1, 'profile.xp': -1 }, limit },
     )
       .lean()
       .exec();

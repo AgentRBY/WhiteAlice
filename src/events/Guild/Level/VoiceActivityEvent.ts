@@ -26,6 +26,8 @@ class VoiceActivity extends DiscordEvent<'voiceStateUpdate'> {
         client.service.incrementXp(getMemberBaseId(oldState.member), xpToAdd);
       }
 
+      client.service.addTimeInVoice(getMemberBaseId(oldState.member), timeInVoice);
+
       currentInVoice.delete(oldState.member.id);
     }
 
