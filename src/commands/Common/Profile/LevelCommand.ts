@@ -4,6 +4,7 @@ import { Colors } from '../../../static/Colors';
 import { Emojis } from '../../../static/Emojis';
 import { getMemberFromMessage } from '../../../utils/Discord/Users';
 import { getMemberBaseId } from '../../../utils/Other';
+import dayjs from 'dayjs';
 
 class Level extends CommonCommand {
   name = 'level';
@@ -32,7 +33,8 @@ class Level extends CommonCommand {
       return;
     }
 
-    const timeInVoiceText = profile.timeInVoice ? ` **|** 🎤 ${profile.timeInVoice}` : '';
+    const timeInVoice = profile.timeInVoice > 0 ? dayjs.duration(profile.timeInVoice).format('HH:mm:ss') : '';
+    const timeInVoiceText = timeInVoice ? ` **|** 🎤 ${timeInVoice}` : '';
 
     const xpForNextLevel = client.service.getXpByLevel(profile.level + 1) - profile.xp;
 
