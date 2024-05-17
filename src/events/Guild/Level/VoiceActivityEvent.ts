@@ -10,7 +10,7 @@ const currentInVoice = new Map<Snowflake, Date>();
 class VoiceActivity extends DiscordEvent<'voiceStateUpdate'> {
   name: DiscordEventNames = 'voiceStateUpdate';
 
-  private recalculateMemberVoiceTime(member: GuildMember, client: ExtendClient) {
+  private static recalculateMemberVoiceTime(member: GuildMember, client: ExtendClient) {
     const timeInVoice = Date.now() - currentInVoice.get(member.id).getTime();
 
     const timeInVoiceInMinutes = Math.floor(moment(timeInVoice).unix() / 60);
@@ -32,7 +32,7 @@ class VoiceActivity extends DiscordEvent<'voiceStateUpdate'> {
     }
 
     if (oldState.channel?.id && currentInVoice.has(oldState.member?.id)) {
-      this.recalculateMemberVoiceTime(oldState.member, client);
+      VoiceActivity.recalculateMemberVoiceTime(oldState.member, client);
     }
 
     if (newState.channel?.id) {
@@ -54,7 +54,7 @@ class VoiceActivity extends DiscordEvent<'voiceStateUpdate'> {
     client.guilds.cache.forEach((guild) => {
       guild.members.cache.forEach((member) => {
         if (member.voice.channel) {
-          this.recalculateMemberVoiceTime(member, client);
+          VoiceActivity.recalculateMemberVoiceTime(member, client);
         }
       });
     });
