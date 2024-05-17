@@ -1,4 +1,4 @@
-import { GuildMember } from 'discord.js';
+import { Awaitable, GuildMember } from 'discord.js';
 import { MemberBaseId } from '../typings/MemberModel';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -40,4 +40,59 @@ export function includesInEnum<VariableType, Enum extends Record<string, Variabl
   enumItem: Enum,
 ): item is Enum[keyof Enum] {
   return Object.values(enumItem).includes(item);
+}
+
+export function onProcessExit(callback: () => Awaitable<void>): void {
+  let emitted = false;
+
+  process.on('exit', async (code) => {
+    if (emitted) {
+      return;
+    }
+
+    emitted = true;
+
+    await callback();
+    process.exit(code);
+  });
+  process.on('SIGINT', async () => {
+    if (emitted) {
+      return;
+    }
+
+    emitted = true;
+
+    await callback();
+    process.exit();
+  });
+  process.on('SIGUSR1', async () => {
+    if (emitted) {
+      return;
+    }
+
+    emitted = true;
+
+    await callback();
+    process.exit();
+  });
+  process.on('SIGUSR2', async () => {
+    if (emitted) {
+      return;
+    }
+
+    emitted = true;
+
+    await callback();
+    process.exit();
+  });
+  process.on('uncaughtException', async () => {
+    if (emitted) {
+      return;
+    }
+
+    emitted = true;
+
+    await callback();
+    process.exit();
+  });
 }

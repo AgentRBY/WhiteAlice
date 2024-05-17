@@ -16,6 +16,7 @@ import { ContextCommand } from './Commands/ContextCommand';
 import { SlashCommand } from './Commands/SlashCommand';
 import { DiscordEvent, DiscordEventNames } from './Event';
 import { Service } from './Service';
+import { onProcessExit } from '../utils/Other';
 
 export class ExtendClient extends Client<true> {
   commonCommands: Collection<string, CommonCommand> = new Collection(); // <Name, CommonCommand>
@@ -152,7 +153,13 @@ export class ExtendClient extends Client<true> {
       if (event.name) {
         this.on(event.name, event.run.bind(null, this));
 
-        this.on('ready', () => event.init(this));
+        this.once('ready', () => {
+          event.onInit(this);
+
+          onProcessExit(async () => {
+            await event.onExit(this);
+          });
+        });
 
         return;
       }

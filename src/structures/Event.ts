@@ -9,5 +9,8 @@ export abstract class DiscordEvent<T extends DiscordEventNames> {
   abstract run(client: ExtendClient, ...options: ClientEvents[T]): Awaitable<void>;
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  init(client: ExtendClient): Awaitable<void> {}
+  onInit(client: ExtendClient): Awaitable<void> {}
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  onExit(client: ExtendClient): Awaitable<void> {}
 }
