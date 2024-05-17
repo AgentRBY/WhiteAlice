@@ -45,7 +45,7 @@ export function includesInEnum<VariableType, Enum extends Record<string, Variabl
 export function onProcessExit(callback: () => Awaitable<void>): void {
   let emitted = false;
 
-  process.on('exit', async (code) => {
+  process.once('exit', async (code) => {
     if (emitted) {
       return;
     }
@@ -55,7 +55,7 @@ export function onProcessExit(callback: () => Awaitable<void>): void {
     await callback();
     process.exit(code);
   });
-  process.on('SIGINT', async () => {
+  process.once('SIGINT', async () => {
     if (emitted) {
       return;
     }
@@ -65,7 +65,7 @@ export function onProcessExit(callback: () => Awaitable<void>): void {
     await callback();
     process.exit();
   });
-  process.on('SIGUSR1', async () => {
+  process.once('SIGUSR1', async () => {
     if (emitted) {
       return;
     }
@@ -75,7 +75,7 @@ export function onProcessExit(callback: () => Awaitable<void>): void {
     await callback();
     process.exit();
   });
-  process.on('SIGUSR2', async () => {
+  process.once('SIGUSR2', async () => {
     if (emitted) {
       return;
     }
@@ -85,7 +85,7 @@ export function onProcessExit(callback: () => Awaitable<void>): void {
     await callback();
     process.exit();
   });
-  process.on('uncaughtException', async () => {
+  process.once('uncaughtException', async () => {
     if (emitted) {
       return;
     }
