@@ -21,7 +21,7 @@ class MessageActivity extends DiscordEvent<'messageCreate'> {
       return;
     }
 
-    if (message.author.bot) {
+    if (message.author.bot || message.content.startsWith(client.config.prefix)) {
       return;
     }
 

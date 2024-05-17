@@ -1,6 +1,6 @@
 import { DiscordEvent, DiscordEventNames } from '../../../structures/Event';
 import { ExtendClient } from '../../../structures/Client';
-import { Snowflake, VoiceState } from 'discord.js';
+import { Awaitable, Snowflake, VoiceState } from 'discord.js';
 import moment from 'moment';
 import { getMemberBaseId } from '../../../utils/Other';
 import { getRandomInt } from '../../../utils/Common/Number';
@@ -34,6 +34,16 @@ class VoiceActivity extends DiscordEvent<'voiceStateUpdate'> {
     if (newState.channel?.id) {
       currentInVoice.set(newState.member.id, new Date());
     }
+  }
+
+  init(client: ExtendClient): Awaitable<void> {
+    client.guilds.cache.forEach((guild) => {
+      guild.members.cache.forEach((member) => {
+        if (member.voice.channel) {
+          currentInVoice.set(member.id, new Date());
+        }
+      });
+    });
   }
 }
 

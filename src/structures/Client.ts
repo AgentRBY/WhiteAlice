@@ -151,6 +151,9 @@ export class ExtendClient extends Client<true> {
     eventFiles.map((event) => {
       if (event.name) {
         this.on(event.name, event.run.bind(null, this));
+
+        this.on('ready', () => event.init(this));
+
         return;
       }
     });
