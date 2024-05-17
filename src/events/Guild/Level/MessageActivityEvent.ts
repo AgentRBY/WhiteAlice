@@ -21,7 +21,12 @@ class MessageActivity extends DiscordEvent<'messageCreate'> {
       return;
     }
 
-    if (message.author.bot || message.content.startsWith(client.config.prefix)) {
+    const prefix = await client.getPrefix(message.guild.id);
+    const args = message.content.slice(prefix.length).trim().split(/ +/g);
+    const cmd = args.shift()?.toLowerCase() ?? '';
+    const command = client.commonCommands.get(cmd) || client.commonCommands.get(client.aliases.get(cmd) || '');
+
+    if (message.author.bot || command) {
       return;
     }
 
