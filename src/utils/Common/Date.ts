@@ -1,5 +1,6 @@
 import moment, { Duration } from 'moment';
 import { Moment } from 'moment/moment';
+import { Duration as DayJsDuration } from 'dayjs/plugin/duration';
 
 export function getDurationFromString(text: string): Duration | undefined {
   const days = getDaysFromString(text) * 86_400_000;
@@ -144,4 +145,11 @@ export function getMinutesFromString(text: string): number {
 
 export function momentToDiscordDate(moment: Moment, timeFormat = 'f') {
   return `<t:${moment.unix()}:${timeFormat}>`;
+}
+
+export function formatVoiceTime(duration: DayJsDuration) {
+  const hours = Math.trunc(duration.asHours());
+  const hoursFormatted = hours < 10 ? `0${hours}` : hours;
+
+  return `${hoursFormatted}:${duration.format('mm:ss')}`;
 }
