@@ -31,11 +31,15 @@ class LevelLeaderboard extends CommonCommand {
       .map((user) => {
         const guildMember = message.guild.members.cache.get(user._id.split('-')[0])!;
 
+        const timeInVoiceDuration = dayjs.duration(user.profile.timeInVoice);
         return {
           username: Util.escapeMarkdown(guildMember.displayName),
           level: user.profile.level,
           xp: user.profile.xp,
-          timeInVoice: user.profile.timeInVoice > 0 ? dayjs.duration(user.profile.timeInVoice).format('HH:mm:ss') : '',
+          timeInVoice:
+            user.profile.timeInVoice > 0
+              ? `${timeInVoiceDuration.asHours()}:${timeInVoiceDuration.format('mm:ss')}`
+              : '',
         };
       });
 
@@ -56,7 +60,7 @@ class LevelLeaderboard extends CommonCommand {
         }),
       );
 
-    message.channel.send({ embeds: [embed] });
+    message.reply({ embeds: [embed], options: { allowedMentions: { repliedUser: false } } });
   }
 }
 

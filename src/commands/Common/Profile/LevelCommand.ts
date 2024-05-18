@@ -33,7 +33,9 @@ class Level extends CommonCommand {
       return;
     }
 
-    const timeInVoice = profile.timeInVoice > 0 ? dayjs.duration(profile.timeInVoice).format('HH:mm:ss') : '';
+    const timeInVoiceDuration = dayjs.duration(profile.timeInVoice);
+    const timeInVoice =
+      profile.timeInVoice > 0 ? `${timeInVoiceDuration.asHours()}:${timeInVoiceDuration.format('mm:ss')}` : '';
     const timeInVoiceText = timeInVoice ? ` **|** 🎤 ${timeInVoice}` : '';
 
     const xpForNextLevel = client.service.getXpByLevel(profile.level + 1) - profile.xp;
@@ -44,7 +46,7 @@ class Level extends CommonCommand {
       .setDescription(`➤ **Уровень:** ${profile.level} **|** **Опыт:** ${Math.round(profile.xp)}${timeInVoiceText}`)
       .setFooter({ text: `До следующего уровня: ${xpForNextLevel} опыта` });
 
-    message.channel.send({ embeds: [embed] });
+    message.reply({ embeds: [embed], options: { allowedMentions: { repliedUser: false } } });
   }
 }
 
