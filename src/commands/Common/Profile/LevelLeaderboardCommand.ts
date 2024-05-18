@@ -3,6 +3,7 @@ import { MessageEmbed, Util } from 'discord.js';
 import { Colors } from '../../../static/Colors';
 import { Emojis } from '../../../static/Emojis';
 import dayjs from 'dayjs';
+import { formatVoiceTime } from '../../../utils/Common/Date';
 
 class LevelLeaderboard extends CommonCommand {
   name = 'levelLeaderboard';
@@ -31,15 +32,11 @@ class LevelLeaderboard extends CommonCommand {
       .map((user) => {
         const guildMember = message.guild.members.cache.get(user._id.split('-')[0])!;
 
-        const timeInVoiceDuration = dayjs.duration(user.profile.timeInVoice);
         return {
           username: Util.escapeMarkdown(guildMember.displayName),
           level: user.profile.level,
           xp: user.profile.xp,
-          timeInVoice:
-            user.profile.timeInVoice > 0
-              ? `${timeInVoiceDuration.asHours()}:${timeInVoiceDuration.format('mm:ss')}`
-              : '',
+          timeInVoice: user.profile.timeInVoice > 0 ? formatVoiceTime(dayjs.duration(user.profile.timeInVoice)) : '',
         };
       });
 
