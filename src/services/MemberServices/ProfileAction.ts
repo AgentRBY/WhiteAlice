@@ -3,6 +3,7 @@ import { MemberBaseId } from '../../typings/MemberModel';
 import { getRandomInt } from '../../utils/Common/Number';
 import { MemberModel } from '../../models/MemberModel';
 import { Snowflake } from 'discord.js';
+import { getXpByLevel } from '../../utils/Other';
 
 export class ProfileAction {
   async incrementMessageCount(this: Service, id: MemberBaseId) {
@@ -46,7 +47,7 @@ export class ProfileAction {
   }
 
   getXpByLevel(this: Service, level: number) {
-    return Math.round((8 / 9) * level * (2 * level * level + 45 * level + 111)); // XP FORMULA
+    return getXpByLevel(level);
   }
 
   async incrementLevel(this: Service, id: MemberBaseId) {

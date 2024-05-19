@@ -6,7 +6,7 @@ export interface IMemberModel {
   warns: Warn[];
   mutes: Mute[];
   bans: Ban[];
-  profile: Profile;
+  profile: UserProfile;
   karma: number;
 }
 
@@ -41,11 +41,12 @@ export interface Punishment {
   reason?: string;
 }
 
-export interface Profile {
+export interface UserProfile {
   xp: number;
   level: number;
   messageCount: number;
   timeInVoice: number;
+  coins: number;
   customization: Customization;
   achievements: Achievement[];
 }

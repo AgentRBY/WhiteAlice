@@ -96,3 +96,7 @@ export function onProcessExit(callback: () => Awaitable<void>): void {
     process.exit();
   });
 }
+
+export function getXpByLevel(level: number) {
+  return Math.round((8 / 9) * level * (2 * level * level + 45 * level + 111)); // XP FORMULA
+}

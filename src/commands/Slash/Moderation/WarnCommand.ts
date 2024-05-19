@@ -22,6 +22,7 @@ class WarnCommand extends SlashCommand {
     });
 
   async run({ client, interaction }: SlashCommandRunOptions) {
+    console.log(interaction);
     if (!interaction.memberPermissions.has('BAN_MEMBERS')) {
       const embed = ErrorEmbed('У вас нет прав на эту команду');
       interaction.reply({ embeds: [embed], ephemeral: true });
