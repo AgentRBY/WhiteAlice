@@ -9,7 +9,10 @@ dayjs.extend(durationPlugin);
 
 require('dotenv').config();
 
-GlobalFonts.registerFromPath(path.join(__dirname, 'utils', 'Canvas', 'Font', 'SegoeUI.ttf'), 'Segoe UI');
+GlobalFonts.registerFromPath(
+  path.join(__dirname, '..', '..', 'src', 'utils', 'Canvas', 'Font', 'SegoeUI.ttf'),
+  'Segoe UI',
+);
 
 export const client = new ExtendClient();
 
