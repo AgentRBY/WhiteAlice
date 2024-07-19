@@ -26,6 +26,7 @@ export class CommonCommand {
   memberPermissions?: PermissionString[];
   botPermissions?: PermissionString[];
   ownerOnly?: boolean;
+  hide?: boolean;
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   run(options: Partial<CommandRunOptions>): unknown {

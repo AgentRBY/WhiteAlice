@@ -27,16 +27,19 @@ class HelpCommand extends CommonCommand {
   async run({ client, message, args }: CommandRunOptions) {
     const prefix = await client.getPrefix(message.guild.id);
 
+    const commands = client.commonCommands.filter(
+      (command) => !command.hide || (command.hide && client.getOwners().includes(message.member.user.id)),
+    );
+
     if (!args.length) {
       const fields: EmbedFieldData[] = [...client.categories.keys()].map((category) => {
+        const categoryCommands = commands.filter(
+          (command) => command.category.toLowerCase() === category.toLowerCase(),
+        );
+
         return {
-          name: `${upAllFirstLatter(category)} [${
-            client.commonCommands.filter((command) => command.category.toLowerCase() === category.toLowerCase()).size
-          }]`,
-          value: client.commonCommands
-            .filter((command) => command.category.toLowerCase() === category.toLowerCase())
-            .map((command) => `\`${command.name}\``)
-            .join(', '),
+          name: `${upAllFirstLatter(category)} [${categoryCommands.size}]`,
+          value: categoryCommands.map((command) => `\`${command.name}\``).join(', '),
         };
       });
 
@@ -44,7 +47,7 @@ class HelpCommand extends CommonCommand {
         fields,
       })
         .setDescription(
-          `${Emojis.Info} **Всего \`${client.commonCommands.size}\` команд в \`${client.categories.size}\` категориях **`,
+          `${Emojis.Info} **Всего \`${commands.size}\` команд в \`${client.categories.size}\` категориях **`,
         )
         .setFooter({ text: `Что бы увидеть подробно про каждую команду, используйте: ${prefix}help [имя команды]` })
         .setColor(Colors.Blue);
@@ -53,8 +56,7 @@ class HelpCommand extends CommonCommand {
     }
 
     const command =
-      client.commonCommands.get(args[0].toLowerCase()) ||
-      client.commonCommands.get(client.aliases.get(args[0].toLowerCase()) || '');
+      commands.get(args[0].toLowerCase()) || commands.get(client.aliases.get(args[0].toLowerCase()) || '');
 
     if (!command) {
       message.sendError(`**Команда не найдена. Введите \`${prefix}help\` для списка команд**`);
@@ -72,6 +74,11 @@ class HelpCommand extends CommonCommand {
     if (command.ownerOnly) {
       description += `
     \n__**➤ Только для создателей**__: Эта команда доступна только для создателей бота`;
+    }
+
+    if (command.hide) {
+      description += `
+    \n__**➤ Скрытая**__: Эта команда скрыта и показывается только создателям бота`;
     }
 
     if (command.aliases?.length) {
