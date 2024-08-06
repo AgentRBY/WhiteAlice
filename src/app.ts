@@ -23,5 +23,5 @@ try {
 }
 
 process.on('uncaughtException', (error) => {
-  Logger.error(error);
+  console.error(error);
 });

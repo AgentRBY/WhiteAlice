@@ -24,6 +24,21 @@ const GuildSchema = new Schema<IGuildModel>({
       content: String,
     },
   ],
+  testing: {
+    reportsChannel: String,
+    reports: [
+      {
+        id: Number,
+        authorId: String,
+        description: String,
+        links: String,
+        status: String,
+        createdAt: Number,
+        editedAt: Number,
+        editedBy: String,
+      },
+    ],
+  },
 });
 
 export const GuildModel = model<IGuildModel>('GuildData', GuildSchema);

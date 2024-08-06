@@ -16,6 +16,8 @@ export const Emojis: Record<EmojisType, string> = {
   Discord: '<:DiscordEmoji:1001056688608116756>',
   Competing: '<:CompetingEmoji:843464794417528872>',
   Moderation: '<:ModerationEmoji:843094908448407593>',
+  Clipboard: '<:ClipboardEmoji:1270113752854827008>',
+  Documents: '<:DocumentsEmoji:1270113751407792209>',
 };
 
 export const EmojisLinks: Record<EmojisType, string> = {
@@ -36,7 +38,12 @@ export const EmojisLinks: Record<EmojisType, string> = {
   Discord: 'https://cdn.discordapp.com/emojis/1001056688608116756.png',
   Competing: 'https://cdn.discordapp.com/emojis/843464794417528872.png',
   Moderation: 'https://cdn.discordapp.com/emojis/843094908448407593.png',
+  Clipboard: 'https://cdn.discordapp.com/emojis/1270113752854827008.png',
+  Documents: 'https://cdn.discordapp.com/emojis/1270113751407792209.png',
 };
+export const EmojisIDs: Record<EmojisType, string> = Object.fromEntries(
+  Object.entries(Emojis).map(([key, value]) => [key, value.split(':')[2].slice(0, -1)]),
+) as Record<EmojisType, string>;
 
 type EmojisType =
   | 'Yes'
@@ -55,4 +62,6 @@ type EmojisType =
   | 'Music'
   | 'Discord'
   | 'Competing'
-  | 'Moderation';
+  | 'Moderation'
+  | 'Clipboard'
+  | 'Documents';

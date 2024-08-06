@@ -18,6 +18,7 @@ import { IGuildModel } from '../typings/GuildModel';
 import { IMemberModel, MemberBaseId } from '../typings/MemberModel';
 import { serviceMixin } from '../utils/Other';
 import { ExtendClient } from './Client';
+import { TestingAction } from '../services/GuildServices/TestingAction';
 
 export interface Service
   extends PrefixAction,
@@ -30,7 +31,8 @@ export interface Service
     BansAction,
     CustomVoiceAction,
     ModeratorsAction,
-    QuoteAction {}
+    QuoteAction,
+    TestingAction {}
 
 export class Service extends serviceMixin(
   PrefixAction,
@@ -44,6 +46,7 @@ export class Service extends serviceMixin(
   CustomVoiceAction,
   ModeratorsAction,
   QuoteAction,
+  TestingAction,
 ) {
   client: ExtendClient;
 

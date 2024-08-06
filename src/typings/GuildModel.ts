@@ -9,6 +9,7 @@ export interface IGuildModel {
   customVoices: CustomVoice;
   moderators: string[];
   quotes: Quote[];
+  testing: Testing;
 }
 
 interface Quote {
@@ -26,4 +27,26 @@ export interface Note {
 
 export interface CustomVoice {
   baseVoiceChannel: string;
+}
+
+export interface Testing {
+  reportsChannel: string;
+  reports: Report[];
+}
+export enum ReportStatus {
+  New = 'New',
+  InProgress = 'InProgress',
+  Declined = 'Declined',
+  Done = 'Done',
+}
+
+export interface Report {
+  id: number;
+  authorId: string;
+  description: string;
+  links?: string;
+  status: ReportStatus;
+  createdAt: number;
+  editedAt?: number;
+  editedBy?: string;
 }
