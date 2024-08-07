@@ -33,6 +33,11 @@ export class AutoAnswerCommand extends SlashCommand {
     );
 
   async run({ interaction, client }: SlashCommandRunOptions) {
+    if (!interaction.member.permissions.has('ADMINISTRATOR')) {
+      const embed = ErrorEmbed('Недостаточно прав');
+      return interaction.reply({ embeds: [embed], ephemeral: true });
+    }
+
     const subcommand = interaction.options.getSubcommand();
 
     if (subcommand === 'add') {

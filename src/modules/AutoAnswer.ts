@@ -17,7 +17,7 @@ export async function AutoAnswerModule(client: ExtendClient, message: Message) {
     const regex = AutoAnswerCommand.stringToRegex(autoAnswer.triggerRegex);
 
     if (regex.test(message.content)) {
-      message.reply(autoAnswer.answer);
+      message.reply(autoAnswer.answer).catch(() => {});
       break;
     }
   }
