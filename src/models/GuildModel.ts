@@ -39,6 +39,13 @@ const GuildSchema = new Schema<IGuildModel>({
       },
     ],
   },
+  autoAnswers: [
+    {
+      id: Number,
+      triggerRegex: String,
+      answer: String,
+    },
+  ],
 });
 
 export const GuildModel = model<IGuildModel>('GuildData', GuildSchema);

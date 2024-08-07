@@ -180,9 +180,9 @@ export class ReportsCommand extends SlashCommand {
       keySelector: (item) => item.name,
     });
 
-    const filteredBans = searcher.search(focusedValue.value as string);
+    const filteredReports = searcher.search(focusedValue.value as string);
 
-    await interaction.respond(filteredBans.slice(0, 25));
+    await interaction.respond(filteredReports.slice(0, 25));
   }
 
   static buildReportEmbed(report: Report) {

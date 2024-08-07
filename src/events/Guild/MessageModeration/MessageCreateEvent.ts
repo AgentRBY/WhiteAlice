@@ -6,6 +6,7 @@ import { ExtendClient } from '../../../structures/Client';
 import { DiscordEvent, DiscordEventNames } from '../../../structures/Event';
 import { ExtendedMessage } from '../../../structures/ExtendedMessage';
 import { getMemberBaseId } from '../../../utils/Other';
+import { AutoAnswerModule } from '../../../modules/AutoAnswer';
 
 class MessageModeration extends DiscordEvent<'messageCreate'> {
   name: DiscordEventNames = 'messageCreate';
@@ -24,6 +25,7 @@ class MessageModeration extends DiscordEvent<'messageCreate'> {
 
     AntiScamModule(client, message);
     AntiPingModule(client, message);
+    AutoAnswerModule(client, message);
 
     if (!client.config.mongoURI) {
       return;

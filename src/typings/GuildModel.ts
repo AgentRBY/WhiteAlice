@@ -10,6 +10,7 @@ export interface IGuildModel {
   moderators: string[];
   quotes: Quote[];
   testing: Testing;
+  autoAnswers: AutoAnswer[];
 }
 
 interface Quote {
@@ -49,4 +50,10 @@ export interface Report {
   createdAt: number;
   editedAt?: number;
   editedBy?: string;
+}
+
+export interface AutoAnswer {
+  id: number;
+  triggerRegex: string;
+  answer: string;
 }
