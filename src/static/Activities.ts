@@ -41,4 +41,14 @@ export const Activities: ActivityOptions[] = [
     type: 'PLAYING',
     url: 'https://discord.gg/kSr6fREFfJ',
   },
+  {
+    name: 'FireballFight',
+    type: 'PLAYING',
+    url: 'https://discord.gg/kSr6fREFfJ',
+  },
+  {
+    name: 'BedFight',
+    type: 'PLAYING',
+    url: 'https://discord.gg/kSr6fREFfJ',
+  },
 ];
