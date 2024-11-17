@@ -27,7 +27,7 @@ class ScriptCommand extends CommonCommand {
 
     // Convert to format: title:"my title wtih \"quoutes\"" description:"my desc"
     const scriptArgsParser = <T extends Record<string, string>>() => {
-      const args = scriptArgs.join(' ').match(/(?:[^\s"]+|"[^"]*")+/g);
+      const args = scriptArgs.join(' ').match(/(?:[^\s"\\]+|"[^"\\]*(?:\\.[^"\\]*)*")+/g);
 
       if (!args) {
         return {} as T;
@@ -78,6 +78,7 @@ class ScriptCommand extends CommonCommand {
             message.reply('**Канал не является текстовым**');
           }
         } else {
+          console.log('send');
           message.reply({ embeds: [embed] });
         }
       },
@@ -92,7 +93,9 @@ class ScriptCommand extends CommonCommand {
 
     script()
       .then((result) => {
-        message.reply(result);
+        if (result) {
+          message.reply(result);
+        }
       })
       .catch((error) => {
         message.sendError(`**Ошибка при выполнении скрипта**\n\`\`\`js\n${error}\n\`\`\``);
