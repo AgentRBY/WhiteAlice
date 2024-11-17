@@ -52,7 +52,7 @@ class ScriptCommand extends CommonCommand {
         message.reply('**Мой скрипт работает**');
       },
       embed_message: async () => {
-        const { title, description, image, channelId, color } = scriptArgsParser();
+        const { title, description, image, channelId, color, content } = scriptArgsParser();
 
         if (!description) {
           message.sendError('**Введите описание**');
@@ -73,13 +73,13 @@ class ScriptCommand extends CommonCommand {
           const channel = client.channels.cache.get(channelId);
 
           if (channel.isText()) {
-            channel.send({ embeds: [embed] });
+            channel.send({ content, embeds: [embed] });
           } else {
             message.reply('**Канал не является текстовым**');
           }
         } else {
           console.log('send');
-          message.reply({ embeds: [embed] });
+          message.reply({ content, embeds: [embed] });
         }
       },
     };
