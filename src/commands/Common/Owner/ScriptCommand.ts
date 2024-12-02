@@ -52,7 +52,7 @@ class ScriptCommand extends CommonCommand {
         message.reply('**Мой скрипт работает**');
       },
       embed_message: async () => {
-        const { title, description, image, channelId, color, content } = scriptArgsParser();
+        const { title, description, image, channelId, color, content, field1, field2 } = scriptArgsParser();
 
         if (!description) {
           message.sendError('**Введите описание**');
@@ -67,6 +67,24 @@ class ScriptCommand extends CommonCommand {
 
         if (image) {
           embed.setImage(image);
+        }
+
+        if (field1) {
+          const [name, inline, ...value] = field1.split('|');
+          embed.addFields({
+            name,
+            inline: inline === 'true',
+            value: value.join('|'),
+          });
+        }
+
+        if (field2) {
+          const [name, inline, ...value] = field2.split('|');
+          embed.addFields({
+            name,
+            inline: inline === 'true',
+            value: value.join('|'),
+          });
         }
 
         if (channelId) {
