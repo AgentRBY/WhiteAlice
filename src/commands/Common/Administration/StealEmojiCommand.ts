@@ -17,7 +17,7 @@ class StealEmoji extends CommonCommand {
       description: 'Добавить эмодзи с ссылки на эмодзи',
     },
   ];
-  usage = 'stealEmoji <ссылка | эмодзи>';
+  usage = 'stealEmoji <ссылка | эмодзи> [название эмодзи]';
   botPermissions: PermissionString[] = ['MANAGE_EMOJIS_AND_STICKERS'];
   memberPermissions: PermissionString[] = ['MANAGE_EMOJIS_AND_STICKERS'];
 
