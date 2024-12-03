@@ -71,7 +71,9 @@ class StealEmoji extends CommonCommand {
 
     let baseLink = removeQueryParameters(link);
 
-    if (baseLink.endsWith('.webp')) {
+    if (query.has('animated')) {
+      baseLink = baseLink.replace('.webp', '.gif');
+    } else if (baseLink.endsWith('.webp')) {
       baseLink = baseLink.replace('.webp', '.png');
     }
 
