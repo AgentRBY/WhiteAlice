@@ -81,9 +81,10 @@ class StealEmoji extends CommonCommand {
   }
 
   private generateEmojiLink(emoji: string) {
+    const isAnimated = emoji.includes('a:');
     const emojiId = emoji.split(':')[2].replace('>', '');
 
-    return `https://cdn.discordapp.com/emojis/${emojiId}.png`;
+    return `https://cdn.discordapp.com/emojis/${emojiId}.${isAnimated ? 'gif' : 'png'}`;
   }
 
   private getEmojiName(emoji: string) {
