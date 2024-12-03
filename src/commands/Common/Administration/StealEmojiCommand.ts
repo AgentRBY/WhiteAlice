@@ -9,12 +9,12 @@ class StealEmoji extends CommonCommand {
   description = 'Добавить эмодзи с чужого сервера или по ссылке';
   examples: CommandExample[] = [
     {
-      command: 'stealEmoji :emoji:',
-      description: 'Добавить эмодзи с чужого сервера',
+      command: 'stealEmoji :emoji: new_emoji',
+      description: 'Добавить эмодзи с чужого сервера и назвать его new_emoji',
     },
     {
       command: 'stealEmoji https://cdn.discordapp.com/emojis/123456789.png',
-      description: 'Добавить эмодзи с ссылки на эмодзи',
+      description: 'Добавить эмодзи с ссылки на эмодзи, имя сгенерируется автоматически',
     },
   ];
   usage = 'stealEmoji <ссылка | эмодзи> [название эмодзи]';
