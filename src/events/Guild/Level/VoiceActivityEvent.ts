@@ -22,8 +22,6 @@ class VoiceActivity extends DiscordEvent<'voiceStateUpdate'> {
     }
 
     client.service.addTimeInVoice(getMemberBaseId(member), timeInVoice);
-
-    currentInVoice.delete(member.id);
   }
 
   run(client: ExtendClient, oldState: VoiceState, newState: VoiceState) {
@@ -33,6 +31,7 @@ class VoiceActivity extends DiscordEvent<'voiceStateUpdate'> {
 
     if (oldState.channel?.id && currentInVoice.has(oldState.member?.id)) {
       VoiceActivity.recalculateMemberVoiceTime(oldState.member, client);
+      currentInVoice.delete(oldState.member.id);
     }
 
     if (newState.channel?.id) {
@@ -48,6 +47,18 @@ class VoiceActivity extends DiscordEvent<'voiceStateUpdate'> {
         }
       });
     });
+
+    // Recalculate voice time every minute
+    setInterval(() => {
+      client.guilds.cache.forEach((guild) => {
+        guild.members.cache.forEach((member) => {
+          if (member.voice.channel) {
+            VoiceActivity.recalculateMemberVoiceTime(member, client);
+            currentInVoice.set(member.id, new Date());
+          }
+        });
+      });
+    }, 60_050);
   }
 
   onExit(client: ExtendClient): Awaitable<void> {
@@ -58,6 +69,8 @@ class VoiceActivity extends DiscordEvent<'voiceStateUpdate'> {
         }
       });
     });
+
+    currentInVoice.clear();
   }
 }
 
