@@ -42,7 +42,7 @@ export class AutoAnswerCommand extends SlashCommand {
 
     if (subcommand === 'add') {
       const trigger = interaction.options.getString('trigger', true);
-      const answer = interaction.options.getString('answer', true);
+      const answer = interaction.options.getString('answer', true).replaceAll('\\n', '\n');
 
       if (!AutoAnswerCommand.isValidRegex(trigger)) {
         const embed = ErrorEmbed('Невалидный регекс');

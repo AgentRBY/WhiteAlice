@@ -1,6 +1,7 @@
 import { Message } from 'discord.js';
 import { ExtendClient } from '../structures/Client';
 import { AutoAnswerCommand } from '../commands/Slash/Information/AutoAnswerCommand';
+import { log } from 'console';
 
 export async function AutoAnswerModule(client: ExtendClient, message: Message) {
   if (!message.content) {
@@ -17,7 +18,7 @@ export async function AutoAnswerModule(client: ExtendClient, message: Message) {
     const regex = AutoAnswerCommand.stringToRegex(autoAnswer.triggerRegex);
 
     if (regex.test(message.content)) {
-      message.reply(autoAnswer.answer).catch(() => {});
+      message.reply(autoAnswer.answer.replaceAll('\\n', '\n')).catch(() => {});
       break;
     }
   }
